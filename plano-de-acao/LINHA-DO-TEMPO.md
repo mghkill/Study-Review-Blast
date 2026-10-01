@@ -43,3 +43,5 @@ Registro cronológico (mais antigo primeiro). Só se acrescenta; nunca se apaga.
 - **2026-10-01 12:27** — [T-025] concluída. Middleware requireStudent implementado e aplicado. FK CASCADE na migration 005. Testes passando.
 - **2026-10-01 12:49** — [T-026] iniciada.
 - **2026-10-01 12:50** — [T-026] concluída. POST /api/students cria estudante sem vincular vocabulario existente; testado e validado
+- **2026-10-01 12:56** — [T-027] iniciada.
+- **2026-10-01 13:02** — [T-027] concluída. api.js injeta X-Student-Id via interceptor; AppContext gerencia sincronizacao; App.jsx reseta rotas e layout com key student.id; 6 testes vitest passando
