@@ -12,8 +12,8 @@
 
 ## PRÓXIMO PASSO
 <!-- proximo:start -->
-- Atualizado em 2026-10-01 12:27
-- Iniciar **T-026** — `POST /api/students`: parar de vincular o novo estudante a todo o vocabulário existente (começa vazio)
+- Atualizado em 2026-10-01 12:50
+- Iniciar **T-027** — Cliente: `api.js` envia `X-Student-Id` do estudante ativo; trocar de estudante limpa o estado das telas
 <!-- proximo:end -->
 
 ## Regras fixas (só mudam se o usuário pedir)
@@ -84,7 +84,7 @@
 - [x] T-023 Migrar dados existentes conforme D-02 (clonar palavra + significados + contextos + formas verbais por estudante, remapeando progresso, revisões e erros), em transação, com contagens antes/depois ✔ 2026-10-01 11:34
 - [x] T-024 Chaves estrangeiras compostas `(vocabulary_item_id, student_id)` nas tabelas de progresso e histórico; `student_id` em `contexts` (ver modelo-logico-alvo.md, seção 2) ✔ 2026-10-01 11:42
 - [x] T-025 API: middleware `requireStudent` em todas as rotas; queries filtram por `req.studentId`; ignorar `student_id` vindo do corpo/query; item de outro estudante responde 404 ✔ 2026-10-01 12:27
-- [ ] T-026 `POST /api/students`: parar de vincular o novo estudante a todo o vocabulário existente (começa vazio)
+- [x] T-026 `POST /api/students`: parar de vincular o novo estudante a todo o vocabulário existente (começa vazio) ✔ 2026-10-01 12:50
 - [ ] T-027 Cliente: `api.js` envia `X-Student-Id` do estudante ativo; trocar de estudante limpa o estado das telas
 - [ ] T-028 Conferir Dashboard, Progresso, fila de revisão, Vocabulário e Banco de Frases: contagens e gráficos só do estudante ativo
 - [ ] T-029 Testes de isolamento passando e suíte antiga sem regressão; registrar
