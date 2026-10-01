@@ -82,9 +82,17 @@ beforeAll(async () => {
 
 afterAll(async () => {
   // Ordem importa: FKs compostas exigem deletar dependentes antes
+  await testPool.query('DELETE FROM pronunciation_practice WHERE student_id = $1', [testStudentId]);
+  await testPool.query('DELETE FROM tense_practice WHERE student_id = $1', [testStudentId]);
+  await testPool.query('DELETE FROM errors WHERE student_id = $1', [testStudentId]);
+  await testPool.query('DELETE FROM reviews WHERE student_id = $1', [testStudentId]);
+  await testPool.query('DELETE FROM study_sessions WHERE student_id = $1', [testStudentId]);
+  await testPool.query('DELETE FROM sentences WHERE student_id = $1', [testStudentId]);
+  await testPool.query('DELETE FROM contexts WHERE student_id = $1', [testStudentId]);
+  await testPool.query('DELETE FROM meanings WHERE vocabulary_item_id IN (SELECT id FROM vocabulary_items WHERE student_id = $1)', [testStudentId]);
   await testPool.query('DELETE FROM student_vocabulary WHERE student_id = $1', [testStudentId]);
   await testPool.query('DELETE FROM vocabulary_items WHERE student_id = $1', [testStudentId]);
-  await testPool.query('DELETE FROM students WHERE name = $1', ['__Test Student__']);
+  await testPool.query('DELETE FROM students WHERE id = $1', [testStudentId]);
   await testPool.end();
 });
 
