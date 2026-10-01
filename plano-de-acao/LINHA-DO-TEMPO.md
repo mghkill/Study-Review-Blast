@@ -18,3 +18,5 @@ Registro cronológico (mais antigo primeiro). Só se acrescenta; nunca se apaga.
 - **2026-10-01 02:52** — [T-006] iniciada.
 - **2026-10-01 02:54** — [T-006] concluída. Baseline registrado: server 30 falhas (autenticacao banco por [PASSWORD] hardcoded no api.test.js); client 4 falhas em 55 testes (3 srs, 1 tts); client lint 0 erros, 30 warnings.
 - **2026-10-01 02:58** — T-006 baseline: server 30/30 falharam por auth no postgres; client 51 passaram, 4 falharam (srs e tts); client oxlint 0 erros e 30 avisos.
+- **2026-10-01 02:58** — [T-007] iniciada.
+- **2026-10-01 02:58** — [T-007] concluída. Perguntas D-02 (dados existentes) e D-03 (autor e licença MIT) apresentadas ao usuário.
