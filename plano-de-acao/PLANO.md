@@ -12,8 +12,8 @@
 
 ## PRÓXIMO PASSO
 <!-- proximo:start -->
-- Atualizado em 2026-10-01 02:58
-- Iniciar **T-010** — Criar `server/src/db/migrations/` e a tabela `schema_migrations` (versão, nome, aplicada_em)
+- Atualizado em 2026-10-01 03:31
+- Iniciar **T-011** — Escrever o executor em Node puro com `pg` (sem dependência nova): aplica .sql em ordem, cada arquivo em transação, pula os já aplicados
 <!-- proximo:end -->
 
 ## Regras fixas (só mudam se o usuário pedir)
@@ -41,7 +41,7 @@
 - [x] T-007 Perguntar ao usuário, em uma única mensagem, D-02 (dados atuais: preservar ou descartar) e D-03 (nome do autor e confirmação da licença MIT) ✔ 2026-10-01 02:58
 
 ## Fase 1 — Migrações versionadas (pré-requisito)
-- [ ] T-010 Criar `server/src/db/migrations/` e a tabela `schema_migrations` (versão, nome, aplicada_em)
+- [x] T-010 Criar `server/src/db/migrations/` e a tabela `schema_migrations` (versão, nome, aplicada_em) ✔ 2026-10-01 03:31
 - [ ] T-011 Escrever o executor em Node puro com `pg` (sem dependência nova): aplica .sql em ordem, cada arquivo em transação, pula os já aplicados
 - [ ] T-012 Converter o schema.sql atual em `001_baseline.sql` e fazer `npm run migrate` usar o executor (mesmo nome de script)
 - [ ] T-013 Testar em banco novo vazio e em cópia do banco existente (restaurada do backup); registrar resultado
