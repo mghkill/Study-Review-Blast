@@ -1,0 +1,21 @@
+# Dependências e builds
+node_modules/
+dist/
+build/
+.cache/
+
+# Credenciais
+.env
+
+# Logs
+*.log
+npm-debug.log*
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.swp
+*.swo
