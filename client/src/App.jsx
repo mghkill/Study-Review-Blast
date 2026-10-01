@@ -23,16 +23,16 @@ function ProtectedLayout({ children }) {
   useEffect(() => {
     if (!student) return;
     getDashboard(student.id)
-      .then(d => setPendingReviews(parseInt(d.stats.pending_reviews) || 0))
+      .then(d => setPendingReviews(parseInt(d?.stats?.pending_reviews) || 0))
       .catch(() => {});
   }, [student]);
 
   if (!student) return <Navigate to="/" replace />;
 
   return (
-    <div className="app-layout">
+    <div className="app-layout" key={student.id}>
       <Sidebar pendingReviews={pendingReviews} />
-      <main className="main-content">
+      <main className="main-content" key={student.id}>
         {children}
       </main>
     </div>
@@ -43,7 +43,7 @@ export default function App() {
   const { student } = useApp();
 
   return (
-    <Routes>
+    <Routes key={student?.id || 'guest'}>
       <Route path="/" element={student ? <Navigate to="/dashboard" replace /> : <StudentSelect />} />
       <Route path="/dashboard" element={<ProtectedLayout><Dashboard /></ProtectedLayout>} />
       <Route path="/study" element={<ProtectedLayout><StudySession /></ProtectedLayout>} />

@@ -41,3 +41,7 @@ Registro cronológico (mais antigo primeiro). Só se acrescenta; nunca se apaga.
 - **2026-10-01 11:42** — [T-024] concluída. Migration 004 aplicada: FKs compostas (vocab_id,student_id)->vocabulary_items(id,student_id) em student_vocabulary, reviews, errors, tense_practice, sentences. contexts ganhou student_id NOT NULL e FK composta. reviews.context_practiced->contexts(id,student_id). sentences.student_id e vocabulary_item_id agora NOT NULL.
 - **2026-10-01 11:45** — [T-025] iniciada.
 - **2026-10-01 12:27** — [T-025] concluída. Middleware requireStudent implementado e aplicado. FK CASCADE na migration 005. Testes passando.
+- **2026-10-01 12:49** — [T-026] iniciada.
+- **2026-10-01 12:50** — [T-026] concluída. POST /api/students cria estudante sem vincular vocabulario existente; testado e validado
+- **2026-10-01 12:56** — [T-027] iniciada.
+- **2026-10-01 13:02** — [T-027] concluída. api.js injeta X-Student-Id via interceptor; AppContext gerencia sincronizacao; App.jsx reseta rotas e layout com key student.id; 6 testes vitest passando

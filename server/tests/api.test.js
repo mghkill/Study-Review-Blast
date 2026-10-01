@@ -132,12 +132,20 @@ describe('Students API', () => {
     expect(res.status).toBe(404);
   });
 
-  it('POST /api/students — cria e retorna estudante', async () => {
+  it('POST /api/students — cria e retorna estudante sem vincular vocabulário prévio (T-026)', async () => {
     const res = await request(app)
       .post('/api/students')
       .send({ name: '__Temp Student__', current_level: 'A2' });
     expect(res.status).toBe(201);
     expect(res.body.name).toBe('__Temp Student__');
+
+    // T-026: Deve começar com zero itens vinculados
+    const svCheck = await testPool.query('SELECT COUNT(*) FROM student_vocabulary WHERE student_id = $1', [res.body.id]);
+    expect(parseInt(svCheck.rows[0].count, 10)).toBe(0);
+
+    const tpCheck = await testPool.query('SELECT COUNT(*) FROM tense_practice WHERE student_id = $1', [res.body.id]);
+    expect(parseInt(tpCheck.rows[0].count, 10)).toBe(0);
+
     await testPool.query('DELETE FROM students WHERE id = $1', [res.body.id]);
   });
 
