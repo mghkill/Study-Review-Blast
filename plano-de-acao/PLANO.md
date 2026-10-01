@@ -12,8 +12,8 @@
 
 ## PRÓXIMO PASSO
 <!-- proximo:start -->
-- Atualizado em 2026-10-01 02:31
-- Iniciar **T-006** — Rodar a suíte atual (server `npm test`; client `npm run test:run` e `npm run lint`) e registrar o baseline
+- Atualizado em 2026-10-01 02:54
+- Iniciar **T-007** — Perguntar ao usuário, em uma única mensagem, D-02 (dados atuais: preservar ou descartar) e D-03 (nome do autor e confirmação da licença MIT)
 <!-- proximo:end -->
 
 ## Regras fixas (só mudam se o usuário pedir)
@@ -37,7 +37,7 @@
 - [x] T-003 Confirmar que `npm run dev` funciona em server/ e client/ (portas 3001 e 5173) antes de qualquer mudança ✔ 2026-09-30 23:57
 - [x] T-004 Criar branch de trabalho no git e confirmar árvore limpa ✔ 2026-10-01 00:01
 - [x] T-005 Backup do banco com `pg_dump -Fc` fora do repositório; anotar só o caminho do arquivo (sem senha) ✔ 2026-10-01 02:31
-- [ ] T-006 Rodar a suíte atual (server `npm test`; client `npm run test:run` e `npm run lint`) e registrar o baseline
+- [x] T-006 Rodar a suíte atual (server `npm test`; client `npm run test:run` e `npm run lint`) e registrar o baseline ✔ 2026-10-01 02:54
 - [ ] T-007 Perguntar ao usuário, em uma única mensagem, D-02 (dados atuais: preservar ou descartar) e D-03 (nome do autor e confirmação da licença MIT)
 
 ## Fase 1 — Migrações versionadas (pré-requisito)

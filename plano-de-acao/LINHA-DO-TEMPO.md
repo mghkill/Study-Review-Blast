@@ -15,3 +15,6 @@ Registro cronológico (mais antigo primeiro). Só se acrescenta; nunca se apaga.
 - **2026-10-01 02:24** — [T-005] iniciada.
 - **2026-10-01 02:31** — [T-005] concluída. Backup pg_dump -Fc gerado em C:\Users\opera\studyreviewblast-backups\studyreviewblast_backup_20261001_023059.dump (66526 bytes)
 - **2026-10-01 02:32** — T-005: Backup do banco com pg_dump -Fc gerado com sucesso em C:\Users\opera\studyreviewblast-backups\studyreviewblast_backup_20261001_023059.dump (66526 bytes). Sem expor credenciais.
+- **2026-10-01 02:52** — [T-006] iniciada.
+- **2026-10-01 02:54** — [T-006] concluída. Baseline registrado: server 30 falhas (autenticacao banco por [PASSWORD] hardcoded no api.test.js); client 4 falhas em 55 testes (3 srs, 1 tts); client lint 0 erros, 30 warnings.
+- **2026-10-01 02:58** — T-006 baseline: server 30/30 falharam por auth no postgres; client 51 passaram, 4 falharam (srs e tts); client oxlint 0 erros e 30 avisos.
