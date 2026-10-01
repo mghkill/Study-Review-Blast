@@ -53,7 +53,7 @@ export default function ProgressPage() {
     labels: errors.map(e => errorLabels[e.error_category] || e.error_category),
     datasets: [{
       label: 'Erros',
-      data: errors.map(e => e.count),
+      data: errors.map(e => e.count ?? e.total_count ?? 0),
       backgroundColor: '#f85149CC',
       borderColor: '#f85149',
       borderWidth: 1,

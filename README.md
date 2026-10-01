@@ -23,6 +23,7 @@ O **StudyReviewBlast** combina os fundamentos da repetição espaçada (*Spaced 
 - [Endpoints da API](#-endpoints-da-api)
 - [Estrutura do Projeto](#-estrutura-do-projeto)
 - [Testes e Qualidade](#-testes-e-qualidade)
+- [Isolamento e Segurança](#-modelo-de-isolamento-e-limitações-de-segurança)
 - [Roadmap](#-roadmap)
 - [Contribuição](#-contribuição)
 - [Licença](#-licença)
@@ -38,7 +39,7 @@ O **StudyReviewBlast** combina os fundamentos da repetição espaçada (*Spaced 
   - *Frase com Lacuna (Cloze Test):* Oculta o verbo alvo na frase (`[ _______ ]`) para estimular a recuperação da conjugação e sintaxe no tempo verbal correto.
 - **🔊 Síntese de Voz Nativa em Inglês (TTS):** Seleção inteligente de vozes nativas (`en-US` e `en-GB`) com rejeição de sotaques incompatíveis e fallback automático para stream de pronúncia em áudio HD.
 - **📚 Gestão Completa de Vocabulário (CRUD):** Cadastro, edição completa de campos (palavra, significado principal, nível CEFR, dificuldade, irregularidade e notas), edição inline de frases e múltiplos significados, e exclusão com limpeza segura em cascata.
-- **👥 Gestão de Estudantes:** Seleção rápida de perfis, criação com vínculo automático a todo o vocabulário existente e exclusão simplificada.
+- **👥 Gestão de Estudantes:** Isolamento completo de dados por perfil. Cada estudante possui seu próprio vocabulário, histórico de revisões, sentenças e progresso independente, iniciando com catálogo limpo.
 - **📊 Painel Analítico de Desempenho:** Dashboard com métricas de retenção, taxa de acertos, distribuição de domínio por nível CEFR (A1 a C1) e categorização de erros gramaticais.
 
 ---
@@ -220,6 +221,20 @@ Execute as suítes de validação automatizadas em seus respectivos diretórios:
   cd server
   npm test
   ```
+
+---
+
+## 🔒 Modelo de Isolamento e Limitações de Segurança
+
+O **StudyReviewBlast** opera de forma local e offline, sem exigir autenticação centralizada por usuário e senha.
+
+### Como funciona o isolamento:
+- **Posse no Banco de Dados:** Cada palavra de vocabulário, revisão, sentença e contexto pertence exclusivamente a um `student_id`.
+- **Validação na API:** O middleware `requireStudent` valida o cabeçalho `X-Student-Id` em todas as rotas; tentativas de acessar ou manipular recursos de outro estudante retornam `404 Not Found`.
+- **Integridade Referencial:** Chaves estrangeiras compostas `(vocabulary_item_id, student_id)` impedem cruzamento ou corrupção de dados entre contas no PostgreSQL.
+
+### ⚠️ Limitação de Segurança:
+> **Atenção:** Sem um sistema formal de autenticação por senha ou tokens criptografados (JWT/sessões protegidas), esta arquitetura **separa os dados com precisão e evita vazamento acidental durante o uso**, mas **não protege contra usuários com acesso à máquina local, à rede ou às ferramentas de desenvolvedor (DevTools)**, os quais podem alterar o cabeçalho `X-Student-Id`. Para mais detalhes, consulte [docs/seguranca-e-isolamento.md](./docs/seguranca-e-isolamento.md).
 
 ---
 

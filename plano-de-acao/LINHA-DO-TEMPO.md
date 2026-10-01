@@ -45,3 +45,10 @@ Registro cronológico (mais antigo primeiro). Só se acrescenta; nunca se apaga.
 - **2026-10-01 12:50** — [T-026] concluída. POST /api/students cria estudante sem vincular vocabulario existente; testado e validado
 - **2026-10-01 12:56** — [T-027] iniciada.
 - **2026-10-01 13:02** — [T-027] concluída. api.js injeta X-Student-Id via interceptor; AppContext gerencia sincronizacao; App.jsx reseta rotas e layout com key student.id; 6 testes vitest passando
+- **2026-10-01 13:15** — [T-028] iniciada.
+- **2026-10-01 13:18** — [T-028] concluída. Conferidas as 5 areas (Dashboard, Progresso, Fila de Revisao, Vocabulario, Frases): contagens e dados 100% isolados pelo header do estudante ativo
+- **2026-10-01 13:31** — [T-029] iniciada.
+- **2026-10-01 13:31** — T-029: 46/46 testes backend passando (30 api.test.js, 13 isolation.test.js, 3 migrator.test.js) + 6/6 vitest isolamento cliente sem regressao
+- **2026-10-01 13:32** — [T-029] concluída. 46/46 testes backend passando (api.test.js, isolation.test.js, migrator.test.js) e 6 testes cliente sem regressao
+- **2026-10-01 13:34** — [T-030] iniciada.
+- **2026-10-01 13:36** — [T-030] concluída. Documentada a limitacao de seguranca (sem login separa os dados mas nao protege contra quem tem acesso ao app) no README.md e em docs/seguranca-e-isolamento.md
