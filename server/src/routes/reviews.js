@@ -328,6 +328,7 @@ router.get('/errors', async (req, res) => {
       SELECT
         e.error_category,
         COUNT(*) as total_count,
+        COUNT(*) as count,
         COUNT(DISTINCT e.vocabulary_item_id) as distinct_words,
         MAX(e.occurred_at) as last_occurred,
         json_agg(DISTINCT vi.word) FILTER (WHERE vi.word IS NOT NULL) as words
