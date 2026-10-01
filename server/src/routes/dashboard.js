@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db/connection');
+const { requireStudent } = require('../middleware/requireStudent');
 
-// GET /api/dashboard?studentId=1
+router.use(requireStudent);
+
+// GET /api/dashboard
 router.get('/', async (req, res) => {
   try {
-    const { studentId } = req.query;
-    if (!studentId) return res.status(400).json({ error: 'studentId required' });
+    const sid = req.studentId;
 
-    // Estatísticas gerais
     const statsRes = await db.query(`
       SELECT
         COUNT(*) as total_vocab,
@@ -21,33 +22,30 @@ router.get('/', async (req, res) => {
         COUNT(*) FILTER (WHERE vi.type = 'verb' AND sv.mastery_level >= 4) as mastered_verbs,
         AVG(sv.mastery_level) as avg_mastery
       FROM student_vocabulary sv
-      JOIN vocabulary_items vi ON vi.id = sv.vocabulary_item_id
+      JOIN vocabulary_items vi ON vi.id = sv.vocabulary_item_id AND vi.student_id = $1
       WHERE sv.student_id = $1
-    `, [studentId]);
+    `, [sid]);
 
-    // Frases
     const sentencesRes = await db.query(`
       SELECT COUNT(*) as total_sentences,
         COUNT(*) FILTER (WHERE s.status = 'mastered') as mastered_sentences,
         COUNT(*) FILTER (WHERE s.status = 'active') as active_sentences
       FROM sentences s
-      WHERE s.student_id = $1 OR s.student_id IS NULL
-    `, [studentId]);
+      WHERE s.student_id = $1
+    `, [sid]);
 
-    // Revisões prioritárias (top 10)
     const priorityRes = await db.query(`
       SELECT vi.id, vi.word, vi.type, vi.level,
         sv.mastery_level, sv.status, sv.review_priority,
         sv.total_incorrect, sv.total_reviews, sv.consecutive_incorrect,
         sv.next_review_at
       FROM student_vocabulary sv
-      JOIN vocabulary_items vi ON vi.id = sv.vocabulary_item_id
+      JOIN vocabulary_items vi ON vi.id = sv.vocabulary_item_id AND vi.student_id = $1
       WHERE sv.student_id = $1
       ORDER BY sv.review_priority DESC, sv.next_review_at ASC
       LIMIT 10
-    `, [studentId]);
+    `, [sid]);
 
-    // Sessões recentes
     const sessionsRes = await db.query(`
       SELECT ss.*,
         COUNT(r.id) as items_reviewed,
@@ -59,18 +57,16 @@ router.get('/', async (req, res) => {
       GROUP BY ss.id
       ORDER BY ss.started_at DESC
       LIMIT 7
-    `, [studentId]);
+    `, [sid]);
 
-    // Erros por categoria
     const errorsRes = await db.query(`
       SELECT error_category, COUNT(*) as count
       FROM errors
       WHERE student_id = $1 AND occurred_at >= NOW() - INTERVAL '30 days'
       GROUP BY error_category
       ORDER BY count DESC
-    `, [studentId]);
+    `, [sid]);
 
-    // Progresso semanal (últimas 8 semanas)
     const weeklyRes = await db.query(`
       SELECT
         DATE_TRUNC('week', r.reviewed_at) as week,
@@ -81,9 +77,8 @@ router.get('/', async (req, res) => {
       WHERE r.student_id = $1 AND r.reviewed_at >= NOW() - INTERVAL '8 weeks'
       GROUP BY DATE_TRUNC('week', r.reviewed_at)
       ORDER BY week
-    `, [studentId]);
+    `, [sid]);
 
-    // Domínio por nível (A1, A2, B1, B2, C1)
     const levelRes = await db.query(`
       SELECT vi.level,
         COUNT(*) as total,
@@ -91,14 +86,13 @@ router.get('/', async (req, res) => {
         COUNT(*) FILTER (WHERE sv.status = 'yellow') as learning,
         COUNT(*) FILTER (WHERE sv.status = 'red') as weak
       FROM student_vocabulary sv
-      JOIN vocabulary_items vi ON vi.id = sv.vocabulary_item_id
+      JOIN vocabulary_items vi ON vi.id = sv.vocabulary_item_id AND vi.student_id = $1
       WHERE sv.student_id = $1
       GROUP BY vi.level
       ORDER BY vi.level
-    `, [studentId]);
+    `, [sid]);
 
-    // Estudante
-    const studentRes = await db.query('SELECT * FROM students WHERE id = $1', [studentId]);
+    const studentRes = await db.query('SELECT * FROM students WHERE id = $1', [sid]);
 
     res.json({
       student: studentRes.rows[0],

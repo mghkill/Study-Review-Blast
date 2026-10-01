@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db/connection');
 
-// GET /api/students
+// GET /api/students — lista todos (não requer header, é usada na seleção de estudante)
 router.get('/', async (req, res) => {
   try {
     const result = await db.query(`
@@ -35,7 +35,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST /api/students
+// POST /api/students — cria estudante NOVO, começa com zero palavras (T-026)
 router.post('/', async (req, res) => {
   try {
     const { name, current_level = 'A1' } = req.body;
@@ -44,31 +44,8 @@ router.post('/', async (req, res) => {
       'INSERT INTO students (name, current_level) VALUES ($1, $2) RETURNING *',
       [name, current_level]
     );
-    const newStudent = result.rows[0];
-
-    // Vincular automaticamente todos os itens de vocabulário existentes
-    await db.query(`
-      INSERT INTO student_vocabulary (student_id, vocabulary_item_id, mastery_level, status, review_priority, next_review_at)
-      SELECT $1, id, 0, 'red', 80, NOW()
-      FROM vocabulary_items
-      ON CONFLICT (student_id, vocabulary_item_id) DO NOTHING
-    `, [newStudent.id]);
-
-    // Criar registros iniciais de tempos verbais
-    await db.query(`
-      INSERT INTO tense_practice (student_id, vocabulary_item_id, tense)
-      SELECT $1, v.id, t.tense
-      FROM vocabulary_items v
-      CROSS JOIN (VALUES
-        ('Present Simple'), ('Past Simple'), ('Present Perfect'),
-        ('Present Continuous'), ('Past Continuous'), ('Future'),
-        ('Future with will'), ('Going to'), ('Modal constructions'), ('Conditionals')
-      ) as t(tense)
-      WHERE v.type = 'verb'
-      ON CONFLICT (student_id, vocabulary_item_id, tense) DO NOTHING
-    `, [newStudent.id]);
-
-    res.status(201).json(newStudent);
+    // Não vincula vocabulário existente — cada palavra pertence ao seu criador (T-026)
+    res.status(201).json(result.rows[0]);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -98,6 +75,7 @@ router.patch('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
+    // ON DELETE CASCADE em vocabulary_items.student_id cuida de todo o progresso
     await db.query('DELETE FROM students WHERE id = $1', [id]);
     res.json({ success: true });
   } catch (err) {

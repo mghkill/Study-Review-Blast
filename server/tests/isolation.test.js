@@ -83,15 +83,17 @@ beforeAll(async () => {
   );
   studentBId = resB.rows[0].id;
 
-  // Cria palavra A
+  // Cria palavra A (com dono = estudante A)
   const resWordA = await testPool.query(
-    "INSERT INTO vocabulary_items (word, type, level, primary_meaning) VALUES ('__iso_word_a__', 'verb', 'B1', 'meaning a') RETURNING id"
+    "INSERT INTO vocabulary_items (word, type, level, primary_meaning, student_id) VALUES ('__iso_word_a__', 'verb', 'B1', 'meaning a', $1) RETURNING id",
+    [studentAId]
   );
   wordAId = resWordA.rows[0].id;
 
-  // Cria palavra B
+  // Cria palavra B (com dono = estudante B)
   const resWordB = await testPool.query(
-    "INSERT INTO vocabulary_items (word, type, level, primary_meaning) VALUES ('__iso_word_b__', 'verb', 'B2', 'meaning b') RETURNING id"
+    "INSERT INTO vocabulary_items (word, type, level, primary_meaning, student_id) VALUES ('__iso_word_b__', 'verb', 'B2', 'meaning b', $1) RETURNING id",
+    [studentBId]
   );
   wordBId = resWordB.rows[0].id;
 
@@ -160,7 +162,8 @@ describe('Isolamento de Vocabulário', () => {
   it('DELETE /api/vocabulary/:id de B sobre palavra de A responde 404', async () => {
     // Palavra dedicada de A para teste de delete
     const resDelWord = await testPool.query(
-      "INSERT INTO vocabulary_items (word, type, level, primary_meaning) VALUES ('__iso_word_del_a__', 'verb', 'B1', 'del') RETURNING id"
+      "INSERT INTO vocabulary_items (word, type, level, primary_meaning, student_id) VALUES ('__iso_word_del_a__', 'verb', 'B1', 'del', $1) RETURNING id",
+      [studentAId]
     );
     const delWordId = resDelWord.rows[0].id;
 
@@ -182,8 +185,10 @@ describe('Isolamento de Reviews e Sessões', () => {
       .set('X-Student-Id', String(studentBId));
 
     expect(res.status).toBe(200);
-    expect(Array.isArray(res.body)).toBe(true);
-    const itemIds = res.body.map(item => item.id || item.vocabulary_item_id);
+    // queue retorna { items: [...], total, mode }
+    const items = res.body.items || res.body;
+    expect(Array.isArray(items)).toBe(true);
+    const itemIds = items.map(item => item.id || item.vocabulary_item_id);
     expect(itemIds).not.toContain(wordAId);
   });
 
@@ -208,8 +213,8 @@ describe('Isolamento de Dashboard', () => {
 
     expect(res.status).toBe(200);
     expect(res.body).toHaveProperty('stats');
-    // B tem apenas 1 palavra vinculada
-    expect(res.body.stats.total_vocab).toBe(1);
+    // B tem apenas 1 palavra vinculada; COUNT() retorna string
+    expect(parseInt(res.body.stats.total_vocab)).toBe(1);
   });
 });
 
