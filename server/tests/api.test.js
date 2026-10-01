@@ -9,31 +9,37 @@ const request = require('supertest');
 const express = require('express');
 const cors = require('cors');
 
-// Pool próprio do teste — credenciais explícitas, sem depender do .env
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '../../.env') });
+require('dotenv').config({ path: path.join(__dirname, '../.env'), override: true });
+
+// Pool próprio do teste — credenciais lidas do .env (DB_PASSWORD)
 const testPool = new Pool({
-  host: 'localhost',
-  port: 5432,
-  database: 'reviewdatabase',
-  user: 'postgres',
-  password: '[PASSWORD]',
+  host: process.env.DB_HOST || 'localhost',
+  port: parseInt(process.env.DB_PORT, 10) || 5432,
+  database: process.env.DB_NAME || 'reviewdatabase',
+  user: process.env.DB_USER || 'postgres',
+  password: process.env.DB_PASSWORD,
 });
 
-// Mock do módulo de conexão — usa o testPool para que todas as rotas
-// se conectem ao banco real com credenciais explícitas.
+// Mock do módulo de conexão — usa o pool com credenciais do .env
 jest.mock('../src/db/connection', () => {
   const { Pool } = require('pg');
+  const path = require('path');
+  require('dotenv').config({ path: path.join(__dirname, '../../.env') });
+  require('dotenv').config({ path: path.join(__dirname, '../.env'), override: true });
+
   const mockPool = new Pool({
-    host: 'localhost',
-    port: 5432,
-    database: 'reviewdatabase',
-    user: 'postgres',
-    password: '[PASSWORD]',
+    host: process.env.DB_HOST || 'localhost',
+    port: parseInt(process.env.DB_PORT, 10) || 5432,
+    database: process.env.DB_NAME || 'reviewdatabase',
+    user: process.env.DB_USER || 'postgres',
+    password: process.env.DB_PASSWORD,
   });
 
   return {
     get pool() { return mockPool; },
     query: (text, params) => mockPool.query(text, params),
-    // getClient retorna uma Promise de um client real (pg Client com query/release)
     getClient: () => mockPool.connect(),
   };
 });
