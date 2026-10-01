@@ -30,12 +30,12 @@ function parseMigrationFile(filename) {
   };
 }
 
-async function runMigrations({ migrationsDir = MIGRATIONS_DIR, silent = false } = {}) {
-  const client = await getClient();
+async function runMigrations({ migrationsDir = MIGRATIONS_DIR, silent = false, client = null } = {}) {
+  const dbClient = client || (await getClient());
   const appliedMigrations = [];
 
   try {
-    const appliedVersions = await getAppliedVersions(client);
+    const appliedVersions = await getAppliedVersions(dbClient);
 
     if (!fs.existsSync(migrationsDir)) {
       fs.mkdirSync(migrationsDir, { recursive: true });
@@ -70,18 +70,18 @@ async function runMigrations({ migrationsDir = MIGRATIONS_DIR, silent = false } 
       const sql = fs.readFileSync(filePath, 'utf8');
 
       if (!silent) console.log(`⏳ Aplicando migração ${migration.filename}...`);
-      await client.query('BEGIN');
+      await dbClient.query('BEGIN');
       try {
-        await client.query(sql);
-        await client.query(
+        await dbClient.query(sql);
+        await dbClient.query(
           'INSERT INTO schema_migrations (version, name, applied_at) VALUES ($1, $2, NOW())',
           [migration.version, migration.filename]
         );
-        await client.query('COMMIT');
+        await dbClient.query('COMMIT');
         appliedMigrations.push(migration);
         if (!silent) console.log(`✅ Migração ${migration.filename} aplicada com sucesso!`);
       } catch (err) {
-        await client.query('ROLLBACK');
+        await dbClient.query('ROLLBACK');
         if (!silent) {
           console.error(`❌ Falha ao aplicar migração ${migration.filename}:`, err.message);
         }
@@ -91,7 +91,9 @@ async function runMigrations({ migrationsDir = MIGRATIONS_DIR, silent = false } 
 
     return { applied: appliedMigrations };
   } finally {
-    client.release();
+    if (!client && dbClient && typeof dbClient.release === 'function') {
+      dbClient.release();
+    }
   }
 }
 

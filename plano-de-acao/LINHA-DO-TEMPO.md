@@ -27,3 +27,5 @@ Registro cronológico (mais antigo primeiro). Só se acrescenta; nunca se apaga.
 - **2026-10-01 03:35** — [T-011] concluída. Criado server/src/db/migrator.js com transação individual, ordenação natural e idempotência; 3 testes passando em migrator.test.js
 - **2026-10-01 03:36** — [T-012] iniciada.
 - **2026-10-01 03:37** — [T-012] concluída. Criado 001_baseline.sql a partir de schema.sql e adaptado migrate.js para usar runMigrations() com suporte a --reset
+- **2026-10-01 03:49** — [T-013] iniciada.
+- **2026-10-01 03:52** — [T-013] concluída. Testado com sucesso em banco vazio (17 tabelas criadas) e em banco restaurado do backup (dados preservados: students=2, vocabulary_items=6)

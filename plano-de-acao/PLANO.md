@@ -12,8 +12,8 @@
 
 ## PRÓXIMO PASSO
 <!-- proximo:start -->
-- Atualizado em 2026-10-01 03:37
-- Iniciar **T-013** — Testar em banco novo vazio e em cópia do banco existente (restaurada do backup); registrar resultado
+- Atualizado em 2026-10-01 03:52
+- Iniciar **T-020** — Mapear todas as rotas e queries; listar as que não filtram por estudante (tabela no plano)
 <!-- proximo:end -->
 
 ## Regras fixas (só mudam se o usuário pedir)
@@ -44,7 +44,7 @@
 - [x] T-010 Criar `server/src/db/migrations/` e a tabela `schema_migrations` (versão, nome, aplicada_em) ✔ 2026-10-01 03:31
 - [x] T-011 Escrever o executor em Node puro com `pg` (sem dependência nova): aplica .sql em ordem, cada arquivo em transação, pula os já aplicados ✔ 2026-10-01 03:35
 - [x] T-012 Converter o schema.sql atual em `001_baseline.sql` e fazer `npm run migrate` usar o executor (mesmo nome de script) ✔ 2026-10-01 03:37
-- [ ] T-013 Testar em banco novo vazio e em cópia do banco existente (restaurada do backup); registrar resultado
+- [x] T-013 Testar em banco novo vazio e em cópia do banco existente (restaurada do backup); registrar resultado ✔ 2026-10-01 03:52
 
 ## Fase 2 — Isolamento por estudante (prioridade máxima)
 - [ ] T-020 Mapear todas as rotas e queries; listar as que não filtram por estudante (tabela no plano)
