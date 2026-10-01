@@ -12,8 +12,8 @@
 
 ## PRÓXIMO PASSO
 <!-- proximo:start -->
-- Atualizado em 2026-10-01 04:26
-- Iniciar **T-021** — Escrever ANTES os testes de isolamento (Jest + Supertest) e confirmar que falham hoje (ver references/modelo-logico-alvo.md, seção 3)
+- Atualizado em 2026-10-01 11:18
+- Iniciar **T-022** — Migration 002: `vocabulary_items.student_id` (dono), `UNIQUE(student_id, word, type)` no lugar de `UNIQUE(word, type)`, `UNIQUE(id, student_id)` para chaves compostas
 <!-- proximo:end -->
 
 ## Regras fixas (só mudam se o usuário pedir)
@@ -79,7 +79,7 @@
 | `/api/sessions` | GET | Parcial | Lê `studentId` da query string | Forçar `req.studentId` |
 | `/api/dashboard` | GET | Parcial (Vazamento) | Contagem de frases inclui sentenças nulas/globais | Filtrar estritamente por `req.studentId` |
 
-- [ ] T-021 Escrever ANTES os testes de isolamento (Jest + Supertest) e confirmar que falham hoje (ver references/modelo-logico-alvo.md, seção 3)
+- [x] T-021 Escrever ANTES os testes de isolamento (Jest + Supertest) e confirmar que falham hoje (ver references/modelo-logico-alvo.md, seção 3) ✔ 2026-10-01 11:18
 - [ ] T-022 Migration 002: `vocabulary_items.student_id` (dono), `UNIQUE(student_id, word, type)` no lugar de `UNIQUE(word, type)`, `UNIQUE(id, student_id)` para chaves compostas
 - [ ] T-023 Migrar dados existentes conforme D-02 (clonar palavra + significados + contextos + formas verbais por estudante, remapeando progresso, revisões e erros), em transação, com contagens antes/depois
 - [ ] T-024 Chaves estrangeiras compostas `(vocabulary_item_id, student_id)` nas tabelas de progresso e histórico; `student_id` em `contexts` (ver modelo-logico-alvo.md, seção 2)

@@ -31,3 +31,5 @@ Registro cronológico (mais antigo primeiro). Só se acrescenta; nunca se apaga.
 - **2026-10-01 03:52** — [T-013] concluída. Testado com sucesso em banco vazio (17 tabelas criadas) e em banco restaurado do backup (dados preservados: students=2, vocabulary_items=6)
 - **2026-10-01 04:23** — [T-020] iniciada.
 - **2026-10-01 04:26** — [T-020] concluída. Mapeadas 26 rotas/queries com identificacao dos pontos de vazamento e tabela detalhada inserida no PLANO.md
+- **2026-10-01 11:15** — [T-021] iniciada.
+- **2026-10-01 11:18** — [T-021] concluída. Criado server/tests/isolation.test.js (13 testes cobrindo X-Student-Id, vocabulario, reviews, dashboard, sentencas e lifecycle); 11 falhas confirmadas comprovando vazamentos atuais.
