@@ -12,8 +12,8 @@
 
 ## PRÓXIMO PASSO
 <!-- proximo:start -->
-- Atualizado em 2026-10-01 13:18
-- Iniciar **T-029** — Testes de isolamento passando e suíte antiga sem regressão; registrar
+- Atualizado em 2026-10-01 13:32
+- Iniciar **T-030** — Documentar a limitação: sem login isso separa os dados, mas não protege contra quem tem acesso ao app
 <!-- proximo:end -->
 
 ## Regras fixas (só mudam se o usuário pedir)
@@ -87,7 +87,7 @@
 - [x] T-026 `POST /api/students`: parar de vincular o novo estudante a todo o vocabulário existente (começa vazio) ✔ 2026-10-01 12:50
 - [x] T-027 Cliente: `api.js` envia `X-Student-Id` do estudante ativo; trocar de estudante limpa o estado das telas ✔ 2026-10-01 13:02
 - [x] T-028 Conferir Dashboard, Progresso, fila de revisão, Vocabulário e Banco de Frases: contagens e gráficos só do estudante ativo ✔ 2026-10-01 13:18
-- [ ] T-029 Testes de isolamento passando e suíte antiga sem regressão; registrar
+- [x] T-029 Testes de isolamento passando e suíte antiga sem regressão; registrar ✔ 2026-10-01 13:32
 - [ ] T-030 Documentar a limitação: sem login isso separa os dados, mas não protege contra quem tem acesso ao app
 
 ## Fase 3 — Modelo lógico completo (PostgreSQL 18)
