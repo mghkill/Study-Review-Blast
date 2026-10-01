@@ -8,10 +8,9 @@
 const { Pool } = require('pg');
 const path = require('path');
 
-// Carrega .env se ainda não estiver no process.env
-if (!process.env.DB_NAME) {
-  require('dotenv').config({ path: path.join(__dirname, '../../.env') });
-}
+// Carrega .env do server ou da raiz se necessário
+require('dotenv').config({ path: path.join(__dirname, '../../../.env') });
+require('dotenv').config({ path: path.join(__dirname, '../../.env'), override: true });
 
 let _pool = null;
 
