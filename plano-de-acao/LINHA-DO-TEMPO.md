@@ -12,3 +12,4 @@ Registro cronológico (mais antigo primeiro). Só se acrescenta; nunca se apaga.
 - **2026-09-30 23:57** — [T-003] concluída. npm run dev funciona nos dois: server (nodemon, porta 3001), client (vite, porta 5173). Health check OK: status=ok, db=connected.
 - **2026-09-30 23:58** — [T-004] iniciada.
 - **2026-10-01 00:01** — [T-004] concluída. Branch fix/isolamento-e-evolucao criada a partir de main (commit 554f9c6). Árvore limpa.
+- **2026-10-01 02:24** — [T-005] iniciada.
