@@ -12,8 +12,8 @@
 
 ## PRÓXIMO PASSO
 <!-- proximo:start -->
-- Atualizado em 2026-10-01 11:18
-- Iniciar **T-022** — Migration 002: `vocabulary_items.student_id` (dono), `UNIQUE(student_id, word, type)` no lugar de `UNIQUE(word, type)`, `UNIQUE(id, student_id)` para chaves compostas
+- Atualizado em 2026-10-01 12:27
+- Iniciar **T-026** — `POST /api/students`: parar de vincular o novo estudante a todo o vocabulário existente (começa vazio)
 <!-- proximo:end -->
 
 ## Regras fixas (só mudam se o usuário pedir)
@@ -80,10 +80,10 @@
 | `/api/dashboard` | GET | Parcial (Vazamento) | Contagem de frases inclui sentenças nulas/globais | Filtrar estritamente por `req.studentId` |
 
 - [x] T-021 Escrever ANTES os testes de isolamento (Jest + Supertest) e confirmar que falham hoje (ver references/modelo-logico-alvo.md, seção 3) ✔ 2026-10-01 11:18
-- [ ] T-022 Migration 002: `vocabulary_items.student_id` (dono), `UNIQUE(student_id, word, type)` no lugar de `UNIQUE(word, type)`, `UNIQUE(id, student_id)` para chaves compostas
-- [ ] T-023 Migrar dados existentes conforme D-02 (clonar palavra + significados + contextos + formas verbais por estudante, remapeando progresso, revisões e erros), em transação, com contagens antes/depois
-- [ ] T-024 Chaves estrangeiras compostas `(vocabulary_item_id, student_id)` nas tabelas de progresso e histórico; `student_id` em `contexts` (ver modelo-logico-alvo.md, seção 2)
-- [ ] T-025 API: middleware `requireStudent` em todas as rotas; queries filtram por `req.studentId`; ignorar `student_id` vindo do corpo/query; item de outro estudante responde 404
+- [x] T-022 Migration 002: `vocabulary_items.student_id` (dono), `UNIQUE(student_id, word, type)` no lugar de `UNIQUE(word, type)`, `UNIQUE(id, student_id)` para chaves compostas ✔ 2026-10-01 11:27
+- [x] T-023 Migrar dados existentes conforme D-02 (clonar palavra + significados + contextos + formas verbais por estudante, remapeando progresso, revisões e erros), em transação, com contagens antes/depois ✔ 2026-10-01 11:34
+- [x] T-024 Chaves estrangeiras compostas `(vocabulary_item_id, student_id)` nas tabelas de progresso e histórico; `student_id` em `contexts` (ver modelo-logico-alvo.md, seção 2) ✔ 2026-10-01 11:42
+- [x] T-025 API: middleware `requireStudent` em todas as rotas; queries filtram por `req.studentId`; ignorar `student_id` vindo do corpo/query; item de outro estudante responde 404 ✔ 2026-10-01 12:27
 - [ ] T-026 `POST /api/students`: parar de vincular o novo estudante a todo o vocabulário existente (começa vazio)
 - [ ] T-027 Cliente: `api.js` envia `X-Student-Id` do estudante ativo; trocar de estudante limpa o estado das telas
 - [ ] T-028 Conferir Dashboard, Progresso, fila de revisão, Vocabulário e Banco de Frases: contagens e gráficos só do estudante ativo

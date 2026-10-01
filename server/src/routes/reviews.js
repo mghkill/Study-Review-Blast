@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db/connection');
+const { requireStudent } = require('../middleware/requireStudent');
 const {
   calculatePriority,
   calculateNextInterval,
@@ -9,15 +10,16 @@ const {
   generateAuditText,
 } = require('../services/srs');
 
-// GET /api/reviews/queue?studentId=1&mode=mixed&limit=10&vocabId=3&level=B1&status=red
-// Retorna os itens para a próxima sessão de estudo com garantia de prática contínua
+router.use(requireStudent);
+
+// GET /api/reviews/queue?mode=mixed&limit=10&vocabId=3&level=B1&status=red
 router.get('/queue', async (req, res) => {
   try {
-    const { studentId, mode = 'mixed', limit = 13, vocabId, level, status } = req.query;
-    if (!studentId) return res.status(400).json({ error: 'studentId required' });
+    const sid = req.studentId;
+    const { mode = 'mixed', limit = 13, vocabId, level, status } = req.query;
 
     let query = `
-      SELECT 
+      SELECT
         sv.*,
         vi.id as vocabulary_item_id,
         vi.word, vi.type, vi.level, vi.primary_meaning, vi.difficulty, vi.is_irregular,
@@ -35,88 +37,69 @@ router.get('/queue', async (req, res) => {
         (
           SELECT json_agg(row_to_json(s.*))
           FROM sentences s
-          WHERE s.vocabulary_item_id = vi.id
+          WHERE s.vocabulary_item_id = vi.id AND s.student_id = $1
           LIMIT 3
         ) as sample_sentences
       FROM student_vocabulary sv
-      JOIN vocabulary_items vi ON vi.id = sv.vocabulary_item_id
+      JOIN vocabulary_items vi ON vi.id = sv.vocabulary_item_id AND vi.student_id = $1
       LEFT JOIN meanings m ON m.vocabulary_item_id = vi.id
-      LEFT JOIN contexts c ON c.vocabulary_item_id = vi.id
+      LEFT JOIN contexts c ON c.vocabulary_item_id = vi.id AND c.student_id = $1
       WHERE sv.student_id = $1
     `;
 
-    const params = [studentId];
+    const params = [sid];
     let pIdx = 2;
 
-    if (vocabId) {
-      query += ` AND vi.id = $${pIdx++}`;
-      params.push(vocabId);
-    }
-    if (level && level !== 'all') {
-      query += ` AND vi.level = $${pIdx++}`;
-      params.push(level);
-    }
-    if (status && status !== 'all') {
-      query += ` AND sv.status = $${pIdx++}`;
-      params.push(status);
-    }
+    if (vocabId) { query += ` AND vi.id = $${pIdx++}`;     params.push(vocabId); }
+    if (level && level !== 'all') { query += ` AND vi.level = $${pIdx++}`; params.push(level); }
+    if (status && status !== 'all') { query += ` AND sv.status = $${pIdx++}`; params.push(status); }
 
     query += ` GROUP BY sv.id, vi.id`;
 
     const result = await db.query(query, params);
     let items = result.rows;
 
-    // Aplicar filtros de modo se especificado
     if (mode === 'weak' || mode === 'weak_items') {
-      const filtered = items.filter(i => i.status === 'red' || (i.consecutive_incorrect || 0) >= 1);
-      if (filtered.length > 0) items = filtered;
+      const f = items.filter(i => i.status === 'red' || (i.consecutive_incorrect || 0) >= 1);
+      if (f.length > 0) items = f;
     } else if (mode === 'yellow' || mode === 'learning') {
-      const filtered = items.filter(i => i.status === 'yellow');
-      if (filtered.length > 0) items = filtered;
+      const f = items.filter(i => i.status === 'yellow');
+      if (f.length > 0) items = f;
     } else if (mode === 'green' || mode === 'mastered') {
-      const filtered = items.filter(i => i.status === 'green');
-      if (filtered.length > 0) items = filtered;
+      const f = items.filter(i => i.status === 'green');
+      if (f.length > 0) items = f;
     } else if (mode === 'new' || mode === 'new_acquisition') {
-      const filtered = items.filter(i => (i.total_reviews || 0) === 0);
-      if (filtered.length > 0) items = filtered;
+      const f = items.filter(i => (i.total_reviews || 0) === 0);
+      if (f.length > 0) items = f;
     } else if (mode === 'review') {
-      const filtered = items.filter(i => new Date(i.next_review_at) <= new Date());
-      // Se não houver itens vencidos exatamente hoje, pega os que mais precisam de revisão
-      if (filtered.length > 0) items = filtered;
+      const f = items.filter(i => new Date(i.next_review_at) <= new Date());
+      if (f.length > 0) items = f;
     }
 
-    // Selecionar itens com lógica de repetição intercalada e preenchimento contínuo
     const selected = selectStudyItems(items, {
-      newCount: 3,
-      reviewCount: 7,
-      reinforceCount: 3,
+      newCount: 3, reviewCount: 7, reinforceCount: 3,
       totalMax: parseInt(limit) || 13,
     });
 
-    // Adicionar textos de auditoria
     const withAudit = selected.map(item => ({
       ...item,
       audit_lines: generateAuditText(item.selection_reason || {}, item),
     }));
 
-    res.json({
-      items: withAudit,
-      total: withAudit.length,
-      mode,
-    });
+    res.json({ items: withAudit, total: withAudit.length, mode });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
 // POST /api/reviews
-// Registra o resultado de uma revisão e atualiza o SRS
 router.post('/', async (req, res) => {
   try {
+    const sid = req.studentId;
     const {
-      studentId, vocabularyItemId, sessionId,
-      result: reviewResult,  // correct | partial | incorrect
-      difficultyRating,       // easy | medium | hard
+      vocabularyItemId, sessionId,
+      result: reviewResult,
+      difficultyRating,
       meaningCorrect, grammarCorrect, sentenceCorrect,
       pronunciationCorrect, pronunciationRating,
       studentAnswer, teacherNotes,
@@ -126,49 +109,44 @@ router.post('/', async (req, res) => {
       sentenceId,
     } = req.body;
 
-    if (!studentId || !vocabularyItemId || !reviewResult) {
-      return res.status(400).json({ error: 'studentId, vocabularyItemId, result required' });
+    if (!vocabularyItemId || !reviewResult) {
+      return res.status(400).json({ error: 'vocabularyItemId e result são obrigatórios' });
+    }
+
+    // Verificar que a palavra pertence ao estudante
+    const ownCheck = await db.query(
+      'SELECT id FROM vocabulary_items WHERE id = $1 AND student_id = $2',
+      [vocabularyItemId, sid]
+    );
+    if (!ownCheck.rows[0]) {
+      return res.status(404).json({ error: 'Vocabulary item not found for this student' });
     }
 
     const client = await db.getClient();
     try {
       await client.query('BEGIN');
 
-      // Buscar estado atual do item
       const svRes = await client.query(`
         SELECT * FROM student_vocabulary
         WHERE student_id = $1 AND vocabulary_item_id = $2
-      `, [studentId, vocabularyItemId]);
+      `, [sid, vocabularyItemId]);
 
       let sv = svRes.rows[0];
-
-      // Se não existe, criar
       if (!sv) {
         const newSv = await client.query(`
           INSERT INTO student_vocabulary (student_id, vocabulary_item_id)
           VALUES ($1, $2) RETURNING *
-        `, [studentId, vocabularyItemId]);
+        `, [sid, vocabularyItemId]);
         sv = newSv.rows[0];
       }
 
-      // Calcular novo intervalo
       const { newInterval, newEaseFactor } = calculateNextInterval(sv, reviewResult, sv.ease_factor);
-
-      // Atualizar contadores
       const isCorrect = reviewResult === 'correct';
       const isIncorrect = reviewResult === 'incorrect';
-
-      const newConsecutiveCorrect = isCorrect ? (sv.consecutive_correct || 0) + 1 : 0;
+      const newConsecutiveCorrect  = isCorrect   ? (sv.consecutive_correct  || 0) + 1 : 0;
       const newConsecutiveIncorrect = isIncorrect ? (sv.consecutive_incorrect || 0) + 1 : 0;
+      const { newLevel, status } = updateMasteryLevel(sv.mastery_level, reviewResult, newConsecutiveCorrect);
 
-      // Atualizar mastery level
-      const { newLevel, status } = updateMasteryLevel(
-        sv.mastery_level,
-        reviewResult,
-        newConsecutiveCorrect
-      );
-
-      // Calcular nova prioridade
       const updatedSvData = {
         ...sv,
         total_reviews: (sv.total_reviews || 0) + 1,
@@ -180,21 +158,15 @@ router.post('/', async (req, res) => {
         next_review_at: new Date(Date.now() + newInterval * 24 * 60 * 60 * 1000),
         last_reviewed_at: new Date(),
       };
-
       const { priority: newPriority } = calculatePriority(updatedSvData);
 
-      // Sanitizar campos opcionais para respeitar constraints do banco
       const validDifficulty = ['easy', 'medium', 'hard'].includes(difficultyRating)
         ? difficultyRating
         : (reviewResult === 'correct' ? 'easy' : reviewResult === 'partial' ? 'medium' : 'hard');
-
       const validPronunciationRating = ['excellent', 'good', 'needs_improvement', 'very_weak'].includes(pronunciationRating)
-        ? pronunciationRating
-        : null;
-
+        ? pronunciationRating : null;
       const cleanTense = tensePracticed && tensePracticed.trim() ? tensePracticed.trim() : null;
 
-      // Atualizar student_vocabulary
       await client.query(`
         UPDATE student_vocabulary SET
           total_reviews = total_reviews + 1,
@@ -213,20 +185,13 @@ router.post('/', async (req, res) => {
           updated_at = NOW()
         WHERE student_id = $1 AND vocabulary_item_id = $2
       `, [
-        studentId, vocabularyItemId,
-        isCorrect ? 1 : 0,      // $3
-        isIncorrect ? 1 : 0,    // $4
-        newConsecutiveCorrect,   // $5
-        newConsecutiveIncorrect, // $6
-        isIncorrect ? 1 : -1,   // $7 recent_errors delta (integer)
-        newLevel,                // $8
-        status,                  // $9
-        newInterval,             // $10
-        newEaseFactor,           // $11
-        newPriority,             // $12
+        sid, vocabularyItemId,
+        isCorrect ? 1 : 0, isIncorrect ? 1 : 0,
+        newConsecutiveCorrect, newConsecutiveIncorrect,
+        isIncorrect ? 1 : -1,
+        newLevel, status, newInterval, newEaseFactor, newPriority,
       ]);
 
-      // Registrar revisão
       const reviewRes = await client.query(`
         INSERT INTO reviews (
           student_id, vocabulary_item_id, session_id, sentence_id,
@@ -241,36 +206,33 @@ router.post('/', async (req, res) => {
         ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21)
         RETURNING *
       `, [
-        studentId, vocabularyItemId, sessionId || null, sentenceId || null,
+        sid, vocabularyItemId, sessionId || null, sentenceId || null,
         reviewResult, validDifficulty,
         meaningCorrect ?? null, grammarCorrect ?? null, sentenceCorrect ?? null,
         pronunciationCorrect ?? null, validPronunciationRating,
         studentAnswer || null, teacherNotes || null,
         cleanTense, contextPracticed || null,
-        Array.isArray(errorCategories) ? errorCategories : [], selectionReason ? JSON.stringify(selectionReason) : null,
+        Array.isArray(errorCategories) ? errorCategories : [],
+        selectionReason ? JSON.stringify(selectionReason) : null,
         sv.review_priority, newPriority,
         sv.review_interval_days, newInterval,
       ]);
-
       const review = reviewRes.rows[0];
 
-      // Registrar erros específicos
       for (const category of errorCategories) {
         await client.query(`
           INSERT INTO errors (review_id, student_id, vocabulary_item_id, error_category, tense)
           VALUES ($1, $2, $3, $4, $5)
-        `, [review.id, studentId, vocabularyItemId, category, tensePracticed]);
+        `, [review.id, sid, vocabularyItemId, category, tensePracticed]);
       }
 
-      // Registrar prática de pronúncia se informada
       if (pronunciationCorrect !== undefined) {
         await client.query(`
           INSERT INTO pronunciation_practice (student_id, vocabulary_item_id, sentence_id, is_correct, rating, teacher_notes)
           VALUES ($1, $2, $3, $4, $5, $6)
-        `, [studentId, vocabularyItemId, sentenceId, pronunciationCorrect, pronunciationRating, teacherNotes]);
+        `, [sid, vocabularyItemId, sentenceId, pronunciationCorrect, pronunciationRating, teacherNotes]);
       }
 
-      // Atualizar prática por tempo verbal se informado
       if (tensePracticed) {
         await client.query(`
           INSERT INTO tense_practice (student_id, vocabulary_item_id, tense, total_reviews, total_correct, total_incorrect, mastery_level, status, last_practiced_at)
@@ -296,23 +258,22 @@ router.post('/', async (req, res) => {
             last_practiced_at = NOW(),
             updated_at = NOW()
         `, [
-          studentId, vocabularyItemId, tensePracticed,
+          sid, vocabularyItemId, tensePracticed,
           isCorrect ? 1 : 0, isIncorrect ? 1 : 0,
           isCorrect ? 4 : 1, isCorrect ? 'green' : 'red',
         ]);
       }
 
-      // Atualizar status das sentenças do verbo
       if (isCorrect) {
         await client.query(`
           UPDATE sentences SET status = 'mastered', updated_at = NOW()
-          WHERE vocabulary_item_id = $1 AND (student_id = $2 OR student_id IS NULL)
-        `, [vocabularyItemId, studentId]);
+          WHERE vocabulary_item_id = $1 AND student_id = $2
+        `, [vocabularyItemId, sid]);
       } else if (isIncorrect) {
         await client.query(`
           UPDATE sentences SET status = 'active', updated_at = NOW()
-          WHERE vocabulary_item_id = $1 AND (student_id = $2 OR student_id IS NULL)
-        `, [vocabularyItemId, studentId]);
+          WHERE vocabulary_item_id = $1 AND student_id = $2
+        `, [vocabularyItemId, sid]);
       }
 
       await client.query('COMMIT');
@@ -338,17 +299,18 @@ router.post('/', async (req, res) => {
   }
 });
 
-// GET /api/reviews/history?studentId=1&vocabId=5&limit=20
+// GET /api/reviews/history?vocabId=5&limit=20
 router.get('/history', async (req, res) => {
   try {
-    const { studentId, vocabId, limit = 20 } = req.query;
+    const sid = req.studentId;
+    const { vocabId, limit = 20 } = req.query;
     let query = `
       SELECT r.*, vi.word, vi.type
       FROM reviews r
-      JOIN vocabulary_items vi ON vi.id = r.vocabulary_item_id
+      JOIN vocabulary_items vi ON vi.id = r.vocabulary_item_id AND vi.student_id = $1
       WHERE r.student_id = $1
     `;
-    const params = [studentId];
+    const params = [sid];
     if (vocabId) { query += ` AND r.vocabulary_item_id = $2`; params.push(vocabId); }
     query += ` ORDER BY r.reviewed_at DESC LIMIT ${parseInt(limit)}`;
     const result = await db.query(query, params);
@@ -358,23 +320,23 @@ router.get('/history', async (req, res) => {
   }
 });
 
-// GET /api/reviews/errors?studentId=1
+// GET /api/reviews/errors
 router.get('/errors', async (req, res) => {
   try {
-    const { studentId } = req.query;
+    const sid = req.studentId;
     const result = await db.query(`
-      SELECT 
+      SELECT
         e.error_category,
         COUNT(*) as total_count,
         COUNT(DISTINCT e.vocabulary_item_id) as distinct_words,
         MAX(e.occurred_at) as last_occurred,
         json_agg(DISTINCT vi.word) FILTER (WHERE vi.word IS NOT NULL) as words
       FROM errors e
-      JOIN vocabulary_items vi ON vi.id = e.vocabulary_item_id
+      JOIN vocabulary_items vi ON vi.id = e.vocabulary_item_id AND vi.student_id = $1
       WHERE e.student_id = $1
       GROUP BY e.error_category
       ORDER BY total_count DESC
-    `, [studentId]);
+    `, [sid]);
     res.json(result.rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -382,15 +344,21 @@ router.get('/errors', async (req, res) => {
 });
 
 // POST /api/reviews/student-sentence
-// Registrar frase produzida pelo aluno
 router.post('/student-sentence', async (req, res) => {
   try {
+    const sid = req.studentId;
     const {
-      studentId, vocabularyItemId, sentenceText, context, tense,
+      vocabularyItemId, sentenceText, context, tense,
       teacherResult, teacherNotes, pronunciationRating,
       grammarRating, meaningRating, naturalnessRating, vocabularyRating,
       errorCategories = [],
     } = req.body;
+
+    // Verificar posse
+    const own = await db.query(
+      'SELECT id FROM vocabulary_items WHERE id = $1 AND student_id = $2', [vocabularyItemId, sid]
+    );
+    if (!own.rows[0]) return res.status(404).json({ error: 'Not found' });
 
     const result = await db.query(`
       INSERT INTO student_sentences (
@@ -401,7 +369,7 @@ router.post('/student-sentence', async (req, res) => {
       ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
       RETURNING *
     `, [
-      studentId, vocabularyItemId, sentenceText, context, tense,
+      sid, vocabularyItemId, sentenceText, context, tense,
       teacherResult || 'not_evaluated', teacherNotes, pronunciationRating,
       grammarRating, meaningRating, naturalnessRating, vocabularyRating,
       errorCategories,
