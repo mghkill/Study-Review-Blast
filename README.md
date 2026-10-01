@@ -1,94 +1,124 @@
-# 🚀 StudyReviewBlast
+# StudyReviewBlast
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-green.svg)](https://nodejs.org/)
 [![React](https://img.shields.io/badge/React-19-61dafb.svg)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/Vite-8-646cff.svg)](https://vitejs.dev/)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./CONTRIBUTING.md)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18-blue.svg)](https://www.postgresql.org/)
 
-> Plataforma open source de repetição espaçada e quizzes dinâmicos para retenção acelerada de vocabulário e estruturas em inglês.
+> A personal Spaced Repetition System (SRS) and dynamic Active Recall training platform for accelerated retention of English vocabulary, verbs, and grammatical structures.
 
-O **StudyReviewBlast** combina os fundamentos da repetição espaçada (*Spaced Repetition System - SRS*) e princípios de *Active Recall* para transformar o estudo de verbos e vocabulário em uma prática ativa de alta retenção. O sistema prioriza itens com maior taxa de erro e permite a criação de quizzes customizáveis organizados em blocos de 5 ou 10 questões. Através de pistas contextuais e frases com lacuna (*cloze tests*), o estudante exercita a recuperação da informação antes de consultar a resposta.
+**StudyReviewBlast** blends cognitive science principles (*Spaced Repetition System* and *Active Recall*) to turn language acquisition into an active, high-retention habit. The system prioritizes items with high error frequency, dynamically organizes customizable quiz blocks of 5 or 10 questions, and prompts learners with contextual clues and cloze-test sentence completions before revealing answers.
 
 ---
 
-## 📑 Sumário
+## 📑 Table of Contents
 
-- [Funcionalidades](#-funcionalidades)
-- [Tecnologias e Versões](#-tecnologias-e-versões)
-- [Pré-requisitos](#-pré-requisitos)
-- [Instalação](#-instalação)
-- [Configuração de Ambiente](#-configuração-de-ambiente)
-- [Execução](#-execução)
-- [Endpoints da API](#-endpoints-da-api)
-- [Estrutura do Projeto](#-estrutura-do-projeto)
-- [Testes e Qualidade](#-testes-e-qualidade)
-- [Isolamento e Segurança](#-modelo-de-isolamento-e-limitações-de-segurança)
+- [Core Features](#-core-features)
+- [System Architecture & Logical Data Model](#-system-architecture--logical-data-model)
+- [Technology Stack](#-technology-stack)
+- [Prerequisites](#-prerequisites)
+- [Installation](#-installation)
+- [Environment Configuration](#-environment-configuration)
+- [Running the Application](#-running-the-application)
+- [API Endpoints](#-api-endpoints)
+- [Project Structure](#-project-structure)
+- [Automated Tests & Quality](#-automated-tests--quality)
 - [Roadmap](#-roadmap)
-- [Contribuição](#-contribuição)
-- [Licença](#-licença)
+- [License](#-license)
 
 ---
 
-## ✨ Funcionalidades
+## ✨ Core Features
 
-- **🃏 Quizzes Personalizados (Modo Anki Customizado):** Criação e edição de perguntas personalizadas agrupadas em blocos ágeis de 5 ou 10 questões, com chips que inserem contextos e frases de exemplo diretamente no enunciado.
-- **🎯 Algoritmo de Afunilamento de Erros (SRS):** Cálculo dinâmico de prioridade com base em frequência de erro, recência e intervalo de revisão, empurrando itens fracos para o topo da fila.
-- **🧠 Active Recall com Pistas Contextuais:**
-  - *Contextos de Uso:* Exibe contextos naturais associados ao verbo (ex.: `avoid people`, `avoid conflict`) para ativar a memória antes da resposta.
-  - *Frase com Lacuna (Cloze Test):* Oculta o verbo alvo na frase (`[ _______ ]`) para estimular a recuperação da conjugação e sintaxe no tempo verbal correto.
-- **🔊 Síntese de Voz Nativa em Inglês (TTS):** Seleção inteligente de vozes nativas (`en-US` e `en-GB`) com rejeição de sotaques incompatíveis e fallback automático para stream de pronúncia em áudio HD.
-- **📚 Gestão Completa de Vocabulário (CRUD):** Cadastro, edição completa de campos (palavra, significado principal, nível CEFR, dificuldade, irregularidade e notas), edição inline de frases e múltiplos significados, e exclusão com limpeza segura em cascata.
-- **👥 Gestão de Estudantes:** Isolamento completo de dados por perfil. Cada estudante possui seu próprio vocabulário, histórico de revisões, sentenças e progresso independente, iniciando com catálogo limpo.
-- **📊 Painel Analítico de Desempenho:** Dashboard com métricas de retenção, taxa de acertos, distribuição de domínio por nível CEFR (A1 a C1) e categorização de erros gramaticais.
+- **🃏 Customizable Quizzes (Adaptive Anki-Style Mode):** Create and practice custom questions in agile blocks of 5 or 10 questions, incorporating contextual chips and sample sentences directly into the prompt.
+- **🎯 Dynamic SRS Error-Funneling Algorithm:** Priority weighting computed using recency, error rate, difficulty, and review intervals, ensuring struggling items remain front and center.
+- **🧠 Active Recall with Contextual Clues:**
+  - *Collocations & Usage Contexts:* Displays natural pairings (e.g., `avoid people`, `avoid conflict`) to prime memory prior to card flip.
+  - *Cloze Tests (Sentence Gap-Fills):* Blanks out target verbs (`[ _______ ]`) to challenge morphological conjugation and grammatical syntax.
+- **🔊 Native English Speech Synthesis (TTS):** Automatic selection of native voices (`en-US` and `en-GB`), filtering incompatible accents, and providing instant auditory feedback.
+- **📚 Complete Vocabulary Management (CRUD):** Add, update, and search vocabulary items (primary definition, CEFR level, difficulty, irregularity flags, inline sentence editing, and multiple meanings) with cascaded relational cleanup.
+- **👥 Multi-Profile Student Isolation:** Switch between multiple student profiles seamlessly. Each student maintains a completely isolated catalog of words, review queues, study sessions, and metrics.
+- **📊 Analytical Performance Dashboard:** Track retention rates, review accuracy, CEFR level mastery (A1 to C1), and error breakdowns by category (grammar, tense, meaning, etc.).
 
 ---
 
-## 🛠 Tecnologias e Versões
+## 🏗 System Architecture & Logical Data Model
 
-| Camada | Tecnologia | Versão Declarada | Papel no Projeto |
+The application adheres to the structural principles defined in the core engineering specifications ([`modelo-logico-alvo.md`](file:///c:/Users/opera/Desktop/Training%20Verbs/skills/references/modelo-logico-alvo.md)):
+
+### 1. The Database as the Ultimate Boundary (PostgreSQL 18)
+Business logic and client validations are backed by hard constraints at the schema level:
+- **Strict Data Ownership (Decision D-01):** Every vocabulary entry, review record, sentence, context, and study session is strictly associated with a `student_id`. There is no global shared catalog that can be inadvertently altered by another learner.
+- **Composite Foreign Keys:** Child tables (`student_vocabulary`, `tense_practice`, `reviews`, `errors`, `sentences`, `contexts`, `paragraphs`) enforce compound foreign keys:
+  ```sql
+  FOREIGN KEY (vocabulary_item_id, student_id)
+    REFERENCES vocabulary_items(id, student_id)
+    ON DELETE CASCADE
+  ```
+  This guarantees at the database engine level that Student A's review logs or sentences can never reference or corrupt Student B's vocabulary.
+- **Transactional Migrations:** Database versioning is governed by a pure Node.js migration runner (`server/src/db/migrations/`). Every migration script runs inside an atomic transaction (`BEGIN ... COMMIT`), tracking execution history in `schema_migrations`.
+
+### 2. API Student Isolation Middleware (`requireStudent`)
+- Every authenticated REST endpoint passes through the `requireStudent` middleware.
+- The request must supply a valid `X-Student-Id` HTTP header. Missing headers return `400 Bad Request`; nonexistent student IDs return `404 Not Found`.
+- All SQL queries filter exclusively by `req.studentId`. Attempts to specify `student_id` in the request body or query string are discarded.
+- Accessing or modifying resources belonging to another profile always resolves to `404 Not Found` (preventing existence probing).
+
+### 3. Client-Side Lifecycle & Interceptor
+- The frontend (`client/src/api.js`) utilizes an Axios request interceptor that transparently injects `X-Student-Id` from the active profile stored in `localStorage`.
+- When switching students, layout keys (`key={student.id}`) ensure React fully unmounts and remounts all screens, completely flushing memory caches, form states, and lingering view data.
+
+### 4. Security Scope & Boundary Limitations
+> [!NOTE]
+> **Local / Personal Architecture:** The system is engineered for local, offline study and does not require third-party cloud services or centralized password authentication (no JWT/OAuth). While this architecture guarantees strict data segregation and prevents accidental cross-profile contamination, **it does not protect against users with physical access to the local machine or browser Developer Tools**, where headers can be freely spoofed. For hosted multi-user cloud deployments, a formal authentication layer must be placed in front of `requireStudent`.
+
+---
+
+## 🛠 Technology Stack
+
+| Layer | Technology | Declared Version | Purpose |
 |---|---|---|---|
-| **Runtime & Linguagem** | Node.js | `>= 18.0.0` | Ambiente de execução JavaScript no servidor |
-| **Backend** | Express | `^4.18.2` | Framework HTTP para criação de rotas e middlewares da API REST |
-| **Banco de Dados** | PostgreSQL | `>= 14.0.0` | Banco relacional para armazenamento de estudantes, vocabulário e revisões |
-| **Driver de Banco** | pg (node-postgres) | `^8.11.3` | Pool de conexão e execução de queries com PostgreSQL |
-| **Frontend** | React | `^19.2.8` | Biblioteca de interface reativa para a aplicação web (SPA) |
-| **Frontend Bundler** | Vite | `^8.3.0` | Build tool e servidor de desenvolvimento frontend com HMR |
-| **Roteamento** | react-router-dom | `^7.18.4` | Gerenciamento de rotas e navegação client-side |
-| **Comunicação HTTP** | Axios | `^1.20.0` | Cliente HTTP para integração entre o cliente React e a API |
-| **Gráficos** | Chart.js / react-chartjs-2 | `^4.5.1` / `^5.3.1` | Renderização visual de KPIs de retenção e distribuição CEFR |
-| **Testes (Backend)** | Jest / Supertest | `^29.7.0` / `^7.3.0` | Testes de integração de endpoints e validação do algoritmo SRS |
-| **Testes (Frontend)** | Vitest / Testing Library | `^5.0.3` / `^16.3.3` | Testes unitários e de componentes de interface React |
-| **Qualidade & Linting** | Oxlint | `^1.81.0` | Análise estática ultrarrápida do código frontend |
+| **Runtime & Language** | Node.js | `>= 18.0.0` | Server-side JavaScript execution environment |
+| **Backend Framework** | Express | `^4.18.2` | RESTful API server, routing, and isolation middleware |
+| **Database** | PostgreSQL | `>= 14.0.0` (18 recommended) | Relational database with composite constraints and transactional DDL |
+| **Database Driver** | pg (node-postgres) | `^8.11.3` | Connection pooling and query execution |
+| **Frontend Library** | React | `^19.2.8` | Component-based reactive user interface |
+| **Frontend Tooling** | Vite | `^8.3.0` | Fast development server and production bundler |
+| **Routing** | react-router-dom | `^7.18.4` | Client-side routing and layout management |
+| **HTTP Client** | Axios | `^1.20.0` | API communication with `X-Student-Id` request interceptor |
+| **Data Visualization** | Chart.js / react-chartjs-2 | `^4.5.1` / `^5.3.1` | Retention KPIs, weekly progress, and CEFR domain charts |
+| **Backend Testing** | Jest / Supertest | `^29.7.0` / `^7.3.0` | Integration testing, isolation validation, and migration tests |
+| **Frontend Testing** | Vitest / Testing Library | `^5.0.3` / `^16.3.3` | Unit tests for client isolation and SRS algorithms |
+| **Code Quality** | Oxlint | `^1.81.0` | Static code analysis and linting |
 
 ---
 
-## 📋 Pré-requisitos
+## 📋 Prerequisites
 
-Antes de iniciar, certifique-se de possuir instalado em seu ambiente:
+Ensure your environment satisfies the following requirements:
 
-- **Node.js:** Versão 18 ou superior (`node --version`)
-- **npm:** Versão 9 ou superior (`npm --version`)
-- **PostgreSQL:** Versão 14 ou superior com serviço em execução na porta `5432`
+- **Node.js:** Version 18 or higher (`node --version`)
+- **npm:** Version 9 or higher (`npm --version`)
+- **PostgreSQL:** Version 14 or higher (PostgreSQL 18 recommended) running on port `5432`
 
 ---
 
-## 🚀 Instalação
+## 🚀 Installation
 
-1. **Clone o repositório:**
+1. **Clone the repository:**
    ```bash
    git clone https://github.com/mghkill/Study-Review-Blast.git
    cd Study-Review-Blast
    ```
 
-2. **Instale as dependências do Backend:**
+2. **Install Backend dependencies:**
    ```bash
    cd server
    npm install
    cd ..
    ```
 
-3. **Instale as dependências do Frontend:**
+3. **Install Frontend dependencies:**
    ```bash
    cd client
    npm install
@@ -97,170 +127,156 @@ Antes de iniciar, certifique-se de possuir instalado em seu ambiente:
 
 ---
 
-## ⚙️ Configuração de Ambiente
+## ⚙️ Environment Configuration
 
-Crie o arquivo `.env` na raiz do projeto (ou copie a partir do modelo [.env.example](./.env.example)):
+Create a `.env` file in the project root by copying the template [.env.example](./.env.example):
 
 ```bash
 cp .env.example .env
 ```
 
-### Variáveis Disponíveis
+### Environment Variables
 
-| Variável | Obrigatória | Descrição | Exemplo |
+| Variable | Required | Description | Example |
 |---|---|---|---|
-| `DB_HOST` | Sim | Endereço do servidor PostgreSQL | `localhost` |
-| `DB_PORT` | Sim | Porta de conexão do PostgreSQL | `5432` |
-| `DB_NAME` | Sim | Nome da base de dados da aplicação | `reviewdatabase` |
-| `DB_USER` | Sim | Usuário de autenticação do PostgreSQL | `postgres` |
-| `DB_PASSWORD` | Sim | Senha do usuário do banco de dados | `sua_senha_local` |
-| `PORT` | Não | Porta de execução do servidor Express | `3001` |
-| `NODE_ENV` | Não | Ambiente de execução (`development`/`production`) | `development` |
-
-> ⚠️ **Atenção:** Nunca versione arquivos `.env` contendo credenciais reais de produção.
+| `DB_HOST` | Yes | PostgreSQL host address | `localhost` |
+| `DB_PORT` | Yes | PostgreSQL connection port | `5432` |
+| `DB_NAME` | Yes | Database name | `reviewdatabase` |
+| `DB_USER` | Yes | PostgreSQL username | `postgres` |
+| `DB_PASSWORD` | Yes | PostgreSQL password | `your_local_password` |
+| `PORT` | No | Express server port (default: 3001) | `3001` |
+| `NODE_ENV` | No | Environment mode (`development`/`production`) | `development` |
 
 ---
 
-## 🏁 Execução
+## 🏁 Running the Application
 
-### 1. Migração e Carga Inicial do Banco (Seeds)
+### 1. Database Migrations and Seed Data
 
-Na pasta `server`, execute os scripts para estruturar as tabelas e carregar dados demonstrativos:
+Run the versioned migration runner and seed baseline data:
 
 ```bash
-# Executa a criação das 14 tabelas relacionais
+# Execute transactional migrations in server/src/db/migrations/
 npm run migrate --prefix server
 
-# Popula o banco com o estudante inicial (Filipe) e 6 verbos completos
+# Seed initial student profile and curated verb library
 npm run seed --prefix server
 ```
 
-### 2. Iniciar os Servidores de Desenvolvimento
+### 2. Start Development Servers
 
-Abra dois terminais independentes:
+Open two separate terminals:
 
-- **Terminal 1 — Backend (Porta 3001):**
+- **Terminal 1 — Backend API (Port 3001):**
   ```bash
   cd server
   npm run dev
   ```
-  *Health check:* [http://localhost:3001/api/health](http://localhost:3001/api/health)
+  *Health Check:* [http://localhost:3001/api/health](http://localhost:3001/api/health)
 
-- **Terminal 2 — Frontend (Porta 5173):**
+- **Terminal 2 — Frontend Application (Port 5173):**
   ```bash
   cd client
   npm run dev
   ```
-  *Acesso no navegador:* [http://localhost:5173/](http://localhost:5173/)
+  *Access Web UI:* [http://localhost:5173/](http://localhost:5173/)
 
 ---
 
-## 🌐 Endpoints da API
+## 🌐 API Endpoints
 
-| Método | Endpoint | Descrição |
+All endpoints except `/api/health` and `/api/students` require the `X-Student-Id` header.
+
+| Method | Endpoint | Description |
 |---|---|---|
-| `GET` | `/api/health` | Status de saúde da aplicação e conectividade com o banco |
-| `GET`, `POST` | `/api/students` | Listagem e criação de perfis de estudantes |
-| `DELETE` | `/api/students/:id` | Remoção de estudante e seu histórico |
-| `GET`, `POST` | `/api/vocabulary` | Consulta e cadastro de itens de vocabulário |
-| `GET`, `PATCH`, `DELETE` | `/api/vocabulary/:id` | Detalhes, atualização e exclusão em cascata de verbo |
-| `GET` | `/api/reviews/queue` | Fila inteligente do algoritmo SRS para sessões de estudo |
-| `POST` | `/api/reviews` | Registro de revisão e recálculo de intervalos espaçados |
-| `POST` | `/api/sessions` | Registro de sessões de estudo (misto, revisão ou custom quiz) |
-| `GET` | `/api/dashboard` | Indicadores de retenção, acertos e distribuição CEFR |
-| `GET`, `POST` | `/api/sentences` | Banco global de frases de exemplo |
+| `GET` | `/api/health` | Health status and database connectivity check |
+| `GET`, `POST` | `/api/students` | List student profiles and create new empty profile |
+| `GET`, `PATCH`, `DELETE` | `/api/students/:id` | Fetch, update, or delete student with cascaded cleanup |
+| `GET`, `POST` | `/api/vocabulary` | Query or create vocabulary items for active student |
+| `GET`, `PATCH`, `DELETE` | `/api/vocabulary/:id` | Fetch details, edit fields, or remove word |
+| `GET` | `/api/reviews/queue` | Retrieve intelligent SRS study queue for active student |
+| `POST` | `/api/reviews` | Submit card review (recalculates intervals and mastery) |
+| `GET` | `/api/reviews/errors` | Retrieve error analytics grouped by grammatical category |
+| `POST` | `/api/sessions` | Create new study session (`mixed`, `weak`, `review`, etc.) |
+| `PATCH` | `/api/sessions/:id` | Finalize session and record performance metrics |
+| `GET` | `/api/dashboard` | Aggregated KPIs, retention metrics, and CEFR breakdown |
+| `GET`, `POST` | `/api/sentences` | Query or add custom sentences linked to vocabulary |
+| `GET`, `POST` | `/api/sentences/paragraphs`| Manage multi-sentence contextual paragraphs |
 
 ---
 
-## 📁 Estrutura do Projeto
+## 📁 Project Structure
 
 ```text
 Study-Review-Blast/
-├── client/                      # Aplicação Frontend React (Vite)
+├── client/                      # React SPA Frontend (Vite)
 │   ├── src/
-│   │   ├── components/          # Componentes reutilizáveis (UI, TTSButton, Badges)
-│   │   ├── context/             # Contexto global de estado do estudante ativo
-│   │   ├── pages/               # Telas (Dashboard, StudySession, VocabDetail, etc.)
-│   │   ├── api.js               # Camada de comunicação HTTP com o backend
-│   │   └── index.css            # Design System (dark theme, glassmorphism)
+│   │   ├── components/          # Reusable UI components (Sidebar, TTSButton, Badges)
+│   │   ├── context/             # Global AppContext (active student sync & state reset)
+│   │   ├── pages/               # Views (Dashboard, StudySession, VocabDetail, etc.)
+│   │   ├── test/                # Vitest test suites (isolation & SRS)
+│   │   ├── api.js               # Axios client with X-Student-Id request interceptor
+│   │   └── index.css            # Dark theme, glassmorphic styling system
 │   ├── package.json
 │   └── vite.config.js
-├── server/                      # API Backend Node.js / Express
+├── server/                      # Node.js Express REST API
 │   ├── src/
-│   │   ├── db/                  # Conexão, migrations (schema.sql) e seeds
-│   │   ├── routes/              # Rotas da API (students, vocabulary, reviews, etc.)
-│   │   ├── services/            # Lógica de negócio do algoritmo SRS
-│   │   └── index.js             # Ponto de entrada do servidor Express
-│   ├── tests/                   # Testes automatizados Jest/Supertest
+│   │   ├── db/
+│   │   │   ├── migrations/      # Transactional migration scripts (001_..., 002_...)
+│   │   │   ├── migrate.js       # Transactional migration runner
+│   │   │   ├── connection.js    # PostgreSQL pg pool connection
+│   │   │   └── seed.js          # Database seeder
+│   │   ├── middleware/          # requireStudent isolation middleware
+│   │   ├── routes/              # Express routers (students, vocabulary, reviews, etc.)
+│   │   ├── services/            # SRS scheduling & algorithm services
+│   │   └── index.js             # Express application entrypoint
+│   ├── tests/                   # Jest / Supertest integration test suite
 │   └── package.json
-├── skills/                      # Metodologia pedagógica e planos diretores
-├── .env.example                 # Modelo limpo de variáveis de ambiente
-└── README.md                    # Documentação principal do projeto
+├── docs/                        # Architecture and security specifications
+├── plano-de-acao/               # Project management, task tracking, and master guide
+└── README.md                    # Main project documentation
 ```
 
 ---
 
-## 🧪 Testes e Qualidade
+## 🧪 Automated Tests & Quality
 
-Execute as suítes de validação automatizadas em seus respectivos diretórios:
+Run the automated validation suites:
 
-- **Testes do Frontend (Vitest):**
+- **Backend Integration & Isolation Tests (Jest):**
+  ```bash
+  cd server
+  npm test
+  ```
+  *Validates endpoint behavior, composite foreign key isolation, and migration rollbacks (46 passing tests).*
+
+- **Frontend Isolation & Unit Tests (Vitest):**
   ```bash
   cd client
   npm run test:run
   ```
 
-- **Verificação de Linter (Oxlint):**
+- **Static Code Analysis (Oxlint):**
   ```bash
   cd client
   npm run lint
   ```
 
-- **Testes do Backend (Jest):**
-  ```bash
-  cd server
-  npm test
-  ```
-
----
-
-## 🔒 Modelo de Isolamento e Limitações de Segurança
-
-O **StudyReviewBlast** opera de forma local e offline, sem exigir autenticação centralizada por usuário e senha.
-
-### Como funciona o isolamento:
-- **Posse no Banco de Dados:** Cada palavra de vocabulário, revisão, sentença e contexto pertence exclusivamente a um `student_id`.
-- **Validação na API:** O middleware `requireStudent` valida o cabeçalho `X-Student-Id` em todas as rotas; tentativas de acessar ou manipular recursos de outro estudante retornam `404 Not Found`.
-- **Integridade Referencial:** Chaves estrangeiras compostas `(vocabulary_item_id, student_id)` impedem cruzamento ou corrupção de dados entre contas no PostgreSQL.
-
-### ⚠️ Limitação de Segurança:
-> **Atenção:** Sem um sistema formal de autenticação por senha ou tokens criptografados (JWT/sessões protegidas), esta arquitetura **separa os dados com precisão e evita vazamento acidental durante o uso**, mas **não protege contra usuários com acesso à máquina local, à rede ou às ferramentas de desenvolvedor (DevTools)**, os quais podem alterar o cabeçalho `X-Student-Id`. Para mais detalhes, consulte [docs/seguranca-e-isolamento.md](./docs/seguranca-e-isolamento.md).
-
 ---
 
 ## 🗺️ Roadmap
 
-- [x] CRUD completo de vocabulário com edição inline e exclusão segura.
-- [x] Integração de pistas de Active Recall (Contextos de Uso e Cloze Tests).
-- [x] Quizzes dinâmicos personalizáveis em blocos de 5 e 10 questões.
-- [x] Prática contínua ilimitada desvinculada de bloqueios de data.
-- [ ] Exportação e importação de baralhos no formato CSV / JSON.
-- [ ] Módulo de prática auditiva dedicada com transcrição de fala.
+- [x] Complete vocabulary CRUD with inline editing and cascaded cleanup.
+- [x] Active Recall hints (collocations and contextual cloze tests).
+- [x] Dynamic custom quizzes organized in 5- and 10-question blocks.
+- [x] Multi-student relational isolation with composite foreign keys.
+- [ ] Dedicated `tenses` relational table with standardized grammatical tense codes.
+- [ ] Offline sentence generator using regular/irregular verbal morphology.
+- [ ] Export and import decks in CSV and JSON formats.
+- [ ] Dedicated listening practice module with speech transcription.
 
 ---
 
-## 🤝 Contribuição
+## 📄 License
 
-Contribuições são bem-vindas! Para propor melhorias ou correções:
-
-1. Faça um Fork do projeto.
-2. Crie uma branch para sua funcionalidade: `git checkout -b feature/minha-melhoria`.
-3. Faça commit de suas alterações: `git commit -m 'feat: adiciona nova funcionalidade'`.
-4. Envie para o repositório remoto: `git push origin feature/minha-melhoria`.
-5. Abra um Pull Request detalhado.
-
----
-
-## 📄 Licença
-
-Este projeto é distribuído sob os termos da licença **MIT**. Consulte o arquivo [LICENSE](./LICENSE) para obter mais informações.
+This project is licensed under the terms of the **MIT** License. See the [LICENSE](./LICENSE) file for details.

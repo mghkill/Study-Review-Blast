@@ -1,31 +1,52 @@
-# Como retomar (leia só isto e o status)
-1. Rode `py plano-de-acao/plan_tool.py status` (use `python` se `py` não existir).
-2. Leia somente o bloco "PRÓXIMO PASSO" de plano-de-acao/PLANO.md e as últimas 15 linhas de plano-de-acao/LINHA-DO-TEMPO.md.
-3. Rode `git status --short` e `git log -3 --oneline` para confirmar se o último passo foi concluído de verdade. Se a tarefa [~] ficou pela metade, refaça a verificação dela antes de continuar.
-4. Continue da tarefa [~] ou da primeira [ ]. Não replaneje o que está [x].
+# How to Resume Work (Quick Guide & Developer Rules)
 
-## Economia de tokens
-- Não releia arquivos inteiros: use busca e faixas de linhas. Não releia skills/SKILLENG.md; as regras estão aqui. Abra skills/references/ só na seção da tarefa atual.
-- Limite a saída dos comandos (ex.: `| Select-Object -First 30`) e rode testes em modo resumido.
-- Respostas curtas: até 4 linhas por tarefa. Não repita o plano.
+> **Important for Newcomers:** Read this file and check current status first.
 
-## Regras
-- Uma tarefa por vez: start → executar → verificar → done com nota. Nunca marcar como feita sem evidência. Atualize o plano antes e depois de cada passo; use `log` para decisões e erros.
-- Commit local por tarefa concluída (sem push), com mensagem feat:, fix:, docs: ou chore:. Sem git, apenas salve o plano.
-- Pare no fim de cada fase e espere eu escrever "continuar".
-- Antes de T-023 e de qualquer comando que apague dados: confirme que o backup de T-005 existe e peça meu OK.
-- Não troque PostgreSQL 18, Express, React nem Vite. Não altere `npm run dev` nem as portas 3001 e 5173. Sem dependência nova sem me perguntar.
-- Credenciais: leia do `.env` (DB_HOST, DB_PORT, DB_USER, DB_NAME, DB_PASSWORD). A senha vale só em PGPASSWORD na sessão; nunca imprima nem grave no plano, em logs, em commits ou na conversa.
-- Se o contexto estiver acabando: atualize o plano e registre com `log` onde parou e o próximo passo exato.
-- Responda em português.
-- Se for fazer algum git add, por favor execute adicionando com "git add ." na raiz do projeto, pois só consigo ver assim e ontem uma parte do projeto ficou de fora. Teve arquivo que ficou "escondido" e não entrou no commit.
+---
 
-## Quando pedir ajuda
- - Se for fazer algum git add, por favor execute adicionando com "git add ." na raiz do projeto, pois só consigo ver assim e ontem uma parte do projeto ficou de fora. Teve arquivo que ficou "escondido" e não entrou no commit.
+## 1. Quick Start Workflow
 
-## Hierarquia de Execução
-- Compreenda que o PROMPT_ORIGINAL.md é o nosso guia MESTRE. Você pode e deve usar o script de retomada (plano-de-acao/RETOMAR.md) para se situar e gastar menos tokens, mas não pode haver divergência de ideias. O que manda nas atitudes e na obrigação de atualizar o PLANO.md é o arquivo mestre. A única coisa que faltava nele era a informação de que o DB_PASSWORD está no .env
-- O PLANO.md é o nosso GPS. Você deve atualizá-lo sempre que fizer algo e verificar o que falta fazer. A única coisa que faltava nele era a informação de que o DB_PASSWORD está no .env
- 
-## Entender o Contexto e Onde Paramos
-- Se estiver recapitulando o trabalho ou começando e até com dúvidas (sempre pergunte se tiver dúvidas!), mas a base do trabalho é o prompt original (PROMPT_ORIGINAL.md e nunca considere prioridade o arquivo plano-de-acao/plan_tool.py, porque o plano de ação é apenas para te dizer de onde parou e como vai continuar o trabalho), leia o seu prompt mestre (PROMPT_ORIGINAL.md) para entender a essência do projeto e as regras fundamentais. Em seguida, verifique os registros do projeto (como PLANO.md e LINHA-DO-TEMPO.md) apenas para diagnosticar e entender exatamente em qual etapa o trabalho parou, mas não se prenda a procedimentos específicos ou códigos de versões antigas. O que importa é o que está no PROMPT_ORIGINAL.MD e no seu PLANO.md , não no arquivo de texto plano-de-acao/plan_tool.py.
+1. Run `py plano-de-acao/plan_tool.py status` (use `python` if `py` is not mapped).
+2. Read **only** the "NEXT STEP" block in `plano-de-acao/PLANO.md` and the last 15 lines of `plano-de-acao/LINHA-DO-TEMPO.md`.
+3. Run `git status --short` and `git log -3 --oneline` to verify if the previous task was genuinely finished and committed. If a task is marked `[~]` (in progress), verify and finish it before moving forward.
+4. Continue with the `[~]` task or the first `[ ]` pending task. **Never replan or redo what is already marked `[x]`.**
+
+---
+
+## 2. Execution Hierarchy (Where to Find the Source of Truth)
+
+- **`plano-de-acao/PROMPT_ORIGINAL.md` is our MASTER GUIDE:**
+  It defines the project foundation, architectural decisions (D-01 to D-04), requirements, and pedagogical goals. Whenever there is a design question, this master file takes precedence.
+- **`plano-de-acao/PLANO.md` is our GPS:**
+  It tracks real-time progress and lists pending tasks across all phases. It must be updated immediately before starting (`start`) and after completing (`done`) each task.
+- **`skills/references/modelo-logico-alvo.md` is our ARCHITECTURAL BLUEPRINT:**
+  It details data ownership, composite foreign keys, isolation middleware, PostgreSQL 18 standards, and the offline sentence generator.
+- **`plano-de-acao/plan_tool.py` is the operational tool:**
+  Use it to change task states (`start`, `done`, `log`, `status`). Do not rely on it as project documentation.
+
+---
+
+## 3. Strict Development Rules
+
+1. **One Task at a Time:**
+   - Follow the strict cycle: `start` → implement → verify with concrete tests → `done --nota "..."`.
+   - **Never mark a task as completed without verified evidence.**
+   - Log decisions and error investigations with `py plano-de-acao/plan_tool.py log "message"`.
+2. **Local Git Commits (English Only):**
+   - **From now on, all git commit messages must be written in English** using conventional prefixes: `feat:`, `fix:`, `docs:`, or `chore:`.
+   - Always run `git add .` from the **project root** before committing, ensuring no nested files or plan updates are left behind.
+   - Do not run `git push` unless explicitly asked.
+3. **Phase Checkpoint Rule:**
+   - **Stop at the end of each phase** and wait for the user to explicitly write `"continue"` (or `"continuar"`) before starting the next phase.
+4. **Immutable Stack:**
+   - Do **not** replace or alter PostgreSQL 18, Express, React, or Vite.
+   - Keep dev scripts (`npm run dev`) and default ports unchanged: **3001** (Backend API) and **5173** (Frontend Client).
+   - Do **not** install new dependencies without prior user approval.
+5. **Credentials and Security:**
+   - Read database credentials strictly from root `.env` (`DB_HOST`, `DB_PORT`, `DB_USER`, `DB_NAME`, `DB_PASSWORD`).
+   - `DB_PASSWORD` must be used strictly via environment variables or session scopes (`PGPASSWORD`).
+   - **Never echo, print, or commit passwords or secret tokens into logs, plans, transcripts, or commit messages.**
+6. **Token Economy:**
+   - Keep responses concise: maximum of 4 lines of summary per completed task.
+   - Do not re-read entire files unnecessarily; use targeted searches and line-range views.
+   - Keep command outputs limited and run test suites in summary/quiet mode when possible.
