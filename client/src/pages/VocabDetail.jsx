@@ -560,8 +560,16 @@ export default function VocabDetail() {
               }}>
                 <div style={{ fontWeight: 600, fontSize: '13px', color: 'var(--text-primary)' }}>{c.context_name}</div>
                 {c.description && <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '2px' }}>{c.description}</div>}
-                <div style={{ marginTop: '6px' }}>
+                {c.example_structure && (
+                  <div style={{ fontSize: '11px', color: 'var(--accent)', marginTop: '3px', fontStyle: 'italic' }}>
+                    Ex: {c.example_structure}
+                  </div>
+                )}
+                <div style={{ marginTop: '8px', display: 'flex', gap: '6px', alignItems: 'center', justifyContent: 'space-between' }}>
                   <span className={`badge badge-${c.context_status || 'gray'}`}>{STATUS_LABEL[c.context_status] || '⚪ Não praticado'}</span>
+                  <Link to={`/study?vocabId=${id}`} className="btn btn-sm btn-ghost" style={{ padding: '2px 8px', fontSize: '11px' }}>
+                    🎯 Praticar
+                  </Link>
                 </div>
               </div>
             ))}

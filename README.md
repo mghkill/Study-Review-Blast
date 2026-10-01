@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🚀 StudyReviewBlast
 
 **An open-source spaced repetition and dynamic quiz platform built to maximize study retention.**
@@ -48,3 +49,7 @@ The platform's main differentiator is the ability to construct **highly customiz
 1. **Active Retrieval over Passive Recognition:** True retention happens when the brain works to pull information out, not when it simply recognizes it on a page.
 2. **Spaced Distribution:** Reviews occur at strategically increasing intervals to solidify memories right at the threshold of forgetting.
 3. **Continuous Mastery:** Practice is not capped by arbitrary daily limits. You retain the freedom to practice continuously, hone specific items, or run custom quizzes whenever inspiration or need arises.
+=======
+# Study-Review-Blast
+An open-source spaced repetition and dynamic quiz platform built to maximize study retention.
+>>>>>>> 2860868057d1a3d629566e409d15bb1b0eeb9305

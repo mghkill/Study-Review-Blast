@@ -15,6 +15,13 @@ const ERROR_LABELS = {
   spelling: 'Ortografia', word_choice: 'Escolha de palavra',
 };
 
+function maskWord(text, word) {
+  if (!text || !word) return text;
+  const regex = new RegExp(`\\b${word}\\w*\\b`, 'gi');
+  const masked = text.replace(regex, '[ _______ ]');
+  return masked !== text ? masked : text.replace(/\b\w+\b/, '[ _______ ]');
+}
+
 // ────────────────────────────────────────────────────────────────
 // Modal de Quiz Personalizado
 // O professor digita a pergunta que vai aparecer no card.
@@ -102,6 +109,33 @@ function CustomQuizSetup({ vocabs, onStart, onCancel }) {
                 value={q.prompt}
                 onChange={e => updateQuestion(i, 'prompt', e.target.value)}
               />
+
+              {/* Sugestões de Contextos para a Pergunta */}
+              {(() => {
+                const target = vocabs.find(v => String(v.id) === String(q.vocabId));
+                if (!target) return null;
+                const ctxList = Array.isArray(target.contexts) ? target.contexts : [];
+                if (ctxList.length === 0) return null;
+                return (
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', alignItems: 'center', marginTop: '2px' }}>
+                    <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>💡 Inserir contexto:</span>
+                    {ctxList.map(c => {
+                      const name = c.name || c.context_name || c;
+                      return (
+                        <button
+                          key={name}
+                          type="button"
+                          onClick={() => updateQuestion(i, 'prompt', `Como aplicar "${target.word}" no contexto de "${name}"? Crie uma frase.`)}
+                          className="badge badge-blue"
+                          style={{ cursor: 'pointer', border: '1px solid rgba(56,139,253,0.4)', background: 'rgba(56,139,253,0.1)' }}
+                        >
+                          + {name}
+                        </button>
+                      );
+                    })}
+                  </div>
+                );
+              })()}
             </div>
           </div>
         ))}
@@ -136,6 +170,7 @@ function CustomQuizCard({ item, index, total, sessionResults, onSubmit, submitti
 
   const sample = Array.isArray(item.sample_sentences) ? item.sample_sentences : [];
   const meanings = Array.isArray(item.meanings) ? item.meanings : [];
+  const contexts = Array.isArray(item.contexts) ? item.contexts : [];
 
   const toggleError = (cat) =>
     setErrorCategories(prev => prev.includes(cat) ? prev.filter(c => c !== cat) : [...prev, cat]);
@@ -204,6 +239,16 @@ function CustomQuizCard({ item, index, total, sessionResults, onSubmit, submitti
                 <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '6px' }}>Significado</div>
                 <div style={{ fontSize: '18px', color: 'var(--text-primary)', fontWeight: 500 }}>
                   {meanings.map(m => m.text || m.meaning_text).join(' · ')}
+                </div>
+              </div>
+            )}
+            {contexts.length > 0 && (
+              <div style={{ textAlign: 'left' }}>
+                <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '6px' }}>Contextos de Uso</div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                  {contexts.map(c => (
+                    <span key={c.id || c.name || c} className="badge badge-gray">{c.name || c.context_name || c}</span>
+                  ))}
                 </div>
               </div>
             )}
@@ -358,6 +403,8 @@ export default function StudySession() {
   const [emptyNotice, setEmptyNotice] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(null);
+  const [showContextHint, setShowContextHint] = useState(false);
+  const [showClozeHint, setShowClozeHint] = useState(false);
 
   const currentItem = queue[currentIdx];
 
@@ -487,6 +534,8 @@ export default function StudySession() {
       setErrorCategories([]);
       setTeacherNotes('');
       setSelectedTense('');
+      setShowContextHint(false);
+      setShowClozeHint(false);
 
       if (currentIdx + 1 >= queue.length) {
         if (sessionId) await endSession(sessionId).catch(() => {});
@@ -773,51 +822,72 @@ export default function StudySession() {
         <TTSButton text={currentItem.word} label="Ouvir" />
 
         {!showAnswer && (
-          <p style={{ color: 'var(--text-muted)', fontSize: '14px' }}>
-            O que significa este {currentItem.type === 'verb' ? 'verbo' : 'item'}? Como usá-lo?
-          </p>
-        )}
+          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center' }}>
+            <p style={{ color: 'var(--text-muted)', fontSize: '14px', margin: 0 }}>
+              O que significa este {currentItem.type === 'verb' ? 'verbo' : 'item'}? Como usá-lo?
+            </p>
 
-        {showAnswer && (
-          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {meanings.length > 0 && (
-              <div style={{ background: 'var(--bg-hover)', borderRadius: '10px', padding: '14px', textAlign: 'left' }}>
-                <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '6px' }}>Significado</div>
-                <div style={{ fontSize: '18px', color: 'var(--text-primary)', fontWeight: 500 }}>
-                  {meanings.map(m => m.text || m.meaning_text).join(' · ')}
+            {/* Dica de Contextos de Uso */}
+            {showContextHint && contexts.length > 0 && (
+              <div style={{ background: 'rgba(56, 139, 253, 0.08)', border: '1px solid rgba(56, 139, 253, 0.3)', borderRadius: '10px', padding: '12px 16px', width: '100%', textAlign: 'left' }}>
+                <div style={{ fontSize: '11px', color: 'var(--accent)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '6px' }}>
+                  🌐 Contextos de Uso (Pistas de Relembrança):
                 </div>
-              </div>
-            )}
-
-            {contexts.length > 0 && (
-              <div style={{ textAlign: 'left' }}>
-                <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '6px' }}>Contextos</div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                   {contexts.map(c => (
-                    <span key={c.id || c.name} className="badge badge-gray">{c.name}</span>
+                    <span key={c.id || c.name} className="badge badge-blue">
+                      {c.name || c.context_name || c}
+                    </span>
                   ))}
                 </div>
               </div>
             )}
 
-            {sample.length > 0 && (
-              <div style={{ textAlign: 'left' }}>
-                <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '6px' }}>Exemplo</div>
-                {sample.slice(0, 2).map((s, i) => (
-                  <div key={i} className="flashcard-sentence" style={{ marginBottom: '6px' }}>
-                    {s.sentence_text}
-                    <TTSButton text={s.sentence_text} label="🔊" />
+            {/* Dica de Frase com Lacuna (Cloze Test) */}
+            {showClozeHint && sample.length > 0 && (
+              <div style={{ background: 'rgba(210, 153, 34, 0.08)', border: '1px solid rgba(210, 153, 34, 0.3)', borderRadius: '10px', padding: '12px 16px', width: '100%', textAlign: 'left' }}>
+                <div style={{ fontSize: '11px', color: 'var(--yellow-text)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '6px' }}>
+                  🧩 Complete a Frase de Contexto:
+                </div>
+                <div style={{ fontSize: '15px', color: 'var(--text-primary)', fontStyle: 'italic', lineHeight: '1.4' }}>
+                  "{maskWord(sample[0].sentence_text, currentItem.word)}"
+                </div>
+                {sample[0].tense && (
+                  <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px' }}>
+                    Tempo verbal: <strong>{sample[0].tense}</strong>
                   </div>
-                ))}
+                )}
               </div>
             )}
-          </div>
-        )}
 
-        {!showAnswer && (
-          <button onClick={() => setShowAnswer(true)} className="btn btn-secondary btn-lg">
-            👁️ Mostrar Resposta
-          </button>
+            {/* Botões de ativação de pistas contextuais */}
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'center', marginTop: '4px' }}>
+              {contexts.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setShowContextHint(h => !h)}
+                  className="btn btn-sm btn-ghost"
+                  style={{ border: '1px solid var(--border)', fontSize: '12px' }}
+                >
+                  {showContextHint ? '🙈 Ocultar Contextos' : '🌐 Relembrar por Contextos'}
+                </button>
+              )}
+              {sample.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setShowClozeHint(c => !c)}
+                  className="btn btn-sm btn-ghost"
+                  style={{ border: '1px solid var(--border)', fontSize: '12px' }}
+                >
+                  {showClozeHint ? '🙈 Ocultar Frase' : '🧩 Relembrar por Frase'}
+                </button>
+              )}
+            </div>
+
+            <button onClick={() => setShowAnswer(true)} className="btn btn-secondary btn-lg" style={{ marginTop: '8px' }}>
+              👁️ Mostrar Resposta
+            </button>
+          </div>
         )}
       </div>
 
