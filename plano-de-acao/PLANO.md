@@ -12,8 +12,8 @@
 
 ## PRÓXIMO PASSO
 <!-- proximo:start -->
-- Atualizado em 2026-10-01 03:52
-- Iniciar **T-020** — Mapear todas as rotas e queries; listar as que não filtram por estudante (tabela no plano)
+- Atualizado em 2026-10-01 04:26
+- Iniciar **T-021** — Escrever ANTES os testes de isolamento (Jest + Supertest) e confirmar que falham hoje (ver references/modelo-logico-alvo.md, seção 3)
 <!-- proximo:end -->
 
 ## Regras fixas (só mudam se o usuário pedir)
@@ -47,7 +47,38 @@
 - [x] T-013 Testar em banco novo vazio e em cópia do banco existente (restaurada do backup); registrar resultado ✔ 2026-10-01 03:52
 
 ## Fase 2 — Isolamento por estudante (prioridade máxima)
-- [ ] T-020 Mapear todas as rotas e queries; listar as que não filtram por estudante (tabela no plano)
+- [x] T-020 Mapear todas as rotas e queries; listar as que não filtram por estudante (tabela no plano) ✔ 2026-10-01 04:26
+
+### Mapeamento de Isolamento de Rotas e Queries (T-020)
+| Rota / Endpoint | Método | Filtra por Estudante? | Problema / Vulnerabilidade Atual | Ação na Fase 2 |
+|---|---|---|---|---|
+| `/api/students` | GET | Não (Público) | Lista todos para seleção na interface | Manter público para seleção local |
+| `/api/students/:id` | GET | Não | Busca qualquer estudante por ID | Uso administrativo local |
+| `/api/students` | POST | Não (Vazamento) | Vincula TODO vocabulário existente ao novo estudante | T-026: começar com vocabulário vazio |
+| `/api/students/:id` | PATCH/DELETE | Não | Permite alterar/remover qualquer estudante | Restringir ao estudante autenticado |
+| `/api/vocabulary` | GET | Não (Vazamento) | Traz palavras de todos os estudantes (`SELECT v.*` global) | Filtrar por `v.student_id = req.studentId` |
+| `/api/vocabulary/:id` | GET | Não (Vazamento) | Retorna palavra de qualquer estudante | 404 se não pertencer ao estudante |
+| `/api/vocabulary` | POST | Não (Vazamento) | Sem coluna `student_id`; vincula a todos os estudantes | T-022: Gravar dono `req.studentId`, vincular só a ele |
+| `/api/vocabulary/:id` | PATCH/DELETE | Não (Vazamento) | Modifica/remove palavras de outros estudantes | Restringir por `id` e `student_id` (404) |
+| `/api/vocabulary/:id/sentences` | POST | Não (Vazamento) | Cria frases sem vincular estudante | Gravar `student_id = req.studentId` |
+| `/api/vocabulary/:id/sentences/:sentenceId` | PATCH/DELETE | Não (Vazamento) | Altera/remove frase sem checar estudante | Validar dono da frase e da palavra |
+| `/api/vocabulary/:id/contexts` | POST | Não (Vazamento) | Cria contexto sem vincular estudante | Gravar `student_id = req.studentId` (T-024) |
+| `/api/vocabulary/:id/meanings/:meaningId` | PATCH | Não (Vazamento) | Altera significado de palavra alheia | Validar dono da palavra |
+| `/api/sentences` | GET | Não (Vazamento) | `WHERE s.student_id = $1 OR s.student_id IS NULL` | Filtrar estritamente `s.student_id = req.studentId` |
+| `/api/sentences` | POST | Parcial | Lê `studentId` do body sem validação | Forçar `student_id = req.studentId` |
+| `/api/sentences/:id` | PATCH/DELETE | Não (Vazamento) | Altera/apaga qualquer sentença (`WHERE id = $1`) | Restringir por `student_id = req.studentId` (404) |
+| `/api/sentences/paragraphs` | GET | Não (Vazamento) | `WHERE p.student_id = $1 OR p.student_id IS NULL` | Filtrar estritamente `p.student_id = req.studentId` |
+| `/api/sentences/paragraphs` | POST | Parcial | Lê `studentId` do body sem validação | Forçar `student_id = req.studentId` |
+| `/api/reviews/queue` | GET | Parcial (Vazamento) | Amostras de frases são globais sem filtro de aluno | Filtrar amostras por `student_id = req.studentId` |
+| `/api/reviews` | POST | Parcial | Lê `studentId` do body sem validação | Forçar `req.studentId` |
+| `/api/reviews/history` | GET | Parcial | Lê `studentId` da query string | Forçar `req.studentId` |
+| `/api/reviews/errors` | GET | Parcial | Lê `studentId` da query string | Forçar `req.studentId` |
+| `/api/reviews/student-sentence` | POST | Parcial | Lê `studentId` do body | Forçar `req.studentId` |
+| `/api/sessions` | POST | Parcial | Lê `studentId` do body sem validação | Forçar `req.studentId` |
+| `/api/sessions/:id` | PATCH | Não (Vazamento) | Atualiza qualquer sessão (`WHERE id = $1`) | Restringir por `student_id = req.studentId` |
+| `/api/sessions` | GET | Parcial | Lê `studentId` da query string | Forçar `req.studentId` |
+| `/api/dashboard` | GET | Parcial (Vazamento) | Contagem de frases inclui sentenças nulas/globais | Filtrar estritamente por `req.studentId` |
+
 - [ ] T-021 Escrever ANTES os testes de isolamento (Jest + Supertest) e confirmar que falham hoje (ver references/modelo-logico-alvo.md, seção 3)
 - [ ] T-022 Migration 002: `vocabulary_items.student_id` (dono), `UNIQUE(student_id, word, type)` no lugar de `UNIQUE(word, type)`, `UNIQUE(id, student_id)` para chaves compostas
 - [ ] T-023 Migrar dados existentes conforme D-02 (clonar palavra + significados + contextos + formas verbais por estudante, remapeando progresso, revisões e erros), em transação, com contagens antes/depois
