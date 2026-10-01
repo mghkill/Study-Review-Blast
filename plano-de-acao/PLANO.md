@@ -12,8 +12,8 @@
 
 ## PRÓXIMO PASSO
 <!-- proximo:start -->
-- Atualizado em 2026-10-01 13:32
-- Iniciar **T-030** — Documentar a limitação: sem login isso separa os dados, mas não protege contra quem tem acesso ao app
+- Atualizado em 2026-10-01 13:36
+- Iniciar **T-040** — Tabela `tenses` (código, idioma, rótulo, ordem) com os tempos usados na interface; trocar texto livre por chave estrangeira preservando valores existentes
 <!-- proximo:end -->
 
 ## Regras fixas (só mudam se o usuário pedir)
@@ -88,7 +88,7 @@
 - [x] T-027 Cliente: `api.js` envia `X-Student-Id` do estudante ativo; trocar de estudante limpa o estado das telas ✔ 2026-10-01 13:02
 - [x] T-028 Conferir Dashboard, Progresso, fila de revisão, Vocabulário e Banco de Frases: contagens e gráficos só do estudante ativo ✔ 2026-10-01 13:18
 - [x] T-029 Testes de isolamento passando e suíte antiga sem regressão; registrar ✔ 2026-10-01 13:32
-- [ ] T-030 Documentar a limitação: sem login isso separa os dados, mas não protege contra quem tem acesso ao app
+- [x] T-030 Documentar a limitação: sem login isso separa os dados, mas não protege contra quem tem acesso ao app ✔ 2026-10-01 13:36
 
 ## Fase 3 — Modelo lógico completo (PostgreSQL 18)
 - [ ] T-040 Tabela `tenses` (código, idioma, rótulo, ordem) com os tempos usados na interface; trocar texto livre por chave estrangeira preservando valores existentes
