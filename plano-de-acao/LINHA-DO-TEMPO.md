@@ -37,3 +37,5 @@ Registro cronológico (mais antigo primeiro). Só se acrescenta; nunca se apaga.
 - **2026-10-01 11:27** — [T-022] concluída. Migration 002_vocabulary_owner.sql aplicada: student_id nullable adicionado a vocabulary_items, UNIQUE(word,type) removida, novos indices parciais uq_vocabulary_items_student_word_type, uq_vocabulary_items_id_student e idx_vocabulary_items_student_id criados.
 - **2026-10-01 11:30** — [T-023] iniciada.
 - **2026-10-01 11:34** — [T-023] concluída. Migration 003 aplicada: 7 palavras globais clonadas para cada um dos 2 estudantes (14 itens com dono). student_vocabulary=14, reviews=18, errors=3, sentences=25 preservados. vocabulary_items.student_id NOT NULL ativado. Zero itens sem dono.
+- **2026-10-01 11:36** — [T-024] iniciada.
+- **2026-10-01 11:42** — [T-024] concluída. Migration 004 aplicada: FKs compostas (vocab_id,student_id)->vocabulary_items(id,student_id) em student_vocabulary, reviews, errors, tense_practice, sentences. contexts ganhou student_id NOT NULL e FK composta. reviews.context_practiced->contexts(id,student_id). sentences.student_id e vocabulary_item_id agora NOT NULL.
