@@ -18,3 +18,14 @@
 - Credenciais: leia do `.env` (DB_HOST, DB_PORT, DB_USER, DB_NAME, DB_PASSWORD). A senha vale só em PGPASSWORD na sessão; nunca imprima nem grave no plano, em logs, em commits ou na conversa.
 - Se o contexto estiver acabando: atualize o plano e registre com `log` onde parou e o próximo passo exato.
 - Responda em português.
+- Se for fazer algum git add, por favor execute adicionando com "git add ." na raiz do projeto, pois só consigo ver assim e ontem uma parte do projeto ficou de fora. Teve arquivo que ficou "escondido" e não entrou no commit.
+
+## Quando pedir ajuda
+ - Se for fazer algum git add, por favor execute adicionando com "git add ." na raiz do projeto, pois só consigo ver assim e ontem uma parte do projeto ficou de fora. Teve arquivo que ficou "escondido" e não entrou no commit.
+
+## Hierarquia de Execução
+- Compreenda que o PROMPT_ORIGINAL.md é o nosso guia MESTRE. Você pode e deve usar o script de retomada (plano-de-acao/RETOMAR.md) para se situar e gastar menos tokens, mas não pode haver divergência de ideias. O que manda nas atitudes e na obrigação de atualizar o PLANO.md é o arquivo mestre. A única coisa que faltava nele era a informação de que o DB_PASSWORD está no .env
+- O PLANO.md é o nosso GPS. Você deve atualizá-lo sempre que fizer algo e verificar o que falta fazer. A única coisa que faltava nele era a informação de que o DB_PASSWORD está no .env
+ 
+## Entender o Contexto e Onde Paramos
+- Se estiver recapitulando o trabalho ou começando e até com dúvidas (sempre pergunte se tiver dúvidas!), mas a base do trabalho é o prompt original (PROMPT_ORIGINAL.md e nunca considere prioridade o arquivo plano-de-acao/plan_tool.py, porque o plano de ação é apenas para te dizer de onde parou e como vai continuar o trabalho), leia o seu prompt mestre (PROMPT_ORIGINAL.md) para entender a essência do projeto e as regras fundamentais. Em seguida, verifique os registros do projeto (como PLANO.md e LINHA-DO-TEMPO.md) apenas para diagnosticar e entender exatamente em qual etapa o trabalho parou, mas não se prenda a procedimentos específicos ou códigos de versões antigas. O que importa é o que está no PROMPT_ORIGINAL.MD e no seu PLANO.md , não no arquivo de texto plano-de-acao/plan_tool.py.
