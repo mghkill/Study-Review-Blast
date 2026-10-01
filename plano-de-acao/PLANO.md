@@ -12,8 +12,8 @@
 
 ## PRÓXIMO PASSO
 <!-- proximo:start -->
-- Atualizado em 2026-09-30 23:58
-- Continuar **T-004** (em andamento) — Criar branch de trabalho no git e confirmar árvore limpa ⏳ 2026-09-30 23:58
+- Atualizado em 2026-10-01 00:01
+- Iniciar **T-005** — Backup do banco com `pg_dump -Fc` fora do repositório; anotar só o caminho do arquivo (sem senha)
 <!-- proximo:end -->
 
 ## Regras fixas (só mudam se o usuário pedir)
@@ -35,7 +35,7 @@
 - [x] T-001 Ler package.json (raiz, server, client), .env.example, schema.sql, rotas e serviços; confirmar versões reais e anotar divergências com o README ✔ 2026-09-30 23:53
 - [x] T-002 Descobrir como o estudante ativo chega à API hoje (contexto React → api.js → rotas) e registrar na linha do tempo ✔ 2026-09-30 23:54
 - [x] T-003 Confirmar que `npm run dev` funciona em server/ e client/ (portas 3001 e 5173) antes de qualquer mudança ✔ 2026-09-30 23:57
-- [~] T-004 Criar branch de trabalho no git e confirmar árvore limpa ⏳ 2026-09-30 23:58
+- [x] T-004 Criar branch de trabalho no git e confirmar árvore limpa ✔ 2026-10-01 00:01
 - [ ] T-005 Backup do banco com `pg_dump -Fc` fora do repositório; anotar só o caminho do arquivo (sem senha)
 - [ ] T-006 Rodar a suíte atual (server `npm test`; client `npm run test:run` e `npm run lint`) e registrar o baseline
 - [ ] T-007 Perguntar ao usuário, em uma única mensagem, D-02 (dados atuais: preservar ou descartar) e D-03 (nome do autor e confirmação da licença MIT)
