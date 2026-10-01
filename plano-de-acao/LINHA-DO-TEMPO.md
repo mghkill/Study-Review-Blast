@@ -13,3 +13,5 @@ Registro cronológico (mais antigo primeiro). Só se acrescenta; nunca se apaga.
 - **2026-09-30 23:58** — [T-004] iniciada.
 - **2026-10-01 00:01** — [T-004] concluída. Branch fix/isolamento-e-evolucao criada a partir de main (commit 554f9c6). Árvore limpa.
 - **2026-10-01 02:24** — [T-005] iniciada.
+- **2026-10-01 02:31** — [T-005] concluída. Backup pg_dump -Fc gerado em C:\Users\opera\studyreviewblast-backups\studyreviewblast_backup_20261001_023059.dump (66526 bytes)
+- **2026-10-01 02:32** — T-005: Backup do banco com pg_dump -Fc gerado com sucesso em C:\Users\opera\studyreviewblast-backups\studyreviewblast_backup_20261001_023059.dump (66526 bytes). Sem expor credenciais.
