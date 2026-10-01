@@ -23,3 +23,5 @@ Registro cronológico (mais antigo primeiro). Só se acrescenta; nunca se apaga.
 - **2026-10-01 03:01** — T-006 ajuste: server/tests/api.test.js corrigido para ler DB_PASSWORD do .env. Resultado real do baseline: 29 passaram e 1 falhou (status red vs yellow em POST /api/reviews).
 - **2026-10-01 03:28** — [T-010] iniciada.
 - **2026-10-01 03:31** — [T-010] concluída. Criada pasta server/src/db/migrations/ e tabela schema_migrations(version, name, applied_at) no PostgreSQL
+- **2026-10-01 03:34** — [T-011] iniciada.
+- **2026-10-01 03:35** — [T-011] concluída. Criado server/src/db/migrator.js com transação individual, ordenação natural e idempotência; 3 testes passando em migrator.test.js
