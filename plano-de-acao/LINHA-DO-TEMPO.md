@@ -33,3 +33,5 @@ Registro cronológico (mais antigo primeiro). Só se acrescenta; nunca se apaga.
 - **2026-10-01 04:26** — [T-020] concluída. Mapeadas 26 rotas/queries com identificacao dos pontos de vazamento e tabela detalhada inserida no PLANO.md
 - **2026-10-01 11:15** — [T-021] iniciada.
 - **2026-10-01 11:18** — [T-021] concluída. Criado server/tests/isolation.test.js (13 testes cobrindo X-Student-Id, vocabulario, reviews, dashboard, sentencas e lifecycle); 11 falhas confirmadas comprovando vazamentos atuais.
+- **2026-10-01 11:24** — [T-022] iniciada.
+- **2026-10-01 11:27** — [T-022] concluída. Migration 002_vocabulary_owner.sql aplicada: student_id nullable adicionado a vocabulary_items, UNIQUE(word,type) removida, novos indices parciais uq_vocabulary_items_student_word_type, uq_vocabulary_items_id_student e idx_vocabulary_items_student_id criados.
