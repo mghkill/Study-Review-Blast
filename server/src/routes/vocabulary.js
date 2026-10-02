@@ -196,14 +196,21 @@ router.post('/', async (req, res) => {
 
       if (type === 'verb') {
         await client.query(`
-          INSERT INTO tense_practice (student_id, vocabulary_item_id, tense)
-          SELECT $1, $2, t.tense
+          INSERT INTO tense_practice (student_id, vocabulary_item_id, tense, tense_code)
+          SELECT $1, $2, t.label, t.code
           FROM (VALUES
-            ('Present Simple'), ('Past Simple'), ('Present Perfect'), ('Present Continuous'),
-            ('Past Continuous'), ('Future'), ('Future with will'), ('Going to'),
-            ('Modal constructions'), ('Conditionals')
-          ) as t(tense)
-          ON CONFLICT (student_id, vocabulary_item_id, tense) DO NOTHING
+            ('Present Simple',             'present_simple'),
+            ('Past Simple',                'past_simple'),
+            ('Present Perfect',            'present_perfect'),
+            ('Present Continuous',         'present_continuous'),
+            ('Past Continuous',            'past_continuous'),
+            ('Future',                     'future'),
+            ('Future with will',           'future_will'),
+            ('Going to',                   'going_to'),
+            ('Modal constructions',        'modal_constructions'),
+            ('Conditionals',               'conditionals')
+          ) as t(label, code)
+          ON CONFLICT (student_id, vocabulary_item_id, tense_code) DO NOTHING
         `, [sid, vocab.id]);
       }
 

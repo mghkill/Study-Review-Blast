@@ -52,3 +52,4 @@ Registro cronológico (mais antigo primeiro). Só se acrescenta; nunca se apaga.
 - **2026-10-01 13:32** — [T-029] concluída. 46/46 testes backend passando (api.test.js, isolation.test.js, migrator.test.js) e 6 testes cliente sem regressao
 - **2026-10-01 13:34** — [T-030] iniciada.
 - **2026-10-01 13:36** — [T-030] concluída. Documentada a limitacao de seguranca (sem login separa os dados mas nao protege contra quem tem acesso ao app) no README.md e em docs/seguranca-e-isolamento.md
+- **2026-10-02 17:59** — [T-040] iniciada.

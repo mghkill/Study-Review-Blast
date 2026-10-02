@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { getReviewQueue, submitReview, startSession, endSession, submitStudentSentence, getVocabulary } from '../api';
 import { Loading, TTSButton, StatusBadge } from '../components/UI';
+import { useTenses } from '../hooks/useTenses';
 
 const ERROR_CATEGORIES = [
   'meaning','grammar','tense','conjugation','preposition',
@@ -167,6 +168,7 @@ function CustomQuizCard({ item, index, total, sessionResults, onSubmit, submitti
   const [errorCategories, setErrorCategories] = useState([]);
   const [teacherNotes, setTeacherNotes] = useState('');
   const [selectedTense, setSelectedTense] = useState('');
+  const { tenses } = useTenses();
 
   const sample = Array.isArray(item.sample_sentences) ? item.sample_sentences : [];
   const meanings = Array.isArray(item.meanings) ? item.meanings : [];
@@ -289,10 +291,8 @@ function CustomQuizCard({ item, index, total, sessionResults, onSubmit, submitti
             <div className="card-title" style={{ marginBottom: '10px' }}>⏰ Tempo verbal praticado</div>
             <select className="form-select" value={selectedTense} onChange={e => setSelectedTense(e.target.value)}>
               <option value="">Selecionar...</option>
-              {['Present Simple','Present Continuous','Past Simple','Past Continuous',
-                'Present Perfect','Past Perfect','Future','Future with will','Going to',
-                'Modal constructions','Conditionals'].map(t => (
-                <option key={t} value={t}>{t}</option>
+              {tenses.map(t => (
+                <option key={t.code} value={t.label}>{t.label}</option>
               ))}
             </select>
           </div>
@@ -379,6 +379,7 @@ function CustomQuizCard({ item, index, total, sessionResults, onSubmit, submitti
 export default function StudySession() {
   const { student } = useApp();
   const navigate = useNavigate();
+  const { tenses } = useTenses();
   const [searchParams] = useSearchParams();
   const [mode, setMode] = useState('mixed');
   const [queue, setQueue] = useState([]);
@@ -912,10 +913,8 @@ export default function StudySession() {
             <div className="card-title" style={{ marginBottom: '10px' }}>⏰ Tempo verbal praticado</div>
             <select className="form-select" value={selectedTense} onChange={e => setSelectedTense(e.target.value)}>
               <option value="">Selecionar...</option>
-              {['Present Simple','Present Continuous','Past Simple','Past Continuous',
-                'Present Perfect','Past Perfect','Future','Future with will','Going to',
-                'Modal constructions','Conditionals'].map(t => (
-                <option key={t} value={t}>{t}</option>
+              {tenses.map(t => (
+                <option key={t.code} value={t.label}>{t.label}</option>
               ))}
             </select>
           </div>

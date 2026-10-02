@@ -3,16 +3,12 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { getVocabItem, updateVocabItem, deleteVocabItem, addSentence, updateSentence, deleteSentence, addContext, updateMeaning } from '../api';
 import { Loading, StatusBadge, LevelBadge, TTSButton } from '../components/UI';
+import { useTenses } from '../hooks/useTenses';
 
 const STATUS_LABEL = { green: '🟢 Excelente', yellow: '🟡 Intermediário', red: '🔴 Fraco' };
-const TENSES = [
-  'Present Simple','Present Continuous','Past Simple','Past Continuous',
-  'Present Perfect','Past Perfect','Future','Future with will',
-  'Going to','Modal constructions','Conditionals',
-];
 
 // ── Componente de edição inline de frase ──────────────────────
-function SentenceRow({ sentence, vocabId, onSaved, onDeleted }) {
+function SentenceRow({ sentence, vocabId, onSaved, onDeleted, tenses = [] }) {
   const [editing, setEditing] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [form, setForm] = useState({
@@ -70,7 +66,7 @@ function SentenceRow({ sentence, vocabId, onSaved, onDeleted }) {
           onChange={e => setForm(p => ({ ...p, tense: e.target.value }))}
         >
           <option value="">Tempo verbal...</option>
-          {TENSES.map(t => <option key={t} value={t}>{t}</option>)}
+          {tenses.map(t => <option key={t.code} value={t.label}>{t.label}</option>)}
         </select>
         <div style={{ display: 'flex', gap: '8px' }}>
           <button className="btn btn-primary btn-sm" onClick={handleSave} disabled={saving || !form.text.trim()}>
@@ -182,6 +178,7 @@ export default function VocabDetail() {
   const { id } = useParams();
   const { student } = useApp();
   const navigate = useNavigate();
+  const { tenses } = useTenses();
   const [vocab, setVocab] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showAddSentence, setShowAddSentence] = useState(false);
@@ -513,15 +510,15 @@ export default function VocabDetail() {
         <div className="card" style={{ marginBottom: '24px' }}>
           <div className="card-title" style={{ marginBottom: '16px' }}>⏰ Domínio por Tempo Verbal</div>
           <div className="tense-grid">
-            {TENSES.map(tense => {
-              const tp = vocab.tenses?.find(t => t.tense === tense);
+            {tenses.map(t => {
+              const tp = vocab.tenses?.find(tp2 => tp2.tense === t.label);
               const st = tp?.status || 'red';
               const acc = tp && tp.total_reviews > 0
                 ? Math.round((tp.total_correct / tp.total_reviews) * 100)
                 : null;
               return (
-                <div key={tense} className="tense-item">
-                  <span className="tense-name">{tense}</span>
+                <div key={t.code} className="tense-item">
+                  <span className="tense-name">{t.label}</span>
                   <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
                     {acc !== null && <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{acc}%</span>}
                     <span>{st === 'green' ? '🟢' : st === 'yellow' ? '🟡' : '⚪'}</span>
@@ -594,7 +591,7 @@ export default function VocabDetail() {
             <input className="form-input" placeholder="Tradução (opcional)" value={newSentence.translation} onChange={e => setNewSentence(p => ({ ...p, translation: e.target.value }))} />
             <select className="form-select" value={newSentence.tense} onChange={e => setNewSentence(p => ({ ...p, tense: e.target.value }))}>
               <option value="">Tempo verbal...</option>
-              {TENSES.map(t => <option key={t} value={t}>{t}</option>)}
+              {tenses.map(t => <option key={t.code} value={t.label}>{t.label}</option>)}
             </select>
             <button type="submit" className="btn btn-primary">Salvar frase</button>
           </form>
@@ -608,6 +605,7 @@ export default function VocabDetail() {
               vocabId={id}
               onSaved={handleSentenceSaved}
               onDeleted={handleSentenceDeleted}
+              tenses={tenses}
             />
           ))}
           {!vocab.sentences?.length && <p style={{ color: 'var(--text-muted)', fontSize: '13px' }}>Nenhuma frase cadastrada.</p>}

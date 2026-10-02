@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { createVocabItem } from '../api';
-
-const TENSES = ['Present Simple','Present Continuous','Past Simple','Past Continuous',
-  'Present Perfect','Past Perfect','Future','Future with will','Going to','Modal constructions','Conditionals'];
+import { useTenses } from '../hooks/useTenses';
 
 export default function AddVerb() {
   const { student } = useApp();

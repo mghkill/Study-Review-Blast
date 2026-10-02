@@ -12,8 +12,8 @@
 
 ## PRÓXIMO PASSO
 <!-- proximo:start -->
-- Atualizado em 2026-10-01 13:36
-- Iniciar **T-040** — Tabela `tenses` (código, idioma, rótulo, ordem) com os tempos usados na interface; trocar texto livre por chave estrangeira preservando valores existentes
+- Atualizado em 2026-10-02 17:59
+- Continuar **T-040** (em andamento) — Tabela `tenses` (código, idioma, rótulo, ordem) com os tempos usados na interface; trocar texto livre por chave estrangeira preservando valores existentes ⏳ 2026-10-02 17:59
 <!-- proximo:end -->
 
 ## Regras fixas (só mudam se o usuário pedir)
@@ -91,7 +91,7 @@
 - [x] T-030 Documentar a limitação: sem login isso separa os dados, mas não protege contra quem tem acesso ao app ✔ 2026-10-01 13:36
 
 ## Fase 3 — Modelo lógico completo (PostgreSQL 18)
-- [ ] T-040 Tabela `tenses` (código, idioma, rótulo, ordem) com os tempos usados na interface; trocar texto livre por chave estrangeira preservando valores existentes
+- [~] T-040 Tabela `tenses` (código, idioma, rótulo, ordem) com os tempos usados na interface; trocar texto livre por chave estrangeira preservando valores existentes ⏳ 2026-10-02 17:59
 - [ ] T-041 Ajustar CHECK de `study_sessions.session_type` aos modos da tela "Estudar Agora" (+ custom_quiz) e de `sentences.source` para aceitar 'generated'
 - [ ] T-042 Tabelas `custom_quizzes` e `custom_quiz_questions` (dono, bloco de 5 ou 10, ordem, enunciado, resposta, palavra, contexto) e `study_sessions.quiz_id`
 - [ ] T-043 `language_code` em `vocabulary_items` (padrão 'en') para estudar outras línguas no futuro

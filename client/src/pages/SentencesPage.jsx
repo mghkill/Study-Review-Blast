@@ -3,12 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { getSentences, createSentence, getVocabulary } from '../api';
 import { Loading, TTSButton, EmptyState } from '../components/UI';
-
-const TENSES = ['Present Simple','Present Continuous','Past Simple','Past Continuous',
-  'Present Perfect','Past Perfect','Future','Future with will','Going to','Modal constructions','Conditionals'];
+import { useTenses } from '../hooks/useTenses';
 
 export default function SentencesPage() {
   const { student } = useApp();
+  const { tenses } = useTenses();
   const navigate = useNavigate();
   const [sentences, setSentences] = useState([]);
   const [vocab, setVocab] = useState([]);
@@ -61,7 +60,7 @@ export default function SentencesPage() {
             <div className="grid-2">
               <select className="form-select" value={form.tense} onChange={e => setForm(p => ({ ...p, tense: e.target.value }))}>
                 <option value="">Tempo verbal...</option>
-                {TENSES.map(t => <option key={t} value={t}>{t}</option>)}
+                {tenses.map(t => <option key={t.code} value={t.label}>{t.label}</option>)}
               </select>
               <select className="form-select" value={form.vocabularyItemId} onChange={e => setForm(p => ({ ...p, vocabularyItemId: e.target.value }))}>
                 <option value="">Associar verbo...</option>

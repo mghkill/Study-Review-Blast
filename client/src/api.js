@@ -85,4 +85,7 @@ export const getParagraphs = (studentId) => {
 };
 export const createParagraph = (data) => api.post('/sentences/paragraphs', data).then(r => r.data);
 
+// ─── Tenses ───────────────────────────────────────
+export const getTenses = () => api.get('/tenses').then(r => r.data);
+
 export default api;

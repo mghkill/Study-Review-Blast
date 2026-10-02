@@ -17,6 +17,7 @@ app.use('/api/vocabulary', require('./routes/vocabulary'));
 app.use('/api/reviews', require('./routes/reviews'));
 app.use('/api/sessions', require('./routes/sessions'));
 app.use('/api/sentences', require('./routes/sentences'));
+app.use('/api/tenses',   require('./routes/tenses'));
 app.use('/api/dashboard', require('./routes/dashboard'));
 
 // ─── Health check ────────────────────────────────────────
