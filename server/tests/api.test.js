@@ -247,6 +247,18 @@ describe('Sessions API', () => {
     testSessionId = res.body.id;
   });
 
+  it('POST /api/sessions — aceita modos da tela Estudar Agora e custom_quiz (T-041)', async () => {
+    const modes = ['custom_quiz', 'green', 'yellow', 'all', 'full', 'maintenance', 'consolidation', 'free_practice'];
+    for (const mode of modes) {
+      const res = await request(app)
+        .post('/api/sessions')
+        .set('X-Student-Id', String(testStudentId))
+        .send({ sessionType: mode });
+      expect(res.status).toBe(201);
+      expect(res.body.student_id).toBe(testStudentId);
+    }
+  });
+
   it('GET /api/sessions — retorna sessões do estudante', async () => {
     const res = await request(app)
       .get('/api/sessions')
@@ -363,6 +375,36 @@ describe('Sentences API', () => {
       });
     expect(res.status).toBe(201);
     expect(res.body.sentence_text).toBe('I __testverb__ every day.');
+  });
+
+  it('POST /api/sentences — aceita source="generated" (T-041)', async () => {
+    if (!testVocabId) return;
+    const res = await request(app)
+      .post('/api/sentences')
+      .set('X-Student-Id', String(testStudentId))
+      .send({
+        vocabularyItemId: testVocabId,
+        sentence_text: 'I have __testverb__ offline.',
+        translation: 'Eu gerei isso offline.',
+        tense: 'Present Perfect',
+        source: 'generated',
+      });
+    expect(res.status).toBe(201);
+    expect(res.body.source).toBe('generated');
+  });
+
+  it('POST /api/sentences — rejeita source inválido pelo CHECK do banco (T-041)', async () => {
+    if (!testVocabId) return;
+    const res = await request(app)
+      .post('/api/sentences')
+      .set('X-Student-Id', String(testStudentId))
+      .send({
+        vocabularyItemId: testVocabId,
+        sentence_text: 'Invalid source test.',
+        source: 'invalid_source',
+      });
+    expect(res.status).toBe(500);
+    expect(res.body).toHaveProperty('error');
   });
 });
 

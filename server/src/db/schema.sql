@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS sentences (
   translation TEXT,
   tense VARCHAR(50),
   notes TEXT,
-  source VARCHAR(30) DEFAULT 'teacher' CHECK (source IN ('teacher','student','book','other')),
+  source VARCHAR(30) DEFAULT 'teacher' CHECK (source IN ('teacher','student','book','other','generated')),
   status VARCHAR(20) DEFAULT 'active' CHECK (status IN ('active','mastered','archived')),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
@@ -184,7 +184,8 @@ CREATE TABLE IF NOT EXISTS study_sessions (
   id SERIAL PRIMARY KEY,
   student_id INTEGER NOT NULL REFERENCES students(id) ON DELETE CASCADE,
   session_type VARCHAR(30) DEFAULT 'mixed' CHECK (session_type IN (
-    'mixed','new_acquisition','review','pronunciation','weak_items','specific_verb'
+    'mixed','full','new_acquisition','review','pronunciation','weak_items','specific_verb',
+    'custom_quiz','green','maintenance','yellow','consolidation','all','free_practice'
   )),
   started_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   finished_at TIMESTAMP WITH TIME ZONE,

@@ -4,11 +4,15 @@ const db = require('../db/connection');
 const { requireStudent } = require('../middleware/requireStudent');
 
 const SESSION_TYPE_MAP = {
-  mixed: 'mixed', review: 'review',
+  mixed: 'mixed', full: 'mixed',
+  review: 'review',
   weak: 'weak_items', weak_items: 'weak_items',
   new: 'new_acquisition', new_acquisition: 'new_acquisition',
   pronunciation: 'pronunciation', specific_verb: 'specific_verb',
-  custom_quiz: 'custom_quiz', green: 'green', yellow: 'yellow', all: 'all',
+  custom_quiz: 'custom_quiz',
+  green: 'green', maintenance: 'green',
+  yellow: 'yellow', consolidation: 'yellow',
+  all: 'all', free_practice: 'all',
 };
 
 router.use(requireStudent);
