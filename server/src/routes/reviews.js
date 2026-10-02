@@ -9,6 +9,7 @@ const {
   selectStudyItems,
   generateAuditText,
 } = require('../services/srs');
+const { tenseToCode } = require('../services/tenses');
 
 router.use(requireStudent);
 
@@ -192,6 +193,7 @@ router.post('/', async (req, res) => {
         newLevel, status, newInterval, newEaseFactor, newPriority,
       ]);
 
+      const reviewTenseCode = tenseToCode(cleanTense);
       const reviewRes = await client.query(`
         INSERT INTO reviews (
           student_id, vocabulary_item_id, session_id, sentence_id,
@@ -199,11 +201,13 @@ router.post('/', async (req, res) => {
           meaning_correct, grammar_correct, sentence_correct,
           pronunciation_correct, pronunciation_rating,
           student_answer, teacher_notes,
-          tense_practiced, context_practiced,
+          tense_practiced, tense_practiced_code, context_practiced,
           error_categories, selection_reason,
           priority_before, priority_after,
           interval_before, interval_after
-        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21)
+        ) VALUES (
+          $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22
+        )
         RETURNING *
       `, [
         sid, vocabularyItemId, sessionId || null, sentenceId || null,
@@ -211,7 +215,7 @@ router.post('/', async (req, res) => {
         meaningCorrect ?? null, grammarCorrect ?? null, sentenceCorrect ?? null,
         pronunciationCorrect ?? null, validPronunciationRating,
         studentAnswer || null, teacherNotes || null,
-        cleanTense, contextPracticed || null,
+        cleanTense, reviewTenseCode, contextPracticed || null,
         Array.isArray(errorCategories) ? errorCategories : [],
         selectionReason ? JSON.stringify(selectionReason) : null,
         sv.review_priority, newPriority,
@@ -221,9 +225,9 @@ router.post('/', async (req, res) => {
 
       for (const category of errorCategories) {
         await client.query(`
-          INSERT INTO errors (review_id, student_id, vocabulary_item_id, error_category, tense)
-          VALUES ($1, $2, $3, $4, $5)
-        `, [review.id, sid, vocabularyItemId, category, tensePracticed]);
+          INSERT INTO errors (review_id, student_id, vocabulary_item_id, error_category, tense, tense_code)
+          VALUES ($1, $2, $3, $4, $5, $6)
+        `, [review.id, sid, vocabularyItemId, category, tensePracticed, tenseToCode(tensePracticed)]);
       }
 
       if (pronunciationCorrect !== undefined) {
@@ -233,11 +237,12 @@ router.post('/', async (req, res) => {
         `, [sid, vocabularyItemId, sentenceId, pronunciationCorrect, pronunciationRating, teacherNotes]);
       }
 
-      if (tensePracticed) {
+      const practiceTenseCode = tenseToCode(tensePracticed);
+      if (tensePracticed && practiceTenseCode) {
         await client.query(`
-          INSERT INTO tense_practice (student_id, vocabulary_item_id, tense, total_reviews, total_correct, total_incorrect, mastery_level, status, last_practiced_at)
-          VALUES ($1, $2, $3, 1, $4, $5, $6, $7, NOW())
-          ON CONFLICT (student_id, vocabulary_item_id, tense) DO UPDATE SET
+          INSERT INTO tense_practice (student_id, vocabulary_item_id, tense, tense_code, total_reviews, total_correct, total_incorrect, mastery_level, status, last_practiced_at)
+          VALUES ($1, $2, $3, $4, 1, $5, $6, $7, $8, NOW())
+          ON CONFLICT (student_id, vocabulary_item_id, tense_code) DO UPDATE SET
             total_reviews = tense_practice.total_reviews + 1,
             total_correct = tense_practice.total_correct + EXCLUDED.total_correct,
             total_incorrect = tense_practice.total_incorrect + EXCLUDED.total_incorrect,
@@ -258,7 +263,7 @@ router.post('/', async (req, res) => {
             last_practiced_at = NOW(),
             updated_at = NOW()
         `, [
-          sid, vocabularyItemId, tensePracticed,
+          sid, vocabularyItemId, tensePracticed, practiceTenseCode,
           isCorrect ? 1 : 0, isIncorrect ? 1 : 0,
           isCorrect ? 4 : 1, isCorrect ? 'green' : 'red',
         ]);

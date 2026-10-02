@@ -52,4 +52,6 @@ Registro cronológico (mais antigo primeiro). Só se acrescenta; nunca se apaga.
 - **2026-10-01 13:32** — [T-029] concluída. 46/46 testes backend passando (api.test.js, isolation.test.js, migrator.test.js) e 6 testes cliente sem regressao
 - **2026-10-01 13:34** — [T-030] iniciada.
 - **2026-10-01 13:36** — [T-030] concluída. Documentada a limitacao de seguranca (sem login separa os dados mas nao protege contra quem tem acesso ao app) no README.md e em docs/seguranca-e-isolamento.md
+- **2026-10-02 18:52** — [T-040] iniciada e concluída. Migration 006: tabela `tenses` (12 tempos canônicos), função `_tense_label_to_code()`, colunas FK `tense_code`/`tense_practiced_code` em tense_practice (NOT NULL, backfill 26/26), sentences (24/24), reviews (15/15) e errors (1/1). UNIQUE constraint recriado. Endpoint GET /api/tenses. Hook useTenses() com fallback local. 4 componentes React migrados (SentencesPage, VocabDetail, StudySession×2, AddVerb). vocabulary.js corrigido para inserir tense_code junto com tense.
 - **2026-10-02 17:59** — [T-040] iniciada.
+- **2026-10-02 18:52** — [T-040] concluída. Migration 006: tabela tenses (12 tempos), funcao _tense_label_to_code, FKs em tense_practice/sentences/reviews/errors (backfill 100%). Endpoint GET /api/tenses. Hook useTenses() com fallback. 4 componentes atualizados. vocabulary.js corrigido para inserir tense_code NOT NULL.

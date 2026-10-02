@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db/connection');
 const { requireStudent } = require('../middleware/requireStudent');
+const { tenseToCode } = require('../services/tenses');
 
 // Todas as rotas de vocabulário exigem X-Student-Id
 router.use(requireStudent);
@@ -293,10 +294,11 @@ router.post('/:id/sentences', async (req, res) => {
     if (!own.rows[0]) return res.status(404).json({ error: 'Not found' });
 
     const { sentence_text, translation, tense, context_id, notes, source = 'teacher' } = req.body;
+    const tenseCode = tenseToCode(tense);
     const result = await db.query(`
-      INSERT INTO sentences (vocabulary_item_id, student_id, sentence_text, translation, tense, context_id, notes, source)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *
-    `, [id, sid, sentence_text, translation, tense, context_id, notes, source]);
+      INSERT INTO sentences (vocabulary_item_id, student_id, sentence_text, translation, tense, tense_code, context_id, notes, source)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *
+    `, [id, sid, sentence_text, translation, tense, tenseCode, context_id, notes, source]);
     res.status(201).json(result.rows[0]);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -309,15 +311,17 @@ router.patch('/:id/sentences/:sentenceId', async (req, res) => {
     const sid = req.studentId;
     const { sentenceId } = req.params;
     const { sentence_text, translation, tense, notes } = req.body;
+    const tenseCode = tense !== undefined ? tenseToCode(tense) : undefined;
     const result = await db.query(`
       UPDATE sentences SET
         sentence_text = COALESCE($1, sentence_text),
         translation   = COALESCE($2, translation),
         tense         = COALESCE($3, tense),
-        notes         = COALESCE($4, notes),
+        tense_code    = CASE WHEN $4::varchar IS NOT NULL THEN $4::varchar ELSE tense_code END,
+        notes         = COALESCE($5, notes),
         updated_at    = NOW()
-      WHERE id = $5 AND student_id = $6 RETURNING *
-    `, [sentence_text, translation, tense, notes, sentenceId, sid]);
+      WHERE id = $6 AND student_id = $7 RETURNING *
+    `, [sentence_text, translation, tense, tenseCode, notes, sentenceId, sid]);
     if (!result.rows[0]) return res.status(404).json({ error: 'Not found' });
     res.json(result.rows[0]);
   } catch (err) {
