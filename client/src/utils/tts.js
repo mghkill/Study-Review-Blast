@@ -170,8 +170,6 @@ export function playNativeAudio(text) {
 function speakViaSpeechSynthesis(text, options = {}) {
   if (!('speechSynthesis' in window)) return false;
 
-  window.speechSynthesis.cancel();
-
   const utterance = new SpeechSynthesisUtterance(text.trim());
   utterance.lang = 'en-US';
   utterance.rate = options.rate ?? 0.88;

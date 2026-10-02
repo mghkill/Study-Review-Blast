@@ -166,38 +166,36 @@ function calculateNextInterval(current, result, easeFactor = 2.5) {
 /**
  * Atualiza o mastery_level e status baseado no resultado
  * 
- * Progressão ágil e motivadora:
- * - 1 acerto: Nível 2 (Amarelo / Intermediário — sai do Vermelho imediatamente)
- * - 2 acertos consecutivos: Nível 3 (Verde / Dominado — reconhece o esforço e consolidação)
- * - 3+ acertos consecutivos: Nível 4/5 (Verde / Retenção avançada)
- * - Erro: reduz 1 nível (se zerar, volta para Vermelho)
+ * Progressão por repetição espaçada:
+ * - 3+ acertos consecutivos: sobe 1 nível (máximo 5)
+ * - Menos de 3 acertos: mantém o nível atual
+ * - Erro: reduz 1 nível (mínimo 0)
+ * 
+ * Status visual:
+ * - Nível >= 4 -> green (Dominado / Retenção avançada)
+ * - Nível 2-3  -> yellow (Intermediário / Em consolidação)
+ * - Nível 0-1  -> red (Fraco / Não consolidado)
  */
 function updateMasteryLevel(currentLevel, result, consecutiveCorrect) {
   let newLevel = currentLevel || 0;
 
   if (result === 'correct') {
-    if (consecutiveCorrect >= 4) {
-      newLevel = 5;
-    } else if (consecutiveCorrect >= 3) {
-      newLevel = 4;
-    } else if (consecutiveCorrect >= 2) {
-      newLevel = 3; // Verde (Dominado)
-    } else {
-      newLevel = Math.max(1, newLevel, 2); // Amarelo (Intermediário no 1º acerto)
+    if (consecutiveCorrect >= 3) {
+      newLevel = Math.min(5, newLevel + 1);
     }
   } else if (result === 'partial') {
-    newLevel = Math.min(Math.max(1, newLevel), 2);
+    newLevel = Math.max(0, Math.min(5, newLevel));
   } else if (result === 'incorrect') {
     newLevel = Math.max(0, newLevel - 1);
   }
 
   // Status visual:
-  // Nível >= 3 -> green (Dominado / Forte)
-  // Nível 1, 2 -> yellow (Intermediário / Em consolidação)
-  // Nível 0    -> red (Fraco / Não consolidado)
+  // Nível >= 4 -> green (Dominado / Retenção avançada)
+  // Nível 2, 3 -> yellow (Intermediário / Em consolidação)
+  // Nível 0, 1 -> red (Fraco / Não consolidado)
   let status;
-  if (newLevel >= 3) status = 'green';
-  else if (newLevel >= 1) status = 'yellow';
+  if (newLevel >= 4) status = 'green';
+  else if (newLevel >= 2) status = 'yellow';
   else status = 'red';
 
   return { newLevel, status };
