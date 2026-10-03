@@ -10,8 +10,8 @@
 
 ## PRÓXIMO PASSO
 <!-- proximo:start -->
-- Atualizado em 2026-10-03 20:05
-- Continuar **T-001** (em andamento) — [P] Abrir o V2: árvore limpa em `main` e branch `v2/phase-01-safety-net` ⏳ 2026-10-03 20:05
+- Atualizado em 2026-10-03 20:11
+- Iniciar **T-002** — [P] Backup novo do banco (`pg_dump -Fc`) fora do repositório + restauração de teste com contagem por tabela
 <!-- proximo:end -->
 
 ## Regras fixas (só mudam se o usuário pedir)
@@ -62,7 +62,7 @@ Explicação em linguagem simples no README (seção "Decisões explicadas").
 | 13 | `@asteasolutions/zod-to-openapi`, `swagger-ui-express` | Documentação da API |
 
 ## Fase 1 — Reconhecimento e rede de segurança
-- [~] T-001 [P] Abrir o V2: árvore limpa em `main` e branch `v2/phase-01-safety-net` ⏳ 2026-10-03 20:05
+- [x] T-001 [P] Abrir o V2: árvore limpa em `main` e branch `v2/phase-01-safety-net` ✔ 2026-10-03 20:11
 - [ ] T-002 [P] Backup novo do banco (`pg_dump -Fc`) fora do repositório + restauração de teste com contagem por tabela
 - [ ] T-003 [P] Baseline: testes, lint, `npm audit` e smoke das telas; registrar números
 - [ ] T-004 [M] Matriz de usabilidade `docs/usability-matrix.md` (tela × rota × tabela × teste; dados que existem no banco e não aparecem no front) [v1 T-060]
