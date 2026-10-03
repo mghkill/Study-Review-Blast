@@ -59,3 +59,5 @@ Registro cronológico (mais antigo primeiro). Só se acrescenta; nunca se apaga.
 - **2026-10-02 20:01** — [T-041] concluída. Migration 007 aplicada: CHECK sentences.source aceita 'generated', study_sessions.session_type aceita modos da tela (custom_quiz, green/maintenance, yellow/consolidation, all/free_practice, full). 49/49 backend e 61/61 frontend passando.
 - **2026-10-02 21:23** — [T-042] iniciada.
 - **2026-10-02 21:29** — [T-042] concluída. Migration 008 aplicada: tabelas custom_quizzes (block_size IN (5,10)) e custom_quiz_questions criadas com FKs compostas (student_id); study_sessions.quiz_id adicionada com FK composta ON DELETE SET NULL (quiz_id). 56/56 testes backend e 61/61 frontend passando.
+- **2026-10-02 22:22** — [T-043] iniciada.
+- **2026-10-02 22:26** — [T-043] concluída. Migration 009 aplicada: coluna language_code VARCHAR(10) NOT NULL DEFAULT 'en' em vocabulary_items com índice idx_vocabulary_items_lang e backfill completo. Rotas GET, POST e PATCH de vocabulary atualizadas. 57/57 backend e 61/61 frontend passando.

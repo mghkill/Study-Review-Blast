@@ -11,7 +11,8 @@ router.use(requireStudent);
 router.get('/', async (req, res) => {
   try {
     const sid = req.studentId;
-    const { type, level, status, q } = req.query;
+    const { type, level, status, q, lang, language_code } = req.query;
+    const targetLang = language_code || lang;
 
     let query = `
       SELECT vi.*,
@@ -42,6 +43,7 @@ router.get('/', async (req, res) => {
     if (type)   { query += ` AND vi.type = $${paramIndex++}`;   params.push(type); }
     if (level)  { query += ` AND vi.level = $${paramIndex++}`;  params.push(level); }
     if (status) { query += ` AND sv.status = $${paramIndex++}`; params.push(status); }
+    if (targetLang) { query += ` AND vi.language_code = $${paramIndex++}`; params.push(targetLang); }
     if (q) {
       query += ` AND (vi.word ILIKE $${paramIndex} OR vi.primary_meaning ILIKE $${paramIndex})`;
       params.push(`%${q}%`);
@@ -145,6 +147,7 @@ router.post('/', async (req, res) => {
       word, type = 'verb', level = 'A1', primary_meaning,
       difficulty = 3, is_irregular = false, notes,
       meanings = [], contexts = [], forms = null,
+      language_code = 'en',
     } = req.body;
 
     if (!word) return res.status(400).json({ error: 'word is required' });
@@ -155,14 +158,15 @@ router.post('/', async (req, res) => {
 
       // Palavra pertence ao estudante atual; UNIQUE é (student_id, word, type)
       const vocabRes = await client.query(`
-        INSERT INTO vocabulary_items (word, type, level, primary_meaning, difficulty, is_irregular, notes, student_id)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+        INSERT INTO vocabulary_items (word, type, level, primary_meaning, difficulty, is_irregular, notes, student_id, language_code)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
         ON CONFLICT (student_id, word, type) WHERE student_id IS NOT NULL DO UPDATE SET
           primary_meaning = EXCLUDED.primary_meaning,
           level = EXCLUDED.level,
+          language_code = EXCLUDED.language_code,
           updated_at = NOW()
         RETURNING *
-      `, [word.toLowerCase(), type, level, primary_meaning, difficulty, is_irregular, notes, sid]);
+      `, [word.toLowerCase(), type, level, primary_meaning, difficulty, is_irregular, notes, sid, language_code]);
 
       const vocab = vocabRes.rows[0];
 
@@ -233,7 +237,7 @@ router.patch('/:id', async (req, res) => {
   try {
     const sid = req.studentId;
     const { id } = req.params;
-    const { word, type, level, primary_meaning, difficulty, is_irregular, notes } = req.body;
+    const { word, type, level, primary_meaning, difficulty, is_irregular, notes, language_code } = req.body;
     const result = await db.query(`
       UPDATE vocabulary_items SET
         word = COALESCE($1, word),
@@ -243,9 +247,10 @@ router.patch('/:id', async (req, res) => {
         difficulty = COALESCE($5, difficulty),
         is_irregular = COALESCE($6, is_irregular),
         notes = COALESCE($7, notes),
+        language_code = COALESCE($8, language_code),
         updated_at = NOW()
-      WHERE id = $8 AND student_id = $9 RETURNING *
-    `, [word, type, level, primary_meaning, difficulty, is_irregular, notes, id, sid]);
+      WHERE id = $9 AND student_id = $10 RETURNING *
+    `, [word, type, level, primary_meaning, difficulty, is_irregular, notes, language_code, id, sid]);
     if (!result.rows[0]) return res.status(404).json({ error: 'Not found' });
     res.json(result.rows[0]);
   } catch (err) {

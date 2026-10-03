@@ -12,8 +12,8 @@
 
 ## PRÓXIMO PASSO
 <!-- proximo:start -->
-- Atualizado em 2026-10-02 21:29
-- Iniciar **T-043** — `language_code` em `vocabulary_items` (padrão 'en') para estudar outras línguas no futuro
+- Atualizado em 2026-10-02 22:26
+- Iniciar **T-044** — Função `set_updated_at()` e gatilhos BEFORE UPDATE nas tabelas com `updated_at`
 <!-- proximo:end -->
 
 ## Regras fixas (só mudam se o usuário pedir)
@@ -94,7 +94,7 @@
 - [x] T-040 Tabela `tenses` (código, idioma, rótulo, ordem) com os tempos usados na interface; trocar texto livre por chave estrangeira preservando valores existentes ✔ 2026-10-02 18:52
 - [x] T-041 Ajustar CHECK de `study_sessions.session_type` aos modos da tela "Estudar Agora" (+ custom_quiz) e de `sentences.source` para aceitar 'generated' ✔ 2026-10-02 20:01
 - [x] T-042 Tabelas `custom_quizzes` e `custom_quiz_questions` (dono, bloco de 5 ou 10, ordem, enunciado, resposta, palavra, contexto) e `study_sessions.quiz_id` ✔ 2026-10-02 21:29
-- [ ] T-043 `language_code` em `vocabulary_items` (padrão 'en') para estudar outras línguas no futuro
+- [x] T-043 `language_code` em `vocabulary_items` (padrão 'en') para estudar outras línguas no futuro ✔ 2026-10-02 22:26
 - [ ] T-044 Função `set_updated_at()` e gatilhos BEFORE UPDATE nas tabelas com `updated_at`
 - [ ] T-045 Índices nas chaves estrangeiras sem índice e índices compostos das consultas quentes (fila de revisão, atividade por data)
 - [ ] T-046 Revisar `ON DELETE` (ex.: `reviews.context_practiced` sem regra bloqueia excluir contexto com revisões); garantir exclusão em cascata segura de palavra e de estudante

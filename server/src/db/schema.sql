@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS vocabulary_items (
   notes TEXT,
   difficulty SMALLINT DEFAULT 3 CHECK (difficulty BETWEEN 1 AND 5),
   is_irregular BOOLEAN DEFAULT FALSE,
+  language_code VARCHAR(10) NOT NULL DEFAULT 'en',
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   UNIQUE(word, type)

@@ -233,6 +233,41 @@ describe('Vocabulary API', () => {
       .set('X-Student-Id', String(testStudentId));
     expect(res.status).toBe(404);
   });
+
+  it('POST /api/vocabulary — language_code padrão é "en" e aceita customizado (T-043)', async () => {
+    // 1. Padrão "en"
+    const res1 = await request(app)
+      .get(`/api/vocabulary/${testVocabId}`)
+      .set('X-Student-Id', String(testStudentId));
+    expect(res1.body.language_code).toBe('en');
+
+    // 2. Customizado "es"
+    const res2 = await request(app)
+      .post('/api/vocabulary')
+      .set('X-Student-Id', String(testStudentId))
+      .send({
+        word: '__testverb_es__',
+        type: 'verb',
+        language_code: 'es',
+      });
+    expect(res2.status).toBe(201);
+    expect(res2.body.language_code).toBe('es');
+
+    // 3. Filtro por lang
+    const resFilter = await request(app)
+      .get('/api/vocabulary?lang=es')
+      .set('X-Student-Id', String(testStudentId));
+    expect(resFilter.body.length).toBeGreaterThanOrEqual(1);
+    expect(resFilter.body.every(item => item.language_code === 'es')).toBe(true);
+
+    // 4. PATCH language_code
+    const resPatch = await request(app)
+      .patch(`/api/vocabulary/${res2.body.id}`)
+      .set('X-Student-Id', String(testStudentId))
+      .send({ language_code: 'fr' });
+    expect(resPatch.status).toBe(200);
+    expect(resPatch.body.language_code).toBe('fr');
+  });
 });
 
 // ─── Sessions ─────────────────────────────────────────────────────────────────
