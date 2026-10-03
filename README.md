@@ -320,6 +320,40 @@ Funcionalidades e serviços que foram excluídos do V2 por custo ou complexidade
 
 ---
 
+## PROMPT para Execução do plano pelo Chat de IA
+
+
+Comando de iniciação por IA
+
+Antes de executar qualquer ação no projeto StudyReviewBlast, leia integralmente os seguintes arquivos:
+
+**plano-de-acao/RELATORIO-GERAL-PROJETO.md**
+
+**plano-de-acao/RETOMAR.md**
+
+**plano-de-acao/PLANO.md**
+
+Esses documentos contêm o contexto do projeto, a arquitetura atual, as regras, as decisões já tomadas, o estado da implementação e o plano de execução.
+
+Após a leitura, compreenda e respeite todas as informações, regras, restrições e orientações estabelecidas nesses arquivos.
+
+Não altere, crie ou exclua arquivos e não execute mudanças no projeto antes de concluir a leitura dos três documentos e analisar o contexto apresentado neles.
+
+Em caso de conflito, inconsistência ou informação ambígua entre os documentos, não faça suposições. Identifique o conflito e peça orientação antes de prosseguir.
+
+Somente após concluir essa etapa de análise, prossiga com a execução do plano conforme definido em plano-de-acao/PLANO.md.
+
+```bash
+
+# PROMPT para Execução do Plano pelo Chat de IA
+
+Leia plano-de-acao/RELATORIO-GERAL-PROJETO.md, plano-de-acao/RETOMAR.md e plano-de-acao/PLANO.md para entender 100% da arquitetura e das regras do StudyReviewBlast antes de agir.
+
+```
+
+---
+
+
 ## Licença
 
 MIT — veja [LICENSE](./LICENSE). *(Arquivo será criado na T-087.)*
