@@ -1,132 +1,186 @@
-# Plano de Ação — StudyReviewBlast
+# Plano de Ação V2 — StudyReviewBlast
 
-> **Esta é a fonte da verdade.** Se a conversa for interrompida (limite de tokens, troca de sessão), retome por aqui:
-> 1. Leia o bloco "PRÓXIMO PASSO" abaixo e o fim de `LINHA-DO-TEMPO.md`.
-> 2. Rode `python plano-de-acao/plan_tool.py status`.
-> 3. Continue da tarefa `[~]` (em andamento) ou da primeira `[ ]`. Não replaneje o que já está `[x]`.
+> **Lista operacional (fonte da verdade do progresso).** O detalhe de cada tarefa (objetivo, back, front, teste antes, pronto, prompt) está em [`TAREFAS.md`](./TAREFAS.md). O passo a passo diário está em [`RETOMAR.md`](./RETOMAR.md). A explicação para humanos está no [`README.md`](../README.md).
 >
 > Legenda: `[ ]` pendente · `[~]` em andamento · `[x]` feita · `[!]` bloqueada
-> Comandos: `start T-000` · `done T-000 --nota "..."` · `block T-000 "motivo"` · `log "mensagem"` · `add-feature "Título" --task "..."`
-> Windows: use `py` no lugar de `python` se `python` não funcionar (ex.: `py plano-de-acao/plan_tool.py status`).
+> Comandos: `py plano-de-acao/plan_tool.py status` · `start T-000` · `done T-000 --nota "..."` · `block T-000 "motivo"` · `log "mensagem"` · `add-feature "Título" --task "..."`
+> Tamanho: **[P]** pequena (até ~30 min) · **[M]** média (uma sessão). Tarefa grande é proibida: divide-se.
+> O plano V1 (T-001 a T-090 antigos) está congelado em [`legado/PLANO-v1.md`](./legado/PLANO-v1.md); o mapa antigo → novo está em [`legado/MAPA-V1-V2.md`](./legado/MAPA-V1-V2.md). Referências como "v1 T-044" apontam para o legado.
 > **Nunca escreva senhas, tokens ou o conteúdo do `.env` neste plano.**
 
 ## PRÓXIMO PASSO
 <!-- proximo:start -->
-- Atualizado em 2026-10-02 22:26
-- Iniciar **T-044** — Função `set_updated_at()` e gatilhos BEFORE UPDATE nas tabelas com `updated_at`
+- Atualizado em 2026-10-03 15:21
+- Iniciar **T-001** — [P] Abrir o V2: árvore limpa em `main` e branch `v2/phase-01-safety-net`
 <!-- proximo:end -->
 
 ## Regras fixas (só mudam se o usuário pedir)
-- Banco: **PostgreSQL 18**. Backend: Node + Express + `pg`. Frontend: **React + Vite**.
-- `npm run dev` continua iniciando o servidor (porta 3001) e o cliente (porta 5173) como hoje. Não alterar scripts `dev`, portas nem proxy.
-- Sem login por enquanto; uso local/offline. Sem serviços externos, sem API de IA paga, sem ORM novo.
-- Dependência nova só com justificativa registrada aqui e aprovação do usuário.
-- Antes de qualquer migração destrutiva: backup (`T-005`).
+- Banco **PostgreSQL 18**; backend **Node + Express**; frontend **React + Vite**. Não trocar nada disso.
+- `npm run dev` em `server/` (porta **3001**) e em `client/` (porta **5173**) continua funcionando; não mudar portas nem o proxy do Vite. Exceções só por decisão (D-07 conteúdo do script com TypeScript; D-09 `dev` único na raiz, sem remover os atuais).
+- **Uma tarefa por sessão** e **pausa obrigatória** no fim de cada uma (protocolo em `RETOMAR.md`). `git add .` sempre **na raiz** do repositório. A IA não faz `push`.
+- **Teste escrito antes** da implementação e visto falhando. Toda tarefa diz o que muda no **front** (ou justifica "sem impacto").
+- **Nada pago** (IA paga, TTS premium, hospedagem, Sentry etc.). Ideias pagas vão para "Melhorias pós-prova de fogo" no README.
+- Dependência nova só se estiver na lista aprovada em **D-10**; fora dela, nova decisão.
+- Todo código, comentário, nome de arquivo e commit **novo** nasce em **inglês** (commits em Conventional Commits). O que já existe em português é traduzido na Fase 9. Exceção: a pasta `plano-de-acao/` e `skills/` ficam em português até a Fase 15.
+- Migração já aplicada nunca é editada; cria-se a próxima. Backup antes de migração destrutiva.
 
 ## Decisões
-| ID | Decisão | Padrão adotado | Situação |
-|---|---|---|---|
-| D-01 | Posse dos dados | Cada palavra (e seus significados, contextos, frases) pertence a **um** estudante | Proposto — usuário pode vetar |
-| D-02 | Dados que já existem no banco | Preservar (clonar para cada estudante que usa a palavra) | Aguardando resposta |
-| D-03 | Licença e autor | MIT (já citada no README); nome do autor a confirmar | Aguardando resposta |
-| D-04 | Como a API sabe quem é o estudante (sem login) | Cabeçalho `X-Student-Id` validado por middleware | Proposto |
+Explicação em linguagem simples no README (seção "Decisões explicadas").
 
-## Fase 0 — Reconhecimento e rede de segurança
-- [x] T-001 Ler package.json (raiz, server, client), .env.example, schema.sql, rotas e serviços; confirmar versões reais e anotar divergências com o README ✔ 2026-09-30 23:53
-- [x] T-002 Descobrir como o estudante ativo chega à API hoje (contexto React → api.js → rotas) e registrar na linha do tempo ✔ 2026-09-30 23:54
-- [x] T-003 Confirmar que `npm run dev` funciona em server/ e client/ (portas 3001 e 5173) antes de qualquer mudança ✔ 2026-09-30 23:57
-- [x] T-004 Criar branch de trabalho no git e confirmar árvore limpa ✔ 2026-10-01 00:01
-- [x] T-005 Backup do banco com `pg_dump -Fc` fora do repositório; anotar só o caminho do arquivo (sem senha) ✔ 2026-10-01 02:31
-- [x] T-006 Rodar a suíte atual (server `npm test`; client `npm run test:run` e `npm run lint`) e registrar o baseline ✔ 2026-10-01 02:54
-- [x] T-007 Perguntar ao usuário, em uma única mensagem, D-02 (dados atuais: preservar ou descartar) e D-03 (nome do autor e confirmação da licença MIT) ✔ 2026-10-01 02:58
-
-## Fase 1 — Migrações versionadas (pré-requisito)
-- [x] T-010 Criar `server/src/db/migrations/` e a tabela `schema_migrations` (versão, nome, aplicada_em) ✔ 2026-10-01 03:31
-- [x] T-011 Escrever o executor em Node puro com `pg` (sem dependência nova): aplica .sql em ordem, cada arquivo em transação, pula os já aplicados ✔ 2026-10-01 03:35
-- [x] T-012 Converter o schema.sql atual em `001_baseline.sql` e fazer `npm run migrate` usar o executor (mesmo nome de script) ✔ 2026-10-01 03:37
-- [x] T-013 Testar em banco novo vazio e em cópia do banco existente (restaurada do backup); registrar resultado ✔ 2026-10-01 03:52
-
-## Fase 2 — Isolamento por estudante (prioridade máxima)
-- [x] T-020 Mapear todas as rotas e queries; listar as que não filtram por estudante (tabela no plano) ✔ 2026-10-01 04:26
-
-### Mapeamento de Isolamento de Rotas e Queries (T-020)
-| Rota / Endpoint | Método | Filtra por Estudante? | Problema / Vulnerabilidade Atual | Ação na Fase 2 |
+| ID | Decisão | Padrão adotado (recomendação) | Alternativas | Situação |
 |---|---|---|---|---|
-| `/api/students` | GET | Não (Público) | Lista todos para seleção na interface | Manter público para seleção local |
-| `/api/students/:id` | GET | Não | Busca qualquer estudante por ID | Uso administrativo local |
-| `/api/students` | POST | Não (Vazamento) | Vincula TODO vocabulário existente ao novo estudante | T-026: começar com vocabulário vazio |
-| `/api/students/:id` | PATCH/DELETE | Não | Permite alterar/remover qualquer estudante | Restringir ao estudante autenticado |
-| `/api/vocabulary` | GET | Não (Vazamento) | Traz palavras de todos os estudantes (`SELECT v.*` global) | Filtrar por `v.student_id = req.studentId` |
-| `/api/vocabulary/:id` | GET | Não (Vazamento) | Retorna palavra de qualquer estudante | 404 se não pertencer ao estudante |
-| `/api/vocabulary` | POST | Não (Vazamento) | Sem coluna `student_id`; vincula a todos os estudantes | T-022: Gravar dono `req.studentId`, vincular só a ele |
-| `/api/vocabulary/:id` | PATCH/DELETE | Não (Vazamento) | Modifica/remove palavras de outros estudantes | Restringir por `id` e `student_id` (404) |
-| `/api/vocabulary/:id/sentences` | POST | Não (Vazamento) | Cria frases sem vincular estudante | Gravar `student_id = req.studentId` |
-| `/api/vocabulary/:id/sentences/:sentenceId` | PATCH/DELETE | Não (Vazamento) | Altera/remove frase sem checar estudante | Validar dono da frase e da palavra |
-| `/api/vocabulary/:id/contexts` | POST | Não (Vazamento) | Cria contexto sem vincular estudante | Gravar `student_id = req.studentId` (T-024) |
-| `/api/vocabulary/:id/meanings/:meaningId` | PATCH | Não (Vazamento) | Altera significado de palavra alheia | Validar dono da palavra |
-| `/api/sentences` | GET | Não (Vazamento) | `WHERE s.student_id = $1 OR s.student_id IS NULL` | Filtrar estritamente `s.student_id = req.studentId` |
-| `/api/sentences` | POST | Parcial | Lê `studentId` do body sem validação | Forçar `student_id = req.studentId` |
-| `/api/sentences/:id` | PATCH/DELETE | Não (Vazamento) | Altera/apaga qualquer sentença (`WHERE id = $1`) | Restringir por `student_id = req.studentId` (404) |
-| `/api/sentences/paragraphs` | GET | Não (Vazamento) | `WHERE p.student_id = $1 OR p.student_id IS NULL` | Filtrar estritamente `p.student_id = req.studentId` |
-| `/api/sentences/paragraphs` | POST | Parcial | Lê `studentId` do body sem validação | Forçar `student_id = req.studentId` |
-| `/api/reviews/queue` | GET | Parcial (Vazamento) | Amostras de frases são globais sem filtro de aluno | Filtrar amostras por `student_id = req.studentId` |
-| `/api/reviews` | POST | Parcial | Lê `studentId` do body sem validação | Forçar `req.studentId` |
-| `/api/reviews/history` | GET | Parcial | Lê `studentId` da query string | Forçar `req.studentId` |
-| `/api/reviews/errors` | GET | Parcial | Lê `studentId` da query string | Forçar `req.studentId` |
-| `/api/reviews/student-sentence` | POST | Parcial | Lê `studentId` do body | Forçar `req.studentId` |
-| `/api/sessions` | POST | Parcial | Lê `studentId` do body sem validação | Forçar `req.studentId` |
-| `/api/sessions/:id` | PATCH | Não (Vazamento) | Atualiza qualquer sessão (`WHERE id = $1`) | Restringir por `student_id = req.studentId` |
-| `/api/sessions` | GET | Parcial | Lê `studentId` da query string | Forçar `req.studentId` |
-| `/api/dashboard` | GET | Parcial (Vazamento) | Contagem de frases inclui sentenças nulas/globais | Filtrar estritamente por `req.studentId` |
+| D-01 | Posse dos dados | Cada palavra (e significados, contextos, frases) pertence a **um** estudante | Catálogo global + vínculo | Decidido (v1, migrations 002–004) |
+| D-02 | Dados atuais do banco | **Preservar** o banco de desenvolvimento; backup antes de cada fase com migração; testes em banco separado (D-12) | Descartar e recriar com seed | Aguardando confirmação |
+| D-03 | Licença e autor | **MIT**, `Copyright (c) 2026 mghkill` (trocar pelo nome que você quiser público) | Apache-2.0, GPL-3.0 | Aguardando confirmação |
+| D-04 | Como a API sabe quem é o estudante sem login | Cabeçalho `X-Student-Id` validado pelo middleware `requireStudent` (já existe) | Login (pós-prova de fogo); RLS no PostgreSQL | Decidido (v1); confirmar manutenção |
+| D-05 | ORM | **Drizzle ORM** (+ drizzle-kit só para introspecção) | Prisma (sua sugestão inicial); continuar com `pg` puro | Aguardando confirmação |
+| D-06 | Quem manda no schema | **Migrações SQL próprias continuam a fonte da verdade**; o schema do ORM é gerado por introspecção e conferido no CI (drift) | Migrações do ORM (`drizzle-kit migrate` / `prisma migrate`) | Aguardando confirmação |
+| D-07 | TypeScript (quando e como) | **Incremental, logo após o ORM (Fase 6)**: server primeiro; no client, `api.ts` e todo arquivo novo/reescrito em TS. Permite mudar o *conteúdo* do script `dev` do server mantendo nome e porta | Não adotar (JSDoc); converter tudo de uma vez; deixar para o fim | Aguardando confirmação |
+| D-08 | Idioma do README | **pt-BR até a Fase 14** (com resumo em inglês no topo); na Fase 15 vira inglês e o pt-BR fica em `README.pt-BR.md` | Inglês desde já | Aguardando confirmação |
+| D-09 | `package.json` na raiz | Criar só para ferramentas (lint, testes, hooks) e um `npm run dev` único com `concurrently`, **sem remover** os scripts de `server/` e `client/` | Não criar; npm workspaces | Aguardando confirmação |
+| D-10 | Dependências gratuitas aprovadas | Lista "Dependências aprovadas" abaixo | Aprovar uma a uma | Aguardando confirmação |
+| D-11 | Docker (não instalado nesta máquina) | **Instalar Docker Desktop** (gratuito para uso pessoal) antes da T-014; o PostgreSQL local continua valendo | Pular Docker local (CI usa contêiner de serviço mesmo assim) | Aguardando sua decisão (instalação) |
+| D-12 | Banco de testes | Testes usam banco próprio (`<DB_NAME>_test`) e nunca o de desenvolvimento | Continuar testando no banco de desenvolvimento | Proposto (padrão seguro) |
+| D-13 | Branches e PRs | Uma branch por fase (`v2/phase-NN-slug`); no fim da fase você faz push, abre PR e faz merge | Tudo em `main`; uma branch para o V2 inteiro | Proposto |
+| D-14 | Algoritmo de revisão | **FSRS** (`ts-fsrs`) decide *quando* revisar; a prioridade por erros atual ordena os vencidos; botões Again/Hard/Good/Easy | Manter o SRS próprio; SM-2 | Proposto |
+| D-15 | Idioma padrão da interface | Detectar o idioma do navegador; padrão `en`; seletor `en`/`pt-BR` salvo no navegador | Padrão `pt-BR` | Proposto |
+| D-16 | Planejamento em inglês | Na Fase 15, renomear `plano-de-acao/` e arquivos para inglês e ajustar `plan_tool.py` (exceção registrada) | Manter em português | Proposto |
+| D-17 | Lint do client | Manter **Oxlint** no client (já configurado); ESLint só no server; Prettier nos dois | ESLint também no client | Proposto |
+| D-18 | Reconhecimento de voz | Web Speech API (`SpeechRecognition`), opcional e desligado por padrão, com aviso (no Chrome o áudio vai para servidor do Google; Firefox não suporta) | Não ter reconhecimento | Proposto |
 
-- [x] T-021 Escrever ANTES os testes de isolamento (Jest + Supertest) e confirmar que falham hoje (ver references/modelo-logico-alvo.md, seção 3) ✔ 2026-10-01 11:18
-- [x] T-022 Migration 002: `vocabulary_items.student_id` (dono), `UNIQUE(student_id, word, type)` no lugar de `UNIQUE(word, type)`, `UNIQUE(id, student_id)` para chaves compostas ✔ 2026-10-01 11:27
-- [x] T-023 Migrar dados existentes conforme D-02 (clonar palavra + significados + contextos + formas verbais por estudante, remapeando progresso, revisões e erros), em transação, com contagens antes/depois ✔ 2026-10-01 11:34
-- [x] T-024 Chaves estrangeiras compostas `(vocabulary_item_id, student_id)` nas tabelas de progresso e histórico; `student_id` em `contexts` (ver modelo-logico-alvo.md, seção 2) ✔ 2026-10-01 11:42
-- [x] T-025 API: middleware `requireStudent` em todas as rotas; queries filtram por `req.studentId`; ignorar `student_id` vindo do corpo/query; item de outro estudante responde 404 ✔ 2026-10-01 12:27
-- [x] T-026 `POST /api/students`: parar de vincular o novo estudante a todo o vocabulário existente (começa vazio) ✔ 2026-10-01 12:50
-- [x] T-027 Cliente: `api.js` envia `X-Student-Id` do estudante ativo; trocar de estudante limpa o estado das telas ✔ 2026-10-01 13:02
-- [x] T-028 Conferir Dashboard, Progresso, fila de revisão, Vocabulário e Banco de Frases: contagens e gráficos só do estudante ativo ✔ 2026-10-01 13:18
-- [x] T-029 Testes de isolamento passando e suíte antiga sem regressão; registrar ✔ 2026-10-01 13:32
-- [x] T-030 Documentar a limitação: sem login isso separa os dados, mas não protege contra quem tem acesso ao app ✔ 2026-10-01 13:36
+### Dependências aprovadas (D-10) — todas gratuitas e de código aberto
+| Fase | Pacotes | Para quê |
+|---|---|---|
+| 2 | `eslint`, `@eslint/js`, `globals`, `prettier`, `husky`, `lint-staged`, `@commitlint/cli`, `@commitlint/config-conventional` | Lint, formatação, hooks de commit, padrão de mensagens |
+| 3 | `zod`, `concurrently` | Validar `.env`; `npm run dev` único na raiz |
+| 5 | `drizzle-orm`, `drizzle-kit` (ou `prisma`, `@prisma/client` se D-05 = Prisma) | ORM e introspecção |
+| 6 | `typescript`, `tsx`, `@types/node`, `@types/express`, `@types/cors`, `@types/pg` | TypeScript no server e client |
+| 7 | `helmet`, `express-rate-limit`, `pino`, `pino-http`, `pino-pretty` (dev) | Segurança HTTP e logs |
+| 9 | `i18next`, `react-i18next`, `i18next-browser-languagedetector` | Interface em `en` e `pt-BR` |
+| 10 | `ts-fsrs` | Repetição espaçada FSRS |
+| 12 | `@playwright/test`, `@vitest/coverage-v8` | Testes de ponta a ponta e cobertura |
+| 13 | `@asteasolutions/zod-to-openapi`, `swagger-ui-express` | Documentação da API |
 
-## Fase 3 — Modelo lógico completo (PostgreSQL 18)
-- [x] T-040 Tabela `tenses` (código, idioma, rótulo, ordem) com os tempos usados na interface; trocar texto livre por chave estrangeira preservando valores existentes ✔ 2026-10-02 18:52
-- [x] T-041 Ajustar CHECK de `study_sessions.session_type` aos modos da tela "Estudar Agora" (+ custom_quiz) e de `sentences.source` para aceitar 'generated' ✔ 2026-10-02 20:01
-- [x] T-042 Tabelas `custom_quizzes` e `custom_quiz_questions` (dono, bloco de 5 ou 10, ordem, enunciado, resposta, palavra, contexto) e `study_sessions.quiz_id` ✔ 2026-10-02 21:29
-- [x] T-043 `language_code` em `vocabulary_items` (padrão 'en') para estudar outras línguas no futuro ✔ 2026-10-02 22:26
-- [ ] T-044 Função `set_updated_at()` e gatilhos BEFORE UPDATE nas tabelas com `updated_at`
-- [ ] T-045 Índices nas chaves estrangeiras sem índice e índices compostos das consultas quentes (fila de revisão, atividade por data)
-- [ ] T-046 Revisar `ON DELETE` (ex.: `reviews.context_practiced` sem regra bloqueia excluir contexto com revisões); garantir exclusão em cascata segura de palavra e de estudante
-- [ ] T-047 Gerar `docs/modelo-de-dados.md` com diagrama Mermaid e dicionário de dados
-- [ ] T-048 Rodar todas as migrations em banco novo e na cópia do existente; conferir com `\d` que não há divergência
+## Fase 1 — Reconhecimento e rede de segurança
+- [ ] T-001 [P] Abrir o V2: árvore limpa em `main` e branch `v2/phase-01-safety-net`
+- [ ] T-002 [P] Backup novo do banco (`pg_dump -Fc`) fora do repositório + restauração de teste com contagem por tabela
+- [ ] T-003 [P] Baseline: testes, lint, `npm audit` e smoke das telas; registrar números
+- [ ] T-004 [M] Matriz de usabilidade `docs/usability-matrix.md` (tela × rota × tabela × teste; dados que existem no banco e não aparecem no front) [v1 T-060]
 
-## Fase 4 — Gerador offline de frases
-- [ ] T-050 `server/src/services/sentenceGenerator.js`: funções puras (verbo + tempo verbal + sujeito → frase) usando `verb_forms` e regras para verbos regulares
-- [ ] T-051 Testes unitários por tempo verbal usado na tela (Present Simple, Past Simple, Present Perfect, Future, Past Continuous, Present Perfect Continuous…), com verbos regulares e irregulares
-- [ ] T-052 `POST /api/sentences/generate` (escopo do estudante; devolve sugestões sem gravar)
-- [ ] T-053 Interface: botão "Gerar frases" em Detalhes da Palavra e Banco de Frases; usuário aprova/edita antes de salvar (`source='generated'`)
-- [ ] T-054 Documentar os limites do gerador (frases simples e gramaticais, nem sempre naturais)
+## Fase 2 — Qualidade e ferramentas base
+- [ ] T-005 [P] `package.json` na raiz só para ferramentas, com `npm test` e `npm run lint` delegando para server e client (D-09)
+- [ ] T-006 [M] ESLint 9 (flat config) no server; client mantém Oxlint (D-17)
+- [ ] T-007 [M] Prettier compartilhado + formatação geral em commit separado + `.git-blame-ignore-revs`
+- [ ] T-008 [M] Husky + lint-staged na raiz + guarda contra commit parcial
+- [ ] T-009 [P] commitlint (Conventional Commits) no hook `commit-msg`
+- [ ] T-010 [M] GitHub Actions: lint + testes do server (PostgreSQL 18 de serviço) + testes e build do client
+- [ ] T-011 [P] Dependabot (npm e actions, semanal, agrupado) + CodeQL
 
-## Fase 5 — Conferência das funcionalidades descritas
-- [ ] T-060 Montar a matriz de cobertura (tela × rota × tabela × teste) a partir de references/diagnostico-atual.md; marcar ✅ ⚠️ ❌ conforme o código real
-- [ ] T-061 Cada ⚠️/❌ vira tarefa nova com `add-feature`
+## Fase 3 — Ambiente reproduzível
+- [ ] T-012 [M] Banco de testes separado (`<DB_NAME>_test`), criado e migrado pelo setup do Jest; remover `server/clean_test_db.js` (D-12)
+- [ ] T-013 [M] Validação do `.env` com Zod e `.env` único na raiz; banner "servidor indisponível" no client
+- [ ] T-014 [P] `docker-compose.yml` só com PostgreSQL 18 + scripts `db:up`/`db:down` (D-11)
+- [ ] T-015 [P] `npm run dev` único na raiz (concurrently) + `npm run setup` (D-09)
 
-## Fase 6 — Qualidade
-- [ ] T-070 Testes unitários do algoritmo SRS (intervalo, ease_factor, prioridade) e `docs/algoritmo-srs.md`
-- [ ] T-071 Erros da API padronizados em JSON, sem vazar SQL
-- [ ] T-072 Validação de entrada nas rotas (tipos, tamanhos, valores permitidos) com código simples, sem biblioteca nova
-- [ ] T-073 Suíte completa + lint verdes; registrar
+## Fase 4 — Migrações versionadas e modelo lógico (SQL)
+- [x] T-016 Migrações versionadas: executor em Node, `schema_migrations`, baseline 001 e migrations 002–005 [v1 T-010–T-013] ✔ legado 2026-10-01
+- [x] T-017 Modelo lógico parte 1: `tenses`, CHECKs, `custom_quizzes`, `language_code` (migrations 006–009) [v1 T-040–T-043] ✔ legado 2026-10-02
+- [ ] T-018 [M] Migrador com checksum (recusa migração editada) + `npm run migrate:status`; versão do schema no health e na Sidebar
+- [ ] T-019 [P] Limpeza: remover `migrate_session_type.js` da raiz e trocar `schema.sql` duplicado por snapshot gerado
+- [ ] T-020 [P] Função `set_updated_at()` e gatilhos; "Atualizado em" nos Detalhes da Palavra [v1 T-044]
+- [ ] T-021 [P] Índices nas chaves estrangeiras e nas consultas quentes [v1 T-045]
+- [ ] T-022 [M] Revisar `ON DELETE` + rota e botão "Excluir contexto" [v1 T-046]
+- [ ] T-023 [P] `docs/data-model.md` com diagrama Mermaid e dicionário de dados [v1 T-047]
+- [ ] T-024 [P] Todas as migrações em banco vazio e na cópia do backup; comparar snapshots [v1 T-048]
 
-## Fase 7 — Pronto para open source
-- [ ] T-080 Criar `LICENSE` (MIT, com ano e autor de D-03)
-- [ ] T-081 Criar `CONTRIBUTING.md` sob medida (PostgreSQL 18, `npm run dev`, testes, branches e commits)
-- [ ] T-082 Conferir `.gitignore` (`.env`, `node_modules`, builds) e `.env.example` completo e sem segredos
-- [ ] T-083 Verificar se algum `.env` real já foi commitado (`git log --all -- .env`); se sim, avisar o usuário e trocar a senha
-- [ ] T-084 Seeds com dados demonstrativos neutros (perguntar antes de trocar o nome do estudante inicial)
-- [ ] T-085 Atualizar o README: PostgreSQL 18 (README diz ≥14), número real de tabelas (README diz 14), novos endpoints, link do modelo de dados, badges só verdadeiros; usar a skill readme-open-source se estiver instalada
-- [ ] T-086 Conferir todos os links do README (LICENSE, CONTRIBUTING.md, .env.example, docs/)
-- [ ] T-087 (opcional, com aprovação) CODE_OF_CONDUCT.md, SECURITY.md, modelos de issue e de PR
+## Fase 5 — ORM (D-05, D-06)
+- [ ] T-025 [M] ADR `docs/adr/0001-orm.md` + instalar ORM + introspecção do banco + cliente compartilhando o pool
+- [ ] T-026 [P] Verificação de drift do schema do ORM (`npm run db:check-drift`) + passo no CI
+- [ ] T-027 [M] Camada de repositórios com escopo por estudante; migrar rotas `students` e `tenses`
+- [ ] T-028 [P] Migrar rotas `sessions` para o ORM
+- [ ] T-029 [M] Migrar rota `dashboard` (agregações parametrizadas)
+- [ ] T-030 [M] Migrar rotas `sentences` e `paragraphs`
+- [ ] T-031 [M] Migrar `vocabulary` — leitura (lista e detalhe)
+- [ ] T-032 [M] Migrar `vocabulary` — escrita (criar, editar, excluir, frases, contextos, significados) com transação
+- [ ] T-033 [M] Migrar `reviews` — fila de revisão
+- [ ] T-034 [M] Migrar `reviews` — registrar revisão, histórico, erros, frase do aluno
+- [ ] T-035 [P] Migrar `seed.js`; regra de lint que proíbe SQL montado por concatenação; `db.query` só no migrador
 
-## Fase final — Prova de fogo
-- [ ] T-090 Em banco vazio, seguir o README passo a passo como um estranho (clone → install → .env → migrate → seed → `npm run dev`) e confirmar que tudo abre
+## Fase 6 — TypeScript (D-07)
+- [ ] T-036 [M] Base TypeScript no server (`tsconfig` com allowJs, `typecheck`, CI) e ajuste do conteúdo do script `dev`
+- [ ] T-037 [M] Converter `config`, `middleware` e `services` do server para TS
+- [ ] T-038 [M] Converter rotas e repositórios `students`, `tenses`, `sessions`, `dashboard`
+- [ ] T-039 [M] Converter rotas e repositórios `sentences` e `vocabulary`
+- [ ] T-040 [M] Converter `reviews` e `index`; desligar allowJs no server; `strict`
+- [ ] T-041 [M] Base TypeScript no client (`typecheck`), `api.js` → `api.ts` com tipos; arquivos novos em TS
+
+## Fase 7 — Segurança
+- [ ] T-042 [M] Tratamento central de erros (formato JSON único, sem vazar SQL) + Toast de erros no client [v1 T-071]
+- [ ] T-043 [M] Middleware `validate` com Zod + schemas de `students`, `sessions`, `tenses`; erros por campo no form de estudante [v1 T-072]
+- [ ] T-044 [M] Zod em `vocabulary`; erros por campo em Novo Verbo e Detalhes da Palavra
+- [ ] T-045 [M] Zod em `reviews`, `sentences` e `dashboard`; erros por campo no Banco de Frases
+- [ ] T-046 [P] helmet + CORS restrito por variável de ambiente + limite de tamanho do corpo
+- [ ] T-047 [P] Rate limit (mais rígido em escrita) + mensagem amigável para 429
+- [ ] T-048 [P] Logs com pino/pino-http (request id, redação de segredos); request id no Toast de erro 500
+- [ ] T-049 [P] `npm audit` (corrigir sem breaking) + passo no CI + atualizar documento de segurança
+
+## Fase 8 — Isolamento por estudante
+- [x] T-050 Isolamento ponta a ponta: dono no banco, FKs compostas, `requireStudent`, `X-Student-Id` no cliente, testes [v1 T-020–T-030] ✔ legado 2026-10-01
+- [ ] T-051 [M] Recertificação pós-ORM/TS: teste que percorre todas as rotas e exige `X-Student-Id`; teste de FK composta no banco
+- [ ] T-052 [M] Trocar de estudante pela Sidebar e estudante ativo sempre visível
+- [ ] T-053 [M] Estudante novo: estados vazios com chamada para ação + "pacote inicial" de palavras
+
+## Fase 9 — Tradução para inglês e i18n
+- [ ] T-054 [P] Inventário de português (`docs/translation-inventory.md`) gerado por script somente leitura
+- [ ] T-055 [M] i18next + react-i18next + detector; locales `en` e `pt-BR`; seletor de idioma na Sidebar (D-15)
+- [ ] T-056 [M] Extrair textos: StudentSelect, Sidebar, UI, App
+- [ ] T-057 [M] Extrair textos: Dashboard e Progresso
+- [ ] T-058 [M] Extrair textos: Vocabulário, Detalhes da Palavra, Novo Verbo
+- [ ] T-059 [M] Extrair textos: StudySession parte 1 (escolha de modo e quiz personalizado)
+- [ ] T-060 [M] Extrair textos: StudySession parte 2 (cartão e avaliação) + Frases, Parágrafos, Busca
+- [ ] T-061 [M] Server em inglês: mensagens da API e comentários; client traduz erros pelo `code`
+- [ ] T-062 [P] Testes, seed, scripts e utils em inglês (sem editar migrações aplicadas)
+- [ ] T-063 [M] Nomes de arquivos em inglês + links + guarda no CI contra português no código
+
+## Fase 10 — Experiência de estudo (quiz como formato principal)
+- [ ] T-064 [M] ADR `docs/adr/0002-fsrs.md` + migração do estado FSRS e `review_logs` com backfill (D-14)
+- [ ] T-065 [P] Serviço `scheduler` com ts-fsrs (avaliar e prévia de intervalos) + testes
+- [ ] T-066 [M] API de estudo: `GET /api/study/queue` e `POST /api/study/answer` (nota 1–4)
+- [ ] T-067 [M] Cartão de quiz estilo Anki (Again/Hard/Good/Easy com prévia e atalhos) como fluxo padrão de "Estudar Agora"
+- [ ] T-068 [M] Tipos de cartão a partir dos dados existentes (significado, lacuna com frases, contextos, formas verbais)
+- [ ] T-069 [M] API de quizzes personalizados persistidos (`/api/quizzes`) usando as tabelas do v1 T-042
+- [ ] T-070 [M] Tela "Meus quizzes": criar bloco de 5/10, editar, jogar e ver resultado
+- [ ] T-071 [M] Prática com parágrafos: leitura + lacunas nas palavras ligadas, avaliada como revisão
+- [ ] T-072 [M] Gerador de frases por tempo verbal (regras/templates, irregulares via `verb_forms`) + testes [v1 T-050, T-051]
+- [ ] T-073 [P] `POST /api/sentences/generate` (escopo do estudante, não grava) [v1 T-052]
+- [ ] T-074 [M] Botão "Gerar frases" com aprovação antes de salvar + documento de limites [v1 T-053, T-054]
+- [ ] T-075 [M] API de estatísticas de aprendizado (retenção, revisões por dia, previsão, sequência)
+- [ ] T-076 [M] Dashboard de aprendizado: retenção, heatmap de 365 dias, revisões por dia, previsão
+- [ ] T-077 [M] Aposentar o fluxo Difícil/Parcial/Fácil, remover código morto, `docs/srs-algorithm.md` [v1 T-070]
+- [ ] T-078 [P] Revisar a matriz de usabilidade: todo ❌ resolvido ou levado ao roadmap [v1 T-061]
+
+## Fase 11 — Voz (Web Speech API, gratuita)
+- [ ] T-079 [M] Hook `useSpeech` + preferências de voz (voz, sotaque, velocidade) salvas
+- [ ] T-080 [M] Reconhecimento de fala com detecção de suporte + pontuação de pronúncia (função pura) (D-18)
+- [ ] T-081 [M] Gravar prática de pronúncia (`pronunciation_practice`) + botão "Falar" no cartão + tendência no Progresso
+
+## Fase 12 — Testes de ponta a ponta e cobertura
+- [ ] T-082 [M] Playwright: configuração com banco de teste + teste de fumaça (criar estudante, adicionar palavra)
+- [ ] T-083 [M] E2E: fluxo de estudo e isolamento entre estudantes
+- [ ] T-084 [P] Cobertura no Jest e no Vitest com metas aplicadas no CI
+- [ ] T-085 [P] E2E no CI com relatório como artefato
+
+## Fase 13 — Documentação e open source
+- [ ] T-086 [M] OpenAPI gerado dos schemas Zod + Swagger UI em `/api/docs` (fora de produção)
+- [ ] T-087 [P] `LICENSE` (D-03), `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md` [v1 T-080, T-081, T-087]
+- [ ] T-088 [P] Modelos de issue e PR em `.github/` + `CHANGELOG.md` [v1 T-087]
+- [ ] T-089 [P] Segredos e dados pessoais: histórico do `.env`, `.gitignore`, `.env.example`, seeds neutros [v1 T-082–T-084]
+- [ ] T-090 [P] Capturas de tela automáticas (Playwright) em `docs/images/`
+- [ ] T-091 [M] README final (pt-BR) com a skill de README: badges reais, stack, endpoints, links conferidos [v1 T-085, T-086]
+
+## Fase 14 — Prova de fogo
+- [ ] T-092 [M] Clone limpo + banco vazio, seguir o README como um estranho; cada atrito vira `add-feature` [v1 T-090]
+
+## Fase 15 — Tradução final
+- [ ] T-093 [M] README em inglês + `README.pt-BR.md` com links cruzados (D-08)
+- [ ] T-094 [M] Planejamento em inglês: renomear `plano-de-acao/` e arquivos, ajustar `plan_tool.py`, skills em inglês (D-16)
