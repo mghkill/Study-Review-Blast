@@ -1,3 +1,5 @@
+> ⚠️ **DOCUMENTO HISTÓRICO:** descreve o projeto ANTES do V1 e está desatualizado. Não usar como verdade; a T-004 deve gerar a matriz a partir do código real.
+
 # Diagnóstico do estado atual
 
 Baseado no README e no schema.sql enviados pelo usuário e na descrição das telas. **O código (rotas, componentes) ainda não foi lido**: tudo marcado "a confirmar" precisa ser verificado na Fase 0 antes de agir.

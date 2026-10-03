@@ -1,3 +1,16 @@
+> ⚠️ **DOCUMENTO HISTÓRICO / REFERÊNCIA:** Descreve a intenção original de modelagem antes do V1. Não usar como fonte da verdade absoluta; a T-004 e as tarefas do V2 devem se guiar pelo código real e pelo schema atual do banco.
+>
+> **Status do que já foi implementado nas migrations 002–009 (legado):**
+> - ✅ **§2 e §3 Posse e chaves compostas:** implementados via migrations `002_vocabulary_owner.sql`, `003_migrate_vocabulary_owners.sql`, `004_composite_foreign_keys.sql` e `005_cascade_delete_student.sql`.
+> - ✅ **§4 Identificação sem login:** middleware `requireStudent` e cabeçalho `X-Student-Id` implementados.
+> - ✅ **§5 Migrações:** pasta `server/src/db/migrations/`, tabela `schema_migrations` e migrador em Node implementados.
+> - ✅ **§6 Novas estruturas:**
+>   - Tabela `tenses` (12 tempos) e FKs (`006_tenses_table.sql`)
+>   - CHECKs de `study_sessions.session_type` e `sentences.source` (`007_session_type_and_sentence_source_checks.sql`)
+>   - `custom_quizzes` e `custom_quiz_questions` (`008_custom_quizzes.sql`)
+>   - `language_code` em `vocabulary_items` (`009_language_code.sql`)
+> - ⏳ **Pendente para o V2:** índices adicionais (T-021), gatilhos de `updated_at` (T-020), gerador de frases (T-072 a T-074), ORM Drizzle (Fase 5) e TypeScript (Fase 6).
+
 # Modelo lógico alvo (PostgreSQL 18)
 
 Sumário: 1 Princípios · 2 Posse e chaves compostas · 3 Testes de isolamento · 4 Identificação sem login · 5 Migrações · 6 Novas estruturas · 7 Notas de PostgreSQL 18 · 8 Gerador de frases · 9 Backup e restauração

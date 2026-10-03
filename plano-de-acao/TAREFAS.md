@@ -42,12 +42,12 @@ Branch da fase: `v2/phase-01-safety-net`
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-003.`
 
 ### T-004 · Matriz de usabilidade
-**M · Origem:** v1 T-060 (antecipada) · **Ler:** ENG, DIAG §4
-- **Objetivo:** mapear o que existe no banco e na API mas **não aparece ou não serve** na interface (ex.: quiz personalizado não é salvo; `custom_quizzes` sem rota; frases e parágrafos não entram no estudo; `pronunciation_practice`, `context_mastery`, `student_sentences` sem tela).
-- **Back:** ler rotas e tabelas; para cada tabela: rota que lê/escreve, tela que mostra, teste que cobre.
-- **Front:** é o diagnóstico do front: cada tela recebe ✅ funciona / ⚠️ parcial / ❌ ausente, com a tarefa V2 que resolve.
-- **Teste antes:** não se aplica (documento); verificação: toda tabela do schema aparece na matriz (conferir com `\dt`).
-- **Pronto quando:** `docs/usability-matrix.md` criado (em inglês) e cada ❌ apontando para uma T do V2 ou para o roadmap.
+**M · Origem:** v1 T-060 (antecipada) · **Ler:** ENG (nota: `DIAG` e `MLA` são históricos; gerar a matriz exclusivamente a partir do código real)
+- **Objetivo:** mapear a partir do **código real** e das **tabelas atuais do banco** o que existe na API e no schema mas **não aparece ou não serve** na interface (ex.: quiz personalizado não é salvo; `custom_quizzes` sem rota; frases e parágrafos não entram no estudo; `pronunciation_practice`, `context_mastery`, `student_sentences` sem tela). **Não usar `diagnostico-atual.md` como verdade.**
+- **Back:** inspecionar as rotas reais (`server/src/routes/`), controllers, migrações 001–009 e tabelas reais do banco (`\dt`); para cada tabela: rota que lê/escreve, tela que mostra, teste que cobre.
+- **Front:** inspecionar as telas reais (`client/src/pages/` e componentes): cada tela recebe ✅ funciona / ⚠️ parcial / ❌ ausente, com a tarefa V2 que resolve.
+- **Teste antes:** não se aplica (documento); verificação: toda tabela do schema real aparece na matriz (conferir com `\dt` no banco).
+- **Pronto quando:** `docs/usability-matrix.md` criado (em inglês), gerado pelo código e schema reais, com cada ❌ apontando para uma T do V2 ou para o roadmap.
 - **Commit:** `docs: add usability matrix (T-004)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-004.`
 

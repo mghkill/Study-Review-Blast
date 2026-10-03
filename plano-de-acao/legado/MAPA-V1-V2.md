@@ -9,7 +9,7 @@
 
 | V1 | Título V1 | V2 | Título V2 | Status |
 |---|---|---|---|---|
-| T-001 | Ler package.json, schema, rotas, confirmar versões | T-001 | Abrir o V2: branch `v2/phase-01-safety-net` | ♻️ (reconhecimento refeito do zero; branch é nova) |
+| T-001 | Ler package.json, schema, rotas, confirmar versões | — | — | ✅ — / incorporado no legado |
 | T-002 | Descobrir como estudante chega à API | — | — | ✅ incorporado no legado (conhecimento registrado) |
 | T-003 | Confirmar `npm run dev` | T-003 | Baseline de qualidade | ♻️ |
 | T-004 | Criar branch de trabalho | T-001 | Abrir o V2 (branch) | ♻️ |
@@ -127,18 +127,70 @@
 
 ## Tarefas 100% novas no V2 (sem equivalente no V1)
 
+Lista exata das 63 tarefas do V2 que não possuem correspondência direta no Plano V1 e não foram listadas nas seções anteriores:
+
 | V2 | Título | Fase |
 |---|---|---|
-| T-005–T-011 | Ferramentas de qualidade (root package.json, ESLint, Prettier, Husky, commitlint, CI, Dependabot) | 2 |
-| T-012–T-015 | Ambiente reproduzível (banco de testes, Zod env, Docker, `npm run dev` único) | 3 |
-| T-018–T-019 | Migrador com checksum, limpeza de scripts soltos | 4 |
-| T-025–T-026 | ORM (Drizzle ou Prisma — D-05) e drift check | 5 |
-| T-027–T-035 | Camada de repositórios (ORM) para todas as rotas | 5 |
-| T-036–T-041 | TypeScript incremental (server e client) | 6 |
-| T-046–T-049 | helmet, rate-limit, pino, npm audit | 7 |
-| T-051–T-053 | Recertificação de isolamento, trocar de estudante, estados vazios | 8 |
-| T-054–T-063 | Tradução para inglês + i18n completo | 9 |
-| T-064–T-081 | FSRS, quiz Anki, quizzes persistidos, parágrafos, voz | 10–11 |
-| T-082–T-085 | Playwright E2E e cobertura | 12 |
-| T-086–T-090 | OpenAPI, comunidade, screenshots | 13 |
-| T-093–T-094 | README em inglês e planejamento em inglês | 15 |
+| T-005 | `package.json` na raiz só para ferramentas, com `npm test` e `npm run lint` delegando para server e client (D-09) | Fase 2 |
+| T-006 | ESLint 9 (flat config) no server; client mantém Oxlint (D-17) | Fase 2 |
+| T-007 | Prettier compartilhado + formatação geral em commit separado + `.git-blame-ignore-revs` | Fase 2 |
+| T-008 | Husky + lint-staged na raiz + guarda contra commit parcial | Fase 2 |
+| T-009 | commitlint (Conventional Commits) no hook `commit-msg` | Fase 2 |
+| T-010 | GitHub Actions: lint + testes do server (PostgreSQL 18 de serviço) + testes e build do client | Fase 2 |
+| T-011 | Dependabot (npm e actions, semanal, agrupado) + CodeQL | Fase 2 |
+| T-012 | Banco de testes separado (`<DB_NAME>_test`), criado e migrado pelo setup do Jest; remover `server/clean_test_db.js` (D-12) | Fase 3 |
+| T-013 | Validação do `.env` com Zod e `.env` único na raiz; banner "servidor indisponível" no client | Fase 3 |
+| T-014 | `docker-compose.yml` só com PostgreSQL 18 + scripts `db:up`/`db:down` (D-11) | Fase 3 |
+| T-015 | `npm run dev` único na raiz (concurrently) + `npm run setup` (D-09) | Fase 3 |
+| T-025 | ADR `docs/adr/0001-orm.md` + instalar ORM + introspecção do banco + cliente compartilhando o pool | Fase 5 |
+| T-026 | Verificação de drift do schema do ORM (`npm run db:check-drift`) + passo no CI | Fase 5 |
+| T-027 | Camada de repositórios com escopo por estudante; migrar rotas `students` e `tenses` | Fase 5 |
+| T-028 | Migrar rotas `sessions` para o ORM | Fase 5 |
+| T-029 | Migrar rota `dashboard` (agregações parametrizadas) | Fase 5 |
+| T-030 | Migrar rotas `sentences` e `paragraphs` | Fase 5 |
+| T-031 | Migrar `vocabulary` — leitura (lista e detalhe) | Fase 5 |
+| T-032 | Migrar `vocabulary` — escrita (criar, editar, excluir, frases, contextos, significados) com transação | Fase 5 |
+| T-033 | Migrar `reviews` — fila de revisão | Fase 5 |
+| T-034 | Migrar `reviews` — registrar revisão, histórico, erros, frase do aluno | Fase 5 |
+| T-035 | Migrar `seed.js`; regra de lint que proíbe SQL montado por concatenação; `db.query` só no migrador | Fase 5 |
+| T-036 | Base TypeScript no server (`tsconfig` com allowJs, `typecheck`, CI) e ajuste do conteúdo do script `dev` | Fase 6 |
+| T-037 | Converter `config`, `middleware` e `services` do server para TS | Fase 6 |
+| T-038 | Converter rotas e repositórios `students`, `tenses`, `sessions`, `dashboard` | Fase 6 |
+| T-039 | Converter rotas e repositórios `sentences` e `vocabulary` | Fase 6 |
+| T-040 | Converter `reviews` e `index`; desligar allowJs no server; `strict` | Fase 6 |
+| T-041 | Base TypeScript no client (`typecheck`), `api.js` → `api.ts` com tipos; arquivos novos em TS | Fase 6 |
+| T-046 | helmet + CORS restrito por variável de ambiente + limite de tamanho do corpo | Fase 7 |
+| T-047 | Rate limit (mais rígido em escrita) + mensagem amigável para 429 | Fase 7 |
+| T-048 | Logs com pino/pino-http (request id, redação de segredos); request id no Toast de erro 500 | Fase 7 |
+| T-049 | `npm audit` (corrigir sem breaking) + passo no CI + atualizar documento de segurança | Fase 7 |
+| T-054 | Inventário de português (`docs/translation-inventory.md`) gerado por script somente leitura | Fase 9 |
+| T-055 | i18next + react-i18next + detector; locales `en` e `pt-BR`; seletor de idioma na Sidebar (D-15) | Fase 9 |
+| T-056 | Extrair textos: StudentSelect, Sidebar, UI, App | Fase 9 |
+| T-057 | Extrair textos: Dashboard e Progresso | Fase 9 |
+| T-058 | Extrair textos: Vocabulário, Detalhes da Palavra, Novo Verbo | Fase 9 |
+| T-059 | Extrair textos: StudySession parte 1 (escolha de modo e quiz personalizado) | Fase 9 |
+| T-060 | Extrair textos: StudySession parte 2 (cartão e avaliação) + Frases, Parágrafos, Busca | Fase 9 |
+| T-061 | Server em inglês: mensagens da API e comentários; client traduz erros pelo `code` | Fase 9 |
+| T-062 | Testes, seed, scripts e utils em inglês (sem editar migrações aplicadas) | Fase 9 |
+| T-063 | Nomes de arquivos em inglês + links + guarda no CI contra português no código | Fase 9 |
+| T-064 | ADR `docs/adr/0002-fsrs.md` + migração do estado FSRS e `review_logs` com backfill (D-14) | Fase 10 |
+| T-065 | Serviço `scheduler` com ts-fsrs (avaliar e prévia de intervalos) + testes | Fase 10 |
+| T-066 | API de estudo: `GET /api/study/queue` e `POST /api/study/answer` (nota 1–4) | Fase 10 |
+| T-067 | Cartão de quiz estilo Anki (Again/Hard/Good/Easy com prévia e atalhos) como fluxo padrão de "Estudar Agora" | Fase 10 |
+| T-068 | Tipos de cartão a partir dos dados existentes (significado, lacuna com frases, contextos, formas verbais) | Fase 10 |
+| T-069 | API de quizzes personalizados persistidos (`/api/quizzes`) usando as tabelas do v1 T-042 | Fase 10 |
+| T-070 | Tela "Meus quizzes": criar bloco de 5/10, editar, jogar e ver resultado | Fase 10 |
+| T-071 | Prática com parágrafos: leitura + lacunas nas palavras ligadas, avaliada como revisão | Fase 10 |
+| T-075 | API de estatísticas de aprendizado (retenção, revisões por dia, previsão, sequência) | Fase 10 |
+| T-076 | Dashboard de aprendizado: retenção, heatmap de 365 dias, revisões por dia, previsão | Fase 10 |
+| T-079 | Hook `useSpeech` + preferências de voz (voz, sotaque, velocidade) salvas | Fase 11 |
+| T-080 | Reconhecimento de fala com detecção de suporte + pontuação de pronúncia (função pura) (D-18) | Fase 11 |
+| T-081 | Gravar prática de pronúncia (`pronunciation_practice`) + botão "Falar" no cartão + tendência no Progresso | Fase 11 |
+| T-082 | Playwright: configuração com banco de teste + teste de fumaça (criar estudante, adicionar palavra) | Fase 12 |
+| T-083 | E2E: fluxo de estudo e isolamento entre estudantes | Fase 12 |
+| T-085 | E2E no CI com relatório como artefato | Fase 12 |
+| T-086 | OpenAPI gerado dos schemas Zod + Swagger UI em `/api/docs` (fora de produção) | Fase 13 |
+| T-088 | Modelos de issue e PR em `.github/` + `CHANGELOG.md` [v1 T-087] | Fase 13 |
+| T-090 | Capturas de tela automáticas (Playwright) em `docs/images/` | Fase 13 |
+| T-093 | README em inglês + `README.pt-BR.md` com links cruzados (D-08) | Fase 15 |
+| T-094 | Planejamento em inglês: renomear `plano-de-acao/` e arquivos, ajustar `plan_tool.py`, skills em inglês (D-16) | Fase 15 |

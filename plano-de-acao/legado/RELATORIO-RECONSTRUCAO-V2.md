@@ -49,11 +49,11 @@ Executou o `PROMPT_ORIGINAL.md` a partir do zero, com `skills/` já presente na 
 | T-020–T-030 | Isolamento por estudante | FKs compostas, `requireStudent`, `X-Student-Id` no client, 46/46 testes passando |
 | T-040–T-043 | Modelo lógico (migrations 006–009) | `tenses`, CHECKs, `custom_quizzes`, `language_code` |
 
-**Estado ao fim da Sessão 1:** 13 tarefas concluídas do V1; branch `fix/isolamento-e-evolucao` com PR #5 mergeado em main. Plano V1 parado na T-044.
+**Estado ao fim da Sessão 1:** 26 tarefas concluídas do V1 (T-001 a T-007, T-010 a T-013, T-020 a T-030, T-040 a T-043); branch `fix/isolamento-e-evolucao` com PR #5 mergeado em main. Plano V1 parado na T-044.
 
 ---
 
-### 2.2 Sessão 2 — Claude Opus (Sonnet 4.5), ~2026-10-03, interrompido por limite de tokens
+### 2.2 Sessão 2 — Opus 5.5, ~2026-10-03, interrompido por limite de tokens
 
 **Objetivo dado pelo usuário:** reconstruir o plano em um "V2" melhor — tarefas menores (uma por sessão), teste antes, front incluído, nada pago, ORM, TypeScript, segurança, i18n, FSRS, voz gratuita, CI, documentação e prova de fogo.
 
@@ -221,22 +221,9 @@ git commit -m "docs(plan): complete V2 plan — RETOMAR, TAREFAS, MAPA-V1-V2, co
 
 ---
 
-## 9. Commit de planejamento pendente (git status)
+## 9. Instrução de commit de planejamento
 
-Os seguintes arquivos estão prontos para commit mas ainda não foram commitados:
-
-```
- M README.md
- D client/README.md
- M plano-de-acao/LINHA-DO-TEMPO.md
- M skills/SKILLENG.md
-?? plano-de-acao/RETOMAR.md
-?? plano-de-acao/legado/MAPA-V1-V2.md
-?? plano-de-acao/legado/PROMPT_INICIAL_LEGADOV2.md
-?? skills/references/convencoes-v2.md
-```
-
-> **Atenção:** os movimentos de arquivo (PLANO.md V1 → legado/, RETOMAR.md V1 → legado/) feitos pelo Opus **já estão no histórico git** (`git log` mostra os commits), porque o Opus usou `Move-Item` e os arquivos já foram commitados anteriormente com seus nomes originais. O Git detecta como rename no próximo `git add .`.
+Nunca confiar em snapshots estáticos de git status. Sempre **rodar `git status` real antes do commit**.
 
 ---
 

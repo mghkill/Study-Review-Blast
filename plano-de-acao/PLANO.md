@@ -30,19 +30,19 @@ Explicação em linguagem simples no README (seção "Decisões explicadas").
 | ID | Decisão | Padrão adotado (recomendação) | Alternativas | Situação |
 |---|---|---|---|---|
 | D-01 | Posse dos dados | Cada palavra (e significados, contextos, frases) pertence a **um** estudante | Catálogo global + vínculo | Decidido (v1, migrations 002–004) |
-| D-02 | Dados atuais do banco | **Preservar** o banco de desenvolvimento; backup antes de cada fase com migração; testes em banco separado (D-12) | Descartar e recriar com seed | Aguardando confirmação |
-| D-03 | Licença e autor | **MIT**, `Copyright (c) 2026 mghkill` (trocar pelo nome que você quiser público) | Apache-2.0, GPL-3.0 | Aguardando confirmação |
+| D-02 | Dados atuais do banco | **Preservar** o banco de desenvolvimento; backup antes de cada fase com migração; testes em banco separado (D-12) | Descartar e recriar com seed | Decidido (confirmado em 2026-10-03) |
+| D-03 | Licença e autor | **MIT**, `Copyright (c) 2026 mghkill` (trocar pelo nome que você quiser público) | Apache-2.0, GPL-3.0 | Decidido (confirmado em 2026-10-03) |
 | D-04 | Como a API sabe quem é o estudante sem login | Cabeçalho `X-Student-Id` validado pelo middleware `requireStudent` (já existe) | Login (pós-prova de fogo); RLS no PostgreSQL | Decidido (v1); confirmar manutenção |
-| D-05 | ORM | **Drizzle ORM** (+ drizzle-kit só para introspecção) | Prisma (sua sugestão inicial); continuar com `pg` puro | Aguardando confirmação |
-| D-06 | Quem manda no schema | **Migrações SQL próprias continuam a fonte da verdade**; o schema do ORM é gerado por introspecção e conferido no CI (drift) | Migrações do ORM (`drizzle-kit migrate` / `prisma migrate`) | Aguardando confirmação |
-| D-07 | TypeScript (quando e como) | **Incremental, logo após o ORM (Fase 6)**: server primeiro; no client, `api.ts` e todo arquivo novo/reescrito em TS. Permite mudar o *conteúdo* do script `dev` do server mantendo nome e porta | Não adotar (JSDoc); converter tudo de uma vez; deixar para o fim | Aguardando confirmação |
-| D-08 | Idioma do README | **pt-BR até a Fase 14** (com resumo em inglês no topo); na Fase 15 vira inglês e o pt-BR fica em `README.pt-BR.md` | Inglês desde já | Aguardando confirmação |
-| D-09 | `package.json` na raiz | Criar só para ferramentas (lint, testes, hooks) e um `npm run dev` único com `concurrently`, **sem remover** os scripts de `server/` e `client/` | Não criar; npm workspaces | Aguardando confirmação |
-| D-10 | Dependências gratuitas aprovadas | Lista "Dependências aprovadas" abaixo | Aprovar uma a uma | Aguardando confirmação |
-| D-11 | Docker (não instalado nesta máquina) | **Instalar Docker Desktop** (gratuito para uso pessoal) antes da T-014; o PostgreSQL local continua valendo | Pular Docker local (CI usa contêiner de serviço mesmo assim) | Aguardando sua decisão (instalação) |
-| D-12 | Banco de testes | Testes usam banco próprio (`<DB_NAME>_test`) e nunca o de desenvolvimento | Continuar testando no banco de desenvolvimento | Proposto (padrão seguro) |
+| D-05 | ORM | **Drizzle ORM** (+ drizzle-kit só para introspecção) | Prisma (sua sugestão inicial); continuar com `pg` puro | Decidido (confirmado em 2026-10-03) |
+| D-06 | Quem manda no schema | **Migrações SQL próprias continuam a fonte da verdade**; o schema do ORM é gerado por introspecção e conferido no CI (drift) | Migrações do ORM (`drizzle-kit migrate` / `prisma migrate`) | Decidido (confirmado em 2026-10-03) |
+| D-07 | TypeScript (quando e como) | **Incremental, logo após o ORM (Fase 6)**: server primeiro; no client, `api.ts` e todo arquivo novo/reescrito em TS. Permite mudar o *conteúdo* do script `dev` do server mantendo nome e porta | Não adotar (JSDoc); converter tudo de uma vez; deixar para o fim | Decidido (confirmado em 2026-10-03) |
+| D-08 | Idioma do README | **pt-BR até a Fase 14** (com resumo em inglês no topo); na Fase 15 vira inglês e o pt-BR fica em `README.pt-BR.md` | Inglês desde já | Decidido (confirmado em 2026-10-03) |
+| D-09 | `package.json` na raiz | Criar só para ferramentas (lint, testes, hooks) e um `npm run dev` único com `concurrently`, **sem remover** os scripts de `server/` e `client/` | Não criar; npm workspaces | Decidido (confirmado em 2026-10-03) |
+| D-10 | Dependências gratuitas aprovadas | Lista "Dependências aprovadas" abaixo | Aprovar uma a uma | Decidido (confirmado em 2026-10-03) |
+| D-11 | Docker (não instalado nesta máquina) | **Instalar Docker Desktop** vs **Não instalar agora** (deixar compose.yml para quem quiser usar e seguir com PostgreSQL local) | CI usa contêiner de serviço de qualquer forma | Aguardando (divergência: instalar antes de T-014 vs não instalar agora) |
+| D-12 | Banco de testes | Testes usam banco próprio (`<DB_NAME>_test`) e nunca o de desenvolvimento | Continuar testando no banco de desenvolvimento | Proposto |
 | D-13 | Branches e PRs | Uma branch por fase (`v2/phase-NN-slug`); no fim da fase você faz push, abre PR e faz merge | Tudo em `main`; uma branch para o V2 inteiro | Proposto |
-| D-14 | Algoritmo de revisão | **FSRS** (`ts-fsrs`) decide *quando* revisar; a prioridade por erros atual ordena os vencidos; botões Again/Hard/Good/Easy | Manter o SRS próprio; SM-2 | Proposto |
+| D-14 | Algoritmo de revisão | **FSRS** (`ts-fsrs`) decide *quando* revisar; a prioridade por erros atual ordena os vencidos; botões Again/Hard/Good/Easy | Manter o SRS próprio; SM-2 | Proposto (requer confirmação explícita do usuário antes da Fase 10) |
 | D-15 | Idioma padrão da interface | Detectar o idioma do navegador; padrão `en`; seletor `en`/`pt-BR` salvo no navegador | Padrão `pt-BR` | Proposto |
 | D-16 | Planejamento em inglês | Na Fase 15, renomear `plano-de-acao/` e arquivos para inglês e ajustar `plan_tool.py` (exceção registrada) | Manter em português | Proposto |
 | D-17 | Lint do client | Manter **Oxlint** no client (já configurado); ESLint só no server; Prettier nos dois | ESLint também no client | Proposto |

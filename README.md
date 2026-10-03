@@ -170,7 +170,7 @@ O plano completo está em [`plano-de-acao/PLANO.md`](./plano-de-acao/PLANO.md). 
 | 10 | Experiência de estudo (FSRS + quiz Anki) | T-064–T-078 | `… T-064` … |
 | 11 | Voz (Web Speech API, gratuita) | T-079–T-081 | `… T-079` … |
 | 12 | Testes de ponta a ponta e cobertura | T-082–T-085 | `… T-082` … |
-| 13 | Documentação e open source | T-086–T-090 | `… T-086` … |
+| 13 | Documentação e open source | T-086–T-091 | `… T-086` … |
 | 14 | Prova de fogo | T-092 | `… T-092` |
 | 15 | Tradução final do planejamento | T-093–T-094 | `… T-093` … |
 
@@ -283,20 +283,20 @@ Explicações em linguagem simples das decisões arquiteturais do Plano V2. A li
 
 | ID | Decisão | O que isso significa |
 |---|---|---|
-| D-01 | Posse dos dados | Cada palavra pertence a um só estudante. Dois estudantes podem ter "run" cadastrada, mas são registros completamente separados no banco. |
-| D-02 | Dados atuais | Os dados existentes no banco de desenvolvimento são preservados. Antes de cada fase com migração, fazemos backup. Os testes rodam em banco separado (`_test`). |
-| D-03 | Licença e autor | MIT, `Copyright (c) 2026 mghkill`. Gratuita, permite uso comercial, exige manter o aviso. |
-| D-04 | Identificação sem login | O cliente envia `X-Student-Id` no cabeçalho de cada requisição. O servidor valida pelo middleware `requireStudent`. Sem JWT, sem sessão — uso local offline. |
-| D-05 | ORM | Drizzle ORM (introspecção + geração de tipos). Alternativa: Prisma. Aguardando confirmação. |
-| D-06 | Quem manda no schema | As migrations SQL continuam a fonte de verdade. O schema do ORM é gerado por introspecção e conferido no CI (drift check). |
-| D-07 | TypeScript | Adotado de forma incremental a partir da Fase 6: server primeiro, depois client. Arquivos existentes em JS são convertidos gradualmente; novos arquivos já nascem em TS. |
-| D-08 | Idioma do README | pt-BR até a Fase 14 (com resumo em inglês no topo). Na Fase 15 vira inglês e o pt-BR fica em `README.pt-BR.md`. |
-| D-09 | `package.json` na raiz | Criado só para ferramentas (hooks, lint, testes unificados). Os scripts de `server/` e `client/` não mudam. |
-| D-10 | Dependências aprovadas | Apenas as listadas em `PLANO.md §Dependências aprovadas`. Dependência fora da lista vira nova decisão antes de instalar. |
-| D-11 | Docker | Docker Desktop não está instalado. A Fase 3 cria o `compose.yml` para quem quiser usar; o PostgreSQL local continua funcionando sem Docker. |
+| D-01 | Posse dos dados | Cada palavra pertence a um só estudante. Dois estudantes podem ter "run" cadastrada, mas são registros completamente separados no banco. *(Decidido no V1)* |
+| D-02 | Dados atuais | Os dados existentes no banco de desenvolvimento são preservados. Antes de cada fase com migração, fazemos backup. Os testes rodam em banco separado (`_test`). *(Confirmado em 2026-10-03)* |
+| D-03 | Licença e autor | MIT, `Copyright (c) 2026 mghkill`. Gratuita, permite uso comercial, exige manter o aviso. *(Confirmado em 2026-10-03)* |
+| D-04 | Identificação sem login | O cliente envia `X-Student-Id` no cabeçalho de cada requisição. O servidor valida pelo middleware `requireStudent`. Sem JWT, sem sessão — uso local offline. *(Decidido no V1)* |
+| D-05 | ORM | Drizzle ORM (introspecção + geração de tipos). *(Confirmado em 2026-10-03)* |
+| D-06 | Quem manda no schema | As migrations SQL continuam a fonte de verdade. O schema do ORM é gerado por introspecção e conferido no CI (drift check). *(Confirmado em 2026-10-03)* |
+| D-07 | TypeScript | Adotado de forma incremental a partir da Fase 6: server primeiro, depois client. Arquivos existentes em JS são convertidos gradualmente; novos arquivos já nascem em TS. *(Confirmado em 2026-10-03)* |
+| D-08 | Idioma do README | pt-BR até a Fase 14 (com resumo em inglês no topo). Na Fase 15 vira inglês e o pt-BR fica em `README.pt-BR.md`. *(Confirmado em 2026-10-03)* |
+| D-09 | `package.json` na raiz | Criado só para ferramentas (hooks, lint, testes unificados). Os scripts de `server/` e `client/` não mudam. *(Confirmado em 2026-10-03)* |
+| D-10 | Dependências aprovadas | Apenas as listadas em `PLANO.md §Dependências aprovadas`. Dependência fora da lista vira nova decisão antes de instalar. *(Confirmado em 2026-10-03)* |
+| D-11 | Docker | Aguardando decisão do usuário: instalar Docker Desktop antes da T-014 vs não instalar agora (manter PostgreSQL local nativo e deixar compose.yml para quem quiser usar). |
 | D-12 | Banco de testes | Banco separado (`<DB_NAME>_test`), criado e migrado automaticamente pelo setup do Jest. Os testes nunca tocam no banco de desenvolvimento. |
 | D-13 | Branches e PRs | Uma branch por fase (`v2/phase-NN-slug`). Ao fim de cada fase o desenvolvedor faz push, abre PR e faz merge. A IA não faz push. |
-| D-14 | Algoritmo de revisão | FSRS (`ts-fsrs`) — decide *quando* revisar cada item. Substitui o SRS próprio na Fase 10. |
+| D-14 | Algoritmo de revisão | FSRS (`ts-fsrs`) — decide *quando* revisar cada item. Requer confirmação explícita do usuário antes da Fase 10. |
 | D-15 | Idioma da interface | Detecta o idioma do navegador; padrão `en`; seletor `en`/`pt-BR` salvo localmente. |
 | D-16 | Planejamento em inglês | Na Fase 15, a pasta `plano-de-acao/` e os arquivos de planejamento são renomeados para inglês. |
 | D-17 | Lint do client | Oxlint (já configurado) mantido no client. ESLint só no server. Prettier nos dois. |

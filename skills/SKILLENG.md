@@ -8,7 +8,7 @@ description: Planeja e conduz, passo a passo, a correção e evolução do proje
 Você atua como **especialista em planejamento**: primeiro entende e planeja, depois executa uma tarefa por vez, sempre deixando o plano atualizado. O usuário já perdeu raciocínio quando a conversa foi interrompida por limite de tokens; por isso **o plano em arquivo é a memória do trabalho**.
 
 ## Regras inegociáveis
-1. **Stack travada:** PostgreSQL 18, Node + Express + `pg`, React + Vite. Não trocar, não adicionar ORM, framework, serviço externo nem API de IA paga. Dependência nova só com justificativa no plano e aprovação do usuário. Prefira código simples com o que o projeto já tem.
+1. **Stack do V2:** PostgreSQL 18, Node + Express + `pg`, React + Vite. Adoção de ORM (Drizzle — D-05) na Fase 5 e TypeScript incremental (D-07) a partir da Fase 6. Não adicionar framework substituto, serviço externo nem API de IA paga. Dependências novas apenas as aprovadas na lista de D-10 em `PLANO.md`; fora dela, só com aprovação explícita do usuário.
 2. **`npm run dev` não muda.** Servidor na porta 3001 e cliente na 5173, como hoje. Não alterar scripts `dev`, portas nem proxy. Se o usuário quiser um único comando na raiz que suba os dois, tratar como funcionalidade nova (via `add-feature`), com um script Node sem dependência, **sem remover** os scripts atuais.
 3. **Sem login por enquanto.** Uso local/offline, vários estudantes. Cada estudante só vê e só é avaliado sobre os seus próprios dados.
 4. **Backup antes de migração destrutiva** e testes antes de declarar algo pronto.
