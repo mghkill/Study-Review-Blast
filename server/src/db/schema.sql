@@ -192,6 +192,7 @@ CREATE TABLE IF NOT EXISTS study_sessions (
   total_items INTEGER DEFAULT 0,
   correct_count INTEGER DEFAULT 0,
   incorrect_count INTEGER DEFAULT 0,
+  quiz_id INTEGER,
   notes TEXT
 );
 
@@ -288,6 +289,41 @@ CREATE TABLE IF NOT EXISTS student_sentences (
   vocabulary_rating VARCHAR(20),
   error_categories TEXT[],
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- =====================================================
+-- CUSTOM_QUIZZES (Quizzes personalizados)
+-- =====================================================
+CREATE TABLE IF NOT EXISTS custom_quizzes (
+  id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  student_id INTEGER NOT NULL REFERENCES students(id) ON DELETE CASCADE,
+  title VARCHAR(255) NOT NULL,
+  block_size SMALLINT NOT NULL DEFAULT 5 CHECK (block_size IN (5, 10)),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  CONSTRAINT uq_custom_quizzes_id_student UNIQUE (id, student_id)
+);
+
+-- =====================================================
+-- CUSTOM_QUIZ_QUESTIONS (Questões do quiz personalizado)
+-- =====================================================
+CREATE TABLE IF NOT EXISTS custom_quiz_questions (
+  id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  quiz_id INTEGER NOT NULL,
+  student_id INTEGER NOT NULL REFERENCES students(id) ON DELETE CASCADE,
+  vocabulary_item_id INTEGER NOT NULL,
+  context_id INTEGER,
+  prompt_text TEXT NOT NULL,
+  expected_answer TEXT NOT NULL,
+  position INTEGER NOT NULL DEFAULT 1,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  CONSTRAINT cqq_quiz_student_fk FOREIGN KEY (quiz_id, student_id)
+    REFERENCES custom_quizzes(id, student_id) ON DELETE CASCADE,
+  CONSTRAINT cqq_vocab_student_fk FOREIGN KEY (vocabulary_item_id, student_id)
+    REFERENCES vocabulary_items(id, student_id) ON DELETE CASCADE,
+  CONSTRAINT cqq_context_student_fk FOREIGN KEY (context_id, student_id)
+    REFERENCES contexts(id, student_id) ON DELETE SET NULL (context_id),
+  CONSTRAINT uq_cqq_quiz_position UNIQUE (quiz_id, position)
 );
 
 -- =====================================================

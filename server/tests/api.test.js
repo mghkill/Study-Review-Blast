@@ -438,3 +438,86 @@ describe('Dashboard API', () => {
     expect(res.status).toBe(400);
   });
 });
+
+// ─── Custom Quizzes (T-042) ───────────────────────────────────────────────────
+describe('Custom Quizzes API & Data Model (T-042)', () => {
+  let createdQuizId;
+
+  it('permite criar custom_quizzes com block_size 5 ou 10', async () => {
+    const res = await testPool.query(`
+      INSERT INTO custom_quizzes (student_id, title, block_size)
+      VALUES ($1, 'Quiz Phrasal Verbs', 5)
+      RETURNING *
+    `, [testStudentId]);
+    expect(res.rows[0].id).toBeDefined();
+    expect(res.rows[0].block_size).toBe(5);
+    createdQuizId = res.rows[0].id;
+  });
+
+  it('rejeita block_size diferente de 5 e 10', async () => {
+    await expect(
+      testPool.query(`
+        INSERT INTO custom_quizzes (student_id, title, block_size)
+        VALUES ($1, 'Invalid Size Quiz', 7)
+      `, [testStudentId])
+    ).rejects.toThrow();
+  });
+
+  it('permite criar custom_quiz_questions vinculadas ao quiz e vocabulário do mesmo estudante', async () => {
+    const res = await testPool.query(`
+      INSERT INTO custom_quiz_questions (
+        quiz_id, student_id, vocabulary_item_id, prompt_text, expected_answer, position
+      )
+      VALUES ($1, $2, $3, 'Complete: He ___ every morning.', 'runs', 1)
+      RETURNING *
+    `, [createdQuizId, testStudentId, testVocabId]);
+    expect(res.rows[0].id).toBeDefined();
+    expect(res.rows[0].position).toBe(1);
+    expect(res.rows[0].prompt_text).toContain('Complete: He');
+  });
+
+  it('impede gravar pergunta para quiz de outro aluno (isolamento FK composta)', async () => {
+    // Tenta associar pergunta usando studentId diferente do quiz
+    await expect(
+      testPool.query(`
+        INSERT INTO custom_quiz_questions (
+          quiz_id, student_id, vocabulary_item_id, prompt_text, expected_answer, position
+        )
+        VALUES ($1, 999999, $2, 'Prompt', 'Answer', 2)
+      `, [createdQuizId, testVocabId])
+    ).rejects.toThrow();
+  });
+
+  it('POST /api/sessions com quizId vincula a sessão ao quiz', async () => {
+    const res = await request(app)
+      .post('/api/sessions')
+      .set('X-Student-Id', String(testStudentId))
+      .send({ sessionType: 'custom_quiz', quizId: createdQuizId });
+    expect(res.status).toBe(201);
+    expect(res.body.quiz_id).toBe(createdQuizId);
+  });
+
+  it('POST /api/sessions com quizId inexistente retorna 404', async () => {
+    const res = await request(app)
+      .post('/api/sessions')
+      .set('X-Student-Id', String(testStudentId))
+      .send({ sessionType: 'custom_quiz', quizId: 999999 });
+    expect(res.status).toBe(404);
+  });
+
+  it('excluir o quiz coloca quiz_id = null na sessão (ON DELETE SET NULL)', async () => {
+    const sessRes = await request(app)
+      .post('/api/sessions')
+      .set('X-Student-Id', String(testStudentId))
+      .send({ sessionType: 'custom_quiz', quizId: createdQuizId });
+    const sId = sessRes.body.id;
+
+    // Deleta o quiz
+    await testPool.query('DELETE FROM custom_quizzes WHERE id = $1', [createdQuizId]);
+
+    // Sessão ainda existe com quiz_id null
+    const check = await testPool.query('SELECT quiz_id FROM study_sessions WHERE id = $1', [sId]);
+    expect(check.rows[0].quiz_id).toBeNull();
+  });
+});
+

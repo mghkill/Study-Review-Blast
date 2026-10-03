@@ -21,12 +21,24 @@ router.use(requireStudent);
 router.post('/', async (req, res) => {
   try {
     const sid = req.studentId;
-    const { sessionType = 'mixed' } = req.body;
+    const { sessionType = 'mixed', quizId, quiz_id } = req.body;
+    const targetQuizId = quizId || quiz_id || null;
+
+    if (targetQuizId) {
+      const qCheck = await db.query(
+        'SELECT id FROM custom_quizzes WHERE id = $1 AND student_id = $2',
+        [targetQuizId, sid]
+      );
+      if (!qCheck.rows[0]) {
+        return res.status(404).json({ error: 'Quiz not found for this student' });
+      }
+    }
+
     const normalizedType = SESSION_TYPE_MAP[sessionType] || 'mixed';
     const result = await db.query(`
-      INSERT INTO study_sessions (student_id, session_type)
-      VALUES ($1, $2) RETURNING *
-    `, [sid, normalizedType]);
+      INSERT INTO study_sessions (student_id, session_type, quiz_id)
+      VALUES ($1, $2, $3) RETURNING *
+    `, [sid, normalizedType, targetQuizId]);
     res.status(201).json(result.rows[0]);
   } catch (err) {
     res.status(500).json({ error: err.message });

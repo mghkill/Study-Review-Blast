@@ -57,3 +57,5 @@ Registro cronológico (mais antigo primeiro). Só se acrescenta; nunca se apaga.
 - **2026-10-02 18:52** — [T-040] concluída. Migration 006: tabela tenses (12 tempos), funcao _tense_label_to_code, FKs em tense_practice/sentences/reviews/errors (backfill 100%). Endpoint GET /api/tenses. Hook useTenses() com fallback. 4 componentes atualizados. vocabulary.js corrigido para inserir tense_code NOT NULL.
 - **2026-10-02 19:24** — [T-041] iniciada.
 - **2026-10-02 20:01** — [T-041] concluída. Migration 007 aplicada: CHECK sentences.source aceita 'generated', study_sessions.session_type aceita modos da tela (custom_quiz, green/maintenance, yellow/consolidation, all/free_practice, full). 49/49 backend e 61/61 frontend passando.
+- **2026-10-02 21:23** — [T-042] iniciada.
+- **2026-10-02 21:29** — [T-042] concluída. Migration 008 aplicada: tabelas custom_quizzes (block_size IN (5,10)) e custom_quiz_questions criadas com FKs compostas (student_id); study_sessions.quiz_id adicionada com FK composta ON DELETE SET NULL (quiz_id). 56/56 testes backend e 61/61 frontend passando.
