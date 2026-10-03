@@ -19,10 +19,9 @@ Você atua como **especialista em planejamento**: primeiro entende e planeja, de
 O usuário usa **Windows** com Python 3.14 (`py --version`). Nos comandos deste plano, use `py` no lugar de `python` quando `python` não existir. Use PowerShell; caminhos podem usar `/` ou `\`. O script já funciona sem instalar nada (sem pip).
 
 ## Ao começar qualquer sessão
-1. Verifique se existe `plano-de-acao/PLANO.md` na raiz do repositório.
-   - **Existe:** é uma retomada. Leia o bloco "PRÓXIMO PASSO" e o fim de `LINHA-DO-TEMPO.md`, rode `python plano-de-acao/plan_tool.py status` e continue da tarefa `[~]` ou da primeira `[ ]`. Não replaneje o que já está `[x]`.
-   - **Não existe:** rode `python <pasta-desta-skill>/scripts/plan_tool.py init` na raiz do repositório. Isso cria `plano-de-acao/` com o plano inicial completo (já montado a partir das necessidades do usuário), a linha do tempo e uma cópia do `plan_tool.py`, de modo que a pasta funcione sozinha depois.
-2. Se o usuário trouxer demanda nova, **não crie outro plano**: `python plano-de-acao/plan_tool.py add-feature "Título" --task "..." --task "..."`. Ela entra no mesmo `PLANO.md` como nova funcionalidade, com data e hora, e na linha do tempo.
+1. Leia `plano-de-acao/RETOMAR.md` — é o arquivo que diz o que fazer e como parar.
+2. Rode `py plano-de-acao/plan_tool.py status` e continue da tarefa `[~]` ou da primeira `[ ]`. Não replaneje o que já está `[x]`.
+3. Se o usuário trouxer demanda nova, **não crie outro plano**: `py plano-de-acao/plan_tool.py add-feature "Título" --task "..." --task "..."`. Ela entra no mesmo `PLANO.md` com data e hora.
 
 ## Ciclo de cada tarefa
 1. `plan_tool.py start T-0XX` **antes** de mexer em arquivos.
@@ -35,11 +34,10 @@ O usuário usa **Windows** com Python 3.14 (`py --version`). Nos comandos deste 
 Fuso das datas: America/Bahia, tratado pelo script. Nunca escreva datas e horas à mão no plano.
 
 ## Como conduzir o trabalho
-- A ordem está no plano: Fase 0 reconhecimento e backup → 1 migrações versionadas → 2 **isolamento por estudante** (prioridade) → 3 modelo lógico completo → 4 gerador offline de frases → 5 conferência das telas descritas → 6 qualidade → 7 open source → prova de fogo final.
-- Na Fase 0, leia o código de verdade e corrija o plano com o que encontrar (tarefas novas com `add-feature`; decisões em `log`). `references/diagnostico-atual.md` traz o que já se sabe e o que ainda é hipótese.
-- O desenho do banco, as chaves compostas que impedem mistura entre estudantes, os testes de isolamento, o desenho do gerador de frases e os comandos de backup estão em `references/modelo-logico-alvo.md`. Leia a seção correspondente antes de cada fase.
-- Escreva testes de isolamento **antes** de corrigir, para ver falhar e depois passar.
-- Perguntas ao usuário (tarefa T-007): uma única mensagem, curta, com a escolha padrão de cada item: dados atuais (preservar ou descartar) e autor/licença. Não bloqueie o resto do trabalho esperando resposta; avance no que não depende dela.
+- A ordem está no plano V2 (`plano-de-acao/PLANO.md`): 1 reconhecimento → 2 qualidade/ferramentas → 3 ambiente reproduzível → 4 migrações SQL → 5 ORM → 6 TypeScript → 7 segurança → 8 isolamento → 9 i18n → 10 quiz Anki/FSRS → 11 voz → 12 E2E → 13 open source → 14 prova de fogo → 15 tradução do planejamento.
+- O detalhe de cada tarefa (back, front, teste antes, critério de pronto) está em `plano-de-acao/TAREFAS.md`.
+- O desenho do banco, chaves compostas e testes de isolamento estão em `references/modelo-logico-alvo.md`. Leia a seção correspondente antes de cada fase.
+- Escreva testes **antes** de implementar; veja-os falhar; só depois implemente.
 
 ## Comunicação com o usuário
 O usuário é desenvolvedor em formação e **iniciante em open source**. Explique licença, CONTRIBUTING e badges em linguagem simples (ver `references/open-source-basico.md`), uma vez, antes de criar os arquivos. Fale em português, objetivo, sem exagero de jargão. Ao fim de cada fase, resuma em poucas linhas: o que mudou, como foi verificado, o que vem a seguir.
@@ -48,8 +46,10 @@ O usuário é desenvolvedor em formação e **iniciante em open source**. Expliq
 Antes de dar o projeto como pronto para open source: README coerente com o código (versões, número de tabelas, endpoints, links existentes), `LICENSE` e `CONTRIBUTING.md` criados, `.env` fora do git, e a prova de fogo (T-090) feita do zero em banco vazio.
 
 ## Arquivos da skill
-- `scripts/plan_tool.py`: cria e atualiza a pasta `plano-de-acao/` (init, status, start, done, block, log, add-feature).
-- `assets/PLANO.inicial.md`: plano completo de partida, com decisões e tarefas numeradas.
-- `references/diagnostico-atual.md`: divergências README × schema, causas prováveis do vazamento entre estudantes, riscos do schema, matriz de cobertura das telas.
-- `references/modelo-logico-alvo.md`: posse dos dados e chaves compostas, testes de isolamento, migrações, novas tabelas, notas de PostgreSQL 18, gerador de frases, backup.
+- `scripts/plan_tool.py`: atualiza a pasta `plano-de-acao/` (status, start, done, block, log, add-feature).
+- `references/diagnostico-atual.md`: divergências README × schema, causas prováveis do vazamento entre estudantes, riscos do schema.
+- `references/modelo-logico-alvo.md`: posse dos dados e chaves compostas, testes de isolamento, migrações, notas de PostgreSQL 18, gerador de frases.
 - `references/open-source-basico.md`: o que são LICENSE, CONTRIBUTING e badges e quais arquivos criar.
+- `references/open-source-checklist.md`: checklist de itens para open source.
+
+> O plano inicial (V1) foi movido para `plano-de-acao/legado/PLANO.inicial-v1.md`. O plano ativo é `plano-de-acao/PLANO.md` (V2, 94 tarefas).

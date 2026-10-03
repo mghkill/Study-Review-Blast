@@ -1,282 +1,325 @@
 # StudyReviewBlast
 
-[![Node.js](https://img.shields.io/badge/Node.js-18%2B-green.svg)](https://nodejs.org/)
+> **English summary:** Personal spaced-repetition and active-recall platform for language learners. Multi-student, fully offline, no paid services. Stack: PostgreSQL 18 · Node 24 + Express · React 19 + Vite. See [Decisões explicadas](#decisões-explicadas) for architectural choices.
+
+[![Node.js](https://img.shields.io/badge/Node.js-24-green.svg)](https://nodejs.org/)
 [![React](https://img.shields.io/badge/React-19-61dafb.svg)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/Vite-8-646cff.svg)](https://vitejs.dev/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18-blue.svg)](https://www.postgresql.org/)
-
-> A personal Spaced Repetition System (SRS) and dynamic Active Recall training platform for accelerated retention of English vocabulary, verbs, and grammatical structures.
-
-**StudyReviewBlast** blends cognitive science principles (*Spaced Repetition System* and *Active Recall*) to turn language acquisition into an active, high-retention habit. The system prioritizes items with high error frequency, dynamically organizes customizable quiz blocks of 5 or 10 questions, and prompts learners with contextual clues and cloze-test sentence completions before revealing answers.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
 ---
 
-## 📑 Table of Contents
+## Índice
 
-- [Core Features](#-core-features)
-- [System Architecture & Logical Data Model](#-system-architecture--logical-data-model)
-- [Technology Stack](#-technology-stack)
-- [Prerequisites](#-prerequisites)
-- [Installation](#-installation)
-- [Environment Configuration](#-environment-configuration)
-- [Running the Application](#-running-the-application)
-- [API Endpoints](#-api-endpoints)
-- [Project Structure](#-project-structure)
-- [Automated Tests & Quality](#-automated-tests--quality)
-- [Roadmap](#-roadmap)
-- [License](#-license)
-
----
-
-## ✨ Core Features
-
-- **🃏 Customizable Quizzes (Adaptive Anki-Style Mode):** Create and practice custom questions in agile blocks of 5 or 10 questions, incorporating contextual chips and sample sentences directly into the prompt.
-- **🎯 Dynamic SRS Error-Funneling Algorithm:** Priority weighting computed using recency, error rate, difficulty, and review intervals, ensuring struggling items remain front and center.
-- **🧠 Active Recall with Contextual Clues:**
-  - *Collocations & Usage Contexts:* Displays natural pairings (e.g., `avoid people`, `avoid conflict`) to prime memory prior to card flip.
-  - *Cloze Tests (Sentence Gap-Fills):* Blanks out target verbs (`[ _______ ]`) to challenge morphological conjugation and grammatical syntax.
-- **🔊 Native English Speech Synthesis (TTS):** Automatic selection of native voices (`en-US` and `en-GB`), filtering incompatible accents, and providing instant auditory feedback.
-- **📚 Complete Vocabulary Management (CRUD):** Add, update, and search vocabulary items (primary definition, CEFR level, difficulty, irregularity flags, inline sentence editing, and multiple meanings) with cascaded relational cleanup.
-- **👥 Multi-Profile Student Isolation:** Switch between multiple student profiles seamlessly. Each student maintains a completely isolated catalog of words, review queues, study sessions, and metrics.
-- **📊 Analytical Performance Dashboard:** Track retention rates, review accuracy, CEFR level mastery (A1 to C1), and error breakdowns by category (grammar, tense, meaning, etc.).
+- [Resumo do projeto](#resumo-do-projeto)
+- [Stack e pré-requisitos](#stack-e-pré-requisitos)
+- [Como rodar](#como-rodar)
+- [Onde parei / como prosseguir](#onde-parei--como-prosseguir)
+- [Algoritmo de um dia de trabalho](#algoritmo-de-um-dia-de-trabalho)
+- [Fases e tarefas do Plano V2](#fases-e-tarefas-do-plano-v2)
+- [Como retomar após interrupção](#como-retomar-após-interrupção)
+- [Endpoints da API](#endpoints-da-api)
+- [Estrutura do projeto](#estrutura-do-projeto)
+- [Testes e qualidade](#testes-e-qualidade)
+- [Decisões explicadas](#decisões-explicadas)
+- [Melhorias pós-prova de fogo](#melhorias-pós-prova-de-fogo)
+- [Licença](#licença)
 
 ---
 
-## 🏗 System Architecture & Logical Data Model
+## Resumo do projeto
 
-The application adheres to the structural principles defined in the core engineering specifications ([`modelo-logico-alvo.md`](file:///c:/Users/opera/Desktop/Training%20Verbs/skills/references/modelo-logico-alvo.md)):
+**StudyReviewBlast** é uma plataforma de estudo por repetição espaçada (*SRS*) e recordação ativa (*Active Recall*) voltada para aquisição de vocabulário em inglês (e futuramente outros idiomas). Funciona 100% offline, sem login, sem serviço externo, com suporte a múltiplos perfis de estudante — cada um com seu próprio catálogo isolado de palavras, revisões, frases e histórico.
 
-### 1. The Database as the Ultimate Boundary (PostgreSQL 18)
-Business logic and client validations are backed by hard constraints at the schema level:
-- **Strict Data Ownership (Decision D-01):** Every vocabulary entry, review record, sentence, context, and study session is strictly associated with a `student_id`. There is no global shared catalog that can be inadvertently altered by another learner.
-- **Composite Foreign Keys:** Child tables (`student_vocabulary`, `tense_practice`, `reviews`, `errors`, `sentences`, `contexts`, `paragraphs`) enforce compound foreign keys:
-  ```sql
-  FOREIGN KEY (vocabulary_item_id, student_id)
-    REFERENCES vocabulary_items(id, student_id)
-    ON DELETE CASCADE
-  ```
-  This guarantees at the database engine level that Student A's review logs or sentences can never reference or corrupt Student B's vocabulary.
-- **Transactional Migrations:** Database versioning is governed by a pure Node.js migration runner (`server/src/db/migrations/`). Every migration script runs inside an atomic transaction (`BEGIN ... COMMIT`), tracking execution history in `schema_migrations`.
-
-### 2. API Student Isolation Middleware (`requireStudent`)
-- Every authenticated REST endpoint passes through the `requireStudent` middleware.
-- The request must supply a valid `X-Student-Id` HTTP header. Missing headers return `400 Bad Request`; nonexistent student IDs return `404 Not Found`.
-- All SQL queries filter exclusively by `req.studentId`. Attempts to specify `student_id` in the request body or query string are discarded.
-- Accessing or modifying resources belonging to another profile always resolves to `404 Not Found` (preventing existence probing).
-
-### 3. Client-Side Lifecycle & Interceptor
-- The frontend (`client/src/api.js`) utilizes an Axios request interceptor that transparently injects `X-Student-Id` from the active profile stored in `localStorage`.
-- When switching students, layout keys (`key={student.id}`) ensure React fully unmounts and remounts all screens, completely flushing memory caches, form states, and lingering view data.
-
-### 4. Security Scope & Boundary Limitations
-> [!NOTE]
-> **Local / Personal Architecture:** The system is engineered for local, offline study and does not require third-party cloud services or centralized password authentication (no JWT/OAuth). While this architecture guarantees strict data segregation and prevents accidental cross-profile contamination, **it does not protect against users with physical access to the local machine or browser Developer Tools**, where headers can be freely spoofed. For hosted multi-user cloud deployments, a formal authentication layer must be placed in front of `requireStudent`.
+**Funcionalidades principais:**
+- Fila de revisão inteligente (algoritmo FSRS — planejado na Fase 10).
+- Cartão de quiz estilo Anki (Again / Hard / Good / Easy) com prévia de intervalo.
+- Quiz personalizado: blocos de 5 ou 10 perguntas com contextos e frases.
+- Isolamento completo por estudante no banco (FKs compostas) e na API (middleware `requireStudent`).
+- Síntese de voz nativa (`SpeechSynthesis`) e reconhecimento de fala opcional (`SpeechRecognition`).
+- Dashboard com KPIs de retenção, heatmap de atividade e previsão de revisões.
 
 ---
 
-## 🛠 Technology Stack
+## Stack e pré-requisitos
 
-| Layer | Technology | Declared Version | Purpose |
-|---|---|---|---|
-| **Runtime & Language** | Node.js | `>= 18.0.0` | Server-side JavaScript execution environment |
-| **Backend Framework** | Express | `^4.18.2` | RESTful API server, routing, and isolation middleware |
-| **Database** | PostgreSQL | `>= 14.0.0` (18 recommended) | Relational database with composite constraints and transactional DDL |
-| **Database Driver** | pg (node-postgres) | `^8.11.3` | Connection pooling and query execution |
-| **Frontend Library** | React | `^19.2.8` | Component-based reactive user interface |
-| **Frontend Tooling** | Vite | `^8.3.0` | Fast development server and production bundler |
-| **Routing** | react-router-dom | `^7.18.4` | Client-side routing and layout management |
-| **HTTP Client** | Axios | `^1.20.0` | API communication with `X-Student-Id` request interceptor |
-| **Data Visualization** | Chart.js / react-chartjs-2 | `^4.5.1` / `^5.3.1` | Retention KPIs, weekly progress, and CEFR domain charts |
-| **Backend Testing** | Jest / Supertest | `^29.7.0` / `^7.3.0` | Integration testing, isolation validation, and migration tests |
-| **Frontend Testing** | Vitest / Testing Library | `^5.0.3` / `^16.3.3` | Unit tests for client isolation and SRS algorithms |
-| **Code Quality** | Oxlint | `^1.81.0` | Static code analysis and linting |
+| Camada | Tecnologia | Versão |
+|---|---|---|
+| Banco | PostgreSQL | **18** |
+| Runtime | Node.js | **24** |
+| Backend | Express + pg | 4.x + 8.x |
+| Frontend | React + Vite | 19 + 8 |
+| Roteamento | react-router-dom | 7.x |
+| HTTP client | Axios | 1.x |
+| Testes backend | Jest + Supertest | 29 + 7 |
+| Testes frontend | Vitest | 5 |
+| Lint frontend | Oxlint | 1.x |
 
----
-
-## 📋 Prerequisites
-
-Ensure your environment satisfies the following requirements:
-
-- **Node.js:** Version 18 or higher (`node --version`)
-- **npm:** Version 9 or higher (`npm --version`)
-- **PostgreSQL:** Version 14 or higher (PostgreSQL 18 recommended) running on port `5432`
+**Para rodar localmente você precisa de:**
+- Node.js 24 (`node --version`)
+- npm 10+ (`npm --version`)
+- PostgreSQL 18 na porta 5432
 
 ---
 
-## 🚀 Installation
+## Como rodar
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/mghkill/Study-Review-Blast.git
-   cd Study-Review-Blast
-   ```
+### 1. Clonar e instalar dependências
 
-2. **Install Backend dependencies:**
-   ```bash
-   cd server
-   npm install
-   cd ..
-   ```
+```bash
+git clone https://github.com/mghkill/Study-Review-Blast.git
+cd Study-Review-Blast
 
-3. **Install Frontend dependencies:**
-   ```bash
-   cd client
-   npm install
-   cd ..
-   ```
+npm install --prefix server
+npm install --prefix client
+```
 
----
-
-## ⚙️ Environment Configuration
-
-Create a `.env` file in the project root by copying the template [.env.example](./.env.example):
+### 2. Configurar o `.env`
 
 ```bash
 cp .env.example .env
+# Edite .env com suas credenciais locais do PostgreSQL
 ```
 
-### Environment Variables
+| Variável | Obrigatório | Exemplo |
+|---|---|---|
+| `DB_HOST` | Sim | `localhost` |
+| `DB_PORT` | Sim | `5432` |
+| `DB_NAME` | Sim | `reviewdatabase` |
+| `DB_USER` | Sim | `postgres` |
+| `DB_PASSWORD` | Sim | *(sua senha local)* |
+| `PORT` | Não | `3001` |
+| `NODE_ENV` | Não | `development` |
 
-| Variable | Required | Description | Example |
-|---|---|---|---|
-| `DB_HOST` | Yes | PostgreSQL host address | `localhost` |
-| `DB_PORT` | Yes | PostgreSQL connection port | `5432` |
-| `DB_NAME` | Yes | Database name | `reviewdatabase` |
-| `DB_USER` | Yes | PostgreSQL username | `postgres` |
-| `DB_PASSWORD` | Yes | PostgreSQL password | `your_local_password` |
-| `PORT` | No | Express server port (default: 3001) | `3001` |
-| `NODE_ENV` | No | Environment mode (`development`/`production`) | `development` |
-
----
-
-## 🏁 Running the Application
-
-### 1. Database Migrations and Seed Data
-
-Run the versioned migration runner and seed baseline data:
+### 3. Migrar e popular o banco
 
 ```bash
-# Execute transactional migrations in server/src/db/migrations/
-npm run migrate --prefix server
-
-# Seed initial student profile and curated verb library
-npm run seed --prefix server
+npm run migrate --prefix server   # aplica migrations em ordem
+npm run seed --prefix server      # cria estudante inicial e vocabulário demo
 ```
 
-### 2. Start Development Servers
+### 4. Subir os servidores (dois terminais)
 
-Open two separate terminals:
+```bash
+# Terminal 1 — API (porta 3001)
+cd server && npm run dev
 
-- **Terminal 1 — Backend API (Port 3001):**
-  ```bash
-  cd server
-  npm run dev
-  ```
-  *Health Check:* [http://localhost:3001/api/health](http://localhost:3001/api/health)
+# Terminal 2 — Interface (porta 5173)
+cd client && npm run dev
+```
 
-- **Terminal 2 — Frontend Application (Port 5173):**
-  ```bash
-  cd client
-  npm run dev
-  ```
-  *Access Web UI:* [http://localhost:5173/](http://localhost:5173/)
+- Health check: http://localhost:3001/api/health
+- Interface: http://localhost:5173
 
 ---
 
-## 🌐 API Endpoints
+## Onde parei / como prosseguir
 
-All endpoints except `/api/health` and `/api/students` require the `X-Student-Id` header.
+**Prompt que você dá à IA a cada sessão:**
 
-| Method | Endpoint | Description |
+```
+Leia plano-de-acao/RETOMAR.md e execute a T-0XX.
+```
+
+Substitua `0XX` pelo número exibido em `plano-de-acao/PLANO.md → ## PRÓXIMO PASSO`, ou rode:
+
+```powershell
+py plano-de-acao/plan_tool.py status
+```
+
+---
+
+## Algoritmo de um dia de trabalho
+
+```
+1. py plano-de-acao/plan_tool.py status
+2. Ler PLANO.md → bloco "PRÓXIMO PASSO"
+3. Ler TAREFAS.md → cartão da tarefa (### T-0XX)
+4. Ler últimas 20 linhas de LINHA-DO-TEMPO.md
+5. git status + git log -3
+──────────────────────────────────────
+6. plan_tool.py start T-0XX
+7. Escrever o teste ANTES e vê-lo FALHAR
+8. Implementar até o teste passar
+──────────────────────────────────────
+PAUSA OBRIGATÓRIA (ver plano-de-acao/RETOMAR.md §3):
+9. Rodar testes e lint
+10. git add . (na raiz) + git commit
+11. plan_tool.py done T-0XX --nota "..."
+12. PARAR — não avance sem aprovação
+```
+
+---
+
+## Fases e tarefas do Plano V2
+
+O plano completo está em [`plano-de-acao/PLANO.md`](./plano-de-acao/PLANO.md). Resumo das fases:
+
+| Fase | Título | Tarefas | Prompt da IA |
+|---|---|---|---|
+| 1 | Reconhecimento e rede de segurança | T-001–T-004 | `Leia plano-de-acao/RETOMAR.md e execute a T-001.` |
+| 2 | Qualidade e ferramentas base | T-005–T-011 | `… T-005` … `… T-011` |
+| 3 | Ambiente reproduzível | T-012–T-015 | `… T-012` … `… T-015` |
+| 4 | Migrações versionadas e modelo lógico | T-016–T-024 | `… T-016` … `… T-024` |
+| 5 | ORM (D-05, D-06) | T-025–T-035 | `… T-025` … |
+| 6 | TypeScript (D-07) | T-036–T-041 | `… T-036` … |
+| 7 | Segurança | T-042–T-049 | `… T-042` … |
+| 8 | Isolamento por estudante | T-050–T-053 | `… T-051` … |
+| 9 | Tradução para inglês e i18n | T-054–T-063 | `… T-054` … |
+| 10 | Experiência de estudo (FSRS + quiz Anki) | T-064–T-078 | `… T-064` … |
+| 11 | Voz (Web Speech API, gratuita) | T-079–T-081 | `… T-079` … |
+| 12 | Testes de ponta a ponta e cobertura | T-082–T-085 | `… T-082` … |
+| 13 | Documentação e open source | T-086–T-090 | `… T-086` … |
+| 14 | Prova de fogo | T-092 | `… T-092` |
+| 15 | Tradução final do planejamento | T-093–T-094 | `… T-093` … |
+
+> T-016, T-017 e T-050 já estão concluídas (feitas no Plano V1).
+
+---
+
+## Como retomar após interrupção
+
+Se a IA encerrou por falta de tokens ou foi trocada no meio de uma tarefa:
+
+1. Veja se a tarefa está marcada `[~]` em `PLANO.md`. Se não, rode `plan_tool.py start T-0XX`.
+2. Leia as últimas 20 linhas de `LINHA-DO-TEMPO.md`.
+3. Rode `git status` — se houver arquivos não commitados, avalie se o trabalho parcial está correto.
+4. Use o prompt: `Leia plano-de-acao/RETOMAR.md e continue a T-0XX (interrompida).`
+
+---
+
+## Endpoints da API
+
+Todos os endpoints exceto `/api/health` e `/api/students` exigem o header `X-Student-Id`.
+
+| Método | Endpoint | Descrição |
 |---|---|---|
-| `GET` | `/api/health` | Health status and database connectivity check |
-| `GET`, `POST` | `/api/students` | List student profiles and create new empty profile |
-| `GET`, `PATCH`, `DELETE` | `/api/students/:id` | Fetch, update, or delete student with cascaded cleanup |
-| `GET`, `POST` | `/api/vocabulary` | Query or create vocabulary items for active student |
-| `GET`, `PATCH`, `DELETE` | `/api/vocabulary/:id` | Fetch details, edit fields, or remove word |
-| `GET` | `/api/reviews/queue` | Retrieve intelligent SRS study queue for active student |
-| `POST` | `/api/reviews` | Submit card review (recalculates intervals and mastery) |
-| `GET` | `/api/reviews/errors` | Retrieve error analytics grouped by grammatical category |
-| `POST` | `/api/sessions` | Create new study session (`mixed`, `weak`, `review`, etc.) |
-| `PATCH` | `/api/sessions/:id` | Finalize session and record performance metrics |
-| `GET` | `/api/dashboard` | Aggregated KPIs, retention metrics, and CEFR breakdown |
-| `GET`, `POST` | `/api/sentences` | Query or add custom sentences linked to vocabulary |
-| `GET`, `POST` | `/api/sentences/paragraphs`| Manage multi-sentence contextual paragraphs |
+| `GET` | `/api/health` | Status e conectividade com o banco |
+| `GET`, `POST` | `/api/students` | Listar perfis e criar novo (começa vazio) |
+| `GET`, `PATCH`, `DELETE` | `/api/students/:id` | Buscar, atualizar ou remover perfil |
+| `GET` | `/api/tenses` | Listar tempos verbais canônicos |
+| `GET`, `POST` | `/api/vocabulary` | Listar ou criar palavra do estudante |
+| `GET`, `PATCH`, `DELETE` | `/api/vocabulary/:id` | Detalhe, editar ou remover palavra |
+| `POST` | `/api/vocabulary/:id/sentences` | Adicionar frase à palavra |
+| `POST` | `/api/vocabulary/:id/contexts` | Adicionar contexto à palavra |
+| `PATCH` | `/api/vocabulary/:id/meanings/:mId` | Editar significado |
+| `GET` | `/api/reviews/queue` | Fila de revisão SRS do estudante |
+| `POST` | `/api/reviews` | Registrar revisão (recalcula intervalo) |
+| `GET` | `/api/reviews/history` | Histórico de revisões |
+| `GET` | `/api/reviews/errors` | Análise de erros por categoria |
+| `POST` | `/api/reviews/student-sentence` | Salvar frase do estudante na revisão |
+| `POST` | `/api/sessions` | Criar sessão de estudo |
+| `PATCH` | `/api/sessions/:id` | Finalizar sessão |
+| `GET` | `/api/dashboard` | KPIs agregados do estudante |
+| `GET`, `POST` | `/api/sentences` | Frases do estudante |
+| `GET`, `POST` | `/api/sentences/paragraphs` | Parágrafos do estudante |
 
 ---
 
-## 📁 Project Structure
+## Estrutura do projeto
 
 ```text
 Study-Review-Blast/
-├── client/                      # React SPA Frontend (Vite)
+├── client/                    # SPA React + Vite (porta 5173)
 │   ├── src/
-│   │   ├── components/          # Reusable UI components (Sidebar, TTSButton, Badges)
-│   │   ├── context/             # Global AppContext (active student sync & state reset)
-│   │   ├── pages/               # Views (Dashboard, StudySession, VocabDetail, etc.)
-│   │   ├── test/                # Vitest test suites (isolation & SRS)
-│   │   ├── api.js               # Axios client with X-Student-Id request interceptor
-│   │   └── index.css            # Dark theme, glassmorphic styling system
-│   ├── package.json
-│   └── vite.config.js
-├── server/                      # Node.js Express REST API
+│   │   ├── components/        # Sidebar, TTSButton, Badges...
+│   │   ├── context/           # AppContext (estudante ativo)
+│   │   ├── pages/             # Dashboard, StudySession, VocabDetail...
+│   │   ├── test/              # Vitest (isolamento, SRS)
+│   │   ├── api.js             # Axios + interceptor X-Student-Id
+│   │   └── index.css          # Dark theme, glassmorphic
+│   └── package.json
+├── server/                    # API Express (porta 3001)
 │   ├── src/
 │   │   ├── db/
-│   │   │   ├── migrations/      # Transactional migration scripts (001_..., 002_...)
-│   │   │   ├── migrate.js       # Transactional migration runner
-│   │   │   ├── connection.js    # PostgreSQL pg pool connection
-│   │   │   └── seed.js          # Database seeder
-│   │   ├── middleware/          # requireStudent isolation middleware
-│   │   ├── routes/              # Express routers (students, vocabulary, reviews, etc.)
-│   │   ├── services/            # SRS scheduling & algorithm services
-│   │   └── index.js             # Express application entrypoint
-│   ├── tests/                   # Jest / Supertest integration test suite
+│   │   │   ├── migrations/    # 001_baseline.sql, 002_…, …
+│   │   │   ├── migrator.js    # Executor de migrations (Node puro)
+│   │   │   ├── migrate.js     # Script npm run migrate
+│   │   │   ├── connection.js  # Pool pg
+│   │   │   └── seed.js        # Seed inicial
+│   │   ├── middleware/        # requireStudent
+│   │   ├── routes/            # students, vocabulary, reviews...
+│   │   ├── services/          # SRS (algoritmo de intervalo)
+│   │   └── index.js           # Entry point Express
+│   ├── tests/                 # Jest + Supertest
 │   └── package.json
-├── docs/                        # Architecture and security specifications
-├── plano-de-acao/               # Project management, task tracking, and master guide
-└── README.md                    # Main project documentation
+├── docs/                      # Documentação técnica
+├── plano-de-acao/             # Plano V2, tarefas, linha do tempo
+│   ├── RETOMAR.md             # ← Leia isto todos os dias
+│   ├── PLANO.md               # Progresso e decisões
+│   ├── TAREFAS.md             # Cartões detalhados de cada tarefa
+│   ├── LINHA-DO-TEMPO.md      # Histórico cronológico
+│   └── plan_tool.py           # Ferramenta de progresso
+├── skills/                    # Skill studyreviewblast-planner
+├── .env.example
+└── README.md
 ```
 
 ---
 
-## 🧪 Automated Tests & Quality
+## Testes e qualidade
 
-Run the automated validation suites:
+```bash
+# Backend (Jest + Supertest)
+npm test --prefix server
 
-- **Backend Integration & Isolation Tests (Jest):**
-  ```bash
-  cd server
-  npm test
-  ```
-  *Validates endpoint behavior, composite foreign key isolation, and migration rollbacks (46 passing tests).*
+# Frontend (Vitest)
+npm run test:run --prefix client
 
-- **Frontend Isolation & Unit Tests (Vitest):**
-  ```bash
-  cd client
-  npm run test:run
-  ```
+# Lint frontend (Oxlint)
+npm run lint --prefix client
 
-- **Static Code Analysis (Oxlint):**
-  ```bash
-  cd client
-  npm run lint
-  ```
+# Auditoria de segurança
+npm audit --omit=dev --prefix server
+npm audit --omit=dev --prefix client
+```
 
 ---
 
-## 🗺️ Roadmap
+## Decisões explicadas
 
-- [x] Complete vocabulary CRUD with inline editing and cascaded cleanup.
-- [x] Active Recall hints (collocations and contextual cloze tests).
-- [x] Dynamic custom quizzes organized in 5- and 10-question blocks.
-- [x] Multi-student relational isolation with composite foreign keys.
-- [ ] Dedicated `tenses` relational table with standardized grammatical tense codes.
-- [ ] Offline sentence generator using regular/irregular verbal morphology.
-- [ ] Export and import decks in CSV and JSON formats.
-- [ ] Dedicated listening practice module with speech transcription.
+Explicações em linguagem simples das decisões arquiteturais do Plano V2. A lista completa (D-01 a D-18) com alternativas está em [`plano-de-acao/PLANO.md`](./plano-de-acao/PLANO.md).
+
+| ID | Decisão | O que isso significa |
+|---|---|---|
+| D-01 | Posse dos dados | Cada palavra pertence a um só estudante. Dois estudantes podem ter "run" cadastrada, mas são registros completamente separados no banco. |
+| D-02 | Dados atuais | Os dados existentes no banco de desenvolvimento são preservados. Antes de cada fase com migração, fazemos backup. Os testes rodam em banco separado (`_test`). |
+| D-03 | Licença e autor | MIT, `Copyright (c) 2026 mghkill`. Gratuita, permite uso comercial, exige manter o aviso. |
+| D-04 | Identificação sem login | O cliente envia `X-Student-Id` no cabeçalho de cada requisição. O servidor valida pelo middleware `requireStudent`. Sem JWT, sem sessão — uso local offline. |
+| D-05 | ORM | Drizzle ORM (introspecção + geração de tipos). Alternativa: Prisma. Aguardando confirmação. |
+| D-06 | Quem manda no schema | As migrations SQL continuam a fonte de verdade. O schema do ORM é gerado por introspecção e conferido no CI (drift check). |
+| D-07 | TypeScript | Adotado de forma incremental a partir da Fase 6: server primeiro, depois client. Arquivos existentes em JS são convertidos gradualmente; novos arquivos já nascem em TS. |
+| D-08 | Idioma do README | pt-BR até a Fase 14 (com resumo em inglês no topo). Na Fase 15 vira inglês e o pt-BR fica em `README.pt-BR.md`. |
+| D-09 | `package.json` na raiz | Criado só para ferramentas (hooks, lint, testes unificados). Os scripts de `server/` e `client/` não mudam. |
+| D-10 | Dependências aprovadas | Apenas as listadas em `PLANO.md §Dependências aprovadas`. Dependência fora da lista vira nova decisão antes de instalar. |
+| D-11 | Docker | Docker Desktop não está instalado. A Fase 3 cria o `compose.yml` para quem quiser usar; o PostgreSQL local continua funcionando sem Docker. |
+| D-12 | Banco de testes | Banco separado (`<DB_NAME>_test`), criado e migrado automaticamente pelo setup do Jest. Os testes nunca tocam no banco de desenvolvimento. |
+| D-13 | Branches e PRs | Uma branch por fase (`v2/phase-NN-slug`). Ao fim de cada fase o desenvolvedor faz push, abre PR e faz merge. A IA não faz push. |
+| D-14 | Algoritmo de revisão | FSRS (`ts-fsrs`) — decide *quando* revisar cada item. Substitui o SRS próprio na Fase 10. |
+| D-15 | Idioma da interface | Detecta o idioma do navegador; padrão `en`; seletor `en`/`pt-BR` salvo localmente. |
+| D-16 | Planejamento em inglês | Na Fase 15, a pasta `plano-de-acao/` e os arquivos de planejamento são renomeados para inglês. |
+| D-17 | Lint do client | Oxlint (já configurado) mantido no client. ESLint só no server. Prettier nos dois. |
+| D-18 | Reconhecimento de voz | `SpeechRecognition` (Web Speech API), opcional, desligado por padrão. No Chrome o áudio vai para servidores do Google; Firefox não suporta. |
 
 ---
 
-## 📄 License
+## Melhorias pós-prova de fogo
 
-This project is licensed under the terms of the **MIT** License. See the [LICENSE](./LICENSE) file for details.
+Funcionalidades e serviços que foram excluídos do V2 por custo ou complexidade, para considerar depois que o projeto estiver pronto para open source:
+
+| Melhoria | Custo estimado | Quando considerar |
+|---|---|---|
+| **Login com senha ou OAuth** | Gratuito (implementação); hosting ~$5–20/mês | Após prova de fogo, se quiser hospedar para outros |
+| **Hospedagem (Railway, Render, Fly.io)** | ~$5–20/mês | Após prova de fogo |
+| **TTS premium** (ElevenLabs, Google Cloud TTS) | ~$0,016/1k caracteres | Se a qualidade do `SpeechSynthesis` não satisfizer |
+| **Geração de frases com IA** (OpenAI, Gemini) | ~$0,002–0,03/1k tokens | Se o gerador offline ficar limitado demais |
+| **Monitoramento de erros** (Sentry) | Gratuito até 5k eventos/mês | Em produção |
+| **Banco de dados gerenciado** (Neon, Supabase) | Gratuito com limites | Em produção |
+| **Row-Level Security (RLS) no PostgreSQL** | Gratuito | Se mover para multi-tenant com login real |
+
+---
+
+## Licença
+
+MIT — veja [LICENSE](./LICENSE). *(Arquivo será criado na T-087.)*
