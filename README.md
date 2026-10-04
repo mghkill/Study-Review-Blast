@@ -351,6 +351,15 @@ Leia plano-de-acao/RELATORIO-GERAL-PROJETO.md, plano-de-acao/RETOMAR.md e plano-
 
 ```
 
+## PROMPT DE MELHORIA DO PROJETO
+
+**Prompt B (colar em cada sessão seguinte)**
+
+```bash 
+
+Leia skills/SKILL-MELHORIA-PLANO.md e plano-de-acao/MELHORIA-PLANO.md e siga o ciclo da skill. Execute APENAS a próxima tarefa M pendente (ou termine a que estiver em [~]). Não altere código, não commite, não faça push. Ao final: log, resumo, `git status`, oferta de `git add .` na raiz, e PARE perguntando se devo continuar.
+
+```
 ---
 
 

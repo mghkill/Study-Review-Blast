@@ -6,13 +6,82 @@
 
 ## PRÓXIMO PASSO
 
-Cole o Prompt B para iniciar a **M-01**.
+Cole o Prompt B para iniciar a **M-02**.
 
 ---
 
 ## Achados (F-xx)
 
-> Achados identificados durante as tarefas M. Preenchido a partir da M-01.
+### F-01 · Inventário de arquivos .md e .py (resultado da M-01)
+
+#### Raiz do repositório
+| Arquivo | Bytes | Classif. | Função |
+|---|---|---|---|
+| `README.md` | 16.905 | **ATIVO** | Guia mestre do projeto: visão geral, stack, fases, decisões |
+| `.env.example` | 166 | ATIVO | Modelo de variáveis de ambiente |
+| `.gitignore` | 171 | ATIVO | Proteção de arquivos sensíveis |
+| `migrate_session_type.js` | 915 | **⚠️ ÓRFÃO** | Script de migração avulso na raiz — não pertence a `server/src/db/migrations/`; T-019 prevê remoção |
+
+#### plano-de-acao/ (ativos)
+| Arquivo | Bytes | Classif. | Função |
+|---|---|---|---|
+| `RELATORIO-GERAL-PROJETO.md` | 22.422 | **ATIVO** | Guia arquitetural e de conduta para IAs |
+| `PLANO.md` | 17.957 | **ATIVO** | Fases, tarefas, decisões, dependências |
+| `TAREFAS.md` | 69.384 | **ATIVO** | 94 cartões detalhados |
+| `RETOMAR.md` | 5.292 | **ATIVO** | Protocolo diário e regras de pausa |
+| `LINHA-DO-TEMPO.md` | 10.774 | **ATIVO** | Log cronológico imutável |
+| `PROMPT_ORIGINAL.md` | 14.216 | **HISTÓRICO** | Instruções primitivas do projeto (referência) |
+| `MELHORIA-PLANO.md` | ~9.400 | **ATIVO** | Este plano de melhoria (criado na M-00) |
+| `plan_tool.py` | 8.220 | **ATIVO** | Script CLI de planejamento (status, start, done, log) |
+
+#### plano-de-acao/legado/
+| Arquivo | Bytes | Classif. | Função |
+|---|---|---|---|
+| `PLANO-v1.md` | 13.402 | **LEGADO** | Plano antigo V1 (congelação) |
+| `RETOMAR-v1.md` | 3.492 | **LEGADO** | Protocolo antigo do V1 em inglês |
+| `PLANO.inicial-v1.md` | 9.073 | **LEGADO** | Template inicial bruto |
+| `MAPA-V1-V2.md` | 12.910 | **ATIVO** | De-para de tarefas V1 → V2 (ainda é consultado) |
+| `PROMPT_INICIAL_LEGADOV2.md` | 6.477 | **HISTÓRICO** | Prompt mestre que ordenou a reconstrução |
+| `RELATORIO-RECONSTRUCAO-V2.md` | 13.605 | **HISTÓRICO** | Registro técnico da transição V1 → V2 |
+
+#### skills/
+| Arquivo | Bytes | Classif. | Função |
+|---|---|---|---|
+| `SKILLENG.md` | 6.078 | **ATIVO** | Diretrizes técnicas da IA planejadora |
+| `skill.md` | 8.355 | **ATIVO** | Diretrizes de documentação e README open source |
+| `SKILL-MELHORIA-PLANO.md` | 3.508 | **ATIVO** | Skill desta sessão de melhoria (criada na M-00) |
+| `assets/README.template.md` | 3.837 | **ATIVO** | Template de documentação profissional |
+| `references/convencoes-v2.md` | 4.831 | **ATIVO** | Padrões de código, branches e commits |
+| `references/diagnostico-atual.md` | 4.539 | **HISTÓRICO** | Análise preliminar pré-V1 |
+| `references/modelo-logico-alvo.md` | 10.067 | **ATIVO** | Schema alvo e status das migrations |
+| `references/open-source-basico.md` | 2.114 | **ATIVO** | Guia conceitual de licença MIT e badges |
+| `references/open-source-checklist.md` | 3.108 | **ATIVO** | Checklist de lançamento público |
+| `scripts/plan_tool.py` | 8.220 | **⚠️ DUPLIC.** | Cópia de `plano-de-acao/plan_tool.py` — manter sincronizada |
+| `scripts/detect_stack.py` | 11.654 | **ATIVO** | Analisador automático de stack e dependências |
+
+#### server/src/db/migrations/
+| Arquivo | Bytes | Classif. | Função |
+|---|---|---|---|
+| `001_baseline.sql` a `009_language_code.sql` | vários | **ATIVO** | 9 migrations versionadas e aplicadas |
+| `README.md` | 102 | **⚠️ MÍNIMO** | Apenas 1 linha de descrição; sem inventário das migrations; **sugestão: manter** (não remove) — seria útil detalhar cada migration |
+
+### F-02 · Duplicações identificadas
+- `plano-de-acao/plan_tool.py` e `skills/scripts/plan_tool.py` — conteúdo idêntico (8.220 bytes); RELATORIO-GERAL §2 documenta que a de `skills/scripts/` é a "cópia mestre", mas não há mecanismo de sincronização. Risco: dessincronia silenciosa. Q-01 gerada.
+
+### F-03 · Arquivo órfão na raiz
+- `migrate_session_type.js` (915 bytes) — script de migração avulso na raiz. Não é chamado por nenhum script npm nem pelo migrador. T-019 prevê remoção explícita. Não remover agora.
+
+### F-04 · migrations/README.md tem função mínima
+- Contém apenas "Pasta para migrações versionadas..." (102 bytes / 1 linha útil). Função existe mas é mínima. RELATORIO-GERAL §2 lista-o explicitamente; removê-lo quebraria a árvore documentada. **Sugestão: manter e enriquecer** (listar cada migration com data e objetivo) — pode ser proposta de T nova.
+
+### F-05 · PROMPT_ORIGINAL.md sem posição na hierarquia
+- `plano-de-acao/PROMPT_ORIGINAL.md` (14.216 bytes) é classificado como HISTÓRICO mas não está em `legado/`. Não há nota de "somente leitura". Pode gerar confusão. Q-02 gerada.
+
+### F-06 · diagnostico-atual.md sem classificação explicitada
+- `skills/references/diagnostico-atual.md` (4.539 bytes) é classificado como `[Histórico]` no RELATORIO-GERAL §2, mas está na pasta ativa `references/`. Sem nota de somente leitura. Q-03 gerada.
+
+### F-07 · plano-de-melhoria/ — pasta fora do escopo
+- Existe `plano-de-melhoria/` na raiz (contém `CENTRAL_IDEA.md`). Não é citada no RELATORIO-GERAL §2 nem em nenhum outro documento de planejamento. É um órfão do ponto de vista da hierarquia oficial. Q-04 gerada.
 
 ---
 
@@ -26,13 +95,21 @@ Cole o Prompt B para iniciar a **M-01**.
 
 > Conflitos, ambiguidades e decisões pendentes que requerem resposta do usuário. Não avançar sem resposta.
 
+**Q-01** `plan_tool.py` existe em dois lugares (`plano-de-acao/` e `skills/scripts/`). O RELATORIO-GERAL §2 diz que `skills/scripts/` é a "cópia mestre", mas sem sincronização automática. Qual deve ser a fonte única? Sugestão: manter só a de `plano-de-acao/` (que é a usada operacionalmente) e transformar `skills/scripts/plan_tool.py` em um link simbólico ou removê-la (com nota).
+
+**Q-02** `PROMPT_ORIGINAL.md` está em `plano-de-acao/` mas é HISTÓRICO. Deve ser movido para `legado/` para manter a pasta operacional limpa? Ou deve permanecer onde está com uma nota de "somente leitura"?
+
+**Q-03** `skills/references/diagnostico-atual.md` é marcado como `[Histórico]` no RELATORIO-GERAL, mas não tem nenhuma nota nele mesmo. Deve ser mantido sem alteração, receber uma nota de histórico no cabeçalho, ou ser movido?
+
+**Q-04** A pasta `plano-de-melhoria/` (contendo `CENTRAL_IDEA.md`) existe na raiz mas não é citada em nenhum documento oficial do projeto. Deve ser mencionada no RELATORIO-GERAL ou README (como "pasta temporária de ideias"), ou pode ser ignorada pelo plano de melhoria?
+
 ---
 
 ## Tarefas de Melhoria
 
 ### Fase M1 — Varredura (somente leitura)
 
-- [ ] **M-01** Inventário — Listar todos os `.md` e `.py` de `plano-de-acao/`, `skills/`, raiz e `legado/` com tamanho e função; classificar ATIVO / LEGADO / HISTÓRICO; apontar duplicações e arquivos órfãos (inclua `migrations/README.md`: tem função? sugerir manter ou remover, sem remover).
+- [x] **M-01** Inventário — concluído: inventário completo em F-01 a F-07, 2 duplicações, 1 órfão, 4 Q-xx geradas — Listar todos os `.md` e `.py` de `plano-de-acao/`, `skills/`, raiz e `legado/` com tamanho e função; classificar ATIVO / LEGADO / HISTÓRICO; apontar duplicações e arquivos órfãos (inclua `migrations/README.md`: tem função? sugerir manter ou remover, sem remover).
   - Lê: raiz, `plano-de-acao/`, `plano-de-acao/legado/`, `skills/`, `skills/references/`, `skills/assets/`, `skills/scripts/`
   - Altera: `plano-de-acao/MELHORIA-PLANO.md` (seção Achados F-xx)
 
@@ -132,4 +209,8 @@ Cole o Prompt B para iniciar a **M-01**.
                    - git status: working tree clean (sem arquivos modificados não commitados)
                    - Estrutura: plano-de-acao/ (7 arquivos + legado/ com 6), skills/ (2 md + 3 subpastas), raiz (README.md, .env, .gitignore, migrate_session_type.js)
                    - Achados preliminares (sem M formal): links absolutos em RELATORIO-GERAL §4 e §6; RELATORIO-GERAL §5B menciona "análise fonética" via Web Speech API (possível conflito com princípio 100% local); D-10 não lista ts-fsrs, Playwright, libs OpenAPI/cobertura; D-11 a D-18 pendentes; 8 documentos de planejamento sem hierarquia clara definida; migrations/README.md existe.
+[2026-10-03 21:16] INÍCIO M-01 — Inventário de arquivos .md e .py
+[2026-10-03 21:18] FIM M-01 — arquivos alterados: plano-de-acao/MELHORIA-PLANO.md
+                   Achados: F-01 (inventário completo classificado), F-02 (plan_tool.py duplicado), F-03 (órfão migrate_session_type.js), F-04 (migrations/README.md mínimo), F-05 (PROMPT_ORIGINAL.md sem hierarquia), F-06 (diagnostico-atual.md sem classificação), F-07 (plano-de-melhoria/ fora do escopo)
+                   Perguntas geradas: Q-01, Q-02, Q-03, Q-04
 ```
