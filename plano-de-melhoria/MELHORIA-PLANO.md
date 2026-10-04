@@ -6,7 +6,7 @@
 
 ## PRÓXIMO PASSO
 
-Cole o Prompt B para iniciar a **M-11**:
+Cole o Prompt B para iniciar a **M-12**:
 
 > Leia plano-de-melhoria/SKILL-MELHORIA-PLANO.md e plano-de-melhoria/MELHORIA-PLANO.md e siga o ciclo da skill. Se algum desses dois arquivos não existir nesses caminhos, PARE e me avise sem tentar adivinhar. Execute APENAS a próxima tarefa M pendente (ou termine a que estiver em [~]). Não altere código, não commite, não faça push. Ao final: log, resumo, git status, oferta de git add . na raiz, e PARE perguntando se devo continuar.
 
@@ -387,7 +387,7 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Lê: `plano-de-acao/RETOMAR.md`
   - Altera: `plano-de-acao/RETOMAR.md`
 
-- [ ] **M-11** `RELATORIO-GERAL-PROJETO.md` — Trocar links absolutos por relativos; ajustar §5B (voz) conforme decisão do usuário; corrigir "100% TS strict" vs D-07 (incremental). **[! Bloqueada até M-06 respondida]**
+- [x] **M-11** `RELATORIO-GERAL-PROJETO.md` — concluído: links absolutos file:/// substituídos por relativos; §5B e D-18 alinhados à decisão de voz local-first e comparação de fala sem dependência externa; Fase 6 e Visão Alvo harmonizadas com TS incremental (D-07); §6.1 alinhado à ordem canônica de 6 passos; D-11 a D-18 atualizados para Decidido na tabela de decisões.
   - Lê: `plano-de-acao/RELATORIO-GERAL-PROJETO.md`
   - Altera: `plano-de-acao/RELATORIO-GERAL-PROJETO.md`
 
@@ -486,4 +486,6 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 [2026-10-04 16:29] FIM M-09d — arquivos alterados: plano-de-acao/TAREFAS.md, plano-de-melhoria/MELHORIA-PLANO.md — achados: 13 cartões das Fases 12 a 15 (T-082 a T-094) padronizados com campo Objetivo explícito e apontamento canônico de pausa para RETOMAR.md §3; 100% dos 94 cartões ativos de TAREFAS.md agora possuem Objetivo e Pausa canônica padronizados.
 [2026-10-04 16:31] INÍCIO M-10 — Alinhamento de RETOMAR.md à hierarquia da M-07
 [2026-10-04 16:34] FIM M-10 — arquivos alterados: plano-de-acao/RETOMAR.md, plano-de-melhoria/MELHORIA-PLANO.md — achados: RETOMAR.md alinhado com a governança da M-07 (ordem canônica de leitura de 6 passos, matriz de precedência de 10 níveis, plan_tool.py operacional único com init obsoleto, confinamento de plano-de-melhoria/ e ambiente atualizado com Docker Desktop).
+[2026-10-04 16:36] INÍCIO M-11 — Ajustes no RELATORIO-GERAL-PROJETO.md
+[2026-10-04 17:16] FIM M-11 — arquivos alterados: plano-de-acao/RELATORIO-GERAL-PROJETO.md, plano-de-melhoria/MELHORIA-PLANO.md — achados: 5 links absolutos file:/// substituídos por caminhos relativos; §5B e D-18 ajustados para voz e comparação falado/esperado com privacidade (100% local por padrão); Fase 6 e visão de futuro alinhadas com adoção incremental de TypeScript (D-07); tabela D-11..D-18 atualizada para Decidido; §6.1 alinhado à ordem canônica de 6 passos da M-07.
 ```
