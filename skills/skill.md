@@ -106,3 +106,6 @@ Entregue em poucas linhas: o que foi alterado no README, quais dados vieram de q
 - `scripts/detect_stack.py`: detecta linguagens, runtimes, frameworks, serviços e versões. Opções: `--markdown` (tabela pronta), `--json`.
 - `assets/README.template.md`: esqueleto completo do README.
 - `references/open-source-checklist.md`: checklist de arquivos e boas práticas de projeto open source, com modelos curtos de CONTRIBUTING, SECURITY e escolha de licença.
+
+## Sempre transforme tudo em inglês 
+- `Transforme todo o documento README.md, na raiz do projeto em inglês.`
