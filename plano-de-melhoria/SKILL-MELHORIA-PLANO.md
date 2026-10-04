@@ -13,7 +13,7 @@ Melhorar o planejamento do projeto StudyReviewBlast — arquivos em `plano-de-ac
 ## Escopo permitido (em todas as sessões)
 
 ### Pode:
-- **CRIAR e EDITAR** apenas arquivos `.md` dentro de `plano-de-acao/`, de `skills/` e o `README.md` da raiz.
+- **CRIAR e EDITAR** apenas arquivos `.md` dentro de `plano-de-acao/`, de `plano-de-melhoria/`, de `skills/` e o `README.md` da raiz.
 - **LER** qualquer arquivo do projeto (código, configs, migrations) para avaliar e registrar achados.
 - Rodar `py plano-de-acao/plan_tool.py status` (somente leitura).
 - Rodar `git status` e `git diff --stat` (somente leitura).
@@ -37,8 +37,8 @@ Melhorar o planejamento do projeto StudyReviewBlast — arquivos em `plano-de-ac
 ## Ciclo de CADA sessão (siga na ordem exata)
 
 ```
-1. Ler este arquivo (SKILL-MELHORIA-PLANO.md).
-2. Ler plano-de-acao/MELHORIA-PLANO.md inteiro.
+1. Ler este arquivo (plano-de-melhoria/SKILL-MELHORIA-PLANO.md).
+2. Ler plano-de-melhoria/MELHORIA-PLANO.md inteiro.
 3. Se houver M marcada [~] (em andamento):
    a. NÃO começar outra M.
    b. Rodar `git status` e `git diff --stat`.
@@ -70,7 +70,7 @@ Se sentir que o contexto está acabando, **escreva o log ANTES de continuar edit
 
 ## Conflitos e dúvidas
 
-- Registre como **Q-xx** em `plano-de-acao/MELHORIA-PLANO.md`.
+- Registre como **Q-xx** em `plano-de-melhoria/MELHORIA-PLANO.md`.
 - Não tome decisões que são prerrogativa do usuário.
 - Após a M-07, respeite a hierarquia de documentos definida nela.
 

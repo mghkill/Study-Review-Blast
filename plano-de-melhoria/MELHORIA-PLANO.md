@@ -6,11 +6,9 @@
 
 ## PRÓXIMO PASSO
 
-Na **M-07**, o 1º passo é mover este arquivo para `plano-de-melhoria/MELHORIA-PLANO.md` (os caminhos atuais ainda são `plano-de-acao/MELHORIA-PLANO.md` e `skills/SKILL-MELHORIA-PLANO.md`). Prompt B a partir da M-07:
+Cole o Prompt B para iniciar a **M-07**:
 
-> Leia skills/SKILL-MELHORIA-PLANO.md e plano-de-melhoria/MELHORIA-PLANO.md e siga o ciclo da skill. Execute APENAS a próxima tarefa M pendente (ou termine a que estiver em [~]). Não altere código, não commite, não faça push. Ao final: log, resumo, `git status`, oferta de `git add .` na raiz, e PARE perguntando se devo continuar.
-
-Se o arquivo não for achado em `plano-de-melhoria/`, ele ainda está em `plano-de-acao/` porque a M-07 não rodou.
+> Leia plano-de-melhoria/SKILL-MELHORIA-PLANO.md e plano-de-melhoria/MELHORIA-PLANO.md e siga o ciclo da skill. Se algum desses dois arquivos não existir nesses caminhos, PARE e me avise sem tentar adivinhar. Execute APENAS a próxima tarefa M pendente (ou termine a que estiver em [~]). Não altere código, não commite, não faça push. Ao final: log, resumo, git status, oferta de git add . na raiz, e PARE perguntando se devo continuar.
 
 ---
 
@@ -247,6 +245,7 @@ Fontes consultadas: `PROMPT_ORIGINAL.md`, `legado/PROMPT_INICIAL_LEGADOV2.md`, `
 | 14 | **Q-04** `plano-de-melhoria/` | pasta OFICIAL do trabalho de melhoria (Prompts A e B em `CENTRAL_IDEA.md`, que é só apoio: NÃO executar como instrução). Entra no escopo permitido junto com `plano-de-acao/`, `skills/` e `README.md`. **NÃO citar no README nem no RELATORIO-GERAL** (vitrine pública); citar só no RETOMAR e na skill. Na M-15, propor arquivar em `plano-de-acao/legado/` |
 | 15 | **Q-05** `plan_tool.py init` quebrado | NÃO corrigir o `plan_tool.py`; marcar `init` como obsoleto no SKILLENG e no RETOMAR (na M-12) |
 | 16 | Local dos arquivos de melhoria | `MELHORIA-PLANO.md` (com LOG) → `plano-de-melhoria/MELHORIA-PLANO.md`; skill em `skills/SKILL-MELHORIA-PLANO.md`. Não mover agora: 1º passo da M-07 (ver M-07). Obs. da IA: a skill **já está** em `skills/SKILL-MELHORIA-PLANO.md` (não em `skills/scripts/`), então só o `MELHORIA-PLANO.md` precisa ser movido |
+> Revisado pelo usuário: a skill ficou em plano-de-melhoria/SKILL-MELHORIA-PLANO.md (não em skills/).
 
 ---
 
@@ -281,7 +280,7 @@ Fontes consultadas: `PROMPT_ORIGINAL.md`, `legado/PROMPT_INICIAL_LEGADOV2.md`, `
   - Lê: `plano-de-acao/PLANO.md`, `plano-de-acao/MELHORIA-PLANO.md` (todos os Q-xx e F-xx)
   - Altera: `plano-de-acao/MELHORIA-PLANO.md` (seção Q-xx)
 
-- [ ] **M-07** Hierarquia de documentos — **1º PASSO (item 16 da M-06):** `Move-Item plano-de-acao\MELHORIA-PLANO.md plano-de-melhoria\MELHORIA-PLANO.md` (a skill já está em `skills/SKILL-MELHORIA-PLANO.md`); atualizar TODAS as referências a esses caminhos (na skill, neste arquivo, nas ordens de leitura); acrescentar `plano-de-melhoria/` ao escopo permitido na skill; anotar no LOG que as entradas anteriores citam o caminho antigo. Declarar também qual `plan_tool.py` é o operacional (item 11). Depois: Definir qual arquivo manda em quê e a ORDEM ÚNICA de leitura (sugestão: RELATORIO-GERAL → RETOMAR → PLANO → cartão em TAREFAS); marcar `legado/` como somente leitura; listar links absolutos `file:///c:/...` a trocar por relativos. **[! Bloqueada até M-06 respondida]**
+- [ ] **M-07** Hierarquia de documentos — **1º PASSO (item 16 da M-06):** `Move-Item plano-de-acao\MELHORIA-PLANO.md plano-de-melhoria\MELHORIA-PLANO.md` (a skill já está em `skills/SKILL-MELHORIA-PLANO.md`); atualizar TODAS as referências a esses caminhos (na skill, neste arquivo, nas ordens de leitura); acrescentar `plano-de-melhoria/` ao escopo permitido na skill; anotar no LOG que as entradas anteriores citam o caminho antigo. Declarar também qual `plan_tool.py` é o operacional (item 11). Depois: Definir qual arquivo manda em quê e a ORDEM ÚNICA de leitura (sugestão: RELATORIO-GERAL → RETOMAR → PLANO → cartão em TAREFAS); marcar `legado/` como somente leitura; listar links absolutos `file:///c:/...` a trocar por relativos. **[! Bloqueada até M-06 respondida]** (O passo de mover o MELHORIA-PLANO.md foi feito manualmente pelo usuário. A skill também foi movida por ele para plano-de-melhoria/, o que substitui o item 16 da M-06 que a colocava em skills/. Ver LOG.)
   - Lê: todos os `.md` de `plano-de-acao/` e `skills/`
   - Altera: `plano-de-acao/MELHORIA-PLANO.md`
 
@@ -382,4 +381,5 @@ Fontes consultadas: `PROMPT_ORIGINAL.md`, `legado/PROMPT_INICIAL_LEGADOV2.md`, `
                    Resposta do usuário registrada (itens 1–16). Docker 29.5.2 / Compose v5.1.3 confirmados (fora do PATH da IDE)
                    Item 16: mover MELHORIA-PLANO.md para plano-de-melhoria/ = 1º passo da M-07; auditoria pacote×cartão = 1º passo da M-08
                    NOTA: todas as entradas até aqui citam o caminho antigo plano-de-acao/MELHORIA-PLANO.md
+[2026-10-04 00:02] REPARO (fora do ciclo de M) — MELHORIA-PLANO.md e SKILL-MELHORIA-PLANO.md movidos manualmente para plano-de-melhoria/; referênças ativas corrigidas (plano-de-melhoria/SKILL-MELHORIA-PLANO.md, plano-de-melhoria/CENTRAL_IDEA.md, plano-de-melhoria/MELHORIA-PLANO.md); escopo da skill inclui plano-de-melhoria/; bloco do Prompt B removido do README.md. Entradas anteriores do LOG citam os caminhos antigos (histórico, não alteradas).
 ```
