@@ -288,6 +288,7 @@ Branch da fase: `v2/phase-05-orm`
 - **Front:** sem impacto (nenhuma rota alterada).
 - **Teste antes:** Jest: `orm.select().from(students)` (ou `prisma.students.count()`) devolve número; falha antes (módulo inexistente).
 - **Pronto quando:** teste verde; suíte antiga verde.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `feat(server): add drizzle orm with introspected schema (T-025)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-025.`
 
@@ -298,6 +299,7 @@ Branch da fase: `v2/phase-05-orm`
 - **Front:** sem impacto.
 - **Teste antes:** criar uma migração de teste local que adiciona coluna → `db:check-drift` deve falhar; antes da tarefa o script não existe.
 - **Pronto quando:** sem drift → passa; com drift → falha com mensagem clara.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `ci: check orm schema drift (T-026)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-026.`
 
@@ -308,78 +310,95 @@ Branch da fase: `v2/phase-05-orm`
 - **Front:** sem mudança visual; conferir tela de seleção de estudante e seletores de tempo verbal.
 - **Teste antes:** testes unitários dos repositórios (ex.: `listStudents`, `listTenses`) falham antes (módulos inexistentes).
 - **Pronto quando:** testes novos e antigos verdes; nenhuma `db.query` nas duas rotas.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `refactor(server): introduce repositories; migrate students and tenses (T-027)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-027.`
 
 ### T-028 · `sessions`
 **P · Origem:** novo · **Ler:** ENG, CONV §3
+- **Objetivo:** migrar operações de sessões de estudo para repositório ORM, eliminando SQL manual.
 - **Back:** `sessionsRepo` e `routes/sessions.js` sem SQL manual.
 - **Front:** sem mudança visual; iniciar e encerrar uma sessão em "Estudar Agora".
 - **Teste antes:** unitário de `sessionsRepo.finish()` só atualiza sessão do próprio estudante; falha antes.
 - **Pronto quando:** testes verdes.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `refactor(server): migrate sessions to orm (T-028)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-028.`
 
 ### T-029 · `dashboard`
 **M · Origem:** novo · **Ler:** ENG, CONV §3
+- **Objetivo:** migrar agregações do dashboard para o builder/template do ORM mantendo exatidão dos números e segurança.
 - **Back:** agregações com o builder do ORM ou com o template `sql` **parametrizado** (nunca concatenação).
 - **Front:** sem mudança visual; comparar os números do Dashboard antes/depois (print ou anotação).
 - **Teste antes:** teste de contrato: resposta de `/api/dashboard` para um estudante com dados conhecidos tem os mesmos campos e valores; escrever com o código atual (passa) e rodar após a troca. Teste novo de repositório falha antes.
 - **Pronto quando:** números idênticos; testes verdes.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `refactor(server): migrate dashboard to orm (T-029)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-029.`
 
 ### T-030 · `sentences` e `paragraphs`
 **M · Origem:** novo · **Ler:** ENG, CONV §3
+- **Objetivo:** migrar rotas de frases e parágrafos para repositórios ORM com escopo estrito de estudante.
 - **Back:** `sentencesRepo`, `paragraphsRepo`; rotas sem SQL manual.
 - **Front:** sem mudança visual; conferir Banco de Frases e Parágrafos.
 - **Teste antes:** unitários dos dois repositórios (incluindo escopo por estudante) falham antes.
 - **Pronto quando:** testes verdes.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `refactor(server): migrate sentences and paragraphs to orm (T-030)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-030.`
 
 ### T-031 · `vocabulary` — leitura
 **M · Origem:** novo · **Ler:** ENG, CONV §3
+- **Objetivo:** migrar leituras de vocabulário (busca, filtros e detalhes relacionais) para repositório ORM.
 - **Back:** lista (busca, filtros) e detalhe (significados, formas verbais, contextos, frases, domínio por tempo) via repositório.
 - **Front:** sem mudança visual; conferir Vocabulário (filtros) e Detalhes.
 - **Teste antes:** unitários de `vocabularyRepo.list/get` com filtros; falham antes.
 - **Pronto quando:** testes verdes.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `refactor(server): migrate vocabulary reads to orm (T-031)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-031.`
 
 ### T-032 · `vocabulary` — escrita
 **M · Origem:** novo · **Ler:** ENG, CONV §3
+- **Objetivo:** migrar mutações transacionais de vocabulário (criação, edição e exclusão) para repositório ORM.
 - **Back:** criar (palavra + formas + significados + contextos numa transação), editar, excluir, frases, contextos e significados.
 - **Front:** sem mudança visual; criar um verbo em Novo Verbo, editar e excluir.
 - **Teste antes:** unitário: falha no meio da criação desfaz tudo (transação); falha antes.
 - **Pronto quando:** testes verdes; `routes/vocabulary.js` sem SQL manual.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `refactor(server): migrate vocabulary writes to orm (T-032)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-032.`
 
 ### T-033 · `reviews` — fila
 **M · Origem:** novo · **Ler:** ENG, CONV §3
+- **Objetivo:** migrar consulta da fila de revisões para repositório ORM preservando o algoritmo SRS e escopo.
 - **Back:** consulta da fila (filtros por modo e CEFR, amostras de frases do próprio estudante) via repositório; `srs.js` intacto.
 - **Front:** sem mudança visual; abrir cada modo de "Estudar Agora".
 - **Teste antes:** unitário de `reviewsRepo.queue` por modo; falha antes.
 - **Pronto quando:** testes verdes.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `refactor(server): migrate review queue to orm (T-033)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-033.`
 
 ### T-034 · `reviews` — escrita e históricos
 **M · Origem:** novo · **Ler:** ENG, CONV §3
+- **Objetivo:** migrar registro de revisões e histórico com integridade transacional para repositório ORM.
 - **Back:** registrar revisão (atualiza `student_vocabulary`, `tense_practice`, `errors` em transação), histórico, estatísticas de erro, frase do aluno.
 - **Front:** sem mudança visual; responder um cartão e conferir Progresso.
 - **Teste antes:** unitário: revisão grava tudo ou nada; falha antes.
 - **Pronto quando:** testes verdes; `routes/reviews.js` sem SQL manual.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `refactor(server): migrate review writes to orm (T-034)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-034.`
 
 ### T-035 · Seed e regra anti-SQL-concatenado
 **P · Origem:** novo · **Ler:** ENG, CONV §3 e §5
+- **Objetivo:** migrar seed para ORM e garantir por lint a proibição definitiva de SQL concatenado.
 - **Back:** `seed.js` com o ORM; regra ESLint (`no-restricted-syntax`) que proíbe template string com `${}` dentro de chamadas `query(`/`sql.raw(`; `db.query` permitido só em `migrator.js`.
 - **Front:** sem impacto.
 - **Teste antes:** arquivo de fixture com SQL concatenado deve gerar erro de lint (teste com `ESLint` API); falha antes.
 - **Pronto quando:** lint verde no projeto e vermelho na fixture; `seed` funciona no banco de teste.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `refactor(server): seed via orm and forbid string-built sql (T-035)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-035.`
 
@@ -392,55 +411,67 @@ Branch da fase: `v2/phase-06-typescript`
 
 ### T-036 · Base TypeScript no server
 **M · Origem:** novo · **Ler:** ENG, CONV §4
+- **Objetivo:** estabelecer infraestrutura TypeScript no backend sem quebrar scripts dev e porta 3001.
 - **Back:** `tsconfig.json` (`allowJs`, `checkJs: false`, `strict` para `.ts`), script `typecheck`, CI roda `typecheck`; conteúdo do script `dev` passa a rodar TS (ex.: `nodemon --exec tsx src/index.ts`), **mantendo o nome `dev` e a porta 3001** (exceção D-07).
 - **Front:** sem impacto.
 - **Teste antes:** `npm run typecheck --prefix server` falha (script inexistente).
 - **Pronto quando:** typecheck verde; `npm run dev` sobe na 3001; testes verdes.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `build(server): add typescript baseline (T-036)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-036.`
 
 ### T-037 · `config`, `middleware`, `services`
 **M · Origem:** novo · **Ler:** ENG, CONV §4
+- **Objetivo:** migrar módulos centrais de configuração, middleware e serviços para TypeScript com tipagem estrita.
 - **Back:** converter `config/env`, `middleware/requireStudent`, `services/srs`, `services/tenses` para `.ts` com tipos explícitos.
 - **Front:** sem impacto.
 - **Teste antes:** teste de tipos (`tsd`-like via `// @ts-expect-error` num arquivo `*.types.test.ts` compilado pelo typecheck): chamar `calculatePriority` sem campos obrigatórios deve dar erro de tipo; falha antes (arquivo `.js` não é checado).
 - **Pronto quando:** typecheck e testes verdes.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `refactor(server): convert config, middleware and services to ts (T-037)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-037.`
 
 ### T-038 · Rotas `students`, `tenses`, `sessions`, `dashboard`
 **M · Origem:** novo · **Ler:** ENG, CONV §4
+- **Objetivo:** migrar rotas de students, tenses, sessions e dashboard e seus repositórios para TypeScript.
 - **Back:** converter as rotas e seus repositórios; `Request` tipado com `studentId`.
 - **Front:** sem impacto; conferir Dashboard.
 - **Teste antes:** teste de tipos: `req.studentId` é `number` nas rotas protegidas (`@ts-expect-error` ao atribuir string); falha antes.
 - **Pronto quando:** typecheck e testes verdes.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `refactor(server): convert students, tenses, sessions, dashboard to ts (T-038)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-038.`
 
 ### T-039 · Rotas `sentences` e `vocabulary`
 **M · Origem:** novo · **Ler:** ENG, CONV §4
+- **Objetivo:** migrar rotas de frases e vocabulário com seus repositórios e DTOs para TypeScript.
 - **Back:** converter rotas e repositórios.
 - **Front:** sem impacto; conferir Vocabulário e Frases.
 - **Teste antes:** teste de tipos dos DTOs de vocabulário; falha antes.
 - **Pronto quando:** typecheck e testes verdes.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `refactor(server): convert sentences and vocabulary to ts (T-039)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-039.`
 
 ### T-040 · `reviews`, `index` e `strict` total
 **M · Origem:** novo · **Ler:** ENG, CONV §4
+- **Objetivo:** concluir conversão do backend para TypeScript e habilitar checagem estrita sem allowJs no server/src.
 - **Back:** converter `reviews` e `index`; remover `allowJs` do server (testes podem continuar em JS com `ts-jest` ou `tsx`? — escolher o caminho sem dependência nova fora de D-10: rodar Jest sobre o build ou manter testes em JS importando `.ts` via `tsx`; registrar a escolha).
 - **Front:** sem impacto.
 - **Teste antes:** `typecheck` com `allowJs: false` falha enquanto houver `.js` em `src/`.
 - **Pronto quando:** nenhum `.js` em `server/src`; typecheck, lint e testes verdes.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `refactor(server): finish ts migration and enable strict (T-040)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-040.`
 
 ### T-041 · Base TypeScript no client
 **M · Origem:** novo · **Ler:** ENG, CONV §4
+- **Objetivo:** estabelecer base TypeScript no frontend com typecheck no Vite e cliente de API tipado.
 - **Back:** sem impacto no server.
 - **Front:** `tsconfig.json` do Vite (`allowJs`), script `typecheck`; `api.js` → `api.ts` com tipos das respostas (`Student`, `VocabularyItem`, `ReviewQueueItem`…); regra: arquivo novo ou reescrito nasce `.ts/.tsx`.
 - **Teste antes:** `npm run typecheck --prefix client` falha (script inexistente); teste de tipos de `getVocabItem` devolvendo `VocabularyItem`.
 - **Pronto quando:** typecheck, lint, testes e build do client verdes; telas sem mudança visual.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `build(client): add typescript baseline and typed api client (T-041)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-041.`
 
@@ -451,73 +482,89 @@ Branch da fase: `v2/phase-07-security`
 
 ### T-042 · Tratamento central de erros + Toast
 **M · Origem:** v1 T-071 · **Ler:** ENG, CONV §5
+- **Objetivo:** unificar tratamento de erros da API com formato padronizado sem vazamento de SQL e exibir toasts no client.
 - **Back:** `AppError` (`code`, `status`, `details`); handler único com formato `{ "error": { "code", "message", "details?" } }`; 404 para rota desconhecida; erro de banco vira `INTERNAL_ERROR` sem texto de SQL; `/api/health` deixa de expor `err.message`.
 - **Front:** componente `Toast` + interceptor do axios que mostra mensagem amigável por `code`.
 - **Teste antes:** Jest: rota que lança erro de banco responde 500 sem `SELECT`/`relation` no corpo; rota inexistente → 404 JSON. Vitest: interceptor exibe Toast. Falham antes.
 - **Pronto quando:** testes verdes.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `feat: centralized api errors and client toasts (T-042)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-042.`
 
 ### T-043 · Zod: middleware + `students`, `sessions`, `tenses`
 **M · Origem:** v1 T-072 (agora com Zod, D-10) · **Ler:** ENG, CONV §5
+- **Objetivo:** introduzir middleware de validação Zod e proteger rotas de students, sessions e tenses.
 - **Back:** `validate({ body, params, query })` com Zod; schemas em `server/src/schemas/`; erro 400 `VALIDATION_ERROR` com `details` por campo; ids sempre inteiros positivos.
 - **Front:** formulário de novo estudante mostra erro ao lado do campo.
 - **Teste antes:** Jest: `POST /api/students` com nome vazio ou de 500 caracteres → 400 com `details.name`; `PATCH /api/sessions/abc` → 400. Vitest: erro por campo renderizado. Falham antes.
 - **Pronto quando:** testes verdes.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `feat: validate students, sessions and tenses input with zod (T-043)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-043.`
 
 ### T-044 · Zod em `vocabulary`
 **M · Origem:** v1 T-072 · **Ler:** ENG, CONV §5
+- **Objetivo:** validar todas as entradas de vocabulário com Zod protegendo contra payloads malformados ou injeção.
 - **Back:** schemas de criação/edição (tamanhos, CEFR permitido, `type`, dificuldade 1–5, listas de significados e contextos).
 - **Front:** Novo Verbo e Detalhes da Palavra mostram erros por campo.
 - **Teste antes:** Jest: CEFR `Z9` → 400; payload com `student_id` extra é descartado; tentativa de injeção (`word: "x'; DROP TABLE students;--"`) é gravada como texto literal e a tabela continua existindo. Falham antes (os dois primeiros).
 - **Pronto quando:** testes verdes.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `feat: validate vocabulary input with zod (T-044)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-044.`
 
 ### T-045 · Zod em `reviews`, `sentences`, `dashboard`
 **M · Origem:** v1 T-072 · **Ler:** ENG, CONV §5
+- **Objetivo:** validar entradas e parâmetros de reviews, sentences e dashboard com Zod cobrindo 100% das rotas.
 - **Back:** schemas de revisão (resultado permitido, categorias de erro), frases, parágrafos e query strings.
 - **Front:** Banco de Frases e Parágrafos mostram erros por campo.
 - **Teste antes:** Jest: `POST /api/reviews` com resultado inválido → 400; `GET /api/reviews/history?limit=-1` → 400. Falham antes.
 - **Pronto quando:** toda rota tem schema (teste que percorre as rotas e confere `validate` registrado).
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `feat: validate reviews, sentences and dashboard input with zod (T-045)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-045.`
 
 ### T-046 · helmet, CORS e limite do corpo
 **P · Origem:** novo · **Ler:** ENG, CONV §5
+- **Objetivo:** proteger a API com headers de segurança HTTP (helmet), CORS restritivo e limite de payload.
 - **Back:** `helmet()`; CORS a partir de `CORS_ORIGINS` (padrão `http://localhost:5173`); `express.json({ limit: '100kb' })`.
 - **Front:** sem impacto (o proxy do Vite usa a mesma origem); conferir 2 telas.
 - **Teste antes:** Jest: resposta tem `x-content-type-options`; origem `http://evil.test` não recebe `access-control-allow-origin`; corpo de 1 MB → 413. Falham antes.
 - **Pronto quando:** testes verdes.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `feat(server): add helmet, strict cors and body limit (T-046)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-046.`
 
 ### T-047 · Rate limit
 **P · Origem:** novo · **Ler:** ENG, CONV §5
+- **Objetivo:** prevenir abuso de requisições com rate limiting proporcional e respostas amigáveis.
 - **Back:** `express-rate-limit` global generoso (uso local) e mais rígido em rotas de escrita; desligável nos testes por variável.
 - **Front:** mensagem amigável no Toast para `429 RATE_LIMITED`.
 - **Teste antes:** Jest: N+1 requisições de escrita → 429 JSON; Vitest: Toast para 429. Falham antes.
 - **Pronto quando:** testes verdes.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `feat: rate limit api with friendly client message (T-047)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-047.`
 
 ### T-048 · Logs com pino
 **P · Origem:** novo · **Ler:** ENG, CONV §5
+- **Objetivo:** implementar logging estruturado com Pino, request IDs rastreáveis e mascaramento de dados sensíveis.
 - **Back:** `pino` + `pino-http` (request id em `X-Request-Id`; redação de `authorization`, `cookie`, `password`, `DB_PASSWORD`); `pino-pretty` só em desenvolvimento; trocar `console.*` do server.
 - **Front:** Toast de erro 500 mostra o request id ("informe este código ao relatar o problema").
 - **Teste antes:** Jest: logger com destino em memória não contém o valor de uma senha de teste; resposta tem `x-request-id`. Falham antes.
 - **Pronto quando:** testes verdes; nenhum `console.` em `server/src` (lint).
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `feat: structured logging with pino and request ids (T-048)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-048.`
 
 ### T-049 · npm audit e documento de segurança
 **P · Origem:** novo · **Ler:** ENG, CONV §5
+- **Objetivo:** auditar vulnerabilidades de dependências no CI e documentar formalmente a arquitetura de segurança.
 - **Back:** `npm audit fix` sem `--force` nas três pastas; exceções registradas; passo no CI `npm audit --omit=dev --audit-level=high`; atualizar `docs/seguranca-e-isolamento.md` com as camadas (Zod, helmet, CORS, rate limit, logs).
 - **Front:** sem impacto.
 - **Teste antes:** verificação: `npm audit --omit=dev --audit-level=high` registrado antes (pode falhar).
 - **Pronto quando:** sem vulnerabilidade alta em produção (ou exceção justificada); CI com o passo.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `chore(security): audit dependencies and document security layers (T-049)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-049.`
 
@@ -531,28 +578,34 @@ Concluída no v1 (T-020 a T-030): dono em `vocabulary_items`, FKs compostas, mig
 
 ### T-051 · Recertificação automática
 **M · Origem:** novo (reforça v1 T-029) · **Ler:** ENG, MLA §3–4
+- **Objetivo:** garantir por testes automatizados no CI que nenhuma rota seja exposta sem proteção de isolamento por estudante.
 - **Back:** teste que percorre todas as rotas registradas no Express e exige 400 sem `X-Student-Id` (lista explícita de exceções: `/api/health`, `GET/POST /api/students`, `/api/tenses`); teste de banco: inserir progresso de B apontando para palavra de A falha por FK composta (se ainda não existir).
 - **Front:** sem impacto.
 - **Teste antes:** criar uma rota de teste sem `requireStudent` dentro do teste → o verificador deve acusar; antes da tarefa o verificador não existe.
 - **Pronto quando:** testes verdes; qualquer rota nova sem proteção quebra o CI.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `test(server): guard every route with student isolation check (T-051)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-051.`
 
 ### T-052 · Trocar de estudante pela Sidebar
 **M · Origem:** novo (usabilidade) · **Ler:** ENG, MLA §4
+- **Objetivo:** permitir troca rápida e segura de estudante ativo diretamente na Sidebar com recarregamento reativo de dados.
 - **Back:** sem mudança (usa `GET /api/students`).
 - **Front:** seletor de estudante no topo da Sidebar (nome + avatar com iniciais); trocar recarrega as telas com o novo `X-Student-Id`; "Gerenciar estudantes" leva à tela atual.
 - **Teste antes:** Vitest: ao escolher outro estudante, `getApiStudentId()` muda e o conteúdo da página é remontado; falha antes (componente inexistente).
 - **Pronto quando:** testes verdes; troca funciona sem voltar à tela inicial.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `feat(client): switch student from sidebar (T-052)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-052.`
 
 ### T-053 · Estados vazios e pacote inicial
 **M · Origem:** novo (usa a ideia de "pacote inicial" do MLA §2) · **Ler:** ENG, MLA §2
+- **Objetivo:** fornecer feedback em estados vazios e mecanismo para importar pacote inicial de 20 verbos para novos estudantes.
 - **Back:** `POST /api/students/:id/starter-pack` copia um baralho neutro (definido em `server/src/db/starter-pack.json`, 20 verbos comuns) para o estudante, em transação, sem duplicar se repetido.
 - **Front:** Dashboard, Vocabulário e Estudar Agora mostram estado vazio com botões "Adicionar primeira palavra" e "Importar pacote inicial".
 - **Teste antes:** Jest: estudante novo importa o pacote → 20 palavras dele e 0 nos outros; repetir não duplica. Vitest: estado vazio renderiza os dois botões. Falham antes.
 - **Pronto quando:** testes verdes (incluindo isolamento).
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `feat: empty states and starter pack for new students (T-053)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-053.`
 

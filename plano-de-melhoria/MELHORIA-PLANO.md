@@ -6,7 +6,7 @@
 
 ## PRÓXIMO PASSO
 
-Cole o Prompt B para iniciar a **M-09a**:
+Cole o Prompt B para iniciar a **M-09c**:
 
 > Leia plano-de-melhoria/SKILL-MELHORIA-PLANO.md e plano-de-melhoria/MELHORIA-PLANO.md e siga o ciclo da skill. Se algum desses dois arquivos não existir nesses caminhos, PARE e me avise sem tentar adivinhar. Execute APENAS a próxima tarefa M pendente (ou termine a que estiver em [~]). Não altere código, não commite, não faça push. Ao final: log, resumo, git status, oferta de git add . na raiz, e PARE perguntando se devo continuar.
 
@@ -371,11 +371,11 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Lê: `plano-de-acao/TAREFAS.md`, `plano-de-melhoria/MELHORIA-PLANO.md`
   - Altera: `plano-de-acao/TAREFAS.md`
 
-- [ ] **M-09b** `TAREFAS.md` (Fases 5 a 8: T-025 a T-053) — Padronizar campo `**Objetivo:**` e apontar pausa para o `RETOMAR.md` nos cartões de ORM, TS, Segurança e Isolamento. **[! Bloqueada até M-09a]**
+- [x] **M-09b** `TAREFAS.md` (Fases 5 a 8: T-025 a T-053) — concluído: 28 cartões das Fases 5 a 8 (T-025 a T-053) padronizados com campo Objetivo explícito e apontamento canônico de pausa para RETOMAR.md §3; stub legado T-050 mantido.
   - Lê: `plano-de-acao/TAREFAS.md`
   - Altera: `plano-de-acao/TAREFAS.md`
 
-- [ ] **M-09c** `TAREFAS.md` (Fases 9 a 11: T-054 a T-081) — Padronizar campo `**Objetivo:**` e apontar pausa para o `RETOMAR.md` nos cartões de i18n, Experiência de Estudo/FSRS e Voz. **[! Bloqueada até M-09b]**
+- [~] **M-09c** `TAREFAS.md` (Fases 9 a 11: T-054 a T-081) — Padronizar campo `**Objetivo:**` e apontar pausa para o `RETOMAR.md` nos cartões de i18n, Experiência de Estudo/FSRS e Voz. **[! Bloqueada até M-09b]**
   - Lê: `plano-de-acao/TAREFAS.md`
   - Altera: `plano-de-acao/TAREFAS.md`
 
@@ -478,4 +478,7 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 [2026-10-04 01:34] FIM M-08 — arquivos alterados: plano-de-acao/PLANO.md, plano-de-melhoria/MELHORIA-PLANO.md, plano-de-acao/LINHA-DO-TEMPO.md — achados: auditoria pacote × cartão concluída (dependências 100% mapeadas); D-11 a D-18 migradas de Proposto/Aguardando para Decidido; D-10 estendida com pacotes TypeScript de teste (typescript-eslint, ts-jest, types); tarefas T-095 (sanitização de LIMIT/OFFSET e err.message), T-096 (testes srs/tts client) e T-097 (teste status server) adicionadas com sucesso via add-feature sob autorização explícita; M-09 dividida em 4 etapas (M-09a..M-09d) para prevenção de saturação de contexto.
 [2026-10-04 01:52] INÍCIO M-09a — Cartões T-095..T-097 e revisão Fases 1 a 4 em TAREFAS.md
 [2026-10-04 01:55] FIM M-09a — arquivos alterados: plano-de-acao/TAREFAS.md, plano-de-melhoria/MELHORIA-PLANO.md — achados: cartões T-095, T-096 e T-097 criados e documentados completos; Fases 1 a 4 (T-001 a T-024) padronizadas com campo Objetivo explícito e apontamento canônico de pausa para RETOMAR.md §3; caminho de backup de máquina em T-002 generalizado.
+[2026-10-04 16:18] INÍCIO M-09b — Padronização de TAREFAS.md (Fases 5 a 8: T-025 a T-053)
+[2026-10-04 16:21] FIM M-09b — arquivos alterados: plano-de-acao/TAREFAS.md, plano-de-melhoria/MELHORIA-PLANO.md — achados: 28 cartões ativos das Fases 5 a 8 (T-025 a T-053) revisados e padronizados com campo Objetivo explícito e apontamento canônico de pausa para RETOMAR.md §3; stub legado T-050 preservado intacto.
+[2026-10-04 16:25] INÍCIO M-09c — Padronização de TAREFAS.md (Fases 9 a 11: T-054 a T-081)
 ```
