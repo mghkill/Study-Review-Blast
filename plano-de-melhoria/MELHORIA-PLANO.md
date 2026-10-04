@@ -6,7 +6,7 @@
 
 ## PRÓXIMO PASSO
 
-Cole o Prompt B para iniciar a **M-09c**:
+Cole o Prompt B para iniciar a **M-10**:
 
 > Leia plano-de-melhoria/SKILL-MELHORIA-PLANO.md e plano-de-melhoria/MELHORIA-PLANO.md e siga o ciclo da skill. Se algum desses dois arquivos não existir nesses caminhos, PARE e me avise sem tentar adivinhar. Execute APENAS a próxima tarefa M pendente (ou termine a que estiver em [~]). Não altere código, não commite, não faça push. Ao final: log, resumo, git status, oferta de git add . na raiz, e PARE perguntando se devo continuar.
 
@@ -375,11 +375,11 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Lê: `plano-de-acao/TAREFAS.md`
   - Altera: `plano-de-acao/TAREFAS.md`
 
-- [~] **M-09c** `TAREFAS.md` (Fases 9 a 11: T-054 a T-081) — Padronizar campo `**Objetivo:**` e apontar pausa para o `RETOMAR.md` nos cartões de i18n, Experiência de Estudo/FSRS e Voz. **[! Bloqueada até M-09b]**
+- [x] **M-09c** `TAREFAS.md` (Fases 9 a 11: T-054 a T-081) — concluído: 28 cartões das Fases 9 a 11 (T-054 a T-081) padronizados com campo Objetivo explícito e apontamento canônico de pausa para RETOMAR.md §3.
   - Lê: `plano-de-acao/TAREFAS.md`
   - Altera: `plano-de-acao/TAREFAS.md`
 
-- [ ] **M-09d** `TAREFAS.md` (Fases 12 a 15: T-082 a T-094) — Padronizar campo `**Objetivo:**` e apontar pausa para o `RETOMAR.md` nos cartões de E2E, Documentação/Open Source, Prova de Fogo e Tradução Final. **[! Bloqueada até M-09c]**
+- [x] **M-09d** `TAREFAS.md` (Fases 12 a 15: T-082 a T-094) — concluído: 13 cartões das Fases 12 a 15 (T-082 a T-094) padronizados com campo Objetivo explícito e apontamento canônico de pausa para RETOMAR.md §3; alinhamento de D-16 em T-094.
   - Lê: `plano-de-acao/TAREFAS.md`
   - Altera: `plano-de-acao/TAREFAS.md`
 
@@ -481,4 +481,7 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 [2026-10-04 16:18] INÍCIO M-09b — Padronização de TAREFAS.md (Fases 5 a 8: T-025 a T-053)
 [2026-10-04 16:21] FIM M-09b — arquivos alterados: plano-de-acao/TAREFAS.md, plano-de-melhoria/MELHORIA-PLANO.md — achados: 28 cartões ativos das Fases 5 a 8 (T-025 a T-053) revisados e padronizados com campo Objetivo explícito e apontamento canônico de pausa para RETOMAR.md §3; stub legado T-050 preservado intacto.
 [2026-10-04 16:25] INÍCIO M-09c — Padronização de TAREFAS.md (Fases 9 a 11: T-054 a T-081)
+[2026-10-04 16:27] FIM M-09c — arquivos alterados: plano-de-acao/TAREFAS.md, plano-de-melhoria/MELHORIA-PLANO.md — achados: 28 cartões ativos das Fases 9 a 11 (T-054 a T-081) padronizados com campo Objetivo explícito e apontamento canônico de pausa para RETOMAR.md §3.
+[2026-10-04 16:27] INÍCIO M-09d — Padronização de TAREFAS.md (Fases 12 a 15: T-082 a T-094)
+[2026-10-04 16:29] FIM M-09d — arquivos alterados: plano-de-acao/TAREFAS.md, plano-de-melhoria/MELHORIA-PLANO.md — achados: 13 cartões das Fases 12 a 15 (T-082 a T-094) padronizados com campo Objetivo explícito e apontamento canônico de pausa para RETOMAR.md §3; 100% dos 94 cartões ativos de TAREFAS.md agora possuem Objetivo e Pausa canônica padronizados.
 ```
