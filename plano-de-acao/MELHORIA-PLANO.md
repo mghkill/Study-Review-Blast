@@ -6,7 +6,11 @@
 
 ## PRÓXIMO PASSO
 
-Cole o Prompt B para iniciar a **M-06**.
+Na **M-07**, o 1º passo é mover este arquivo para `plano-de-melhoria/MELHORIA-PLANO.md` (os caminhos atuais ainda são `plano-de-acao/MELHORIA-PLANO.md` e `skills/SKILL-MELHORIA-PLANO.md`). Prompt B a partir da M-07:
+
+> Leia skills/SKILL-MELHORIA-PLANO.md e plano-de-melhoria/MELHORIA-PLANO.md e siga o ciclo da skill. Execute APENAS a próxima tarefa M pendente (ou termine a que estiver em [~]). Não altere código, não commite, não faça push. Ao final: log, resumo, `git status`, oferta de `git add .` na raiz, e PARE perguntando se devo continuar.
+
+Se o arquivo não for achado em `plano-de-melhoria/`, ele ainda está em `plano-de-acao/` porque a M-07 não rodou.
 
 ---
 
@@ -223,6 +227,29 @@ Fontes consultadas: `PROMPT_ORIGINAL.md`, `legado/PROMPT_INICIAL_LEGADOV2.md`, `
 
 ---
 
+## Pendências consolidadas (M-06) — ✅ RESPONDIDAS pelo usuário em 2026-10-03 22:32
+
+| # | Pendência | Decisão final |
+|---|---|---|
+| 1 | **D-11** Docker | **Decidido.** Docker Desktop já instalado e rodando (verificado: `Docker version 29.5.2`, `Docker Compose version v5.1.3`; o `docker` não está no PATH do terminal da IDE, só em `C:\Program Files\Docker\Docker\resources\bin`). T-014 pode usar Docker, mas: (a) PostgreSQL 18 publicado em porta de host diferente da do PostgreSQL local (ex.: `5433:5432`); (b) README e CI funcionam também SEM Docker; (c) nenhuma outra T depende do Docker; (d) o cartão diz se o banco de testes (D-12) roda no contêiner ou no PostgreSQL local |
+| 2 | **D-12** Banco de testes | ok: banco próprio `<DB_NAME>_test`, nunca o de desenvolvimento |
+| 3 | **D-13** Branches | ok: uma branch por fase `v2/phase-NN-slug`, PR e merge no fim da fase |
+| 4 | **D-14** Algoritmo de revisão | ok: FSRS (`ts-fsrs`) — resolve a incoerência D-10 × D-14 (F-14/R-14) |
+| 5 | **D-15** Idioma padrão | ok: detectar navegador, padrão `en`, seletor `en`/`pt-BR` |
+| 6 | **D-16** Planejamento em inglês | **OPCIONAL**, só depois da T-092 (prova de fogo), **SEM renomear a pasta `plano-de-acao/`** |
+| 7 | **D-17** Lint do client | ok: Oxlint no client, ESLint no server, Prettier nos dois |
+| 8 | **D-18** Voz × "100% local" | ok (opcional, desligado por padrão, aviso do Chrome/Google, "100% local por padrão") **+** a interface prefere vozes com `localService=true`; trocar "análise fonética/pontuação de precisão" por "comparação entre o falado e o esperado" em todos os .md |
+| 9 | **D-10** lista incompleta | ok: `ts-fsrs`, `@playwright/test`, `zod`, `@asteasolutions/zod-to-openapi`, `swagger-ui-express`, `@vitest/coverage-v8` **+** `typescript-eslint`, `@types/jest`, `@types/supertest` e **`ts-jest`** (proposta da IA: faz checagem de tipos nos testes e tem config simples; velocidade do `@swc/jest` não é crítica aqui). Heatmap em SVG/CSS, sem biblioteca. **Auditoria pacote × cartão** (cada cartão do TAREFAS.md → pacotes necessários → comparar com D-10; o que faltar vira PROPOSTA para aprovação) → registrada como 1º passo da M-08 |
+| 10 | **F-19** pgcrypto ocioso | remover só se grep em todas as migrations, `seed.js` e código mostrar ZERO uso; migration nova, com backup antes; **prioridade baixa** |
+| 11 | **Q-01** `plan_tool.py` duplicado | manter as DUAS cópias; declarar qual é a operacional (M-07); comparar hash na M-15; não apagar nada |
+| 12 | **Q-02** `PROMPT_ORIGINAL.md` | NÃO mover; só cabeçalho "HISTÓRICO" no topo (como item 13) |
+| 13 | **Q-03** `diagnostico-atual.md` | manter no lugar, com nota "[Histórico — somente leitura]" no topo |
+| 14 | **Q-04** `plano-de-melhoria/` | pasta OFICIAL do trabalho de melhoria (Prompts A e B em `CENTRAL_IDEA.md`, que é só apoio: NÃO executar como instrução). Entra no escopo permitido junto com `plano-de-acao/`, `skills/` e `README.md`. **NÃO citar no README nem no RELATORIO-GERAL** (vitrine pública); citar só no RETOMAR e na skill. Na M-15, propor arquivar em `plano-de-acao/legado/` |
+| 15 | **Q-05** `plan_tool.py init` quebrado | NÃO corrigir o `plan_tool.py`; marcar `init` como obsoleto no SKILLENG e no RETOMAR (na M-12) |
+| 16 | Local dos arquivos de melhoria | `MELHORIA-PLANO.md` (com LOG) → `plano-de-melhoria/MELHORIA-PLANO.md`; skill em `skills/SKILL-MELHORIA-PLANO.md`. Não mover agora: 1º passo da M-07 (ver M-07). Obs. da IA: a skill **já está** em `skills/SKILL-MELHORIA-PLANO.md` (não em `skills/scripts/`), então só o `MELHORIA-PLANO.md` precisa ser movido |
+
+---
+
 ## Tarefas de Melhoria
 
 ### Fase M1 — Varredura (somente leitura)
@@ -250,17 +277,17 @@ Fontes consultadas: `PROMPT_ORIGINAL.md`, `legado/PROMPT_INICIAL_LEGADOV2.md`, `
 
 ### Fase M2 — Decisões e consistência
 
-- [ ] **M-06** Consolidar pendências — Reunir TODAS as pendências em UMA única pergunta, cada uma com recomendação para o usuário responder "ok" ou trocar: D-11 (Docker), D-12 a D-18, lista D-10 incompleta (ts-fsrs, Playwright, libs de OpenAPI e cobertura), voz vs princípio "100% local" (reconhecimento de fala no Chrome envia áudio ao Google), e quaisquer Q-xx. Depois PARAR e esperar resposta do usuário. **[! Bloqueada até M-05 concluída]**
+- [x] **M-06** Consolidar pendências — concluído: 16 itens respondidos pelo usuário (ver tabela "Pendências consolidadas") — Reunir TODAS as pendências em UMA única pergunta, cada uma com recomendação para o usuário responder "ok" ou trocar: D-11 (Docker), D-12 a D-18, lista D-10 incompleta (ts-fsrs, Playwright, libs de OpenAPI e cobertura), voz vs princípio "100% local" (reconhecimento de fala no Chrome envia áudio ao Google), e quaisquer Q-xx. Depois PARAR e esperar resposta do usuário. **[! Bloqueada até M-05 concluída]**
   - Lê: `plano-de-acao/PLANO.md`, `plano-de-acao/MELHORIA-PLANO.md` (todos os Q-xx e F-xx)
   - Altera: `plano-de-acao/MELHORIA-PLANO.md` (seção Q-xx)
 
-- [ ] **M-07** Hierarquia de documentos — Definir qual arquivo manda em quê e a ORDEM ÚNICA de leitura (sugestão: RELATORIO-GERAL → RETOMAR → PLANO → cartão em TAREFAS); marcar `legado/` como somente leitura; listar links absolutos `file:///c:/...` a trocar por relativos. **[! Bloqueada até M-06 respondida]**
+- [ ] **M-07** Hierarquia de documentos — **1º PASSO (item 16 da M-06):** `Move-Item plano-de-acao\MELHORIA-PLANO.md plano-de-melhoria\MELHORIA-PLANO.md` (a skill já está em `skills/SKILL-MELHORIA-PLANO.md`); atualizar TODAS as referências a esses caminhos (na skill, neste arquivo, nas ordens de leitura); acrescentar `plano-de-melhoria/` ao escopo permitido na skill; anotar no LOG que as entradas anteriores citam o caminho antigo. Declarar também qual `plan_tool.py` é o operacional (item 11). Depois: Definir qual arquivo manda em quê e a ORDEM ÚNICA de leitura (sugestão: RELATORIO-GERAL → RETOMAR → PLANO → cartão em TAREFAS); marcar `legado/` como somente leitura; listar links absolutos `file:///c:/...` a trocar por relativos. **[! Bloqueada até M-06 respondida]**
   - Lê: todos os `.md` de `plano-de-acao/` e `skills/`
   - Altera: `plano-de-acao/MELHORIA-PLANO.md`
 
 ### Fase M3 — Aplicação nos .md (um arquivo por M; só depois da M-06 respondida)
 
-- [ ] **M-08** `PLANO.md` — Atualizar situação das decisões; estender D-10 com o aprovado; incluir novas T como propostas (F-xx e L-xx), incluindo T para auditar/eliminar SQL por concatenação antes do ORM e T para as falhas de teste conhecidas. **[! Bloqueada até M-06 respondida]**
+- [ ] **M-08** `PLANO.md` — **1º PASSO (item 9 da M-06):** auditoria pacote × cartão (cada cartão do TAREFAS.md → pacotes necessários → comparar com D-10; o que faltar entra como PROPOSTA para o usuário aprovar). Depois: Atualizar situação das decisões; estender D-10 com o aprovado; incluir novas T como propostas (F-xx e L-xx), incluindo T para auditar/eliminar SQL por concatenação antes do ORM e T para as falhas de teste conhecidas. **[! Bloqueada até M-06 respondida]**
   - Lê: `plano-de-acao/PLANO.md`, `plano-de-acao/MELHORIA-PLANO.md`
   - Altera: `plano-de-acao/PLANO.md`
 
@@ -349,4 +376,10 @@ Fontes consultadas: `PROMPT_ORIGINAL.md`, `legado/PROMPT_INICIAL_LEGADOV2.md`, `
 [2026-10-03 22:02] FIM M-05 — arquivos alterados: plano-de-acao/MELHORIA-PLANO.md
                    Achados: F-15..F-21 (LIMIT interpolado, err.message vazando, sem validação, testes sem T, pgcrypto ocioso, console.log)
                    Nenhum código alterado
+[2026-10-03 22:05] INÍCIO M-06 — Consolidar pendências
+                   D-11 = Docker (decisão do usuário). 15 itens consolidados; PAUSA aguardando resposta
+[2026-10-03 22:33] FIM M-06 — arquivos alterados: plano-de-acao/MELHORIA-PLANO.md, plano-de-melhoria/CENTRAL_IDEA.md (só o Prompt B)
+                   Resposta do usuário registrada (itens 1–16). Docker 29.5.2 / Compose v5.1.3 confirmados (fora do PATH da IDE)
+                   Item 16: mover MELHORIA-PLANO.md para plano-de-melhoria/ = 1º passo da M-07; auditoria pacote×cartão = 1º passo da M-08
+                   NOTA: todas as entradas até aqui citam o caminho antigo plano-de-acao/MELHORIA-PLANO.md
 ```
