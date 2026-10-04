@@ -4,37 +4,41 @@
 
 ---
 
-## 1. Ordem de leitura obrigatória ao iniciar
+## 1. Ordem canônica de leitura ao iniciar
 
-1. Este arquivo (`RETOMAR.md`) — regras e fluxo do dia.
-2. Bloco `## PRÓXIMO PASSO` em [`PLANO.md`](./PLANO.md) — próxima tarefa.
-3. Cartão `### T-0XX` correspondente em [`TAREFAS.md`](./TAREFAS.md) — o que fazer, como testar, critério de pronto.
-4. Últimas 20 linhas de [`LINHA-DO-TEMPO.md`](./LINHA-DO-TEMPO.md) — o que a sessão anterior fez.
-5. `py plano-de-acao/plan_tool.py status` — confirmar progresso e tarefa atual.
+Siga os 6 passos canônicos em ordem estrita (definidos na governança da M-07):
 
-Depois de ler, rode também:
-```powershell
-git status --short
-git log -3 --oneline
-```
-Se houver tarefa `[~]` em andamento, termine-a antes de começar qualquer outra.
+1. [`RELATORIO-GERAL-PROJETO.md`](./RELATORIO-GERAL-PROJETO.md) — ler uma vez no onboarding inicial, ao trocar de modelo de IA ou após compactação de contexto (arquitetura e regras inegociáveis).
+2. Este arquivo (`RETOMAR.md`) — ler no início de toda sessão: regras do dia, conduta e verificação de estado.
+3. Bloco `## PRÓXIMO PASSO` em [`PLANO.md`](./PLANO.md) — identificar qual é a próxima tarefa T e verificar se há pendências na fase.
+4. Cartão `### T-0XX` correspondente em [`TAREFAS.md`](./TAREFAS.md) — ler apenas o bloco da tarefa da sessão (Objetivo, Back, Front, Teste antes, Pronto).
+5. Últimas 20 linhas de [`LINHA-DO-TEMPO.md`](./LINHA-DO-TEMPO.md) — entender o contexto imediato deixado pela sessão anterior.
+6. Checagem obrigatória no terminal:
+   ```powershell
+   py plano-de-acao/plan_tool.py status
+   git status --short
+   git log -3 --oneline
+   ```
+
+Se houver tarefa `[~]` em andamento, termine-a ou avalie o estado antes de começar qualquer outra.
 
 ---
 
 ## 2. Algoritmo de uma sessão
 
-```
-1. ler RETOMAR.md (este arquivo)
-2. ler PLANO.md → bloco "PRÓXIMO PASSO"
-3. ler TAREFAS.md → cartão da tarefa
-4. ler fim de LINHA-DO-TEMPO.md
-5. plan_tool.py status
-6. git status + git log -3
-─────────────────────────────
-7. py plano-de-acao/plan_tool.py start T-0XX
-8. escrever o teste ANTES e vê-lo FALHAR
-9. implementar até o teste passar
-10. PAUSA OBRIGATÓRIA (seção 3)
+```text
+1. ler RELATORIO-GERAL-PROJETO.md (se novo contexto ou troca de IA)
+2. ler RETOMAR.md (este arquivo)
+3. ler PLANO.md → bloco "PRÓXIMO PASSO"
+4. ler TAREFAS.md → cartão exato da tarefa (### T-0XX)
+5. ler últimas 20 linhas de LINHA-DO-TEMPO.md
+6. py plano-de-acao/plan_tool.py status
+7. git status --short + git log -3 --oneline
+────────────────────────────────────────────────────────
+8. py plano-de-acao/plan_tool.py start T-0XX
+9. escrever o teste ANTES e vê-lo FALHAR (TDD obrigatório)
+10. implementar até o teste passar
+11. PAUSA OBRIGATÓRIA (seção 3)
 ```
 
 ---
@@ -81,18 +85,34 @@ Leia plano-de-acao/RETOMAR.md e execute a T-0XX.
 
 ---
 
-## 5. Hierarquia de fontes de verdade
+## 5. Hierarquia de autoridade e fontes da verdade (M-07)
 
-| Arquivo | Para quê |
-|---|---|
-| `RETOMAR.md` (este) | Regras do dia, pausa, protocolo de retomada |
-| `PLANO.md` | Progresso real, fases, decisões D-xx, dependências |
-| `TAREFAS.md` | Detalhe de cada tarefa (back, front, teste, pronto) |
-| `LINHA-DO-TEMPO.md` | Histórico cronológico (nunca apagar) |
-| `plan_tool.py` | Ferramenta operacional (status, start, done, log) |
-| `skills/SKILLENG.md` | Regras da skill (stack, pausa, ambiente) |
-| `skills/references/modelo-logico-alvo.md` | Schema alvo e migrações |
-| `skills/references/diagnostico-atual.md` | Diagnóstico do estado atual |
+A governança do repositório opera em dois regimes: o **Ciclo de Melhoria do Planejamento (Fase M)** e a **Execução Operacional (Fase T)**.
+
+### Matriz de Precedência (Qual arquivo manda em quê)
+
+| Precedência | Documento | Esfera de Autoridade Máxima (Manda em quê) |
+|---|---|---|
+| **0 (Meta-Regulação Ativa)** | `plano-de-melhoria/SKILL-MELHORIA-PLANO.md` | **Regulação Suprema das Sessões de Melhoria:** Durante as tarefas M, rege o ciclo de sessão, escopo estrito (.md), proibição de tocar em código e regra de 1 M por sessão. |
+| **0.1 (Fonte das Melhorias)** | `plano-de-melhoria/MELHORIA-PLANO.md` | **Diretrizes e Decisões de Refinamento:** Consolida achados (F-xx), lacunas (L-xx), decisões do usuário (M-06) e o LOG cronológico das melhorias. |
+| **1 (Suprema Operacional)** | [`RELATORIO-GERAL-PROJETO.md`](./RELATORIO-GERAL-PROJETO.md) | **Arquitetura, Visão Alvo e Princípios Cardeais:** Define o que o sistema é e será; regras inegociáveis (100% gratuito/local, isolamento estrito, PostgreSQL 18 soberano); mapa de decisões D-01 a D-18. |
+| **2** | [`RETOMAR.md`](./RETOMAR.md) (este arquivo) | **Conduta Operacional e Protocolo de Execução:** Manda no fluxo da sessão diária de desenvolvimento de código, ritual de pausa com `git add .`, verificação prévia e tolerância a falhas de contexto. |
+| **3** | [`PLANO.md`](./PLANO.md) | **Sequenciamento das Fases e Dependências Aprovadas:** Manda na ordem das 15 fases, no ponteiro `## PRÓXIMO PASSO`, nas decisões arquiteturais formais D-xx e na lista oficial de dependências autorizadas (D-10). |
+| **4** | [`TAREFAS.md`](./TAREFAS.md) | **Especificação Técnica Unitária:** Manda nos requisitos específicos de cada tarefa: critérios de pronto, testes prévios (TDD), escopo de Backend, Frontend, commits convencionais e tamanho (P/M). |
+| **5** | [`LINHA-DO-TEMPO.md`](./LINHA-DO-TEMPO.md) | **Histórico Factual e Evidência Auditável:** Registro append-only imutável de todas as ações executadas, timestamps, hashes de backup e conclusões. |
+| **6** | `skills/SKILLENG.md` & `skills/references/` | **Padrões Técnicos e Engenharia:** Manda em convenções de branch/commit (`convencoes-v2.md`), modelagem relacional (`modelo-logico-alvo.md`) e padrões open source (`open-source-*.md`). |
+| **7** | `README.md` (Raiz) | **Interface com o Usuário e Comunicação Externa:** Manda na experiência do desenvolvedor/usuário final que clona o repositório, instruções de instalação e visualização de progresso. |
+| **Histórico** | `plano-de-acao/legado/` | **Museu do Plano V1 (Somente Leitura):** Registro imutável das 26 primeiras tarefas e documentos de transição. Sem autoridade executiva no V2, preservado para auditoria. |
+
+### Ferramenta Operacional (`plan_tool.py`)
+- **Operacional única do dia a dia:** `plano-de-acao/plan_tool.py` (usada nos comandos `status`, `start`, `done`, `log`, `block`, `add-feature`).
+- **Subcomando obsoleto:** `py plano-de-acao/plan_tool.py init` está **obsoleto e desativado** (não utilizar; plano V2 já estruturado).
+- **Cópia espelho de referência:** `skills/scripts/plan_tool.py` mantida intacta na skill.
+
+### Confinamento de `plano-de-melhoria/`
+- Espaço oficial de trabalho das melhorias M (`MELHORIA-PLANO.md`, `SKILL-MELHORIA-PLANO.md`, `CENTRAL_IDEA.md`).
+- Não é citado em vitrines públicas (`README.md`, `RELATORIO-GERAL-PROJETO.md`).
+- Arquivamento histórico em `plano-de-acao/legado/` previsto para o fim da M-15.
 
 ---
 
@@ -116,10 +136,11 @@ Leia plano-de-acao/RETOMAR.md e execute a T-0XX.
 
 Se a IA for trocada ou encerrar por falta de tokens no meio de uma tarefa:
 
-1. Verifique se a tarefa está marcada `[~]` em `PLANO.md` (se não estiver, marque com `start`).
-2. Leia o fim de `LINHA-DO-TEMPO.md` para saber até onde chegou.
-3. Rode `git status` — se houver arquivos modificados não commitados, avalie se o trabalho parcial está correto antes de continuar.
-4. Use o prompt: `Leia plano-de-acao/RETOMAR.md e continue a T-0XX (interrompida).`
+1. Se novo contexto ou troca de IA, leia primeiro [`RELATORIO-GERAL-PROJETO.md`](./RELATORIO-GERAL-PROJETO.md) (visão arquitetural).
+2. Verifique se a tarefa está marcada `[~]` em `PLANO.md` (se não estiver, marque com `start`).
+3. Leia o fim de `LINHA-DO-TEMPO.md` para saber até onde chegou.
+4. Rode `git status` — se houver arquivos modificados não commitados, avalie se o trabalho parcial está correto antes de continuar.
+5. Use o prompt: `Leia plano-de-acao/RETOMAR.md e continue a T-0XX (interrompida).`
 
 ---
 
@@ -128,5 +149,5 @@ Se a IA for trocada ou encerrar por falta de tokens no meio de uma tarefa:
 - **SO:** Windows. Use `py` (não `python`). PowerShell; caminhos com `/` ou `\\`.
 - **Node:** 24 (suporta `--experimental-strip-types` nativamente).
 - **PostgreSQL:** 18, local. `pg_dump`/`pg_restore` em `C:\Program Files\PostgreSQL\18\bin\`.
-- **Docker:** não instalado (ver D-11 em `PLANO.md`).
+- **Docker:** Docker Desktop 29.5.2 instalado e em execução (D-11 Decidido; Docker Compose v5.1.3; binário em `C:\Program Files\Docker\Docker\resources\bin`).
 - **Fuso horário:** America/Bahia (UTC-3). O `plan_tool.py` cuida das datas; nunca escreva datas à mão.

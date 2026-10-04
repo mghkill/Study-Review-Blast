@@ -6,7 +6,7 @@
 
 ## PRÓXIMO PASSO
 
-Cole o Prompt B para iniciar a **M-10**:
+Cole o Prompt B para iniciar a **M-11**:
 
 > Leia plano-de-melhoria/SKILL-MELHORIA-PLANO.md e plano-de-melhoria/MELHORIA-PLANO.md e siga o ciclo da skill. Se algum desses dois arquivos não existir nesses caminhos, PARE e me avise sem tentar adivinhar. Execute APENAS a próxima tarefa M pendente (ou termine a que estiver em [~]). Não altere código, não commite, não faça push. Ao final: log, resumo, git status, oferta de git add . na raiz, e PARE perguntando se devo continuar.
 
@@ -383,7 +383,7 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Lê: `plano-de-acao/TAREFAS.md`
   - Altera: `plano-de-acao/TAREFAS.md`
 
-- [ ] **M-10** `RETOMAR.md` — Alinhar à hierarquia da M-07. **[! Bloqueada até M-07]**
+- [x] **M-10** `RETOMAR.md` — concluído: alinhado à hierarquia de autoridade da M-07 (matriz de precedência de 10 níveis, 6 passos de leitura canônicos, confinamento de plano-de-melhoria/, plan_tool.py operacional único com init obsoleto e Docker Desktop atualizado).
   - Lê: `plano-de-acao/RETOMAR.md`
   - Altera: `plano-de-acao/RETOMAR.md`
 
@@ -484,4 +484,6 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 [2026-10-04 16:27] FIM M-09c — arquivos alterados: plano-de-acao/TAREFAS.md, plano-de-melhoria/MELHORIA-PLANO.md — achados: 28 cartões ativos das Fases 9 a 11 (T-054 a T-081) padronizados com campo Objetivo explícito e apontamento canônico de pausa para RETOMAR.md §3.
 [2026-10-04 16:27] INÍCIO M-09d — Padronização de TAREFAS.md (Fases 12 a 15: T-082 a T-094)
 [2026-10-04 16:29] FIM M-09d — arquivos alterados: plano-de-acao/TAREFAS.md, plano-de-melhoria/MELHORIA-PLANO.md — achados: 13 cartões das Fases 12 a 15 (T-082 a T-094) padronizados com campo Objetivo explícito e apontamento canônico de pausa para RETOMAR.md §3; 100% dos 94 cartões ativos de TAREFAS.md agora possuem Objetivo e Pausa canônica padronizados.
+[2026-10-04 16:31] INÍCIO M-10 — Alinhamento de RETOMAR.md à hierarquia da M-07
+[2026-10-04 16:34] FIM M-10 — arquivos alterados: plano-de-acao/RETOMAR.md, plano-de-melhoria/MELHORIA-PLANO.md — achados: RETOMAR.md alinhado com a governança da M-07 (ordem canônica de leitura de 6 passos, matriz de precedência de 10 níveis, plan_tool.py operacional único com init obsoleto, confinamento de plano-de-melhoria/ e ambiente atualizado com Docker Desktop).
 ```
