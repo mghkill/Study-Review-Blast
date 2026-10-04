@@ -6,7 +6,7 @@
 
 ## PRÓXIMO PASSO
 
-Cole o Prompt B para iniciar a **M-04**.
+Cole o Prompt B para iniciar a **M-05**.
 
 ---
 
@@ -148,7 +148,33 @@ Fontes consultadas: `PROMPT_ORIGINAL.md`, `legado/PROMPT_INICIAL_LEGADOV2.md`, `
 
 ## Lacunas do legado (L-xx)
 
-> Lacunas encontradas na migração V1→V2. Preenchido a partir da M-04.
+### L-01 · MAPA linha de V1 T-001 — destino ambíguo
+- `MAPA-V1-V2.md` L12: V1 T-001 (`Ler package.json...`) tem destino `— / incorporado no legado`. Não tem tarefa V2 correspondente numerada. O MAPA usa `—` como destino, o que é aceitável (conhecimento incorporado), mas a coluna V2 está vazia. **Não é lacuna crítica** — o conhecimento existe na LINHA-DO-TEMPO (L6-8). ⚠️ Sugestão para M-14: clarificar o texto do MAPA nessa linha (ex.: "incorporado na LINHA-DO-TEMPO L6-8").
+
+### L-02 · MAPA linha de V1 T-001 tem símbolo estranho
+- `MAPA-V1-V2.md` L12: o campo status exibe `✅ — / incorporado no legado` com barra (`/`) — provavelmente artefato de edição. Menor, mas pode confundir. A corrigir na M-14.
+
+### L-03 · V1 tarefas concluídas sem evidência individual na LINHA-DO-TEMPO V1 para T-016 e T-017
+- T-016 e T-017 no V2 são stubs marcados como concluídos. A evidência está nos arquivos de migração em disco (001–009 existem ✅) e na LINHA-DO-TEMPO L64 ("Plano V2 construído..."). Não há entradas individuais `[T-016] concluída` na LINHA-DO-TEMPO. Aceitável (foram concluídas antes do V2 ser estruturado), mas a rastreabilidade é indireta. Registrar como L-03 para awareness.
+
+### L-04 · V1 T-050 — stubs sem evidência direta na LINHA-DO-TEMPO V2
+- V1 T-020 a T-030 → V2 T-050 (stub). Evidências em disco: `requireStudent.js` ✅, `isolation.test.js` ✅, `X-Student-Id` em `api.js` ✅, migrations 002–005 ✅. LINHA-DO-TEMPO L64 registra o agrupamento. Rastreabilidade indireta mas suficiente. Não é lacuna crítica.
+
+### L-05 · MAPA — tarefas V1 pendentes sem destino explícito
+- V1 T-044 a T-048 (Fase 3 pendentes): o MAPA mapeia T-044→T-020, T-045→T-021, T-046→T-022, T-047→T-023, T-048→T-024. Todos os destinos existem em TAREFAS.md com conteúdo real ✅.
+- V1 T-050 a T-054 (Fase 4, gerador): mapeia para T-072, T-073, T-074 — todos existem ✅.
+- V1 T-060, T-061 (Fase 5): mapeia para T-004, T-078 — existem ✅.
+- V1 T-070 a T-073 (Fase 6): mapeia para T-077, T-042, T-043–T-045, T-084 — todos existem ✅.
+- V1 T-080 a T-087, T-090 (Fases 7 e final): mapeia para T-087, T-089, T-091, T-092 — todos existem ✅.
+- **Resultado: nenhuma tarefa V1 pendente ficou sem destino no V2.** ✅
+
+### Resumo da auditoria M-04
+- ✅ Todas as tarefas V1 concluídas (`[x]`) têm evidência no disco.
+- ✅ Todas as tarefas V1 pendentes têm destino mapeado em TAREFAS.md com conteúdo real.
+- ⚠️ L-01 e L-02: o MAPA tem texto ambíguo/artefato na linha de V1 T-001 — cosmético, corrigir na M-14.
+- ⚠️ L-03 e L-04: rastreabilidade de T-016, T-017 e T-050 é indireta (via LINHA-DO-TEMPO L64 e evidências em disco) — aceitável.
+
+
 
 ---
 
@@ -185,7 +211,7 @@ Fontes consultadas: `PROMPT_ORIGINAL.md`, `legado/PROMPT_INICIAL_LEGADOV2.md`, `
   - Altera: `plano-de-acao/MELHORIA-PLANO.md` (seção Achados F-xx)
 
 
-- [ ] **M-04** Auditoria do legado — Para cada tarefa de `legado/PLANO-v1.md` (T-001 a T-090, inclusive opcionais), confirmar que o destino em `legado/MAPA-V1-V2.md` existe em `TAREFAS.md` com conteúdo real (não só título) e, para as marcadas concluídas, que há evidência no disco. Tudo sem destino ou sem evidência vira L-xx.
+- [x] **M-04** Auditoria do legado — concluído: todas as T V1 com destino e evidência ✅, L-01..L-05 registradas (L-01/L-02 cosméticas, L-03/L-04 rastreabilidade indireta aceitável) — Para cada tarefa de `legado/PLANO-v1.md` (T-001 a T-090, inclusive opcionais), confirmar que o destino em `legado/MAPA-V1-V2.md` existe em `TAREFAS.md` com conteúdo real (não só título) e, para as marcadas concluídas, que há evidência no disco. Tudo sem destino ou sem evidência vira L-xx.
   - Lê: `plano-de-acao/legado/PLANO-v1.md`, `plano-de-acao/legado/MAPA-V1-V2.md`, `plano-de-acao/TAREFAS.md`
   - Altera: `plano-de-acao/MELHORIA-PLANO.md` (seção Lacunas L-xx) 
 
@@ -286,4 +312,8 @@ Fontes consultadas: `PROMPT_ORIGINAL.md`, `legado/PROMPT_INICIAL_LEGADOV2.md`, `
                    Achados: F-14 (checklist R-01..R-16: 14 ✅, 2 ⚠️, 0 ❌)
                    R-14 ⚠️: ts-fsrs em D-10 (aprovada) mas D-14 diz "Proposto"; incoerência a resolver na M-08
                    R-16 ⚠️: menções instrucionais de senha; nenhum segredo real exposto
+[2026-10-03 21:50] INÍCIO M-04 — Auditoria do legado V1
+[2026-10-03 21:59] FIM M-04 — arquivos alterados: plano-de-acao/MELHORIA-PLANO.md
+                   Lacunas: L-01..L-05 (L-01/L-02 cosméticas; L-03/L-04 rastreabilidade indireta aceitável)
+                   Todas as T V1 com destino no MAPA e evidência no disco ✅; correções do MAPA ficam para M-14
 ```
