@@ -33,8 +33,14 @@ Cole o Prompt B para iniciar a **M-07**:
 | `RETOMAR.md` | 5.292 | **ATIVO** | Protocolo diário e regras de pausa |
 | `LINHA-DO-TEMPO.md` | 10.774 | **ATIVO** | Log cronológico imutável |
 | `PROMPT_ORIGINAL.md` | 14.216 | **HISTÓRICO** | Instruções primitivas do projeto (referência) |
-| `MELHORIA-PLANO.md` | ~9.400 | **ATIVO** | Este plano de melhoria (criado na M-00) |
 | `plan_tool.py` | 8.220 | **ATIVO** | Script CLI de planejamento (status, start, done, log) |
+
+#### plano-de-melhoria/ (ativos de melhoria)
+| Arquivo | Bytes | Classif. | Função |
+|---|---|---|---|
+| `CENTRAL_IDEA.md` | 12.403 | **ATIVO** | Ideia central e prompts de execução (Prompt A e B) |
+| `MELHORIA-PLANO.md` | ~38.000 | **ATIVO** | Este plano de melhoria (criado na M-00) |
+| `SKILL-MELHORIA-PLANO.md` | 3.559 | **ATIVO** | Skill das sessões de melhoria (criada na M-00) |
 
 #### plano-de-acao/legado/
 | Arquivo | Bytes | Classif. | Função |
@@ -51,7 +57,6 @@ Cole o Prompt B para iniciar a **M-07**:
 |---|---|---|---|
 | `SKILLENG.md` | 6.078 | **ATIVO** | Diretrizes técnicas da IA planejadora |
 | `skill.md` | 8.355 | **ATIVO** | Diretrizes de documentação e README open source |
-| `SKILL-MELHORIA-PLANO.md` | 3.508 | **ATIVO** | Skill desta sessão de melhoria (criada na M-00) |
 | `assets/README.template.md` | 3.837 | **ATIVO** | Template de documentação profissional |
 | `references/convencoes-v2.md` | 4.831 | **ATIVO** | Padrões de código, branches e commits |
 | `references/diagnostico-atual.md` | 4.539 | **HISTÓRICO** | Análise preliminar pré-V1 |
@@ -255,43 +260,43 @@ Fontes consultadas: `PROMPT_ORIGINAL.md`, `legado/PROMPT_INICIAL_LEGADOV2.md`, `
 
 - [x] **M-01** Inventário — concluído: inventário completo em F-01 a F-07, 2 duplicações, 1 órfão, 4 Q-xx geradas — Listar todos os `.md` e `.py` de `plano-de-acao/`, `skills/`, raiz e `legado/` com tamanho e função; classificar ATIVO / LEGADO / HISTÓRICO; apontar duplicações e arquivos órfãos (inclua `migrations/README.md`: tem função? sugerir manter ou remover, sem remover).
   - Lê: raiz, `plano-de-acao/`, `plano-de-acao/legado/`, `skills/`, `skills/references/`, `skills/assets/`, `skills/scripts/`
-  - Altera: `plano-de-acao/MELHORIA-PLANO.md` (seção Achados F-xx)
+  - Altera: `plano-de-melhoria/MELHORIA-PLANO.md` (seção Achados F-xx)
 
 - [x] **M-02** Verdade no disco — concluído: 94 cartões ✅, status 4/94 ✅, §2 e §3 do RELATORIO-GERAL conferidos, achados F-08–F-13, Q-05 gerada — Conferir `plan_tool.py status`; contar cartões em `TAREFAS.md` (esperado 94, T-001 a T-094, sem faltar nem repetir); campos obrigatórios por cartão (objetivo, back, front, teste antes, pronto, tamanho P/M, prompt, pausa); conferir cada afirmação do RELATORIO-GERAL (§2 árvore vs disco, §3 estado, migrations 001–009 existem); verificar se `plan_tool.py init` depende de `skills/assets/PLANO.inicial.md` (só relatar).
   - Lê: `plano-de-acao/TAREFAS.md`, `plano-de-acao/RELATORIO-GERAL-PROJETO.md`, `plano-de-acao/plan_tool.py`, `server/src/db/migrations/`
-  - Altera: `plano-de-acao/MELHORIA-PLANO.md` (seção Achados F-xx)
+  - Altera: `plano-de-melhoria/MELHORIA-PLANO.md` (seção Achados F-xx)
 
 - [x] **M-03** Conformidade R-01..R-16 — concluído: 14/16 ✅, R-14 e R-16 com ressalvas menores (⚠️), 0 ❌, achado crítico: D-10 vs D-14 inconsistentes para ts-fsrs. — checklist R-01..R-16 abaixo, cada um ✅/⚠️/❌ com evidência (arquivo e linha).
   - Lê: `plano-de-acao/legado/PROMPT_INICIAL_LEGADOV2.md`, `plano-de-acao/PROMPT_ORIGINAL.md`, `plano-de-acao/PLANO.md`, `plano-de-acao/TAREFAS.md`
-  - Altera: `plano-de-acao/MELHORIA-PLANO.md` (seção Achados F-xx)
+  - Altera: `plano-de-melhoria/MELHORIA-PLANO.md` (seção Achados F-xx)
 
 
 - [x] **M-04** Auditoria do legado — concluído: todas as T V1 com destino e evidência ✅, L-01..L-05 registradas (L-01/L-02 cosméticas, L-03/L-04 rastreabilidade indireta aceitável) — Para cada tarefa de `legado/PLANO-v1.md` (T-001 a T-090, inclusive opcionais), confirmar que o destino em `legado/MAPA-V1-V2.md` existe em `TAREFAS.md` com conteúdo real (não só título) e, para as marcadas concluídas, que há evidência no disco. Tudo sem destino ou sem evidência vira L-xx.
   - Lê: `plano-de-acao/legado/PLANO-v1.md`, `plano-de-acao/legado/MAPA-V1-V2.md`, `plano-de-acao/TAREFAS.md`
-  - Altera: `plano-de-acao/MELHORIA-PLANO.md` (seção Lacunas L-xx) 
+  - Altera: `plano-de-melhoria/MELHORIA-PLANO.md` (seção Lacunas L-xx) 
 
 - [x] **M-05** Auditoria de código (SOMENTE LEITURA) — concluído: F-15..F-21; SQL parametrizado (só LIMIT interpolado), ~35 vazamentos de err.message, sem lib de validação, testes quebrados sem T, pgcrypto ocioso, 0 mojibake, 28 console.log no server — SQL montado por concatenação/interpolação de strings; rotas sem validação de entrada; erros que vazam SQL; testes quebrados (client srs/tts, server status red→yellow) e se alguma T cuida deles; extensão pgcrypto sem uso; textos/comentários em português e acentos corrompidos; `console.log`. Resultado: achados F-xx com arquivo:linha. Não alterar código.
   - Lê: `server/src/`, `client/src/`, testes em ambos
-  - Altera: `plano-de-acao/MELHORIA-PLANO.md` (seção Achados F-xx)
+  - Altera: `plano-de-melhoria/MELHORIA-PLANO.md` (seção Achados F-xx)
 
 ### Fase M2 — Decisões e consistência
 
 - [x] **M-06** Consolidar pendências — concluído: 16 itens respondidos pelo usuário (ver tabela "Pendências consolidadas") — Reunir TODAS as pendências em UMA única pergunta, cada uma com recomendação para o usuário responder "ok" ou trocar: D-11 (Docker), D-12 a D-18, lista D-10 incompleta (ts-fsrs, Playwright, libs de OpenAPI e cobertura), voz vs princípio "100% local" (reconhecimento de fala no Chrome envia áudio ao Google), e quaisquer Q-xx. Depois PARAR e esperar resposta do usuário. **[! Bloqueada até M-05 concluída]**
-  - Lê: `plano-de-acao/PLANO.md`, `plano-de-acao/MELHORIA-PLANO.md` (todos os Q-xx e F-xx)
-  - Altera: `plano-de-acao/MELHORIA-PLANO.md` (seção Q-xx)
+  - Lê: `plano-de-acao/PLANO.md`, `plano-de-melhoria/MELHORIA-PLANO.md` (todos os Q-xx e F-xx)
+  - Altera: `plano-de-melhoria/MELHORIA-PLANO.md` (seção Q-xx)
 
-- [ ] **M-07** Hierarquia de documentos — **1º PASSO (item 16 da M-06):** `Move-Item plano-de-acao\MELHORIA-PLANO.md plano-de-melhoria\MELHORIA-PLANO.md` (a skill já está em `skills/SKILL-MELHORIA-PLANO.md`); atualizar TODAS as referências a esses caminhos (na skill, neste arquivo, nas ordens de leitura); acrescentar `plano-de-melhoria/` ao escopo permitido na skill; anotar no LOG que as entradas anteriores citam o caminho antigo. Declarar também qual `plan_tool.py` é o operacional (item 11). Depois: Definir qual arquivo manda em quê e a ORDEM ÚNICA de leitura (sugestão: RELATORIO-GERAL → RETOMAR → PLANO → cartão em TAREFAS); marcar `legado/` como somente leitura; listar links absolutos `file:///c:/...` a trocar por relativos. **[! Bloqueada até M-06 respondida]** (O passo de mover o MELHORIA-PLANO.md foi feito manualmente pelo usuário. A skill também foi movida por ele para plano-de-melhoria/, o que substitui o item 16 da M-06 que a colocava em skills/. Ver LOG.)
+- [ ] **M-07** Hierarquia de documentos — **(Item 16 da M-06 concluído):** `MELHORIA-PLANO.md` e `SKILL-MELHORIA-PLANO.md` consolidados em `plano-de-melhoria/`; referências atualizadas. Declarar também qual `plan_tool.py` é o operacional (item 11). Depois: Definir qual arquivo manda em quê e a ORDEM ÚNICA de leitura (sugestão: RELATORIO-GERAL → RETOMAR → PLANO → cartão em TAREFAS); marcar `legado/` como somente leitura; listar links absolutos `file:///c:/...` a trocar por relativos. **[! Bloqueada até M-06 respondida]**
   - Lê: todos os `.md` de `plano-de-acao/` e `skills/`
-  - Altera: `plano-de-acao/MELHORIA-PLANO.md`
+  - Altera: `plano-de-melhoria/MELHORIA-PLANO.md`
 
 ### Fase M3 — Aplicação nos .md (um arquivo por M; só depois da M-06 respondida)
 
 - [ ] **M-08** `PLANO.md` — **1º PASSO (item 9 da M-06):** auditoria pacote × cartão (cada cartão do TAREFAS.md → pacotes necessários → comparar com D-10; o que faltar entra como PROPOSTA para o usuário aprovar). Depois: Atualizar situação das decisões; estender D-10 com o aprovado; incluir novas T como propostas (F-xx e L-xx), incluindo T para auditar/eliminar SQL por concatenação antes do ORM e T para as falhas de teste conhecidas. **[! Bloqueada até M-06 respondida]**
-  - Lê: `plano-de-acao/PLANO.md`, `plano-de-acao/MELHORIA-PLANO.md`
+  - Lê: `plano-de-acao/PLANO.md`, `plano-de-melhoria/MELHORIA-PLANO.md`
   - Altera: `plano-de-acao/PLANO.md`
 
 - [ ] **M-09** `TAREFAS.md` — Cartões das T novas e correções pontuais nos cartões afetados. **[! Bloqueada até M-08]**
-  - Lê: `plano-de-acao/TAREFAS.md`, `plano-de-acao/MELHORIA-PLANO.md`
+  - Lê: `plano-de-acao/TAREFAS.md`, `plano-de-melhoria/MELHORIA-PLANO.md`
   - Altera: `plano-de-acao/TAREFAS.md`
 
 - [ ] **M-10** `RETOMAR.md` — Alinhar à hierarquia da M-07. **[! Bloqueada até M-07]**
@@ -311,12 +316,12 @@ Fontes consultadas: `PROMPT_ORIGINAL.md`, `legado/PROMPT_INICIAL_LEGADOV2.md`, `
   - Altera: `README.md`
 
 - [ ] **M-14** Legado — Corrigir `legado/MAPA-V1-V2.md` e `legado/RELATORIO-RECONSTRUCAO-V2.md`: correções do mapa (linha V1 T-001; faixas da tabela "100% novas" por listas exatas) e das lacunas L-xx. **[! Bloqueada até M-04]**
-  - Lê: `plano-de-acao/legado/MAPA-V1-V2.md`, `plano-de-acao/legado/RELATORIO-RECONSTRUCAO-V2.md`, `plano-de-acao/MELHORIA-PLANO.md` (L-xx)
+  - Lê: `plano-de-acao/legado/MAPA-V1-V2.md`, `plano-de-acao/legado/RELATORIO-RECONSTRUCAO-V2.md`, `plano-de-melhoria/MELHORIA-PLANO.md` (L-xx)
   - Altera: `plano-de-acao/legado/MAPA-V1-V2.md`, `plano-de-acao/legado/RELATORIO-RECONSTRUCAO-V2.md`
 
-- [ ] **M-15** Verificação final — Repetir M-02; checar links; `plan_tool.py status`; `git status`; registrar que o planejamento está pronto; entregar o prompt exato para iniciar T-001; propor arquivar `MELHORIA-PLANO.md` em `legado/`. **[! Bloqueada até M-08 a M-14]**
+- [ ] **M-15** Verificação final — Repetir M-02; checar links; `plan_tool.py status`; `git status`; registrar que o planejamento está pronto; entregar o prompt exato para iniciar T-001; propor arquivar `MELHORIA-PLANO.md` em `plano-de-acao/legado/`. **[! Bloqueada até M-08 a M-14]**
   - Lê: todos os `.md` modificados
-  - Altera: `plano-de-acao/MELHORIA-PLANO.md` (LOG final)
+  - Altera: `plano-de-melhoria/MELHORIA-PLANO.md` (LOG final)
 
 ---
 
@@ -382,4 +387,5 @@ Fontes consultadas: `PROMPT_ORIGINAL.md`, `legado/PROMPT_INICIAL_LEGADOV2.md`, `
                    Item 16: mover MELHORIA-PLANO.md para plano-de-melhoria/ = 1º passo da M-07; auditoria pacote×cartão = 1º passo da M-08
                    NOTA: todas as entradas até aqui citam o caminho antigo plano-de-acao/MELHORIA-PLANO.md
 [2026-10-04 00:02] REPARO (fora do ciclo de M) — MELHORIA-PLANO.md e SKILL-MELHORIA-PLANO.md movidos manualmente para plano-de-melhoria/; referênças ativas corrigidas (plano-de-melhoria/SKILL-MELHORIA-PLANO.md, plano-de-melhoria/CENTRAL_IDEA.md, plano-de-melhoria/MELHORIA-PLANO.md); escopo da skill inclui plano-de-melhoria/; bloco do Prompt B removido do README.md. Entradas anteriores do LOG citam os caminhos antigos (histórico, não alteradas).
+[2026-10-04 00:43] REPARO — Prompt A em CENTRAL_IDEA.md corrigido para gerar e referenciar arquivos em plano-de-melhoria/; inventário F-01 e referências das tarefas M-01 a M-15 em MELHORIA-PLANO.md atualizados para plano-de-melhoria/.
 ```

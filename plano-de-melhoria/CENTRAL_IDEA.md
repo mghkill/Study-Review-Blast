@@ -39,7 +39,7 @@ Compreenda e respeite as regras, decisões e restrições desses arquivos. Em ca
 Esta sessão é SOMENTE para (a) olhar o projeto de forma leve e (b) criar o plano de melhoria do planejamento. Depois PARE. Você tem acesso total ao PC: crie os arquivos você mesma. Só me peça algo se precisar instalar algo.
 
 ## Escopo permitido (sempre, em todas as sessões deste trabalho)
-- Pode CRIAR e EDITAR apenas arquivos .md dentro de plano-de-acao/, de skills/ e o README.md da raiz.
+- Pode CRIAR e EDITAR apenas arquivos .md dentro de plano-de-acao/, de plano-de-melhoria/, de skills/ e o README.md da raiz.
 - Pode LER qualquer arquivo do projeto, inclusive código, para avaliar.
 - É PROIBIDO: alterar código-fonte, testes, migrations, package.json, plan_tool.py, dependências, banco, portas, proxy; instalar algo; commitar; fazer push; executar qualquer tarefa T do plano de ação; rodar plan_tool.py com start/done/log (só `py plano-de-acao/plan_tool.py status`).
 - Aditivo: NADA do que já está feito pode ser removido. Correções são feitas no próprio lugar, com nota no log. Novas tarefas entram sem renumerar as existentes (use `py plano-de-acao/plan_tool.py add-feature` apenas se eu autorizar; caso contrário registre a nova T como proposta no plano de melhoria). Novas decisões usam D-19, D-20...
@@ -50,17 +50,17 @@ Esta sessão é SOMENTE para (a) olhar o projeto de forma leve e (b) criar o pla
 - NÃO leia o código inteiro agora. A leitura profunda é dividida nas tarefas M abaixo.
 
 ## Passo 2: criar os arquivos do plano de melhoria
-Crie exatamente 2 arquivos:
+Crie exatamente 2 arquivos (ambos na pasta `plano-de-melhoria/`):
 
-A) skills/SKILL-MELHORIA-PLANO.md (a "skill" que vou mandar você ler nas próximas sessões), contendo:
+A) plano-de-melhoria/SKILL-MELHORIA-PLANO.md (a "skill" que vou mandar você ler nas próximas sessões), contendo:
 - Objetivo: melhorar o planejamento (plano-de-acao/, skills/, README.md) sem executar o plano de ação.
 - O escopo permitido e proibido acima.
-- Ciclo de CADA sessão: (1) ler SKILL-MELHORIA-PLANO.md e plano-de-acao/MELHORIA-PLANO.md; (2) se existir M marcada [~], NÃO começar outra: rode `git status` e `git diff --stat`, verifique o estado do arquivo que ela mexia e termine ou reverta SÓ essa M; (3) pegar a próxima M [ ]; (4) escrever no log "INÍCIO M-xx" e marcar [~] ANTES de trabalhar; (5) fazer só aquela M, uma edição pequena por vez; (6) marcar [x] com nota curta e escrever no log "FIM M-xx" com arquivos alterados e achados; (7) mostrar resumo, rodar `git status`, oferecer `git add .` NA RAIZ do repositório (nunca só uma pasta) com mensagem de commit em inglês (Conventional Commits, ex.: `docs(plan): <resumo> (M-xx)`), sem executar; (8) PARAR e perguntar "Continuar com M-yy?".
+- Ciclo de CADA sessão: (1) ler plano-de-melhoria/SKILL-MELHORIA-PLANO.md e plano-de-melhoria/MELHORIA-PLANO.md; (2) se existir M marcada [~], NÃO começar outra: rode `git status` e `git diff --stat`, verifique o estado do arquivo que ela mexia e termine ou reverta SÓ essa M; (3) pegar a próxima M [ ]; (4) escrever no log "INÍCIO M-xx" e marcar [~] ANTES de trabalhar; (5) fazer só aquela M, uma edição pequena por vez; (6) marcar [x] com nota curta e escrever no log "FIM M-xx" com arquivos alterados e achados; (7) mostrar resumo, rodar `git status`, oferecer `git add .` NA RAIZ do repositório (nunca só uma pasta) com mensagem de commit em inglês (Conventional Commits, ex.: `docs(plan): <resumo> (M-xx)`), sem executar; (8) PARAR e perguntar "Continuar com M-yy?".
 - Regra de ouro: UMA M por sessão. Se terminar cedo, pare mesmo assim. Se sentir que o contexto está acabando, escreva o log ANTES de continuar editando.
 - Conflitos e dúvidas viram Q-xx no plano de melhoria; não decidir sozinha o que é decisão minha.
 - Fonte da verdade: após a M-07, vale a hierarquia definida ali.
 
-B) plano-de-acao/MELHORIA-PLANO.md, no estilo do PLANO.md, com: legenda ([ ] pendente · [~] em andamento · [x] feita · [!] bloqueada); bloco "PRÓXIMO PASSO"; seção "Achados" (F-xx), "Lacunas do legado" (L-xx), "Perguntas para o usuário" (Q-xx); a lista de tarefas M abaixo; e uma seção "LOG" no final (append-only, com data e hora). Cada M deve ter 1 linha de objetivo, os arquivos que lê e o arquivo que altera. Tarefas M iniciais:
+B) plano-de-melhoria/MELHORIA-PLANO.md, no estilo do PLANO.md, com: legenda ([ ] pendente · [~] em andamento · [x] feita · [!] bloqueada); bloco "PRÓXIMO PASSO"; seção "Achados" (F-xx), "Lacunas do legado" (L-xx), "Perguntas para o usuário" (Q-xx); a lista de tarefas M abaixo; e uma seção "LOG" no final (append-only, com data e hora). Cada M deve ter 1 linha de objetivo, os arquivos que lê e o arquivo que altera. Tarefas M iniciais:
 
 Fase M1 — Varredura (somente leitura; o resultado vai para este plano)
 - M-01 Inventário: listar todos os .md/.py de plano-de-acao/, skills/, raiz e legado/ com tamanho e função; classificar ATIVO / LEGADO / HISTÓRICO; apontar duplicações e arquivos órfãos (inclua migrations/README.md: tem função? sugerir manter ou remover, sem remover).
@@ -81,7 +81,7 @@ Fase M3 — Aplicação nos .md (um arquivo por M; só depois da M-06 respondida
 - M-12 skills/SKILLENG.md, convencoes-v2.md e skill.md alinhados.
 - M-13 README.md da raiz alinhado (onde parei, decisões em linguagem simples, melhorias pós-prova de fogo, tradução para inglês na Fase 15).
 - M-14 legado/MAPA-V1-V2.md e legado/RELATORIO-RECONSTRUCAO-V2.md: correções do mapa (linha V1 T-001; faixas da tabela "100% novas" por listas exatas) e das lacunas L-xx.
-- M-15 Verificação final: repetir M-02, checar links, `plan_tool.py status`, `git status`; registrar que o planejamento está pronto; entregar o prompt exato para iniciar o T-001; propor arquivar MELHORIA-PLANO.md em legado/.
+- M-15 Verificação final: repetir M-02, checar links, `plan_tool.py status`, `git status`; registrar que o planejamento está pronto; entregar o prompt exato para iniciar o T-001; propor arquivar MELHORIA-PLANO.md em plano-de-acao/legado/.
 
 Você pode ACRESCENTAR tarefas M (M-16...) se o Passo 1 mostrar algo novo, mas não pode remover nem renumerar as acima.
 
