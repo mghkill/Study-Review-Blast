@@ -367,7 +367,7 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Lê: `plano-de-acao/PLANO.md`, `plano-de-melhoria/MELHORIA-PLANO.md`
   - Altera: `plano-de-acao/PLANO.md`
 
-- [ ] **M-09a** `TAREFAS.md` (Novos cartões e Fases 1 a 4) — Criar os 3 cartões completos de T-095 (sanitização de SQL/erros), T-096 (testes srs/tts client) e T-097 (teste status server); conferir cartões T-001 a T-024 (campo `**Objetivo:**` e apontamento para protocolo de pausa do `RETOMAR.md`). **[! Bloqueada até M-08]**
+- [x] **M-09a** `TAREFAS.md` (Novos cartões e Fases 1 a 4) — concluído: cartões T-095..T-097 criados completos; Fases 1 a 4 (T-001..T-024) padronizadas com objetivo e apontamento canônico de pausa para RETOMAR.md §3; caminho de backup T-002 generalizado.
   - Lê: `plano-de-acao/TAREFAS.md`, `plano-de-melhoria/MELHORIA-PLANO.md`
   - Altera: `plano-de-acao/TAREFAS.md`
 
@@ -476,4 +476,6 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 [2026-10-04 00:57] FIM M-07 — arquivos alterados: plano-de-melhoria/MELHORIA-PLANO.md — achados: leitura completa e minuciosa de todos os .md de plano-de-acao/ (RELATORIO-GERAL, PLANO, TAREFAS, RETOMAR, LINHA-DO-TEMPO, PROMPT_ORIGINAL, legado/*), skills/ (SKILLENG, skill, assets/*, references/*) e plano-de-melhoria/ (MELHORIA-PLANO, SKILL-MELHORIA-PLANO, CENTRAL_IDEA); governança estruturada em 2 regimes (Meta-Regulação Ativa Fase M via plano-de-melhoria/ e Execução Operacional Fase T com RELATORIO-GERAL > RETOMAR > PLANO > TAREFAS > LINHA-DO-TEMPO > skills > README); ordem única canônica de 6 passos para sessões T formalizada; plano-de-acao/plan_tool.py declarado ferramenta operacional única; plano-de-melhoria/ integrada formalmente na matriz de autoridade com arquivamento futuro em legado/ previsto; legado/ ratificado como estritamente somente leitura; inventário de 5 links absolutos file:/// e 2 caminhos locais levantados para substituição em M-09, M-11 e M-12.
 [2026-10-04 01:30] INÍCIO M-08 — Atualização do PLANO.md e auditoria de pacotes
 [2026-10-04 01:34] FIM M-08 — arquivos alterados: plano-de-acao/PLANO.md, plano-de-melhoria/MELHORIA-PLANO.md, plano-de-acao/LINHA-DO-TEMPO.md — achados: auditoria pacote × cartão concluída (dependências 100% mapeadas); D-11 a D-18 migradas de Proposto/Aguardando para Decidido; D-10 estendida com pacotes TypeScript de teste (typescript-eslint, ts-jest, types); tarefas T-095 (sanitização de LIMIT/OFFSET e err.message), T-096 (testes srs/tts client) e T-097 (teste status server) adicionadas com sucesso via add-feature sob autorização explícita; M-09 dividida em 4 etapas (M-09a..M-09d) para prevenção de saturação de contexto.
+[2026-10-04 01:52] INÍCIO M-09a — Cartões T-095..T-097 e revisão Fases 1 a 4 em TAREFAS.md
+[2026-10-04 01:55] FIM M-09a — arquivos alterados: plano-de-acao/TAREFAS.md, plano-de-melhoria/MELHORIA-PLANO.md — achados: cartões T-095, T-096 e T-097 criados e documentados completos; Fases 1 a 4 (T-001 a T-024) padronizadas com campo Objetivo explícito e apontamento canônico de pausa para RETOMAR.md §3; caminho de backup de máquina em T-002 generalizado.
 ```

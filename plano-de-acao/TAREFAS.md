@@ -18,16 +18,18 @@ Branch da fase: `v2/phase-01-safety-net`
 - **Front:** sem impacto (só git).
 - **Teste antes:** `git rev-parse --abbrev-ref HEAD` deve devolver `main` (prova que a branch ainda não existe).
 - **Pronto quando:** branch criada, árvore limpa, hash base na linha do tempo.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** nenhum código; o commit da pausa leva só o plano (`chore(plan): start v2 phase 1 (T-001)`).
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-001.`
 
 ### T-002 · Backup novo e teste de restauração
 **P · Origem:** refaz v1 T-005 · **Ler:** ENG, MLA §9
 - **Objetivo:** ter um backup recente e **comprovadamente restaurável** antes de qualquer mudança do V2.
-- **Back:** `pg_dump -Fc` para `C:\Users\opera\studyreviewblast-backups\` (fora do repo); restaurar num banco temporário `srb_restore_check`; comparar contagem de linhas por tabela com o original; apagar o banco temporário. Senha só em `$env:PGPASSWORD` da sessão.
+- **Back:** `pg_dump -Fc` para diretório de backup externo ao repositório (ex.: `../studyreviewblast-backups/` ou `$env:SRB_BACKUP_DIR`); restaurar num banco temporário `srb_restore_check`; comparar contagem de linhas por tabela com o original; apagar o banco temporário. Senha só em `$env:PGPASSWORD` da sessão.
 - **Front:** sem impacto (operação de banco).
 - **Teste antes:** script PowerShell de conferência que compara contagens entre os dois bancos; rodado antes da restauração, falha (banco de cópia não existe).
 - **Pronto quando:** contagens idênticas; só o caminho do arquivo registrado (nunca senha).
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `chore(db): record v2 baseline backup (T-002)` (só plano).
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-002.`
 
@@ -38,6 +40,7 @@ Branch da fase: `v2/phase-01-safety-net`
 - **Front:** abrir cada tela (Dashboard, Estudar Agora, Vocabulário, Detalhes, Novo Verbo, Frases, Parágrafos, Busca, Progresso) e anotar o que abre, quebra ou fica vazio.
 - **Teste antes:** não se aplica (é medição); a "verificação" é a lista de comandos acima com resultados registrados.
 - **Pronto quando:** números (passaram/falharam/avisos/vulnerabilidades) e o smoke das telas registrados com `log`.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `chore(plan): record v2 quality baseline (T-003)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-003.`
 
@@ -48,6 +51,7 @@ Branch da fase: `v2/phase-01-safety-net`
 - **Front:** inspecionar as telas reais (`client/src/pages/` e componentes): cada tela recebe ✅ funciona / ⚠️ parcial / ❌ ausente, com a tarefa V2 que resolve.
 - **Teste antes:** não se aplica (documento); verificação: toda tabela do schema real aparece na matriz (conferir com `\dt` no banco).
 - **Pronto quando:** `docs/usability-matrix.md` criado (em inglês), gerado pelo código e schema reais, com cada ❌ apontando para uma T do V2 ou para o roadmap.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `docs: add usability matrix (T-004)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-004.`
 
@@ -63,6 +67,7 @@ Branch da fase: `v2/phase-02-quality-tooling`
 - **Front:** sem impacto (só scripts).
 - **Teste antes:** `npm test` na raiz falha (não existe `package.json`).
 - **Pronto quando:** `npm test` e `npm run lint` na raiz rodam as duas pastas e passam como no baseline.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `build: add root package.json for repo-wide tooling (T-005)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-005.`
 
@@ -73,6 +78,7 @@ Branch da fase: `v2/phase-02-quality-tooling`
 - **Front:** sem impacto (client já tem Oxlint).
 - **Teste antes:** `npm run lint --prefix server` falha (script inexistente).
 - **Pronto quando:** lint do server com 0 erros; `npm run lint` da raiz roda server + client.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `build(server): add eslint flat config (T-006)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-006.`
 
@@ -83,6 +89,7 @@ Branch da fase: `v2/phase-02-quality-tooling`
 - **Front:** arquivos do client só reformatados; conferir `npm run build --prefix client` e abrir 2 telas: sem mudança visual.
 - **Teste antes:** `npm run format:check` falha (script inexistente; depois, falha por arquivos fora do padrão).
 - **Pronto quando:** `format:check` passa; testes iguais ao baseline.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** dois commits: `style: apply prettier to whole repo (T-007)` e `chore: add .git-blame-ignore-revs (T-007)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-007.`
 
@@ -93,6 +100,7 @@ Branch da fase: `v2/phase-02-quality-tooling`
 - **Front:** sem impacto (fluxo de git).
 - **Teste antes:** teste do script (`node --test`) simulando um repositório temporário com arquivo não adicionado: espera código de saída ≠ 0. Falha antes (script inexistente).
 - **Pronto quando:** tentar commitar com um arquivo de fora bloqueia com mensagem clara; com `git add .` na raiz passa.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `build: add husky, lint-staged and partial-commit guard (T-008)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-008.`
 
@@ -103,6 +111,7 @@ Branch da fase: `v2/phase-02-quality-tooling`
 - **Front:** sem impacto.
 - **Teste antes:** `echo "bad message" | npx commitlint` deve falhar e `echo "feat: ok" | npx commitlint` passar; antes da instalação o comando não existe.
 - **Pronto quando:** commit com mensagem fora do padrão é recusado.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `build: enforce conventional commits with commitlint (T-009)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-009.`
 
@@ -113,6 +122,7 @@ Branch da fase: `v2/phase-02-quality-tooling`
 - **Front:** o job do client roda `build` (garante que a interface compila).
 - **Teste antes:** não há como rodar Actions localmente; verificação: validar YAML com `npx --yes yaml-lint`-equivalente **sem instalar** (ou revisão manual) e, após seu push, o run deve aparecer vermelho/verde.
 - **Pronto quando:** você fez push e o workflow ficou verde (se ficar vermelho, a próxima sessão corrige antes de seguir).
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `ci: add lint and test workflow (T-010)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-010.`
 
@@ -123,6 +133,7 @@ Branch da fase: `v2/phase-02-quality-tooling`
 - **Front:** sem impacto.
 - **Teste antes:** verificação: os arquivos não existem (`Test-Path` falso).
 - **Pronto quando:** após o push, a aba Security/Insights mostra Dependabot e CodeQL ativos.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `ci: add dependabot and codeql (T-011)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-011.`
 
@@ -138,6 +149,7 @@ Branch da fase: `v2/phase-03-environment`
 - **Front:** sem impacto (infra de testes).
 - **Teste antes:** teste que verifica `current_database()` durante a suíte termina em `_test`; falha hoje.
 - **Pronto quando:** suíte inteira verde no banco de teste; contagens do banco de desenvolvimento idênticas antes/depois da suíte.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `test(server): run tests against a dedicated database (T-012)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-012.`
 
@@ -148,6 +160,7 @@ Branch da fase: `v2/phase-03-environment`
 - **Front:** componente `ServerStatusBanner` que consulta `/api/health` e mostra "Servidor indisponível — rode `npm run dev` no server" quando falha.
 - **Teste antes:** Jest: `loadEnv({})` lança erro citando `DB_HOST`; Vitest: banner aparece com health mockado em erro. Ambos falham antes.
 - **Pronto quando:** testes verdes; app sobe com o `.env` da raiz.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `feat(server): validate environment with zod; feat(client): server status banner (T-013)` (use `feat:` e cite os dois no corpo).
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-013.`
 
@@ -158,6 +171,7 @@ Branch da fase: `v2/phase-03-environment`
 - **Front:** sem impacto.
 - **Teste antes:** `docker compose config` falha (arquivo inexistente).
 - **Pronto quando:** `docker compose config` válido; `npm run db:up` + `npm run migrate --prefix server` apontando para a porta do contêiner funciona.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `build: add docker compose for postgres 18 (T-014)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-014.`
 
@@ -168,6 +182,7 @@ Branch da fase: `v2/phase-03-environment`
 - **Front:** client sobe na 5173 pelo comando da raiz.
 - **Teste antes:** script `scripts/check-dev-ports.mjs` que espera 3001 e 5173 responderem; falha antes (script `dev` na raiz inexistente).
 - **Pronto quando:** `npm run dev` na raiz sobe os dois; `npm run dev` em cada pasta continua igual.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `build: add root dev and setup scripts (T-015)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-015.`
 
@@ -190,6 +205,7 @@ Concluída no v1 (T-040 a T-043): migrations 006–009 (`tenses`, CHECKs de `ses
 - **Front:** rodapé da Sidebar mostra `DB v009` (versão vinda do health).
 - **Teste antes:** `migrator.test.js`: alterar o conteúdo de uma migração aplicada → `runMigrations` rejeita; Vitest: Sidebar renderiza a versão mockada. Falham antes.
 - **Pronto quando:** testes verdes; `migrate:status` funciona no banco de desenvolvimento.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `feat(db): checksum applied migrations and add migrate:status (T-018)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-018.`
 
@@ -200,6 +216,7 @@ Concluída no v1 (T-040 a T-043): migrations 006–009 (`tenses`, CHECKs de `ses
 - **Front:** sem impacto.
 - **Teste antes:** verificação: `Test-Path migrate_session_type.js` verdadeiro e `db:snapshot` inexistente.
 - **Pronto quando:** arquivos removidos/substituídos; nenhum `require` aponta para eles (`git grep`).
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `chore(db): remove ad-hoc migration script and generate schema snapshot (T-019)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-019.`
 
@@ -210,6 +227,7 @@ Concluída no v1 (T-040 a T-043): migrations 006–009 (`tenses`, CHECKs de `ses
 - **Front:** Detalhes da Palavra mostra "Atualizado em dd/mm/aaaa hh:mm".
 - **Teste antes:** Jest: atualizar uma palavra muda `updated_at`; Vitest: VocabDetail exibe a data. Falham antes.
 - **Pronto quando:** testes verdes; migração aplicada no banco de desenvolvimento (após backup da T-002).
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `feat(db): auto-update updated_at via trigger (T-020)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-020.`
 
@@ -220,6 +238,7 @@ Concluída no v1 (T-040 a T-043): migrations 006–009 (`tenses`, CHECKs de `ses
 - **Front:** sem impacto visual (desempenho); conferir que Dashboard e fila abrem normalmente.
 - **Teste antes:** Jest consulta `pg_indexes` esperando os nomes novos; falha antes.
 - **Pronto quando:** teste verde; `EXPLAIN` da fila usa o índice (registrar com `log`).
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `perf(db): add foreign key and hot-path indexes (T-021)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-021.`
 
@@ -230,6 +249,7 @@ Concluída no v1 (T-040 a T-043): migrations 006–009 (`tenses`, CHECKs de `ses
 - **Front:** botão "Excluir contexto" com confirmação em Detalhes da Palavra.
 - **Teste antes:** Jest: excluir contexto com revisão responde 200 e a revisão fica com `context_practiced = NULL`; estudante B recebe 404; Vitest: botão chama a API. Falham antes.
 - **Pronto quando:** testes verdes, isolamento verde.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `feat: delete usage contexts safely (T-022)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-022.`
 
@@ -240,6 +260,7 @@ Concluída no v1 (T-040 a T-043): migrations 006–009 (`tenses`, CHECKs de `ses
 - **Front:** sem impacto (documentação).
 - **Teste antes:** verificação: script lista as tabelas de `\dt` e confere que cada uma aparece no documento; falha antes (arquivo inexistente).
 - **Pronto quando:** todas as tabelas documentadas; Mermaid renderiza no GitHub.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `docs: add data model with mermaid erd (T-023)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-023.`
 
@@ -250,6 +271,7 @@ Concluída no v1 (T-040 a T-043): migrations 006–009 (`tenses`, CHECKs de `ses
 - **Front:** sem impacto.
 - **Teste antes:** script de comparação dos snapshots (falha se diferentes); rodado antes de aplicar, falha (banco vazio não tem tabelas).
 - **Pronto quando:** snapshots idênticos; resultado registrado.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `test(db): verify migrations on empty and restored databases (T-024)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-024.`
 
@@ -939,3 +961,40 @@ Branch da fase: `v2/phase-15-final-translation`
 - **Pronto quando:** `status` funciona no novo caminho; nenhum link aponta para os nomes antigos.
 - **Commit:** `docs: translate planning workflow to english (T-094)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-094.`
+
+---
+
+## Funcionalidades Adicionadas
+
+### T-095 · Parametrizar LIMIT/OFFSET e sanitizar erros da API
+**P · Origem:** Funcionalidade adicionada Nº 1 (autorizada na M-08) · **Ler:** ENG, CONV §3
+- **Objetivo:** eliminar risco de erro e injeção por interpolação de `LIMIT` em `reviews.js:320` e impedir vazamento de mensagens internas do banco (`err.message`) nas respostas da API.
+- **Back:** em `server/src/routes/reviews.js:320`, parametrizar o `LIMIT` via placeholder `$n` com fallback seguro (`Math.max(1, parseInt(limit, 10) || 50)`); criar helper centralizado de resposta de erro `sendError(res, err, defaultMsg, status=500)` que loga o erro no servidor mas responde ao cliente com mensagem segura e genérica (`{ error: defaultMsg }`), sem expor `err.message` bruta do PostgreSQL; substituir os vazamentos críticos nas rotas de `reviews.js`, `vocabulary.js` e `sentences.js`.
+- **Front:** conferir telas afetadas (Fila de Revisão, Detalhes da Palavra); garantir que alertas e toasts tratem erro genérico amigável.
+- **Teste antes:** teste Supertest enviando `limit=invalid_string` em `GET /api/reviews/history` esperando `200 OK` com limit padrão (hoje falha/quebra com erro de sintaxe SQL); teste forçando falha de banco e verificando que a resposta HTTP NÃO contém detalhes internos de SQL.
+- **Pronto quando:** nenhum `LIMIT` ou `OFFSET` interpolado por `${...}` em `server/src/`; respostas de erro não expõem detalhes de banco; testes passando.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
+- **Commit:** `fix(api): parameterize review limit and sanitize error responses (T-095)`.
+- **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-095.`
+
+### T-096 · Corrigir testes legados do client (srs.test.js e tts.test.js)
+**P · Origem:** Funcionalidade adicionada Nº 2 (autorizada na M-08) · **Ler:** ENG
+- **Objetivo:** resolver as falhas conhecidas da suíte Vitest do client herdadas do V1 para restabelecer baseline 100% verde no frontend.
+- **Back:** sem impacto.
+- **Front:** ajustar `client/src/test/srs.test.js` e `client/src/test/tts.test.js` para corresponder ao comportamento e assinaturas atuais das funções `calculateNextInterval` e `speakText` (ou mocks de Web Speech API / TTS); eliminar falhas de asserção de intervalo e mocks ausentes.
+- **Teste antes:** rodar `npm run test:run --prefix client` e ver as falhas específicas registradas no baseline; rodar após correções e vê-las passar.
+- **Pronto quando:** `npm run test:run --prefix client` roda com zero falhas em todos os arquivos de teste do cliente.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
+- **Commit:** `test(client): fix legacy srs and tts vitest suites (T-096)`.
+- **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-096.`
+
+### T-097 · Corrigir teste do server de status red vs yellow em reviews
+**P · Origem:** Funcionalidade adicionada Nº 2 (autorizada na M-08) · **Ler:** ENG
+- **Objetivo:** corrigir a falha do baseline da API backend em `server/tests/api.test.js` onde `POST /api/reviews` falha na checagem de transição de status red para yellow.
+- **Back:** investigar e alinhar o teste em `server/tests/api.test.js` ou a lógica de status em `server/src/routes/reviews.js` para que a contagem e os critérios de transição de repetição espaçada (red -> yellow -> green) sejam rigorosamente consistentes.
+- **Front:** sem impacto.
+- **Teste antes:** rodar `npm test --prefix server` e ver a falha isolada em `POST /api/reviews` status red vs yellow.
+- **Pronto quando:** `npm test --prefix server` roda com 100% dos testes passando sem falhas.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
+- **Commit:** `test(server): fix review status red to yellow transition test (T-097)`.
+- **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-097.`
