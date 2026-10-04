@@ -6,7 +6,7 @@
 
 ## PRÓXIMO PASSO
 
-Cole o Prompt B para iniciar a **M-08**:
+Cole o Prompt B para iniciar a **M-09a**:
 
 > Leia plano-de-melhoria/SKILL-MELHORIA-PLANO.md e plano-de-melhoria/MELHORIA-PLANO.md e siga o ciclo da skill. Se algum desses dois arquivos não existir nesses caminhos, PARE e me avise sem tentar adivinhar. Execute APENAS a próxima tarefa M pendente (ou termine a que estiver em [~]). Não altere código, não commite, não faça push. Ao final: log, resumo, git status, oferta de git add . na raiz, e PARE perguntando se devo continuar.
 
@@ -363,12 +363,24 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 
 ### Fase M3 — Aplicação nos .md (um arquivo por M; só depois da M-06 respondida)
 
-- [ ] **M-08** `PLANO.md` — **1º PASSO (item 9 da M-06):** auditoria pacote × cartão (cada cartão do TAREFAS.md → pacotes necessários → comparar com D-10; o que faltar entra como PROPOSTA para o usuário aprovar). Depois: Atualizar situação das decisões; estender D-10 com o aprovado; incluir novas T como propostas (F-xx e L-xx), incluindo T para auditar/eliminar SQL por concatenação antes do ORM e T para as falhas de teste conhecidas. **[! Bloqueada até M-06 respondida]**
+- [x] **M-08** `PLANO.md` — concluído: auditoria pacote × cartão concluída; D-11 a D-18 atualizadas para Decidido; D-10 estendida com pacotes TS de teste; novas tarefas T-095 (segurança/LIMIT/sanitização), T-096 e T-097 (correção de testes legados) adicionadas via add-feature com autorização explícita; M-09 dividida em M-09a..M-09d.
   - Lê: `plano-de-acao/PLANO.md`, `plano-de-melhoria/MELHORIA-PLANO.md`
   - Altera: `plano-de-acao/PLANO.md`
 
-- [ ] **M-09** `TAREFAS.md` — Cartões das T novas e correções pontuais nos cartões afetados. **[! Bloqueada até M-08]**
+- [ ] **M-09a** `TAREFAS.md` (Novos cartões e Fases 1 a 4) — Criar os 3 cartões completos de T-095 (sanitização de SQL/erros), T-096 (testes srs/tts client) e T-097 (teste status server); conferir cartões T-001 a T-024 (campo `**Objetivo:**` e apontamento para protocolo de pausa do `RETOMAR.md`). **[! Bloqueada até M-08]**
   - Lê: `plano-de-acao/TAREFAS.md`, `plano-de-melhoria/MELHORIA-PLANO.md`
+  - Altera: `plano-de-acao/TAREFAS.md`
+
+- [ ] **M-09b** `TAREFAS.md` (Fases 5 a 8: T-025 a T-053) — Padronizar campo `**Objetivo:**` e apontar pausa para o `RETOMAR.md` nos cartões de ORM, TS, Segurança e Isolamento. **[! Bloqueada até M-09a]**
+  - Lê: `plano-de-acao/TAREFAS.md`
+  - Altera: `plano-de-acao/TAREFAS.md`
+
+- [ ] **M-09c** `TAREFAS.md` (Fases 9 a 11: T-054 a T-081) — Padronizar campo `**Objetivo:**` e apontar pausa para o `RETOMAR.md` nos cartões de i18n, Experiência de Estudo/FSRS e Voz. **[! Bloqueada até M-09b]**
+  - Lê: `plano-de-acao/TAREFAS.md`
+  - Altera: `plano-de-acao/TAREFAS.md`
+
+- [ ] **M-09d** `TAREFAS.md` (Fases 12 a 15: T-082 a T-094) — Padronizar campo `**Objetivo:**` e apontar pausa para o `RETOMAR.md` nos cartões de E2E, Documentação/Open Source, Prova de Fogo e Tradução Final. **[! Bloqueada até M-09c]**
+  - Lê: `plano-de-acao/TAREFAS.md`
   - Altera: `plano-de-acao/TAREFAS.md`
 
 - [ ] **M-10** `RETOMAR.md` — Alinhar à hierarquia da M-07. **[! Bloqueada até M-07]**
@@ -462,4 +474,6 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 [2026-10-04 00:43] REPARO — Prompt A em CENTRAL_IDEA.md corrigido para gerar e referenciar arquivos em plano-de-melhoria/; inventário F-01 e referências das tarefas M-01 a M-15 em MELHORIA-PLANO.md atualizados para plano-de-melhoria/.
 [2026-10-04 00:55] INÍCIO M-07 — Hierarquia de documentos
 [2026-10-04 00:57] FIM M-07 — arquivos alterados: plano-de-melhoria/MELHORIA-PLANO.md — achados: leitura completa e minuciosa de todos os .md de plano-de-acao/ (RELATORIO-GERAL, PLANO, TAREFAS, RETOMAR, LINHA-DO-TEMPO, PROMPT_ORIGINAL, legado/*), skills/ (SKILLENG, skill, assets/*, references/*) e plano-de-melhoria/ (MELHORIA-PLANO, SKILL-MELHORIA-PLANO, CENTRAL_IDEA); governança estruturada em 2 regimes (Meta-Regulação Ativa Fase M via plano-de-melhoria/ e Execução Operacional Fase T com RELATORIO-GERAL > RETOMAR > PLANO > TAREFAS > LINHA-DO-TEMPO > skills > README); ordem única canônica de 6 passos para sessões T formalizada; plano-de-acao/plan_tool.py declarado ferramenta operacional única; plano-de-melhoria/ integrada formalmente na matriz de autoridade com arquivamento futuro em legado/ previsto; legado/ ratificado como estritamente somente leitura; inventário de 5 links absolutos file:/// e 2 caminhos locais levantados para substituição em M-09, M-11 e M-12.
+[2026-10-04 01:30] INÍCIO M-08 — Atualização do PLANO.md e auditoria de pacotes
+[2026-10-04 01:34] FIM M-08 — arquivos alterados: plano-de-acao/PLANO.md, plano-de-melhoria/MELHORIA-PLANO.md, plano-de-acao/LINHA-DO-TEMPO.md — achados: auditoria pacote × cartão concluída (dependências 100% mapeadas); D-11 a D-18 migradas de Proposto/Aguardando para Decidido; D-10 estendida com pacotes TypeScript de teste (typescript-eslint, ts-jest, types); tarefas T-095 (sanitização de LIMIT/OFFSET e err.message), T-096 (testes srs/tts client) e T-097 (teste status server) adicionadas com sucesso via add-feature sob autorização explícita; M-09 dividida em 4 etapas (M-09a..M-09d) para prevenção de saturação de contexto.
 ```

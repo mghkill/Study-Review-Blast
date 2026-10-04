@@ -10,7 +10,7 @@
 
 ## PRÓXIMO PASSO
 <!-- proximo:start -->
-- Atualizado em 2026-10-03 20:11
+- Atualizado em 2026-10-04 01:32
 - Iniciar **T-002** — [P] Backup novo do banco (`pg_dump -Fc`) fora do repositório + restauração de teste com contagem por tabela
 <!-- proximo:end -->
 
@@ -39,27 +39,27 @@ Explicação em linguagem simples no README (seção "Decisões explicadas").
 | D-08 | Idioma do README | **pt-BR até a Fase 14** (com resumo em inglês no topo); na Fase 15 vira inglês e o pt-BR fica em `README.pt-BR.md` | Inglês desde já | Decidido (confirmado em 2026-10-03) |
 | D-09 | `package.json` na raiz | Criar só para ferramentas (lint, testes, hooks) e um `npm run dev` único com `concurrently`, **sem remover** os scripts de `server/` e `client/` | Não criar; npm workspaces | Decidido (confirmado em 2026-10-03) |
 | D-10 | Dependências gratuitas aprovadas | Lista "Dependências aprovadas" abaixo | Aprovar uma a uma | Decidido (confirmado em 2026-10-03) |
-| D-11 | Docker (não instalado nesta máquina) | **Instalar Docker Desktop** vs **Não instalar agora** (deixar compose.yml para quem quiser usar e seguir com PostgreSQL local) | CI usa contêiner de serviço de qualquer forma | Aguardando (divergência: instalar antes de T-014 vs não instalar agora) |
-| D-12 | Banco de testes | Testes usam banco próprio (`<DB_NAME>_test`) e nunca o de desenvolvimento | Continuar testando no banco de desenvolvimento | Proposto |
-| D-13 | Branches e PRs | Uma branch por fase (`v2/phase-NN-slug`); no fim da fase você faz push, abre PR e faz merge | Tudo em `main`; uma branch para o V2 inteiro | Proposto |
-| D-14 | Algoritmo de revisão | **FSRS** (`ts-fsrs`) decide *quando* revisar; a prioridade por erros atual ordena os vencidos; botões Again/Hard/Good/Easy | Manter o SRS próprio; SM-2 | Proposto (requer confirmação explícita do usuário antes da Fase 10) |
-| D-15 | Idioma padrão da interface | Detectar o idioma do navegador; padrão `en`; seletor `en`/`pt-BR` salvo no navegador | Padrão `pt-BR` | Proposto |
-| D-16 | Planejamento em inglês | Na Fase 15, renomear `plano-de-acao/` e arquivos para inglês e ajustar `plan_tool.py` (exceção registrada) | Manter em português | Proposto |
-| D-17 | Lint do client | Manter **Oxlint** no client (já configurado); ESLint só no server; Prettier nos dois | ESLint também no client | Proposto |
-| D-18 | Reconhecimento de voz | Web Speech API (`SpeechRecognition`), opcional e desligado por padrão, com aviso (no Chrome o áudio vai para servidor do Google; Firefox não suporta) | Não ter reconhecimento | Proposto |
+| D-11 | Docker (ambiente) | **Docker Desktop já instalado e rodando** (v29.5.2 / Compose v5.1.3). T-014 usa Docker opcional em porta alternativa (`5433:5432`) sem quebrar PostgreSQL local; README e CI rodam também sem Docker; nenhuma outra T depende dele | PostgreSQL local exclusivo | Decidido (2026-10-03) |
+| D-12 | Banco de testes | Testes usam **banco próprio separado** (`<DB_NAME>_test`) e nunca o de desenvolvimento | Continuar testando no banco de desenvolvimento | Decidido (2026-10-03) |
+| D-13 | Branches e PRs | **Uma branch por fase** (`v2/phase-NN-slug`); no fim da fase o usuário faz push, abre PR e faz merge | Tudo em `main`; uma branch para o V2 inteiro | Decidido (2026-10-03) |
+| D-14 | Algoritmo de revisão | **FSRS** (`ts-fsrs`) decide *quando* revisar; botões Again/Hard/Good/Easy com prévia; prioridade por erros ordena os vencidos | Manter o SRS próprio; SM-2 | Decidido (2026-10-03) |
+| D-15 | Idioma padrão da interface | Detectar o idioma do navegador; **padrão `en`**; seletor `en`/`pt-BR` persistido no navegador | Padrão `pt-BR` | Decidido (2026-10-03) |
+| D-16 | Planejamento em inglês | Tradução do planejamento é **OPCIONAL**, realizada apenas após a T-092 (prova de fogo) e **sem renomear a pasta `plano-de-acao/`** | Renomear pastas e arquivos | Decidido (2026-10-03) |
+| D-17 | Lint do client | Manter **Oxlint** no client (já configurado); **ESLint** no server; **Prettier** nos dois | ESLint também no client | Decidido (2026-10-03) |
+| D-18 | Voz e reconhecimento | Web Speech API (`SpeechRecognition`), opcional, desligado por padrão, aviso do Chrome/Google, "100% local por padrão"; preferir vozes com `localService=true`; **comparação entre falado e esperado** (sem análise fonética) | Não ter reconhecimento | Decidido (2026-10-03) |
 
 ### Dependências aprovadas (D-10) — todas gratuitas e de código aberto
 | Fase | Pacotes | Para quê |
 |---|---|---|
 | 2 | `eslint`, `@eslint/js`, `globals`, `prettier`, `husky`, `lint-staged`, `@commitlint/cli`, `@commitlint/config-conventional` | Lint, formatação, hooks de commit, padrão de mensagens |
 | 3 | `zod`, `concurrently` | Validar `.env`; `npm run dev` único na raiz |
-| 5 | `drizzle-orm`, `drizzle-kit` (ou `prisma`, `@prisma/client` se D-05 = Prisma) | ORM e introspecção |
-| 6 | `typescript`, `tsx`, `@types/node`, `@types/express`, `@types/cors`, `@types/pg` | TypeScript no server e client |
+| 5 | `drizzle-orm`, `drizzle-kit` | ORM e introspecção |
+| 6 | `typescript`, `tsx`, `@types/node`, `@types/express`, `@types/cors`, `@types/pg`, `typescript-eslint`, `@types/jest`, `@types/supertest`, `ts-jest` | TypeScript no server/client e tipagem completa de testes |
 | 7 | `helmet`, `express-rate-limit`, `pino`, `pino-http`, `pino-pretty` (dev) | Segurança HTTP e logs |
-| 9 | `i18next`, `react-i18next`, `i18next-browser-languagedetector` | Interface em `en` e `pt-BR` |
-| 10 | `ts-fsrs` | Repetição espaçada FSRS |
-| 12 | `@playwright/test`, `@vitest/coverage-v8` | Testes de ponta a ponta e cobertura |
-| 13 | `@asteasolutions/zod-to-openapi`, `swagger-ui-express` | Documentação da API |
+| 9 | `i18next`, `react-i18next`, `i18next-browser-languagedetector` | Interface bilíngue em `en` e `pt-BR` |
+| 10 | `ts-fsrs` | Repetição espaçada FSRS (heatmap em SVG/CSS nativo, sem biblioteca) |
+| 12 | `@playwright/test`, `@vitest/coverage-v8` | Testes de ponta a ponta e cobertura de código |
+| 13 | `@asteasolutions/zod-to-openapi`, `swagger-ui-express` | Documentação interativa da API (OpenAPI/Swagger) |
 
 ## Fase 1 — Reconhecimento e rede de segurança
 - [x] T-001 [P] Abrir o V2: árvore limpa em `main` e branch `v2/phase-01-safety-net` ✔ 2026-10-03 20:11
@@ -184,3 +184,10 @@ Explicação em linguagem simples no README (seção "Decisões explicadas").
 ## Fase 15 — Tradução final
 - [ ] T-093 [M] README em inglês + `README.pt-BR.md` com links cruzados (D-08)
 - [ ] T-094 [M] Planejamento em inglês: renomear `plano-de-acao/` e arquivos, ajustar `plan_tool.py`, skills em inglês (D-16)
+
+## Funcionalidade adicionada Nº 1 — Seguranca e Sanitizacao da API pre-ORM (em 2026-10-04 01:32)
+- [ ] T-095 [P] Parametrizar LIMIT e OFFSET e criar sanitizador de erros na API sem vazar err.message nem SQL
+
+## Funcionalidade adicionada Nº 2 — Correcao de Testes Conhecidos (em 2026-10-04 01:32)
+- [ ] T-096 [P] Corrigir testes legados do client (srs.test.js e tts.test.js)
+- [ ] T-097 [P] Corrigir teste do server de status red vs yellow em POST /api/reviews

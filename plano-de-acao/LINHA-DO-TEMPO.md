@@ -65,3 +65,5 @@ Registro cronológico (mais antigo primeiro). Só se acrescenta; nunca se apaga.
 - **2026-10-03 20:05** — [T-001] iniciada.
 - **2026-10-03 20:09** — Branch v2/phase-01-safety-net criada a partir de main (hash base: 88fc2cbdd88cc6028c4fc0e267ab844f2ea878af). Arvore limpa.
 - **2026-10-03 20:11** — [T-001] concluída. Branch v2/phase-01-safety-net criada a partir de main (hash base 88fc2cbdd88cc6028c4fc0e267ab844f2ea878af). Testes server (57/57) e client (61/61) 100% verdes.
+- **2026-10-04 01:32** — Nova funcionalidade Nº 1 adicionada: Seguranca e Sanitizacao da API pre-ORM (T-095).
+- **2026-10-04 01:32** — Nova funcionalidade Nº 2 adicionada: Correcao de Testes Conhecidos (T-096, T-097).
