@@ -6,7 +6,7 @@
 
 ## PRÓXIMO PASSO
 
-Cole o Prompt B para iniciar a **M-05**.
+Cole o Prompt B para iniciar a **M-06**.
 
 ---
 
@@ -143,6 +143,35 @@ Fontes consultadas: `PROMPT_ORIGINAL.md`, `legado/PROMPT_INICIAL_LEGADOV2.md`, `
 - ⚠️ R-14: `ts-fsrs` está em D-10 (aprovada) mas D-14 ainda diz "Proposto — requer confirmação antes da Fase 10". Inconsistência que precisa ser resolvida na M-08.
 - Todos os demais R-xx estão em conformidade.
 
+### F-15 · SQL por concatenação (resultado da M-05)
+- Filtros dinâmicos concatenam a string, mas **com placeholders `$n` e `params.push`**, ou seja, são parametrizados ✅: `server/src/routes/vocabulary.js:43-48`, `sentences.js:23-25`, `reviews.js:54-56`.
+- ⚠️ `server/src/routes/reviews.js:320`: `LIMIT ${parseInt(limit)}` é interpolado. Não abre injeção, mas `parseInt` inválido vira `LIMIT NaN`, que gera erro de SQL (e esse erro vaza, ver F-16).
+- Coberto por: T-035 (regra lint anti-SQL concatenado). A interpolação do LIMIT não tem T específica → proposta para M-08.
+
+### F-16 · Erros que vazam SQL/mensagem interna
+- `res.status(500).json({ error: err.message })` em **~35 pontos**: `routes/vocabulary.js` (10×), `sentences.js` (6×), `reviews.js` (5×), `students.js` (5×), `sessions.js` (3×), `dashboard.js:108`, `tenses.js:13`, `middleware/requireStudent.js:29`, `index.js:37` (handler global) e `index.js:30` (`/health` expõe `db: err.message`).
+- O client repassa a mensagem ao usuário via `alert`: `client/src/pages/StudentSelect.jsx:35,48`, `VocabDetail.jsx:257,270`, `StudySession.jsx:467,484,554`, `AddVerb.jsx:38`.
+- Nenhuma T dedicada encontrada → propor T de "handler de erro central sem vazar detalhes" na M-08.
+
+### F-17 · Rotas sem validação de entrada
+- 15 usos de `req.body` nas rotas; nenhuma lib de validação em `server/package.json` (sem zod/joi/express-validator). Validações são manuais e pontuais.
+- Provável cobertura pela fase de OpenAPI/ORM; confirmar na M-06 qual lib (entra na lista D-10).
+
+### F-18 · Testes quebrados conhecidos
+- `TAREFAS.md:618` move testes do client e `utils/tts.js` para inglês, mas **nenhum cartão cita explicitamente** consertar `client/src/test/srs.test.js`, testes de TTS nem o teste de status red→yellow do server. → propor T na M-08 (já previsto no texto da M-08).
+
+### F-19 · Extensão pgcrypto sem uso
+- `CREATE EXTENSION IF NOT EXISTS "pgcrypto"` em `server/src/db/migrations/001_baseline.sql:7` e `server/src/db/schema.sql:7`.
+- Nenhum uso de `gen_random_uuid`, `crypt(` ou `digest(` nos `.sql`/`.js` do server. Extensão ociosa; decidir na M-06 (manter para uso futuro ou remover em migration nova).
+
+### F-20 · Textos em português e acentos
+- Mensagens em português no server (`db/migrate.js`, `db/migrator.js`, `db/seed.js`) e no client (alerts acima). Coerente com i18n planejado (R-08); a tradução fica para as T de i18n/Fase 15.
+- Busca por mojibake (`Ã£`, `Ã§`, `Ã©`...) nos `.js/.jsx/.sql/.css/.html`: **0 ocorrências** ✅. Os `�` vistos no terminal são da codificação do PowerShell, não do arquivo.
+
+### F-21 · `console.log`
+- 28 ocorrências, todas no server: `db/seed.js` (14), `db/migrate.js` (7), `db/migrator.js` (4), `index.js:42-44` (banner), `db/connection.js:42` (log de query — conferir se roda em produção). Client: 0.
+- Scripts de CLI (seed/migrate) são aceitáveis; `connection.js:42` deve ir para logger/nível debug → propor na M-08.
+
 
 
 
@@ -215,7 +244,7 @@ Fontes consultadas: `PROMPT_ORIGINAL.md`, `legado/PROMPT_INICIAL_LEGADOV2.md`, `
   - Lê: `plano-de-acao/legado/PLANO-v1.md`, `plano-de-acao/legado/MAPA-V1-V2.md`, `plano-de-acao/TAREFAS.md`
   - Altera: `plano-de-acao/MELHORIA-PLANO.md` (seção Lacunas L-xx) 
 
-- [ ] **M-05** Auditoria de código (SOMENTE LEITURA) — SQL montado por concatenação/interpolação de strings; rotas sem validação de entrada; erros que vazam SQL; testes quebrados (client srs/tts, server status red→yellow) e se alguma T cuida deles; extensão pgcrypto sem uso; textos/comentários em português e acentos corrompidos; `console.log`. Resultado: achados F-xx com arquivo:linha. Não alterar código.
+- [x] **M-05** Auditoria de código (SOMENTE LEITURA) — concluído: F-15..F-21; SQL parametrizado (só LIMIT interpolado), ~35 vazamentos de err.message, sem lib de validação, testes quebrados sem T, pgcrypto ocioso, 0 mojibake, 28 console.log no server — SQL montado por concatenação/interpolação de strings; rotas sem validação de entrada; erros que vazam SQL; testes quebrados (client srs/tts, server status red→yellow) e se alguma T cuida deles; extensão pgcrypto sem uso; textos/comentários em português e acentos corrompidos; `console.log`. Resultado: achados F-xx com arquivo:linha. Não alterar código.
   - Lê: `server/src/`, `client/src/`, testes em ambos
   - Altera: `plano-de-acao/MELHORIA-PLANO.md` (seção Achados F-xx)
 
@@ -316,4 +345,8 @@ Fontes consultadas: `PROMPT_ORIGINAL.md`, `legado/PROMPT_INICIAL_LEGADOV2.md`, `
 [2026-10-03 21:59] FIM M-04 — arquivos alterados: plano-de-acao/MELHORIA-PLANO.md
                    Lacunas: L-01..L-05 (L-01/L-02 cosméticas; L-03/L-04 rastreabilidade indireta aceitável)
                    Todas as T V1 com destino no MAPA e evidência no disco ✅; correções do MAPA ficam para M-14
+[2026-10-03 22:00] INÍCIO M-05 — Auditoria de código (somente leitura)
+[2026-10-03 22:02] FIM M-05 — arquivos alterados: plano-de-acao/MELHORIA-PLANO.md
+                   Achados: F-15..F-21 (LIMIT interpolado, err.message vazando, sem validação, testes sem T, pgcrypto ocioso, console.log)
+                   Nenhum código alterado
 ```
