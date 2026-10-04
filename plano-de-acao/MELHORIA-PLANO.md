@@ -6,7 +6,7 @@
 
 ## PRÓXIMO PASSO
 
-Cole o Prompt B para iniciar a **M-02**.
+Cole o Prompt B para iniciar a **M-03**.
 
 ---
 
@@ -83,7 +83,41 @@ Cole o Prompt B para iniciar a **M-02**.
 ### F-07 · plano-de-melhoria/ — pasta fora do escopo
 - Existe `plano-de-melhoria/` na raiz (contém `CENTRAL_IDEA.md`). Não é citada no RELATORIO-GERAL §2 nem em nenhum outro documento de planejamento. É um órfão do ponto de vista da hierarquia oficial. Q-04 gerada.
 
+### F-08 · plan_tool.py status — confirmado
+- `py plano-de-acao/plan_tool.py status`: 4/94 (4%) · PRÓXIMA: T-002. Consistente com PLANO.md. ✅
+
+### F-09 · TAREFAS.md — contagem de cartões
+- **94 cartões** confirmados: T-001 a T-094, sem faltar nem repetir. ✅
+- Cartões **T-016, T-017 e T-050** são stubs de tarefas concluídas no legado — texto mínimo ("Concluída no v1, nada a executar"), sem campos Back/Front/Teste/Pronto. Isso é intencional e aceitável para tarefas legado.
+- **Tamanho P/M:** presente em 91 cartões ativos (os 3 stubs legado não têm, o que é aceitável). ✅
+- **Campo "Objetivo":** o campo se chama **`- **Objetivo:**`** nos primeiros cartões (T-001 a T-015, T-018 a T-027), mas nas tarefas de T-028 em diante o campo Objetivo **não existe como `**Objetivo:`** — o objetivo está incorporado ao texto introdutório do cartão ou ausente como campo explícito. ⚠️ **Achado F-09a:** inconsistência de formato entre cartões das Fases 1–5 e Fase 5+ (cartões de T-028 a T-094 não têm `**Objetivo:**` separado). Impacto: a skill manda ler só o campo objetivo; se ele não existe, a IA pode interpretar o cartão de forma incompleta.
+
+### F-10 · TAREFAS.md — campo "Pausa" ausente como campo explícito
+- Nenhum cartão tem campo `**Pausa:**` ou `**Pausa obrigatória:**` separado. A pausa é coberta pelo campo `**Commit:**` e pelas referências a `RETOMAR.md`. O CENTRAL_IDEA.md menciona "pausa" como campo obrigatório, mas o formato atual o incorpora no `**Commit:**`. ⚠️ Achado de inconsistência de nomenclatura entre o que CENTRAL_IDEA.md descreve e o que o arquivo usa.
+
+### F-11 · plan_tool.py init — dependência de arquivo inexistente
+- `cmd_init` (linha 125): `src = SKILL_DIR / "assets" / "PLANO.inicial.md"` — o arquivo `skills/assets/PLANO.inicial.md` **não existe** no disco. Só existe `plano-de-acao/legado/PLANO.inicial-v1.md`.
+- Impacto: o comando `py plano-de-acao/plan_tool.py init` quebraria com FileNotFoundError se chamado hoje. O `init` não é necessário na prática atual (o plano já existe), mas é um bug latente. ⚠️ Q-05 gerada.
+
+### F-12 · RELATORIO-GERAL §2 vs disco — conferência
+| Afirmação do §2 | Verificação |
+|---|---|
+| 9 migrations (001–009) existem | ✅ Confirmado |
+| `server/src/db/migrator.js` existe | ✅ |
+| `server/src/db/migrate.js` existe | ✅ |
+| `server/src/db/seed.js` existe | ✅ |
+| `server/src/db/connection.js` existe | ✅ |
+| `migrations/README.md` existe | ✅ |
+| `migrate_session_type.js` na raiz | ✅ (F-03 confirma como órfão) |
+| `skills/assets/PLANO.inicial.md` implícita em plan_tool | ❌ Arquivo não existe (F-11) |
+
+### F-13 · RELATORIO-GERAL §3 — estado atual confirmado
+- 4 tarefas concluídas (T-001, T-016, T-017, T-050) — consistente com `plan_tool.py status` (4/94). ✅
+- Migrações 001–009 todas presentes e documentadas no §3. ✅
+- Banco de testes separado ainda não criado (D-12 Proposto) — §3 não afirma que existe. ✅
+
 ---
+
 
 ## Lacunas do legado (L-xx)
 
@@ -103,6 +137,8 @@ Cole o Prompt B para iniciar a **M-02**.
 
 **Q-04** A pasta `plano-de-melhoria/` (contendo `CENTRAL_IDEA.md`) existe na raiz mas não é citada em nenhum documento oficial do projeto. Deve ser mencionada no RELATORIO-GERAL ou README (como "pasta temporária de ideias"), ou pode ser ignorada pelo plano de melhoria?
 
+**Q-05** `plan_tool.py init` (linha 125) aponta para `skills/assets/PLANO.inicial.md` que não existe no disco. O `init` não é usado na prática atual. A recomendação é: (a) corrigir o caminho apontando para `plano-de-acao/legado/PLANO.inicial-v1.md`, ou (b) remover/documentar o comando como obsoleto. Qual preferir?
+
 ---
 
 ## Tarefas de Melhoria
@@ -113,7 +149,7 @@ Cole o Prompt B para iniciar a **M-02**.
   - Lê: raiz, `plano-de-acao/`, `plano-de-acao/legado/`, `skills/`, `skills/references/`, `skills/assets/`, `skills/scripts/`
   - Altera: `plano-de-acao/MELHORIA-PLANO.md` (seção Achados F-xx)
 
-- [ ] **M-02** Verdade no disco — Conferir `plan_tool.py status`; contar cartões em `TAREFAS.md` (esperado 94, T-001 a T-094, sem faltar nem repetir); campos obrigatórios por cartão (objetivo, back, front, teste antes, pronto, tamanho P/M, prompt, pausa); conferir cada afirmação do RELATORIO-GERAL (§2 árvore vs disco, §3 estado, migrations 001–009 existem); verificar se `plan_tool.py init` depende de `skills/assets/PLANO.inicial.md` (só relatar).
+- [x] **M-02** Verdade no disco — concluído: 94 cartões ✅, status 4/94 ✅, §2 e §3 do RELATORIO-GERAL conferidos, achados F-08–F-13, Q-05 gerada — Conferir `plan_tool.py status`; contar cartões em `TAREFAS.md` (esperado 94, T-001 a T-094, sem faltar nem repetir); campos obrigatórios por cartão (objetivo, back, front, teste antes, pronto, tamanho P/M, prompt, pausa); conferir cada afirmação do RELATORIO-GERAL (§2 árvore vs disco, §3 estado, migrations 001–009 existem); verificar se `plan_tool.py init` depende de `skills/assets/PLANO.inicial.md` (só relatar).
   - Lê: `plano-de-acao/TAREFAS.md`, `plano-de-acao/RELATORIO-GERAL-PROJETO.md`, `plano-de-acao/plan_tool.py`, `server/src/db/migrations/`
   - Altera: `plano-de-acao/MELHORIA-PLANO.md` (seção Achados F-xx)
 
@@ -213,4 +249,8 @@ Cole o Prompt B para iniciar a **M-02**.
 [2026-10-03 21:18] FIM M-01 — arquivos alterados: plano-de-acao/MELHORIA-PLANO.md
                    Achados: F-01 (inventário completo classificado), F-02 (plan_tool.py duplicado), F-03 (órfão migrate_session_type.js), F-04 (migrations/README.md mínimo), F-05 (PROMPT_ORIGINAL.md sem hierarquia), F-06 (diagnostico-atual.md sem classificação), F-07 (plano-de-melhoria/ fora do escopo)
                    Perguntas geradas: Q-01, Q-02, Q-03, Q-04
+[2026-10-03 21:22] INÍCIO M-02 — Verdade no disco
+[2026-10-03 21:26] FIM M-02 — arquivos alterados: plano-de-acao/MELHORIA-PLANO.md
+                   Achados: F-08 (status 4/94 ✅), F-09 (94 cartões T-001–T-094 ✅; campo Objetivo ausente em T-028+), F-10 (campo Pausa não existe como campo separado), F-11 (plan_tool init aponta para arquivo inexistente), F-12 (§2 RELATORIO-GERAL vs disco ✅ exceto PLANO.inicial.md), F-13 (§3 estado atual ✅)
+                   Perguntas geradas: Q-05
 ```
