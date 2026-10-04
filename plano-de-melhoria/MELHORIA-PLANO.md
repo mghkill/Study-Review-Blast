@@ -6,7 +6,7 @@
 
 ## PRÓXIMO PASSO
 
-Cole o Prompt B para iniciar a **M-07**:
+Cole o Prompt B para iniciar a **M-08**:
 
 > Leia plano-de-melhoria/SKILL-MELHORIA-PLANO.md e plano-de-melhoria/MELHORIA-PLANO.md e siga o ciclo da skill. Se algum desses dois arquivos não existir nesses caminhos, PARE e me avise sem tentar adivinhar. Execute APENAS a próxima tarefa M pendente (ou termine a que estiver em [~]). Não altere código, não commite, não faça push. Ao final: log, resumo, git status, oferta de git add . na raiz, e PARE perguntando se devo continuar.
 
@@ -254,6 +254,74 @@ Fontes consultadas: `PROMPT_ORIGINAL.md`, `legado/PROMPT_INICIAL_LEGADOV2.md`, `
 
 ---
 
+## Hierarquia de Documentos e Governança (resultado da M-07)
+
+### 1. Declaração da Ferramenta Operacional (`plan_tool.py`)
+- **Ferramenta Operacional Única do dia a dia:** `plano-de-acao/plan_tool.py`.
+  - Esta é a versão invocada via CLI (`py plano-de-acao/plan_tool.py status|start|done|log|block|add-feature`) e pelos prompts e instruções operacionais.
+- **Cópia de Referência da Skill:** `skills/scripts/plan_tool.py`.
+  - Mantida intacta como espelho da skill. Nenhuma das duas cópias será removida (conforme item 11 da M-06). Na M-15 será executada comparação de integridade/hash entre ambas.
+
+### 2. Status e Confinamento de `plano-de-melhoria/`
+- A pasta `plano-de-melhoria/` é o espaço oficial e exclusivo de trabalho para melhoria do planejamento.
+- **Arquivos oficiais:**
+  - `plano-de-melhoria/MELHORIA-PLANO.md` (plano mestre de melhorias e LOG append-only).
+  - `plano-de-melhoria/SKILL-MELHORIA-PLANO.md` (skill reguladora de cada sessão de melhoria).
+  - `plano-de-melhoria/CENTRAL_IDEA.md` (documento de apoio e prompts de acionamento A e B).
+- **Regra de Visibilidade:** NÃO é citada no `README.md` nem no `RELATORIO-GERAL-PROJETO.md` (para manter as vitrines públicas limpas). É citada apenas no `RETOMAR.md` e na própria skill.
+- **Arquivamento Futuro:** Conforme decisão 14 da M-06, após o término de todas as melhorias (ao fim da M-15), a pasta será proposta para arquivamento histórico em `plano-de-acao/legado/`.
+
+### 3. Estatuto de `plano-de-acao/legado/` (Somente Leitura)
+- Todos os arquivos sob `plano-de-acao/legado/` (`PLANO-v1.md`, `RETOMAR-v1.md`, `PLANO.inicial-v1.md`, `PROMPT_INICIAL_LEGADOV2.md`, etc.) são **estritamente SOMENTE LEITURA e congelados historicamente**.
+- Nenhuma alteração retroativa é permitida, exceto os ajustes cosméticos de alinhamento do de-para em `MAPA-V1-V2.md` e `RELATORIO-RECONSTRUCAO-V2.md` reservados com exclusividade para a tarefa **M-14** (L-01 a L-05).
+
+### 4. Matriz de Autoridade: Qual Arquivo Manda em Quê
+Em caso de divergência ou ambiguidade entre documentos, a autoridade segue a precedência abaixo:
+
+| Precedência | Documento | Esfera de Autoridade Máxima (Manda em quê) |
+|---|---|---|
+| **1 (Suprema)** | `plano-de-acao/RELATORIO-GERAL-PROJETO.md` | **Arquitetura, Visão Alvo e Princípios Cardeais:** Define o que o sistema é e será; regras inegociáveis (100% gratuito/local, isolamento estrito, soberania do PostgreSQL); diretrizes gerais para IAs; mapa geral de decisões D-01 a D-18. |
+| **2** | `plano-de-acao/RETOMAR.md` | **Conduta Operacional e Protocolo de Execução:** Manda no fluxo da sessão diária, processo de pausa com `git add .`, verificação prévia, regras de tolerância a falhas de contexto e limites da IA. |
+| **3** | `plano-de-acao/PLANO.md` | **Sequenciamento das Fases e Dependências Aprovadas:** Manda na ordem das 15 fases, no ponteiro `## PRÓXIMO PASSO`, nas decisões arquiteturais formais D-xx e na lista oficial de dependências autorizadas (D-10). |
+| **4** | `plano-de-acao/TAREFAS.md` | **Especificação Técnica Unitária:** Manda nos requisitos específicos de cada tarefa: critérios de pronto, testes prévios obrigatórios (TDD), escopo de Backend, escopo de Frontend, commits convencionais e dimensionamento (P/M). |
+| **5** | `plano-de-acao/LINHA-DO-TEMPO.md` | **Histórico Factual e Evidência Auditável:** Registro append-only imutável de todas as ações executadas, timestamps, hashes de backup e conclusões. Manda na comprovação do que já foi feito. |
+| **6** | `skills/SKILLENG.md` & `skills/references/` | **Padrões Técnicos e Engenharia:** Manda em convenções de branch/commit (`convencoes-v2.md`), modelagem relacional (`modelo-logico-alvo.md`) e padrões open source (`open-source-*.md`). |
+| **7** | `README.md` (Raiz) | **Interface com o Usuário e Comunicação Externa:** Manda na experiência do desenvolvedor/usuário final que clona o repositório, instruções de instalação, visualização do progresso e backlog de melhorias futuras. |
+
+### 5. Ordem Única e Canônica de Leitura (Para Toda Sessão de Tarefa T)
+Para iniciar qualquer sessão de trabalho em tarefas T do plano de ação:
+```text
+Passo 1: plano-de-acao/RELATORIO-GERAL-PROJETO.md
+         └── Ler uma vez no onboarding inicial ou após compactação de contexto / troca de IA.
+Passo 2: plano-de-acao/RETOMAR.md
+         └── Ler no início de toda sessão: regras do dia e checagem de estado.
+Passo 3: plano-de-acao/PLANO.md (bloco ## PRÓXIMO PASSO)
+         └── Ler para identificar qual é a próxima T e verificar se há pendências na fase.
+Passo 4: plano-de-acao/TAREFAS.md (apenas o bloco ### T-0XX identificado)
+         └── Ler o cartão exato da tarefa da sessão (Objetivo, Back, Front, Teste antes, Pronto).
+Passo 5: plano-de-acao/LINHA-DO-TEMPO.md (últimas 20 linhas)
+         └── Ler para entender o contexto imediato deixado pela sessão anterior.
+Passo 6: Executar a checagem no terminal:
+         py plano-de-acao/plan_tool.py status
+         git status
+         git log -3 --oneline
+```
+
+### 6. Inventário de Links Absolutos a Substituir por Relativos
+Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e M-12:
+
+| Arquivo Origem | Linha | Conteúdo Absoluto Atual | Correção Relativa Planejada | Tarefa Alvo |
+|---|---|---|---|---|
+| `plano-de-acao/RELATORIO-GERAL-PROJETO.md` | 152 | `file:///c:/Users/opera/Desktop/Training%20Verbs/plano-de-acao/PLANO.md` | `./PLANO.md` | **M-11** |
+| `plano-de-acao/RELATORIO-GERAL-PROJETO.md` | 212 | `file:///c:/Users/opera/Desktop/Training%20Verbs/plano-de-acao/RETOMAR.md` | `./RETOMAR.md` | **M-11** |
+| `plano-de-acao/RELATORIO-GERAL-PROJETO.md` | 214 | `file:///c:/Users/opera/Desktop/Training%20Verbs/plano-de-acao/PLANO.md` | `./PLANO.md` | **M-11** |
+| `plano-de-acao/RELATORIO-GERAL-PROJETO.md` | 215 | `file:///c:/Users/opera/Desktop/Training%20Verbs/plano-de-acao/TAREFAS.md` | `./TAREFAS.md` | **M-11** |
+| `plano-de-acao/RELATORIO-GERAL-PROJETO.md` | 235 | `file:///c:/Users/opera/Desktop/Training%20Verbs/plano-de-acao/PLANO.md` | `./PLANO.md` | **M-11** |
+| `plano-de-acao/TAREFAS.md` | 27 | `C:\Users\opera\studyreviewblast-backups\` | Generalizar como pasta de backup externa ao repo (ex.: `../studyreviewblast-backups/` ou `$HOME/studyreviewblast-backups/`) | **M-09** |
+| `skills/references/convencoes-v2.md` | 45 | `C:\Users\opera\studyreviewblast-backups\` | Generalizar como pasta externa configurável (ex.: `$HOME/studyreviewblast-backups/`) | **M-12** |
+
+---
+
 ## Tarefas de Melhoria
 
 ### Fase M1 — Varredura (somente leitura)
@@ -285,7 +353,7 @@ Fontes consultadas: `PROMPT_ORIGINAL.md`, `legado/PROMPT_INICIAL_LEGADOV2.md`, `
   - Lê: `plano-de-acao/PLANO.md`, `plano-de-melhoria/MELHORIA-PLANO.md` (todos os Q-xx e F-xx)
   - Altera: `plano-de-melhoria/MELHORIA-PLANO.md` (seção Q-xx)
 
-- [ ] **M-07** Hierarquia de documentos — **(Item 16 da M-06 concluído):** `MELHORIA-PLANO.md` e `SKILL-MELHORIA-PLANO.md` consolidados em `plano-de-melhoria/`; referências atualizadas. Declarar também qual `plan_tool.py` é o operacional (item 11). Depois: Definir qual arquivo manda em quê e a ORDEM ÚNICA de leitura (sugestão: RELATORIO-GERAL → RETOMAR → PLANO → cartão em TAREFAS); marcar `legado/` como somente leitura; listar links absolutos `file:///c:/...` a trocar por relativos. **[! Bloqueada até M-06 respondida]**
+- [x] **M-07** Hierarquia de documentos — concluído: hierarquia de 7 níveis e ordem única de leitura formalizadas; plano-de-acao/plan_tool.py declarado operacional único; plano-de-melhoria/ confinada e com arquivamento futuro previsto; legado/ ratificado como somente leitura; 7 links/caminhos absolutos mapeados para correção em M-09, M-11 e M-12 — Definir qual arquivo manda em quê e a ORDEM ÚNICA de leitura; marcar legado/ como somente leitura; listar links absolutos a trocar por relativos.
   - Lê: todos os `.md` de `plano-de-acao/` e `skills/`
   - Altera: `plano-de-melhoria/MELHORIA-PLANO.md`
 
@@ -388,4 +456,6 @@ Fontes consultadas: `PROMPT_ORIGINAL.md`, `legado/PROMPT_INICIAL_LEGADOV2.md`, `
                    NOTA: todas as entradas até aqui citam o caminho antigo plano-de-acao/MELHORIA-PLANO.md
 [2026-10-04 00:02] REPARO (fora do ciclo de M) — MELHORIA-PLANO.md e SKILL-MELHORIA-PLANO.md movidos manualmente para plano-de-melhoria/; referênças ativas corrigidas (plano-de-melhoria/SKILL-MELHORIA-PLANO.md, plano-de-melhoria/CENTRAL_IDEA.md, plano-de-melhoria/MELHORIA-PLANO.md); escopo da skill inclui plano-de-melhoria/; bloco do Prompt B removido do README.md. Entradas anteriores do LOG citam os caminhos antigos (histórico, não alteradas).
 [2026-10-04 00:43] REPARO — Prompt A em CENTRAL_IDEA.md corrigido para gerar e referenciar arquivos em plano-de-melhoria/; inventário F-01 e referências das tarefas M-01 a M-15 em MELHORIA-PLANO.md atualizados para plano-de-melhoria/.
+[2026-10-04 00:55] INÍCIO M-07 — Hierarquia de documentos
+[2026-10-04 00:57] FIM M-07 — arquivos alterados: plano-de-melhoria/MELHORIA-PLANO.md — achados: hierarquia oficial de 7 níveis definida (RELATORIO-GERAL > RETOMAR > PLANO > TAREFAS > LINHA-DO-TEMPO > skills > README); ordem única canônica de 6 passos para sessões T formalizada; plano-de-acao/plan_tool.py declarado ferramenta operacional única; plano-de-melhoria/ isolada com arquivamento futuro em legado/ previsto; legado/ ratificado como estritamente somente leitura; inventário de 5 links absolutos file:/// e 2 caminhos locais levantados para substituição em M-09, M-11 e M-12.
 ```
