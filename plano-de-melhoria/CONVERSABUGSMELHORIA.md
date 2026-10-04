@@ -332,3 +332,67 @@ No Prompt B da M-08, acrescente no fim esta autorização:
 Autorização extra para esta M-08: você PODE usar `py plano-de-acao/plan_tool.py add-feature` apenas para (a) parametrizar LIMIT/OFFSET e tirar err.message das respostas da API, antes do ORM, e (b) as falhas de teste conhecidas do client e do server. Todo o resto continua como proposta no MELHORIA-PLANO.md. Divida a M-09 em partes por fase (M-09a, M-09b...), sem renumerar nada, e peça que cada cartão do TAREFAS.md aponte para o protocolo de pausa do RETOMAR.md em vez de ter um campo próprio.
 
 Se o item 5 mostrar qualquer coisa fora do esperado, me traga a saída antes de continuar. É o único ponto aqui que pode ser sério, por causa do repositório público.
+
+
+A análise da IA de apoio é muito lúcida e as preocupações dela foram todas verificadas agora mesmo no ambiente.
+
+Aqui está o diagnóstico detalhado de cada ponto e a conferência realizada:
+
+1. Resultado das Conferências de Integridade e Segurança
+Item	Verificação	Resultado	Situação
+1. Três crases no README	Contagem com Select-String -Pattern '^\s*```'	18 ocorrências (número par)	✅ Perfeito, blocos de código balanceados.
+2. Fechamento solto no README	Linhas finais (300 a 326) conferidas	Seção termina limpa na licença MIT sem crases soltas	✅ Sem artefatos.
+3. Diff do README	git diff README.md	0 diferenças	✅ Sincronizado e limpo.
+4. Trava no Prompt B	Linha 101 de 
+
+CENTRAL_IDEA.md
+Frase "Se algum desses dois arquivos não existir nesses caminhos, PARE e me avise sem tentar adivinhar." está presente	✅ Proteção ativa.
+5. Segredos (.env e backups)	git log --all --oneline -- .env
+git ls-files | Select-String '(^|/)\.env$'
+git check-ignore -v .env
+git ls-files | Select-String '\.(dump|backup|bak)$'	Histórico limpo (vazio); arquivos rastreados limpos (vazio); protegido pela regra .gitignore:8:.env; nenhum dump/backup commitado	✅ Segurança 100% preservada. Nenhuma credencial foi exposta no repositório público.
+6. SQL (LIMIT e err.message)	LIMIT\s*\$\{|OFFSET\s*\$\{
+err\.message	Identificado em server/src/routes/reviews.js:320: LIMIT ${parseInt(limit)} (se inválido vira NaN). Identificadas 40 ocorrências de err.message no backend	✅ Confirmado. Excelente candidato para tarefa antes do ORM.
+2. O que isso muda e como faremos na M-08
+Todas as orientações da conversa fazem total sentido e serão incorporadas na M-08:
+
+Auditoria Pacote × Cartão (1º Passo):
+
+Comparar todos os cartões de 
+
+TAREFAS.md
+ com a lista de dependências D-10 do 
+
+PLANO.md
+, incorporando formalmente os pacotes já aprovados na M-06 (ts-fsrs, Playwright, Zod, OpenAPI, cobertura Vitest/Jest, etc.).
+Criação das Tarefas com a Autorização Explícita:
+
+Com a autorização extra que você fornecerá no prompt da M-08, usaremos plan_tool.py add-feature para:
+Adicionar uma tarefa [P] antes do ORM (na Fase 2 ou 7) para parametrizar LIMIT/OFFSET e implementar tratamento central de erros sem vazar err.message.
+Adicionar tarefa para corrigir as falhas de teste conhecidas (srs.test.js, tts.test.js e o status red→yellow do server).
+Divisão da M-09 (Prevenção de Estouro de Contexto):
+
+Como os cartões de T-028 a T-094 precisam de ajuste de formatação no campo Objetivo e apontamento para a regra de pausa do 
+
+RETOMAR.md
+, dividiremos a M-09 em subtarefas aditivas por fase (M-09a, M-09b...), sem renumerar as tarefas T existentes.
+Campo de Pausa Simplificado (F-10):
+
+Em vez de um campo proprietário duplicado em 94 cartões, cada cartão apontará diretamente para o protocolo canônico do 
+
+RETOMAR.md
+.
+3. Estado Atual do Git
+text
+On branch v2/phase-01-safety-net
+Your branch is ahead of 'origin/v2/phase-01-safety-net' by 2 commits.
+  (use "git push" to publish your local commits)
+nothing to commit, working tree clean
+(Os commits da M-07 já foram gravados localmente e a árvore está 100% limpa).
+
+Pronto para a M-08!
+Quando quiser iniciar, basta colar o Prompt B com a autorização complementar:
+
+text
+Leia plano-de-melhoria/SKILL-MELHORIA-PLANO.md e plano-de-melhoria/MELHORIA-PLANO.md e siga o ciclo da skill. Se algum desses dois arquivos não existir nesses caminhos, PARE e me avise sem tentar adivinhar. Execute APENAS a próxima tarefa M pendente (ou termine a que estiver em [~]). Não altere código, não commite, não faça push. Ao final: log, resumo, git status, oferta de git add . na raiz, e PARE perguntando se devo continuar.
+Autorização extra para esta M-08: você PODE usar `py plano-de-acao/plan_tool.py add-feature` apenas para (a) parametrizar LIMIT/OFFSET e tirar err.message das respostas da API, antes do ORM, e (b) as falhas de teste conhecidas do client e do server. Todo o resto continua como proposta no MELHORIA-PLANO.md. Divida a M-09 em partes por fase (M-09a, M-09b...), sem renumerar nada, e peça que cada cartão do TAREFAS.md aponte para o protocolo de pausa do RETOMAR.md em vez de ter um campo próprio.
