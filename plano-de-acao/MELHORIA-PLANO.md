@@ -6,7 +6,7 @@
 
 ## PRÓXIMO PASSO
 
-Cole o Prompt B para iniciar a **M-03**.
+Cole o Prompt B para iniciar a **M-04**.
 
 ---
 
@@ -116,7 +116,34 @@ Cole o Prompt B para iniciar a **M-03**.
 - Migrações 001–009 todas presentes e documentadas no §3. ✅
 - Banco de testes separado ainda não criado (D-12 Proposto) — §3 não afirma que existe. ✅
 
----
+### F-14 · Checklist de conformidade R-01..R-16 (resultado da M-03)
+
+Fontes consultadas: `PROMPT_ORIGINAL.md`, `legado/PROMPT_INICIAL_LEGADOV2.md`, `PLANO.md`, `TAREFAS.md`, `RETOMAR.md`, `README.md`
+
+| Código | Requisito | Status | Evidência |
+|---|---|---|---|
+| R-01 | Reaproveita o plano V1 e preserva histórico em `legado/` | ✅ | `legado/` existe com PLANO-v1.md, MAPA-V1-V2.md; PLANO.md L7–8 referencia legado; TAREFAS.md stubs T-016/017/050 |
+| R-02 | Tarefas pequenas (P ou M), uma por sessão | ✅ | PLANO.md L7: "Tarefa grande é proibida: divide-se"; 91 cartões com `[P]` ou `[M]` |
+| R-03 | Todo T inclui o front (ou justificativa) | ✅ | Todos os 91 cartões ativos têm `**Front:**`; stubs legado justificam "sem impacto" |
+| R-04 | Teste escrito antes e visto falhando | ✅ | PLANO.md L21; TAREFAS.md: todos os 91 cartões têm `**Teste antes:**` |
+| R-05 | Pausa com `git add .` na raiz, sem push, commit em inglês | ✅ | RETOMAR.md §3; PLANO.md L20; TAREFAS.md: todos os 91 cartões têm `**Commit:**` |
+| R-06 | Nada pago no plano | ✅ | `grep pago/ElevenLabs/OpenAI/Sentry` no PLANO.md → zero resultados; RETOMAR.md L105: "Nada pago" |
+| R-07 | ORM + qualidade (lint, hooks, CI, Zod, segurança, logs) + proteção SQL injection | ✅ | Fase 2 (T-006–T-011 lint/CI), Fase 5 (T-025–T-035 ORM+regra anti-SQL), Fase 7 (T-042–T-049 Zod/Helmet/Pino); T-035 tem "regra lint que proíbe SQL por concatenação" |
+| R-08 | Tradução para inglês planejada e não executada, com i18n | ✅ | D-08 (PLANO.md L39); Fase 9 (T-054–T-063); D-16 (PLANO.md L47); `i18next` em D-10 Fase 9 |
+| R-09 | Estudo estilo Anki + FSRS + dashboard + voz gratuita | ✅ | Fase 10 T-067 (Anki), T-064/T-065 (FSRS); Fase 11 T-079/T-080 (voz gratuita Web Speech API); Fase 10 T-075/T-076 (dashboard) |
+| R-10 | README como guia mestre (onde parei, prompt por T, decisões simples, melhorias pós-T-090) | ✅ | README.md tem seções "Como prosseguir", prompt por tarefa, "Decisões explicadas", "Melhorias pós-prova de fogo" |
+| R-11 | `RETOMAR.md` é ponto de entrada diário, funciona ao trocar de IA | ✅ | RETOMAR.md §7 "Como retomar após troca de IA ou limite de tokens" (L115–L122) |
+| R-12 | READMEs sem função de `client/` e `server/` removidos | ✅ | `Test-Path client\README.md` → False; `Test-Path server\README.md` → False |
+| R-13 | Prova de fogo final | ✅ | Fase 14 T-092: "Clone limpo + banco vazio, seguir o README como um estranho" |
+| R-14 | Dependências só da lista aprovada cobrindo TODAS as fases | ⚠️ | D-10 (PLANO.md L51–62) lista Fases 2,3,5,6,7,9,10,12,13. **Lacuna**: Fase 1 (nenhuma dep nova, ok); Fase 4 (nenhuma dep nova, ok); Fase 8 (nenhuma dep nova, ok); Fase 11 (Web Speech API é nativa, ok); Fases 14/15 (nenhuma dep nova, ok). A lista está completa por fase ✅ — mas conforme F-02 da M-00, `ts-fsrs` só aparece em D-14 como proposta ainda não confirmada, enquanto D-10 linha 60 já a lista. **Inconsistência**: D-14 diz "Requer confirmação antes da Fase 10", mas D-10 já incluiu `ts-fsrs`. |
+| R-15 | Portas, proxy e scripts dev intactos | ✅ | PLANO.md L19: "porta **3001**" e "porta **5173**"; RETOMAR.md L101-102 confirma |
+| R-16 | Nenhum segredo nos documentos | ⚠️ | LINHA-DO-TEMPO.md L19 e L23 mencionam "senha" em contexto de log de ação (não é segredo real, é narrativa). TAREFAS.md L27 menciona `C:\Users\opera\studyreviewblast-backups\` (caminho local, não senha). PROMPT_ORIGINAL.md L30 contém instrução sobre credenciais (educativo, não é segredo real). **Avaliação: nenhum segredo real está exposto** ✅ — as menções são instrucionais. |
+
+**Achados críticos da M-03:**
+- ⚠️ R-14: `ts-fsrs` está em D-10 (aprovada) mas D-14 ainda diz "Proposto — requer confirmação antes da Fase 10". Inconsistência que precisa ser resolvida na M-08.
+- Todos os demais R-xx estão em conformidade.
+
+
 
 
 ## Lacunas do legado (L-xx)
@@ -153,13 +180,14 @@ Cole o Prompt B para iniciar a **M-03**.
   - Lê: `plano-de-acao/TAREFAS.md`, `plano-de-acao/RELATORIO-GERAL-PROJETO.md`, `plano-de-acao/plan_tool.py`, `server/src/db/migrations/`
   - Altera: `plano-de-acao/MELHORIA-PLANO.md` (seção Achados F-xx)
 
-- [ ] **M-03** Conformidade com `PROMPT_INICIAL_LEGADOV2.md` e `PROMPT_ORIGINAL.md` — checklist R-01..R-16 abaixo, cada um ✅/⚠️/❌ com evidência (arquivo e linha).
+- [x] **M-03** Conformidade R-01..R-16 — concluído: 14/16 ✅, R-14 e R-16 com ressalvas menores (⚠️), 0 ❌, achado crítico: D-10 vs D-14 inconsistentes para ts-fsrs. — checklist R-01..R-16 abaixo, cada um ✅/⚠️/❌ com evidência (arquivo e linha).
   - Lê: `plano-de-acao/legado/PROMPT_INICIAL_LEGADOV2.md`, `plano-de-acao/PROMPT_ORIGINAL.md`, `plano-de-acao/PLANO.md`, `plano-de-acao/TAREFAS.md`
   - Altera: `plano-de-acao/MELHORIA-PLANO.md` (seção Achados F-xx)
 
+
 - [ ] **M-04** Auditoria do legado — Para cada tarefa de `legado/PLANO-v1.md` (T-001 a T-090, inclusive opcionais), confirmar que o destino em `legado/MAPA-V1-V2.md` existe em `TAREFAS.md` com conteúdo real (não só título) e, para as marcadas concluídas, que há evidência no disco. Tudo sem destino ou sem evidência vira L-xx.
   - Lê: `plano-de-acao/legado/PLANO-v1.md`, `plano-de-acao/legado/MAPA-V1-V2.md`, `plano-de-acao/TAREFAS.md`
-  - Altera: `plano-de-acao/MELHORIA-PLANO.md` (seção Lacunas L-xx)
+  - Altera: `plano-de-acao/MELHORIA-PLANO.md` (seção Lacunas L-xx) 
 
 - [ ] **M-05** Auditoria de código (SOMENTE LEITURA) — SQL montado por concatenação/interpolação de strings; rotas sem validação de entrada; erros que vazam SQL; testes quebrados (client srs/tts, server status red→yellow) e se alguma T cuida deles; extensão pgcrypto sem uso; textos/comentários em português e acentos corrompidos; `console.log`. Resultado: achados F-xx com arquivo:linha. Não alterar código.
   - Lê: `server/src/`, `client/src/`, testes em ambos
@@ -253,4 +281,9 @@ Cole o Prompt B para iniciar a **M-03**.
 [2026-10-03 21:26] FIM M-02 — arquivos alterados: plano-de-acao/MELHORIA-PLANO.md
                    Achados: F-08 (status 4/94 ✅), F-09 (94 cartões T-001–T-094 ✅; campo Objetivo ausente em T-028+), F-10 (campo Pausa não existe como campo separado), F-11 (plan_tool init aponta para arquivo inexistente), F-12 (§2 RELATORIO-GERAL vs disco ✅ exceto PLANO.inicial.md), F-13 (§3 estado atual ✅)
                    Perguntas geradas: Q-05
+[2026-10-03 21:28] INÍCIO M-03 — Conformidade R-01..R-16
+[2026-10-03 21:49] FIM M-03 — arquivos alterados: plano-de-acao/MELHORIA-PLANO.md
+                   Achados: F-14 (checklist R-01..R-16: 14 ✅, 2 ⚠️, 0 ❌)
+                   R-14 ⚠️: ts-fsrs em D-10 (aprovada) mas D-14 diz "Proposto"; incoerência a resolver na M-08
+                   R-16 ⚠️: menções instrucionais de senha; nenhum segredo real exposto
 ```
