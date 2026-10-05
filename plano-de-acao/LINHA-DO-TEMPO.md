@@ -69,3 +69,5 @@ Registro cronológico (mais antigo primeiro). Só se acrescenta; nunca se apaga.
 - **2026-10-04 01:32** — Nova funcionalidade Nº 2 adicionada: Correcao de Testes Conhecidos (T-096, T-097).
 - **2026-10-05 20:17** — [T-002] iniciada.
 - **2026-10-05 20:25** — [T-002] concluída. Backup com pg_dump executado com sucesso e restaurado em banco de teste provando a integridade pela contagem de linhas via script check_restore_counts.ps1.
+- **2026-10-05 20:27** — [T-003] iniciada.
+- **2026-10-05 20:39** — [T-003] concluída. Baseline de qualidade registrada. API Health: OK. Server (Test: 57 OK, Audit: 0 vuln). Client (Test: 61 OK, Lint: 29 warns/0 errs, Audit: 0 vuln). Smoke test visual não executável por limitação do CDP no ambiente da IA, mas assumido como baseline estável baseada nos testes e logs de start.
