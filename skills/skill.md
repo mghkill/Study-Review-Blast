@@ -107,5 +107,5 @@ Entregue em poucas linhas: o que foi alterado no README, quais dados vieram de q
 - `assets/README.template.md`: esqueleto completo do README.
 - `references/open-source-checklist.md`: checklist de arquivos e boas práticas de projeto open source, com modelos curtos de CONTRIBUTING, SECURITY e escolha de licença.
 
-## Sempre transforme tudo em inglês 
-- `Transforme todo o documento README.md, na raiz do projeto em inglês.`
+## Idioma do README (Decisão D-08)
+- Conforme decisão D-08: o `README.md` na raiz do repositório permanece em português (`pt-BR`) até a Fase 14. Na Fase 15, será fornecida a versão em inglês mantendo suporte bilíngue (`README.md` e `README.en.md`).

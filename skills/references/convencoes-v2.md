@@ -42,7 +42,7 @@
 ## §3 — Banco de dados e migrações
 
 - Migração aplicada **nunca é editada**; cria-se a próxima.
-- Backup (`pg_dump -Fc`) em `C:\Users\opera\studyreviewblast-backups\` antes de qualquer migração destrutiva.
+- Backup (`pg_dump -Fc`) em diretório externo seguro (ex.: `../studyreviewblast-backups/` ou `$HOME/studyreviewblast-backups/`) antes de qualquer migração destrutiva.
 - Banco de testes: `<DB_NAME>_test`; criado e migrado pelo `globalSetup` do Jest; nunca tocado em desenvolvimento.
 - Arquivo de migração: `server/src/db/migrations/NNN_slug.sql` (número com 3 dígitos, incremental).
 - Cada migration roda em transação; a tabela `schema_migrations` registra `(version, name, applied_at)`.
@@ -63,7 +63,7 @@
 
 - Todo código **novo** (nomes de variáveis, funções, arquivos, comentários, mensagens de API) em **inglês**.
 - Código PT existente é traduzido na Fase 9 (T-054–T-063).
-- Exceção permanente: pasta `plano-de-acao/`, `skills/` e `LINHA-DO-TEMPO.md` ficam em PT até a Fase 15.
+- Exceção permanente: pasta `plano-de-acao/`, `skills/` e `LINHA-DO-TEMPO.md` ficam em PT até a Fase 15 (tradução opcional pós-T-092 conforme D-16, **sem renomear a pasta `plano-de-acao/`**).
 - Nomes de arquivo: `kebab-case` para routes/middleware/services; `PascalCase` para componentes React.
 - SQL concatenado por string é proibido a partir da T-035 (regra de lint).
 
