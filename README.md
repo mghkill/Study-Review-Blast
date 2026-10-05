@@ -265,7 +265,7 @@ The development roadmap is structured into **15 core phases** plus approved expa
 | **Phase 12** | End-to-End Testing (E2E) | T-082 to T-085 | Playwright suites for study flows and student isolation, CI artifact test reports | Pending |
 | **Phase 13** | Documentation & Open Source | T-086 to T-091 | Interactive Swagger UI (`/api/docs`), community files (`CONTRIBUTING.md`, `LICENSE`), screenshots | Pending |
 | **Phase 14** | Production Trial (Trial by Fire) | T-092 | Clean clone on a fresh machine validating README setup from scratch | Pending |
-| **Phase 15** | Final Translation | T-093 to T-094 | Cross-linked English and Portuguese READMEs (`README.en.md` / `README.pt-BR.md`) | Pending |
+| **Phase 15** | Final Translation | T-093 to T-094 | Cross-linked English and Portuguese READMEs (`README.en.md` / `README.pt-BR.md`), plus optional internal planning translation | Pending |
 | **Module 1** | Pre-ORM API Sanitization | T-095 | Strict parameterization of `LIMIT`/`OFFSET` and internal error message masking | Pending |
 | **Module 2** | Legacy Test Stabilization | T-096 to T-097 | Fix legacy frontend tests (`srs.test.js`, `tts.test.js`) and server review status check | Pending |
 
@@ -282,7 +282,6 @@ The repository maintains an audited documentation corpus. Refer to these dedicat
 | **Operational Action Plan** | [`plano-de-acao/PLANO.md`](./plano-de-acao/PLANO.md) | **Sequence of Execution:** 15 phases, formal decisions D-01 through D-18, approved dependency list (D-10), and active pointer. |
 | **Atomic Task Cards** | [`plano-de-acao/TAREFAS.md`](./plano-de-acao/TAREFAS.md) | **Unit Specifications:** 97 detailed task cards outlining Objective, Backend, Frontend, Required Pre-Tests, and Done Criteria. |
 | **Auditable Timeline** | [`plano-de-acao/LINHA-DO-TEMPO.md`](./plano-de-acao/LINHA-DO-TEMPO.md) | **Immutable History:** Append-only chronological log of executed actions, timestamps, backup hashes, and validation proofs. |
-| **Continuous Improvement Plan** | [`plano-de-melhoria/MELHORIA-PLANO.md`](./plano-de-melhoria/MELHORIA-PLANO.md) | **Governance & Audit Log:** Document inventory, findings F-01 to F-21, legacy gaps L-01 to L-05, and session history. |
 | **Security & Isolation Model** | [`docs/seguranca-e-isolamento.md`](./docs/seguranca-e-isolamento.md) | **Security Analysis:** Data ownership mechanics, composite FK protections, desktop no-login boundaries, and cloud recommendations. |
 | **Engineering Conventions** | [`skills/references/convencoes-v2.md`](./skills/references/convencoes-v2.md) | **Standards:** Code conventions, branching models (`v2/phase-NN-slug`), Conventional Commits, and test architecture. |
 | **Target Relational Model** | [`skills/references/modelo-logico-alvo.md`](./skills/references/modelo-logico-alvo.md) | **Database Design:** Relational schema design, composite referential integrity, indexes, and PostgreSQL 18 nuances. |
@@ -392,11 +391,6 @@ Study-Review-Blast/
 │   ├── plan_tool.py                   # Automation CLI tool for plan tracking
 │   ├── RELATORIO-GERAL-PROJETO.md     # Master architectural report
 │   └── legado/                        # Preserved historical Plan V1 archives
-│
-├── plano-de-melhoria/                 # AUDIT & CONTINUOUS IMPROVEMENT WORKSPACE
-│   ├── MELHORIA-PLANO.md              # Findings F-xx, gaps L-xx, and governance
-│   ├── SKILL-MELHORIA-PLANO.md        # Session meta-regulation skill
-│   └── CENTRAL_IDEA.md                # Supporting guidelines and prompts
 │
 └── skills/                            # ENGINEERING SKILLS & STANDARDS PACKAGE
     ├── SKILLENG.md                    # Technical planning and engineering rules

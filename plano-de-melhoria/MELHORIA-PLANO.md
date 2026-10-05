@@ -395,7 +395,7 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Lê: `skills/SKILLENG.md`, `skills/references/convencoes-v2.md`, `skills/skill.md`
   - Altera: os arquivos listados conforme necessário
 
-- [ ] **M-13** `README.md` da raiz — Alinhar (onde parei, decisões em linguagem simples, melhorias pós-prova de fogo, observação de tradução para inglês na Fase 15). **[! Bloqueada até M-06 respondida]**
+- [x] **M-13** `README.md` da raiz — Alinhar (onde parei, decisões em linguagem simples, melhorias pós-prova de fogo, observação de tradução para inglês na Fase 15). — concluído: Fase 15 atualizada; referências a plano-de-melhoria/ removidas para não expor workspace de auditoria na vitrine pública.
   - Lê: `README.md`
   - Altera: `README.md`
 
@@ -435,6 +435,8 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 ## LOG (append-only — nunca apagar linhas)
 
 ```
+[2026-10-05 19:57] INÍCIO M-13 — Alinhamento do README.md da raiz
+[2026-10-05 19:58] FIM M-13 — arquivos alterados: README.md, plano-de-melhoria/MELHORIA-PLANO.md — achados: README atualizado com observação sobre tradução opcional na Fase 15; referências à pasta plano-de-melhoria/ removidas da tabela de Reports e do Directory Structure conforme decisão de governança da M-07 (não citar plano de melhoria em documentos públicos).
 [2026-10-03 21:09] INÍCIO M-00 (criação do plano de melhoria)
 [2026-10-03 21:09] FIM M-00 — Arquivos criados: skills/SKILL-MELHORIA-PLANO.md, plano-de-acao/MELHORIA-PLANO.md
                    Passo 1 (reconhecimento leve):
