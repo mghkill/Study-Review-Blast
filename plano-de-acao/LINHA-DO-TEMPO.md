@@ -67,3 +67,5 @@ Registro cronológico (mais antigo primeiro). Só se acrescenta; nunca se apaga.
 - **2026-10-03 20:11** — [T-001] concluída. Branch v2/phase-01-safety-net criada a partir de main (hash base 88fc2cbdd88cc6028c4fc0e267ab844f2ea878af). Testes server (57/57) e client (61/61) 100% verdes.
 - **2026-10-04 01:32** — Nova funcionalidade Nº 1 adicionada: Seguranca e Sanitizacao da API pre-ORM (T-095).
 - **2026-10-04 01:32** — Nova funcionalidade Nº 2 adicionada: Correcao de Testes Conhecidos (T-096, T-097).
+- **2026-10-05 20:17** — [T-002] iniciada.
+- **2026-10-05 20:25** — [T-002] concluída. Backup com pg_dump executado com sucesso e restaurado em banco de teste provando a integridade pela contagem de linhas via script check_restore_counts.ps1.
