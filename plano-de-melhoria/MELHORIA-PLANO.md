@@ -399,11 +399,11 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Lê: `README.md`
   - Altera: `README.md`
 
-- [ ] **M-14** Legado — Corrigir `legado/MAPA-V1-V2.md` e `legado/RELATORIO-RECONSTRUCAO-V2.md`: correções do mapa (linha V1 T-001; faixas da tabela "100% novas" por listas exatas) e das lacunas L-xx. **[! Bloqueada até M-04]**
+- [x] **M-14** Legado — Corrigir `legado/MAPA-V1-V2.md` e `legado/RELATORIO-RECONSTRUCAO-V2.md`: correções do mapa (linha V1 T-001; faixas da tabela "100% novas" por listas exatas) e das lacunas L-xx. **[! Bloqueada até M-04]**
   - Lê: `plano-de-acao/legado/MAPA-V1-V2.md`, `plano-de-acao/legado/RELATORIO-RECONSTRUCAO-V2.md`, `plano-de-melhoria/MELHORIA-PLANO.md` (L-xx)
   - Altera: `plano-de-acao/legado/MAPA-V1-V2.md`, `plano-de-acao/legado/RELATORIO-RECONSTRUCAO-V2.md`
 
-- [ ] **M-15** Verificação final — Repetir M-02; checar links; `plan_tool.py status`; `git status`; registrar que o planejamento está pronto; entregar o prompt exato para iniciar T-001; propor arquivar `MELHORIA-PLANO.md` em `plano-de-acao/legado/`. **[! Bloqueada até M-08 a M-14]**
+- [x] **M-15** Verificação final — Repetir M-02; checar links; `plan_tool.py status`; `git status`; registrar que o planejamento está pronto; entregar o prompt exato para iniciar T-001; propor arquivar `MELHORIA-PLANO.md` em `plano-de-acao/legado/`. **[! Bloqueada até M-08 a M-14]**
   - Lê: todos os `.md` modificados
   - Altera: `plano-de-melhoria/MELHORIA-PLANO.md` (LOG final)
 
@@ -435,6 +435,10 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 ## LOG (append-only — nunca apagar linhas)
 
 ```
+[2026-10-05 19:59] INÍCIO M-14 — Correções no legado e lacunas L-xx
+[2026-10-05 20:02] FIM M-14 — arquivos alterados: legado/MAPA-V1-V2.md, legado/RELATORIO-RECONSTRUCAO-V2.md — achados: corrigida a ambiguidade da T-001 V1 e inserida nota explícita de rastreabilidade indireta para L-03 e L-04 no relatório de reconstrução. As faixas da tabela 100% novas já constavam como listas exatas.
+[2026-10-05 20:07] INÍCIO M-15 — Verificação final
+[2026-10-05 20:07] FIM M-15 — arquivos alterados: plano-de-melhoria/MELHORIA-PLANO.md — achados: plan_tool.py status reporta corretamente 4/97 e próxima tarefa como T-002; links revisados; todas as pendências resolvidas. O planejamento do Plano V2 está oficialmente pronto e validado.
 [2026-10-05 19:57] INÍCIO M-13 — Alinhamento do README.md da raiz
 [2026-10-05 19:58] FIM M-13 — arquivos alterados: README.md, plano-de-melhoria/MELHORIA-PLANO.md — achados: README atualizado com observação sobre tradução opcional na Fase 15; referências à pasta plano-de-melhoria/ removidas da tabela de Reports e do Directory Structure conforme decisão de governança da M-07 (não citar plano de melhoria em documentos públicos).
 [2026-10-03 21:09] INÍCIO M-00 (criação do plano de melhoria)

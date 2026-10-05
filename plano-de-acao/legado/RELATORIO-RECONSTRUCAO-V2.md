@@ -51,6 +51,8 @@ Executou o `PROMPT_ORIGINAL.md` a partir do zero, com `skills/` já presente na 
 
 **Estado ao fim da Sessão 1:** 26 tarefas concluídas do V1 (T-001 a T-007, T-010 a T-013, T-020 a T-030, T-040 a T-043); branch `fix/isolamento-e-evolucao` com PR #5 mergeado em main. Plano V1 parado na T-044.
 
+> **Nota de rastreabilidade (L-03 e L-04):** A evidência de conclusão das tarefas agrupadas (T-016, T-017, T-050) é indireta e confirmada pelos arquivos no disco (migrations 001–009) e pelo registro na `LINHA-DO-TEMPO.md` L64.
+
 ---
 
 ### 2.2 Sessão 2 — Opus 5.5, ~2026-10-03, interrompido por limite de tokens
