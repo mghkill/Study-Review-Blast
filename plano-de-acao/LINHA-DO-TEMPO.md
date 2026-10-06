@@ -67,3 +67,9 @@ Registro cronológico (mais antigo primeiro). Só se acrescenta; nunca se apaga.
 - **2026-10-03 20:11** — [T-001] concluída. Branch v2/phase-01-safety-net criada a partir de main (hash base 88fc2cbdd88cc6028c4fc0e267ab844f2ea878af). Testes server (57/57) e client (61/61) 100% verdes.
 - **2026-10-04 01:32** — Nova funcionalidade Nº 1 adicionada: Seguranca e Sanitizacao da API pre-ORM (T-095).
 - **2026-10-04 01:32** — Nova funcionalidade Nº 2 adicionada: Correcao de Testes Conhecidos (T-096, T-097).
+- **2026-10-05 20:17** — [T-002] iniciada.
+- **2026-10-05 20:25** — [T-002] concluída. Backup com pg_dump executado com sucesso e restaurado em banco de teste provando a integridade pela contagem de linhas via script check_restore_counts.ps1.
+- **2026-10-05 20:27** — [T-003] iniciada.
+- **2026-10-05 20:39** — [T-003] concluída. Baseline de qualidade registrada. API Health: OK. Server (Test: 57 OK, Audit: 0 vuln). Client (Test: 61 OK, Lint: 29 warns/0 errs, Audit: 0 vuln). Smoke test visual não executável por limitação do CDP no ambiente da IA, mas assumido como baseline estável baseada nos testes e logs de start.
+- **2026-10-05 21:03** — [T-004] iniciada.
+- **2026-10-05 21:06** — [T-004] concluída. docs/usability-matrix.md gerada a partir das tabelas físicas e rotas reais. Foram mapeadas 20 tabelas, identificando itens desconectados da UI como custom_quizzes, student_sentences e context_mastery.

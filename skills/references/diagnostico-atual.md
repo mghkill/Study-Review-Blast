@@ -1,4 +1,4 @@
-> ⚠️ **DOCUMENTO HISTÓRICO:** descreve o projeto ANTES do V1 e está desatualizado. Não usar como verdade; a T-004 deve gerar a matriz a partir do código real.
+> ⚠️ **DOCUMENTO HISTÓRICO — SOMENTE LEITURA:** descreve o projeto ANTES do V1 e está desatualizado. Preservado para auditoria e rastreabilidade. Não usar como verdade; a T-004 deve gerar a matriz a partir do código real.
 
 # Diagnóstico do estado atual
 

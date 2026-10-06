@@ -10,8 +10,8 @@
 
 ## PRÓXIMO PASSO
 <!-- proximo:start -->
-- Atualizado em 2026-10-04 01:32
-- Iniciar **T-002** — [P] Backup novo do banco (`pg_dump -Fc`) fora do repositório + restauração de teste com contagem por tabela
+- Atualizado em 2026-10-05 21:06
+- Iniciar **T-005** — [P] `package.json` na raiz só para ferramentas, com `npm test` e `npm run lint` delegando para server e client (D-09)
 <!-- proximo:end -->
 
 ## Regras fixas (só mudam se o usuário pedir)
@@ -47,6 +47,7 @@ Explicação em linguagem simples no README (seção "Decisões explicadas").
 | D-16 | Planejamento em inglês | Tradução do planejamento é **OPCIONAL**, realizada apenas após a T-092 (prova de fogo) e **sem renomear a pasta `plano-de-acao/`** | Renomear pastas e arquivos | Decidido (2026-10-03) |
 | D-17 | Lint do client | Manter **Oxlint** no client (já configurado); **ESLint** no server; **Prettier** nos dois | ESLint também no client | Decidido (2026-10-03) |
 | D-18 | Voz e reconhecimento | Web Speech API (`SpeechRecognition`), opcional, desligado por padrão, aviso do Chrome/Google, "100% local por padrão"; preferir vozes com `localService=true`; **comparação entre falado e esperado** (sem análise fonética) | Não ter reconhecimento | Decidido (2026-10-03) |
+| D-19 | Idioma Técnico | Todo código, arquivos fonte, nomes de pastas, commits e comentários de código devem ser estritamente em **Inglês** (exceto para dados didáticos específicos do app). | Permitir mistura PT/EN | Decidido (2026-10-06) |
 
 ### Dependências aprovadas (D-10) — todas gratuitas e de código aberto
 | Fase | Pacotes | Para quê |
@@ -63,9 +64,9 @@ Explicação em linguagem simples no README (seção "Decisões explicadas").
 
 ## Fase 1 — Reconhecimento e rede de segurança
 - [x] T-001 [P] Abrir o V2: árvore limpa em `main` e branch `v2/phase-01-safety-net` ✔ 2026-10-03 20:11
-- [ ] T-002 [P] Backup novo do banco (`pg_dump -Fc`) fora do repositório + restauração de teste com contagem por tabela
-- [ ] T-003 [P] Baseline: testes, lint, `npm audit` e smoke das telas; registrar números
-- [ ] T-004 [M] Matriz de usabilidade `docs/usability-matrix.md` (tela × rota × tabela × teste; dados que existem no banco e não aparecem no front) [v1 T-060]
+- [x] T-002 [P] Backup novo do banco (`pg_dump -Fc`) fora do repositório + restauração de teste com contagem por tabela ✔ 2026-10-05 20:25
+- [x] T-003 [P] Baseline: testes, lint, `npm audit` e smoke das telas; registrar números ✔ 2026-10-05 20:39
+- [x] T-004 [M] Matriz de usabilidade `docs/usability-matrix.md` (tela × rota × tabela × teste; dados que existem no banco e não aparecem no front) [v1 T-060] ✔ 2026-10-05 21:06
 
 ## Fase 2 — Qualidade e ferramentas base
 - [ ] T-005 [P] `package.json` na raiz só para ferramentas, com `npm test` e `npm run lint` delegando para server e client (D-09)

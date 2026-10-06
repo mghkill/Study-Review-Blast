@@ -243,6 +243,27 @@ If your session terminates due to context window limits, client switching, or re
 
 ---
 
+## AI Development Skills & Prompts
+
+This repository is designed to be co-developed with agentic AI assistants. It includes predefined prompts and custom skills to guide the AI's behavior reliably without losing context:
+
+### 1. Operational Execution (The "T" Tasks)
+* **Skill:** `studyreviewblast-planner` (located in [`skills/SKILLENG.md`](./skills/SKILLENG.md))
+* **Purpose:** Drives the day-to-day execution of the project. It forces the AI to follow the atomic workflow (1 task per session), write tests first, and pause for commits.
+* **How to use:** Trigger the skill and prompt the AI with:
+  > `Leia plano-de-acao/RETOMAR.md e execute a T-0XX.`
+
+### 2. Planning Refinement (The "M" Tasks)
+* **Skill:** `SKILL-MELHORIA-PLANO` (obsoleta, preservada em [`plano-de-acao/legado/SKILL-MELHORIA-PLANO.md`](./plano-de-acao/legado/SKILL-MELHORIA-PLANO.md))
+* **Purpose:** Allows the AI to audit the project and improve the action plan itself without touching source code.
+* **How to use:** O projeto agora utiliza as skills nativas do diretório `.agents/skills/`. O antigo processo (preservado em [`plano-de-acao/legado/CENTRAL_IDEA.md`](./plano-de-acao/legado/CENTRAL_IDEA.md)) foi superado pelo novo ecossistema.
+
+### 3. Open Source Documentation
+* **Skill:** `readme-open-source` (located in [`skills/skill.md`](./skills/skill.md))
+* **Purpose:** Instructs the AI to analyze the actual codebase and generate/update this README file with accurate stack versions and setup instructions.
+
+---
+
 ## Action Plan V2 and Phases
 
 The development roadmap is structured into **15 core phases** plus approved expansion modules, encompassing **97 atomic tasks**:
@@ -265,7 +286,7 @@ The development roadmap is structured into **15 core phases** plus approved expa
 | **Phase 12** | End-to-End Testing (E2E) | T-082 to T-085 | Playwright suites for study flows and student isolation, CI artifact test reports | Pending |
 | **Phase 13** | Documentation & Open Source | T-086 to T-091 | Interactive Swagger UI (`/api/docs`), community files (`CONTRIBUTING.md`, `LICENSE`), screenshots | Pending |
 | **Phase 14** | Production Trial (Trial by Fire) | T-092 | Clean clone on a fresh machine validating README setup from scratch | Pending |
-| **Phase 15** | Final Translation | T-093 to T-094 | Cross-linked English and Portuguese READMEs (`README.en.md` / `README.pt-BR.md`) | Pending |
+| **Phase 15** | Final Translation | T-093 to T-094 | Cross-linked English and Portuguese READMEs (`README.en.md` / `README.pt-BR.md`), plus optional internal planning translation | Pending |
 | **Module 1** | Pre-ORM API Sanitization | T-095 | Strict parameterization of `LIMIT`/`OFFSET` and internal error message masking | Pending |
 | **Module 2** | Legacy Test Stabilization | T-096 to T-097 | Fix legacy frontend tests (`srs.test.js`, `tts.test.js`) and server review status check | Pending |
 
@@ -282,7 +303,6 @@ The repository maintains an audited documentation corpus. Refer to these dedicat
 | **Operational Action Plan** | [`plano-de-acao/PLANO.md`](./plano-de-acao/PLANO.md) | **Sequence of Execution:** 15 phases, formal decisions D-01 through D-18, approved dependency list (D-10), and active pointer. |
 | **Atomic Task Cards** | [`plano-de-acao/TAREFAS.md`](./plano-de-acao/TAREFAS.md) | **Unit Specifications:** 97 detailed task cards outlining Objective, Backend, Frontend, Required Pre-Tests, and Done Criteria. |
 | **Auditable Timeline** | [`plano-de-acao/LINHA-DO-TEMPO.md`](./plano-de-acao/LINHA-DO-TEMPO.md) | **Immutable History:** Append-only chronological log of executed actions, timestamps, backup hashes, and validation proofs. |
-| **Continuous Improvement Plan** | [`plano-de-melhoria/MELHORIA-PLANO.md`](./plano-de-melhoria/MELHORIA-PLANO.md) | **Governance & Audit Log:** Document inventory, findings F-01 to F-21, legacy gaps L-01 to L-05, and session history. |
 | **Security & Isolation Model** | [`docs/seguranca-e-isolamento.md`](./docs/seguranca-e-isolamento.md) | **Security Analysis:** Data ownership mechanics, composite FK protections, desktop no-login boundaries, and cloud recommendations. |
 | **Engineering Conventions** | [`skills/references/convencoes-v2.md`](./skills/references/convencoes-v2.md) | **Standards:** Code conventions, branching models (`v2/phase-NN-slug`), Conventional Commits, and test architecture. |
 | **Target Relational Model** | [`skills/references/modelo-logico-alvo.md`](./skills/references/modelo-logico-alvo.md) | **Database Design:** Relational schema design, composite referential integrity, indexes, and PostgreSQL 18 nuances. |
@@ -393,11 +413,6 @@ Study-Review-Blast/
 │   ├── RELATORIO-GERAL-PROJETO.md     # Master architectural report
 │   └── legado/                        # Preserved historical Plan V1 archives
 │
-├── plano-de-melhoria/                 # AUDIT & CONTINUOUS IMPROVEMENT WORKSPACE
-│   ├── MELHORIA-PLANO.md              # Findings F-xx, gaps L-xx, and governance
-│   ├── SKILL-MELHORIA-PLANO.md        # Session meta-regulation skill
-│   └── CENTRAL_IDEA.md                # Supporting guidelines and prompts
-│
 └── skills/                            # ENGINEERING SKILLS & STANDARDS PACKAGE
     ├── SKILLENG.md                    # Technical planning and engineering rules
     ├── skill.md                       # Open-source README creation skill
@@ -456,6 +471,23 @@ Every architectural choice has been debated, documented, and formally decided:
 | **D-16** | Planning Translation | **Optional Post-Trial Translation** | Internal planning translation is optional and scheduled only after completing the Trial by Fire (T-092). | **Decided** |
 | **D-17** | Frontend Linter | **Oxlint Kept for Frontend** | Retains Oxlint's superior linting speed for React, applying ESLint to the server and shared Prettier formatting. | **Decided** |
 | **D-18** | Voice & Pronunciation | **Native Local Web Speech API** | Prefers local browser voices (`localService=true`). Avoids sending audio data to third-party transcription services. | **Decided** |
+| **D-19** | Technical Language | **Strict English Standard** | All source code, folders, commits, and code comments must be strictly in English (except for app-specific learning data). | **Decided** |
+
+---
+
+## Autonomous AI Agents & Custom Skills
+
+This repository features a robust, self-documenting ecosystem of custom skills for autonomous AI agents (like Google Antigravity). These skills ensure strict project governance, security, and continuous maintenance without human micromanagement.
+
+All skills are natively loaded from `.agents/skills/`:
+- **`studyreviewblast-planner`**: The core engineering skill that strictly enforces TDD, no-secrets policies, and database migration rules.
+- **`gerador-de-m`**: Automates the creation of architectural improvement plans (`M-xx`) before any code is touched, enforcing planning-first development.
+- **`safe-cleanup`**: A governance skill that prevents accidental deletion of files, demanding formal justification and user approval before moving legacy data.
+- **`markdown-doctor`**: An autonomous documentation healer that scans and fixes broken markdown links across the repository after folder restructures.
+- **`prompt-updater`**: Automatically injects new capabilities into the master prompt catalog (`PROMPTS_MESTRES.md`) whenever a new skill is born.
+- **`readme-open-source`**: Analyzes the repository stack and automatically generates/updates this professional README.
+
+To view the master rules these agents obey, see `.agents/rules/global_rules.md`.
 
 ---
 

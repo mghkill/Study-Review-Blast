@@ -9,7 +9,7 @@
 
 | V1 | Título V1 | V2 | Título V2 | Status |
 |---|---|---|---|---|
-| T-001 | Ler package.json, schema, rotas, confirmar versões | — | — | ✅ — / incorporado no legado |
+| T-001 | Ler package.json, schema, rotas, confirmar versões | — | — | ✅ incorporado na LINHA-DO-TEMPO L6-8 |
 | T-002 | Descobrir como estudante chega à API | — | — | ✅ incorporado no legado (conhecimento registrado) |
 | T-003 | Confirmar `npm run dev` | T-003 | Baseline de qualidade | ♻️ |
 | T-004 | Criar branch de trabalho | T-001 | Abrir o V2 (branch) | ♻️ |

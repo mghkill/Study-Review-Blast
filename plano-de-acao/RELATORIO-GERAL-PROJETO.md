@@ -97,7 +97,6 @@ Study-Review-Blast/
 │   ├── RETOMAR.md                     # Manual operacional diário da IA (ordem de leitura e pausa)
 │   ├── LINHA-DO-TEMPO.md              # Log cronológico imutável de todas as ações executadas
 │   ├── plan_tool.py                   # Script CLI de automação (status, start, done, log, add-feature)
-│   ├── PROMPT_ORIGINAL.md             # Instruções primitivas do projeto preservadas
 │   ├── RELATORIO-GERAL-PROJETO.md     # ESTE DOCUMENTO — Guia mestre de arquitetura e evolução
 │   └── legado/                        # Museu e histórico do Plano V1 congelado
 │       ├── PLANO-v1.md                # Plano antigo (26 tarefas concluídas preservadas)
@@ -149,7 +148,7 @@ Graças às 26 tarefas concluídas no V1 (preservadas no legado) e ao planejamen
 
 ## 4. O Que o Projeto Vai Se Tornar (A Visão Alvo do V2)
 
-Ao longo das **15 fases do Plano V2** ([`plano-de-acao/PLANO.md`](file:///c:/Users/opera/Desktop/Training%20Verbs/plano-de-acao/PLANO.md)), o projeto sofrerá uma metamorfose estrutural de altíssimo nível, tornando-se uma referência em engenharia de software open source:
+Ao longo das **15 fases do Plano V2** ([`plano-de-acao/PLANO.md`](./PLANO.md)), o projeto sofrerá uma metamorfose estrutural de altíssimo nível, tornando-se uma referência em engenharia de software open source:
 
 ```
 [Hoje: JavaScript puro, scripts soltos, SRS rudimentar]
@@ -159,7 +158,7 @@ Fase 2: Infraestrutura profissional (Root package.json, ESLint Flat, Prettier, H
 Fase 3: Ambiente reproduzível (Banco de testes _test isolado, validação Zod no .env, compose.yml opcional)
 Fase 4: Blindagem das migrações SQL (checksum SHA-256, triggers updated_at, índices em FKs)
 Fase 5: Adoção do ORM Drizzle (Camada de repositórios tipada mantendo SQL migrations como fonte da verdade)
-Fase 6: Transição para TypeScript Incremental (Server 100% TS strict, Client api.ts e types)
+Fase 6: Transição para TypeScript Incremental (Server migrado para TS com strict mode, Client api.ts e types — incremental conforme D-07)
 Fase 7: Blindagem de Segurança e Logs (Helmet, CORS restrito, rate limiting inteligente, Pino logger)
 Fase 8: Recertificação do Isolamento (Troca dinâmica de estudante na Sidebar, pacotes iniciais de estudo)
 Fase 9: Internacionalização Completa (i18n en / pt-BR no front, código e rotas 100% em inglês)
@@ -170,7 +169,7 @@ Fase 13: Documentação e Preparação Open Source (Swagger OpenAPI gerado de Zo
 Fase 14: Prova de Fogo (Instalação e execução do zero em máquina limpa como um usuário desconhecido)
 Fase 15: Tradução do Planejamento para Inglês
                          ⬇️
-[Futuro: Plataforma moderna, em TypeScript, com FSRS, voz, multilíngue, segura e pronta para o mundo]
+[Futuro: Plataforma moderna, em TypeScript incremental, com FSRS, voz, multilíngue, segura e pronta para o mundo]
 ```
 
 ---
@@ -187,9 +186,9 @@ Quando o Plano V2 estiver concluído, o usuário final terá em mãos uma plataf
 - **Quizzes Personalizados e Persistidos:** O estudante poderá criar blocos de estudo sob medida (ex.: "Verbos irregulares de viagem - 10 perguntas"), salvar no seu perfil, jogar quando quiser e acompanhar seu desempenho específico.
 - **Prática com Parágrafos e Textos:** O usuário poderá ler pequenos textos ou parágrafos cadastrados e praticar exercícios de lacuna focados exclusivamente nas palavras-alvo contidas naquele texto.
 
-### B. Treino de Fala e Pronúncia (100% Gratuito)
-- **Pronúncia Nativa com Síntese de Voz (TTS):** Botão de áudio para escutar qualquer palavra, frase ou significado com voz clara da Web Speech API nativa, podendo configurar sotaque (US/UK) e velocidade de fala.
-- **Avaliação de Pronúncia por Reconhecimento de Fala:** O estudante poderá clicar no microfone, falar a palavra ou frase em voz alta e o sistema analisará a fonética, atribuindo uma pontuação de precisão e registrando o histórico na tabela `pronunciation_practice`.
+### B. Treino de Fala e Pronúncia (100% Gratuito e Local por Padrão)
+- **Pronúncia Nativa com Síntese de Voz (TTS):** Botão de áudio para escutar qualquer palavra, frase ou significado com voz clara da Web Speech API nativa, priorizando vozes locais (`localService=true`), podendo configurar sotaque (US/UK) e velocidade de fala.
+- **Avaliação de Pronúncia por Reconhecimento de Fala:** O estudante poderá clicar no microfone e falar a palavra ou frase em voz alta. O sistema realizará a **comparação entre o falado e o esperado** (função pura sem dependência externa), registrando o histórico na tabela `pronunciation_practice`. O recurso é **opcional e desligado por padrão**, com aviso explícito de privacidade informando que navegadores baseados no Chromium/Chrome podem enviar o áudio aos servidores do Google para transcrição, mantendo o sistema 100% local por padrão (D-18).
 
 ### C. Dashboard e Gamificação Pedagógica
 - **Heatmap de Atividade de 365 Dias:** Visualização estilo GitHub com os dias em que o aluno praticou, estimulando a consistência diária.
@@ -207,13 +206,14 @@ Quando o Plano V2 estiver concluído, o usuário final terá em mãos uma plataf
 
 Se você é uma IA que foi inicializada ou chamada para trabalhar neste repositório, **siga estas regras estritamente**:
 
-### 1. Protocolo de Abertura de Toda Sessão
-Antes de responder ou executar qualquer ação:
-1. Leia [`plano-de-acao/RETOMAR.md`](file:///c:/Users/opera/Desktop/Training%20Verbs/plano-de-acao/RETOMAR.md) (é a bíblia de conduta diária).
-2. Rode `py plano-de-acao/plan_tool.py status` no terminal do Windows para saber onde o projeto parou.
-3. Leia o bloco `## PRÓXIMO PASSO` em [`plano-de-acao/PLANO.md`](file:///c:/Users/opera/Desktop/Training%20Verbs/plano-de-acao/PLANO.md).
-4. Leia o cartão específico da tarefa em [`plano-de-acao/TAREFAS.md`](file:///c:/Users/opera/Desktop/Training%20Verbs/plano-de-acao/TAREFAS.md) (procure por `### T-0XX`).
-5. Leia os arquivos indicados no campo `Ler:` do cartão (ex.: `ENG`, `CONV`, etc.).
+### 1. Protocolo de Abertura de Toda Sessão (Ordem Canônica M-07)
+Antes de responder ou executar qualquer ação em tarefas operacionais (Fase T):
+1. Leia este documento ([`plano-de-acao/RELATORIO-GERAL-PROJETO.md`](./RELATORIO-GERAL-PROJETO.md)) uma vez no onboarding inicial, ao trocar de modelo de IA ou após compactação de contexto.
+2. Leia [`plano-de-acao/RETOMAR.md`](./RETOMAR.md) (é o guia de conduta e regras operacionais diárias).
+3. Leia o bloco `## PRÓXIMO PASSO` em [`plano-de-acao/PLANO.md`](./PLANO.md).
+4. Leia o cartão específico da tarefa em [`plano-de-acao/TAREFAS.md`](./TAREFAS.md) (procure por `### T-0XX`).
+5. Leia as últimas 20 linhas de [`plano-de-acao/LINHA-DO-TEMPO.md`](./LINHA-DO-TEMPO.md) e os arquivos indicados no campo `Ler:` do cartão.
+6. Execute a checagem no terminal: `py plano-de-acao/plan_tool.py status`, `git status --short` e `git log -3 --oneline`.
 
 ### 2. O Ciclo Inflexível da Tarefa (TDD + Front Incluso)
 1. **Marcar Início:** Rode `py plano-de-acao/plan_tool.py start T-0XX`.
@@ -232,9 +232,10 @@ Toda tarefa executada termina obrigatoriamente com a **PAUSA**:
 
 ### 4. Restrições e Travas Técnicas
 - **Não altere portas:** Servidor em `3001` e cliente em `5173`.
-- **Não instale nada fora da lista D-10:** A lista de dependências aprovadas está em [`plano-de-acao/PLANO.md §Dependências aprovadas`](file:///c:/Users/opera/Desktop/Training%20Verbs/plano-de-acao/PLANO.md). Qualquer pacote fora da lista exige decisão formal prévia.
+- **Não instale nada fora da lista D-10:** A lista de dependências aprovadas está em [`plano-de-acao/PLANO.md §Dependências aprovadas`](./PLANO.md#dependências-aprovadas). Qualquer pacote fora da lista exige decisão formal prévia.
 - **Migrations SQL são imutáveis:** Nunca edite um arquivo de migração já aplicado (001 a 009). Qualquer alteração de banco deve ser uma nova migração sequencial (`010_...sql`).
 - **Segredos:** Nunca escreva senhas, tokens ou dados reais de conexão no `PLANO.md`, na `LINHA-DO-TEMPO.md`, em commits ou no README.
+- **Backup Obrigatório (M-20):** Nunca renomeie ou exclua arquivos estruturais de planejamento ou documentação sem antes criar um clone de segurança na pasta `plano-de-acao/legado/`.
 
 ---
 
@@ -252,14 +253,31 @@ Toda tarefa executada termina obrigatoriamente com a **PAUSA**:
 | **D-08** | Idioma do README | pt-BR até Fase 14; vira inglês + pt-BR na Fase 15 | Decidido (2026-10-03) |
 | **D-09** | package.json raiz | Apenas para ferramentas e lint/testes compartilhados | Decidido (2026-10-03) |
 | **D-10** | Dependências | Lista pré-aprovada em PLANO.md | Decidido (2026-10-03) |
-| **D-11** | Docker | Aguardando usuário: instalar antes de T-014 vs não instalar | Aguardando |
-| **D-12** | Banco de testes | Banco separado `<DB_NAME>_test` para testes limpos | Proposto |
-| **D-13** | Branches | Uma branch por fase (`v2/phase-NN-slug`) | Proposto |
-| **D-14** | Algoritmo SRS | FSRS (`ts-fsrs`) moderno substituindo heurística antiga | Proposto (Requer OK antes da Fase 10) |
-| **D-15** | Idioma da interface | Detecção automática do navegador com seletor manual | Proposto |
-| **D-16** | Planejamento EN | Tradução das pastas e docs de planejamento na Fase 15 | Proposto |
-| **D-17** | Linter frontend | Manter Oxlint no client e ESLint só no backend | Proposto |
-| **D-18** | Voz | Web Speech API nativa (TTS e Fala), 100% gratuita | Proposto |
+| **D-11** | Docker | Docker Desktop instalado; T-014 opcional em `5433:5432`; sem Docker no CI | Decidido (2026-10-03) |
+| **D-12** | Banco de testes | Banco separado `<DB_NAME>_test` para testes limpos | Decidido (2026-10-03) |
+| **D-13** | Branches | Uma branch por fase (`v2/phase-NN-slug`), PR e merge no fim | Decidido (2026-10-03) |
+| **D-14** | Algoritmo SRS | FSRS (`ts-fsrs`) moderno substituindo heurística antiga | Decidido (2026-10-03) |
+| **D-15** | Idioma da interface | Detecção automática do navegador, padrão `en`, seletor manual `en`/`pt-BR` | Decidido (2026-10-03) |
+| **D-16** | Planejamento EN | Tradução opcional após T-092, sem renomear a pasta `plano-de-acao/` | Decidido (2026-10-03) |
+| **D-17** | Linter frontend | Oxlint no client, ESLint no server, Prettier nos dois | Decidido (2026-10-03) |
+| **D-18** | Voz | Web Speech API (opcional, desligado por padrão, aviso de privacidade Chrome/Google, preferência `localService=true`, comparação falado/esperado sem análise fonética) | Decidido (2026-10-03) |
+| **D-19** | Idioma Técnico | Padrão estritamente em Inglês para todo o código, arquivos fonte, nomes de pastas, commits e comentários | Decidido (2026-10-06) |
+
+---
+
+## 8. Ecossistema de Agentes Autônomos e Skills
+
+O repositório é ativamente gerido e governado por agentes de inteligência artificial autônomos (Antigravity). As seguintes skills nativas existem em `.agents/skills/` para garantir a manutenção, segurança e evolução:
+
+- **`studyreviewblast-planner`**: Motor de engenharia que codifica seguindo estritamente o TDD e as regras arquiteturais.
+- **`gerador-de-m`**: Garante que o planejamento preceda a codificação. Formula as melhorias `M-xx`.
+- **`project-oracle`**: O buscador de contexto. Força a IA a ler a `LINHA-DO-TEMPO.md` e os relatórios antes de responder perguntas abertas do usuário.
+- **`safe-cleanup`**: Trava de segurança que impede a deleção arbitrária de arquivos, exigindo justificativa e autorização.
+- **`markdown-doctor`**: Cura de links quebrados. Varre a documentação consertando referências órfãs.
+- **`prompt-updater`**: Mantém o arquivo `PROMPTS_MESTRES.md` sempre sincronizado com as novas skills.
+- **`readme-open-source`**: Mantém o `README.md` raiz com padrão profissional e com a arquitetura sempre em dia.
+
+A IA atuante deve **obrigatória e constantemente** recorrer a essas skills para evitar o trabalho manual.
 
 ---
 
