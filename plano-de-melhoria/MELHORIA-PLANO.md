@@ -447,26 +447,6 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Lê: `.agents/skills/gerador-de-m/SKILL.md`
   - Altera: `.agents/skills/gerador-de-m/SKILL.md`
 
-- [x] **M-31** Revisão e Sincronização do Catálogo (Prompt-Skill Sync) — Refatorar o `PROMPTS_MESTRES.md` para que atue como uma documentação clínica das skills. Adicionar explicações detalhadas, condições de uso, e variações (ex: "Use para X, mas pode ser usado para Y e Z") atrelando cada prompt à sua respectiva skill autônoma.
-  - Lê: todas as skills em `.agents/skills/`
-  - Altera: `PROMPTS_MESTRES.md`
-
-- [ ] **M-32** Skill "Revisor de Dependências" (Dependency Checker) — Criar a skill `dependency-checker` em `.agents/skills/`. Ela varrerá a fila de melhorias procurando por tarefas não concluídas (`[ ]` ou `[~]`) que contêm tags de bloqueio (ex: `[! Bloqueada até M-XX]`). Ela validará se a tarefa bloqueadora já foi concluída (`[x]`) e informará o usuário exatamente quais tarefas agora estão livres para execução e quais continuam travadas.
-  - Lê: `plano-de-melhoria/MELHORIA-PLANO.md`
-  - Altera: `.agents/skills/dependency-checker/SKILL.md` (criação)
-
-- [ ] **M-33** Agentificação do Plano de Ação (Fase 1: Desenho Arquitetural) — Analisar o modelo engessado do `plano-de-acao/` (TAREFAS.md, PLANO.md, RETOMAR.md) e planejar como ele será convertido no novo modelo dinâmico governado por `.agents/`. O objetivo é que as tarefas "T" operacionais passem a ser gerenciadas por regras globais e skills automatizadas, eliminando a necessidade de ler documentos estáticos de "como agir".
-  - Lê: `plano-de-acao/*`
-  - Altera: `MELHORIA-PLANO.md` (gerando os requisitos de conversão)
-
-- [ ] **M-34** Agentificação do Plano de Ação (Fase 2: Criação de Skills e Regras) — Reutilizar, adaptar ou criar novas skills (ex: modernizando o `studyreviewblast-planner`) e extrair as regras técnicas do `RETOMAR.md` para transformá-las em Regras Globais e Prompts Mestres operacionais definitivos no `PROMPTS_MESTRES.md`.
-  - Lê: `RETOMAR.md`, `TAREFAS.md`
-  - Altera: `.agents/skills/`, `.agents/rules/`, `PROMPTS_MESTRES.md`
-
-- [ ] **M-35** Agentificação do Plano de Ação (Fase 3: Limpeza e Transição) — Finalizar a transição. Atualizar o Oráculo e a Sincronização Hierárquica para reconhecer o novo modelo de desenvolvimento T. Movimentar os documentos obsoletos do `plano-de-acao/` (que agora viraram skills) para o legado e curar a documentação final usando o Markdown Doctor.
-  - Lê: N/A
-  - Altera: sistema de arquivos (legado), `README.md`
-
 - [x] **M-25** Refatoração Visual do PROMPTS_MESTRES.md — Formatar o catálogo de prompts com blocos de código markdown para permitir a cópia em um clique pelo usuário.
   - Lê: `plano-de-melhoria/PROMPTS_MESTRES.md`
   - Altera: `plano-de-melhoria/PROMPTS_MESTRES.md`
@@ -490,6 +470,30 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 - [x] **M-30** Skill "Brain Sync" (Inicialização de Contexto Profundo) — A pedido do usuário, mapear o "estado de inferência" que a IA usou para resolver problemas complexos e cristalizá-lo na skill `brain-sync`. Ela obriga a IA a ler as regras, skills, prompts mestres e histórico ANTES de iniciar um trabalho pesado. O prompt de ativação fica no topo absoluto (`## 0. Inicialização`) do `PROMPTS_MESTRES.md`.
   - Lê: N/A
   - Altera: `.agents/skills/brain-sync/SKILL.md`, `.agents/rules/global_rules.md`, `PROMPTS_MESTRES.md`
+
+- [x] **M-31** Revisão e Sincronização do Catálogo (Prompt-Skill Sync) — Refatorar o `PROMPTS_MESTRES.md` para que atue como uma documentação clínica das skills. Adicionar explicações detalhadas, condições de uso, e variações (ex: "Use para X, mas pode ser usado para Y e Z") atrelando cada prompt à sua respectiva skill autônoma.
+  - Lê: todas as skills em `.agents/skills/`
+  - Altera: `PROMPTS_MESTRES.md`
+
+- [ ] **M-32** Skill "Revisor de Dependências" (Dependency Checker) — Criar a skill `dependency-checker` em `.agents/skills/`. Ela varrerá a fila de melhorias procurando por tarefas não concluídas (`[ ]` ou `[~]`) que contêm tags de bloqueio (ex: `[! Bloqueada até M-XX]`). Ela validará se a tarefa bloqueadora já foi concluída (`[x]`) e informará o usuário exatamente quais tarefas agora estão livres para execução e quais continuam travadas.
+  - Lê: `plano-de-melhoria/MELHORIA-PLANO.md`
+  - Altera: `.agents/skills/dependency-checker/SKILL.md` (criação)
+
+- [ ] **M-33** Auditoria de Regras Específicas (Plano de Ação) — Conferir minuciosamente todas as regras que se aplicam SOMENTE ao `plano-de-acao/` (TDD, arquitetura do DB, pausas rígidas). Analisar exceções, avaliar o que pode ser reaproveitado e definir como o arquivo mestre deverá trabalhar para abrigar essas especificidades sem conflitar com as regras de melhoria arquitetural.
+  - Lê: `plano-de-acao/RETOMAR.md`, `plano-de-acao/PLANO.md`
+  - Altera: `MELHORIA-PLANO.md` (Mapeamento de Regras)
+
+- [ ] **M-34** Segregação de Agentes (Melhoria vs Ação) — Estruturar a separação lógica e física das skills. Evitar confusão separando as skills de infraestrutura (`plano-de-melhoria`) das skills de código (`plano-de-acao`). Organizar a pasta `.agents/skills/` em subdomínios (ex: `architect/` e `coder/`) e migrar com segurança o conteúdo da pasta `/skills` da raiz (que é ligada ao plano de ação) para a nova hierarquia, ajustando nomes de arquivos sem bugar o sistema atual.
+  - Lê: `/skills/`, `.agents/skills/`
+  - Altera: sistema de arquivos (`.agents/skills/`), acionando `markdown-doctor` em seguida.
+
+- [ ] **M-35** Evolução do `RETOMAR.md` (Mimetizando o Master Prompt) — O `RETOMAR.md` é o embrião do prompt mestre para código. A tarefa é aplicar a mesma lógica das skills de contexto a ele. Transformar seu fluxo em um sistema parelho ao de "prompts/skills", garantindo que a execução operacional siga a mesma fluidez das tarefas "M", mas blindando a lógica hierárquica e rigorosa que o `RETOMAR` já possui para não bugar o TDD.
+  - Lê: `plano-de-acao/RETOMAR.md`
+  - Altera: `RETOMAR.md`, `.agents/skills/studyreviewblast-planner/SKILL.md`
+
+- [ ] **M-36** Sincronização Final do Catálogo Operacional — Após segregar os agentes e evoluir o modelo do plano de ação, acionar o `prompt-updater` para injetar os novos Prompts Mestres operacionais (para as T-tasks) no catálogo, formalizando os dois sistemas paralelos.
+  - Lê: novas skills segregadas
+  - Altera: `PROMPTS_MESTRES.md`
 
 ---
 
