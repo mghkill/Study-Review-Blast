@@ -26,7 +26,7 @@ async function requireStudent(req, res, next) {
     req.studentId = id;
     next();
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 }
 

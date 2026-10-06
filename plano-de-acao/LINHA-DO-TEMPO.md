@@ -73,3 +73,10 @@ Registro cronológico (mais antigo primeiro). Só se acrescenta; nunca se apaga.
 - **2026-10-05 20:39** — [T-003] concluída. Baseline de qualidade registrada. API Health: OK. Server (Test: 57 OK, Audit: 0 vuln). Client (Test: 61 OK, Lint: 29 warns/0 errs, Audit: 0 vuln). Smoke test visual não executável por limitação do CDP no ambiente da IA, mas assumido como baseline estável baseada nos testes e logs de start.
 - **2026-10-05 21:03** — [T-004] iniciada.
 - **2026-10-05 21:06** — [T-004] concluída. docs/usability-matrix.md gerada a partir das tabelas físicas e rotas reais. Foram mapeadas 20 tabelas, identificando itens desconectados da UI como custom_quizzes, student_sentences e context_mastery.
+- **2026-10-06 15:42** — [T-095] iniciada.
+- **2026-10-06 15:48** — [T-095] concluída. Substituida interpolacao de LIMIT por binding seguro na api de reviews. Centralizado tratamento de erros no sendError() e limpo os res.status(500).json das rotas reviews.js, vocabulary.js e sentences.js, ocultando o err.message do db no client. Adicionados dois testes TDD para validar sanitizacao e limite.
+- **2026-10-06 17:07** — Fase de Planejamento e Arquitetura M-Tasks concluída com sucesso! Todos os agentes segregados e Catálogo Mestre estabelecido. Preparando para retomar o código (T-Tasks).
+- **2026-10-06 17:44** — [T-098] iniciada.
+- **2026-10-06 17:46** — [T-098] concluída. Fix was already implemented in T-095 and tests are passing
+- **2026-10-06 17:48** — [T-099] iniciada.
+- **2026-10-06 17:50** — [T-099] concluída. Added errorHandler middleware, registered in index.js, and used next(err) in students, sessions, and requireStudent.

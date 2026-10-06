@@ -44,6 +44,8 @@ Study-Review-Blast/
 │       │   └── requireStudent.js      # Middleware que valida e injeta req.studentId via X-Student-Id
 │       ├── services/
 │       │   └── srs.js                 # Algoritmo heurístico original de repetição espaçada
+│       ├── utils/
+│       │   └── errors.js              # Helper centralizado para tratamento seguro de erros
 │       └── db/
 │           ├── connection.js          # Pool de conexões do pg
 │           ├── migrator.js            # Executor transacional de migrações em Node puro
@@ -106,20 +108,22 @@ Study-Review-Blast/
 │       ├── PROMPT_INICIAL_LEGADOV2.md # Prompt mestre que ordenou a reconstrução do plano
 │       └── RELATORIO-RECONSTRUCAO-V2.md # Registro técnico da transição entre IAs (Sessão 1 -> Opus 5.5 -> Gemini)
 │
-└── skills/                            # PACOTE DE INSTRUÇÕES DE ENGENHARIA DA IA
-    ├── SKILLENG.md                    # Diretrizes técnicas da IA planejadora (estratégia, stack, regras)
-    ├── skill.md                       # Diretrizes para documentação e README open source
-    ├── assets/                        # Templates e esqueletos de apoio
-    │   └── README.template.md         # Template de documentação profissional
-    ├── references/                    # Base de conhecimento e convenções do repositório
-    │   ├── convencoes-v2.md           # Padrões de código, branches, Conventional Commits e testes
-    │   ├── diagnostico-atual.md       # [Histórico] Análise preliminar do projeto pré-V1
-    │   ├── modelo-logico-alvo.md      # [Histórico/Ref] Modelagem relacional e status das migrations 002–009
-    │   ├── open-source-basico.md      # Guia conceitual de licença MIT, badges e CONTRIBUTING
-    │   └── open-source-checklist.md   # Lista de conferência para lançamento público
-    └── scripts/
-        ├── plan_tool.py               # Cópia mestre da ferramenta de planejamento
-        └── detect_stack.py            # Analisador automático de stack e dependências
+└── plano-de-melhoria/                 # FASE M: PLANEJAMENTO E ARQUITETURA DE AGENTES
+    ├── MELHORIA-PLANO.md              # Consolidação de F-xx, L-xx, Q-xx e tarefas M concluídas
+    └── PROMPTS_MESTRES.md             # Catálogo mestre com os sistemas paralelos (M e T)
+
+├── .agents/                           # PACOTE DE INSTRUÇÕES DE ENGENHARIA DA IA (SKILLS)
+    ├── rules/                         # Meta-regulação global (global_rules.md)
+    └── skills/                        # Agentes especializados segregados
+        ├── architect/                 # Skills do Sistema M (Infraestrutura e Planejamento)
+        │   ├── brain-sync/
+        │   ├── task-reviewer/
+        │   ├── dependency-checker/
+        │   └── ... (outros agentes M)
+        └── coder/                     # Skills do Sistema T (Operacional e Execução)
+            ├── old-root-skills/       # Legado e referências da antiga pasta raiz /skills
+            ├── studyreviewblast-planner/ # Motor principal das T-Tasks (código)
+            └── security-scanner/      # Scanner e auditor de segurança do código
 ```
 
 ---
@@ -141,8 +145,11 @@ Graças às 26 tarefas concluídas no V1 (preservadas no legado) e ao planejamen
    - Tabelas prontas para Quizzes Personalizados (`custom_quizzes` e `custom_quiz_questions`).
    - Suporte a identificador de idioma (`language_code = 'en'`).
 4. **Motor de Planejamento Operacional:**
-   - 94 tarefas dimensionadas para execução de **1 sessão por tarefa**, evitando esgotamento de tokens de contexto.
+   - 97 tarefas dimensionadas para execução de **1 sessão por tarefa**, evitando esgotamento de tokens de contexto (incluindo as recentes tarefas de hotfixes e correção de testes).
    - Script `plan_tool.py` operacional e integrado ao fluxo de trabalho.
+5. **Segurança e Sanitização Preemptiva (Fase 1.5):**
+   - Implementação de camada de segurança inicial com sanitização de erros centralizada (ocultando detalhes internos de SQL do cliente) e proteção contra injeção por interpolação de limites.
+
 
 ---
 
@@ -154,6 +161,7 @@ Ao longo das **15 fases do Plano V2** ([`plano-de-acao/PLANO.md`](./PLANO.md)), 
 [Hoje: JavaScript puro, scripts soltos, SRS rudimentar]
                          ⬇️
 Fase 1: Rede de segurança (branch limpa, backup verificado, baseline real)
+Fase 1.5: Hotfixes de Segurança (Correções críticas pré-desenvolvimento)
 Fase 2: Infraestrutura profissional (Root package.json, ESLint Flat, Prettier, Husky, Commitlint, CI GitHub Actions)
 Fase 3: Ambiente reproduzível (Banco de testes _test isolado, validação Zod no .env, compose.yml opcional)
 Fase 4: Blindagem das migrações SQL (checksum SHA-256, triggers updated_at, índices em FKs)
@@ -269,11 +277,15 @@ Toda tarefa executada termina obrigatoriamente com a **PAUSA**:
 
 O repositório é ativamente gerido e governado por agentes de inteligência artificial autônomos (Antigravity). As seguintes skills nativas existem em `.agents/skills/` para garantir a manutenção, segurança e evolução:
 
+- **`brain-sync`**: Carregamento de contexto profundo para evitar perda de foco e alinhar a IA com as regras globais.
 - **`studyreviewblast-planner`**: Motor de engenharia que codifica seguindo estritamente o TDD e as regras arquiteturais.
 - **`gerador-de-m`**: Garante que o planejamento preceda a codificação. Formula as melhorias `M-xx`.
 - **`project-oracle`**: O buscador de contexto. Força a IA a ler a `LINHA-DO-TEMPO.md` e os relatórios antes de responder perguntas abertas do usuário.
 - **`safe-cleanup`**: Trava de segurança que impede a deleção arbitrária de arquivos, exigindo justificativa e autorização.
 - **`markdown-doctor`**: Cura de links quebrados. Varre a documentação consertando referências órfãs.
+- **`hierarchy-sync`**: Sincronização em cascata (Logs -> Relatório -> README) para evitar divergência de informações.
+- **`crash-recovery`**: Recuperação de contexto pós-pane, permitindo retomar de onde a sessão anterior parou.
+- **`security-scanner`**: Bateria de verificações estáticas para detectar e documentar vulnerabilidades de segurança (SQL Injection, vazamentos, etc).
 - **`prompt-updater`**: Mantém o arquivo `PROMPTS_MESTRES.md` sempre sincronizado com as novas skills.
 - **`readme-open-source`**: Mantém o `README.md` raiz com padrão profissional e com a arquitetura sempre em dia.
 

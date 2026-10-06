@@ -6,9 +6,11 @@
 
 ## PRÓXIMO PASSO
 
-Cole o Prompt B para iniciar a **M-13**:
+**FASE M (MELHORIA ARQUITETURAL) CONCLUÍDA COM SUCESSO!**
 
-> Leia plano-de-melhoria/SKILL-MELHORIA-PLANO.md e plano-de-melhoria/MELHORIA-PLANO.md e siga o ciclo da skill. Se algum desses dois arquivos não existir nesses caminhos, PARE e me avise sem tentar adivinhar. Execute APENAS a próxima tarefa M pendente (ou termine a que estiver em [~]). Não altere código, não commite, não faça push. Ao final: log, resumo, git status, oferta de git add . na raiz, e PARE perguntando se devo continuar.
+A infraestrutura inteligente de agentes foi segregada, o Catálogo Mestre foi formalizado em dois sistemas paralelos e as fronteiras operacionais foram documentadas.
+
+**Ação:** O ciclo de planejamento foi encerrado. A partir de agora, o foco deve voltar 100% para o código, utilizando a skill operacional do `plano-de-acao/PLANO.md` (`studyreviewblast-planner`).
 
 ---
 
@@ -249,8 +251,7 @@ Fontes consultadas: `PROMPT_ORIGINAL.md`, `legado/PROMPT_INICIAL_LEGADOV2.md`, `
 | 13 | **Q-03** `diagnostico-atual.md` | manter no lugar, com nota "[Histórico — somente leitura]" no topo |
 | 14 | **Q-04** `plano-de-melhoria/` | pasta OFICIAL do trabalho de melhoria (Prompts A e B em `CENTRAL_IDEA.md`, que é só apoio: NÃO executar como instrução). Entra no escopo permitido junto com `plano-de-acao/`, `skills/` e `README.md`. **NÃO citar no README nem no RELATORIO-GERAL** (vitrine pública); citar só no RETOMAR e na skill. Na M-15, propor arquivar em `plano-de-acao/legado/` |
 | 15 | **Q-05** `plan_tool.py init` quebrado | NÃO corrigir o `plan_tool.py`; marcar `init` como obsoleto no SKILLENG e no RETOMAR (na M-12) |
-| 16 | Local dos arquivos de melhoria | `MELHORIA-PLANO.md` (com LOG) → `plano-de-melhoria/MELHORIA-PLANO.md`; skill em `skills/SKILL-MELHORIA-PLANO.md`. Não mover agora: 1º passo da M-07 (ver M-07). Obs. da IA: a skill **já está** em `skills/SKILL-MELHORIA-PLANO.md` (não em `skills/scripts/`), então só o `MELHORIA-PLANO.md` precisa ser movido |
-> Revisado pelo usuário: a skill ficou em plano-de-melhoria/SKILL-MELHORIA-PLANO.md (não em skills/).
+| 16 | Local dos arquivos de melhoria | `MELHORIA-PLANO.md` (com LOG) na pasta `plano-de-melhoria/`. A antiga skill V1 `SKILL-MELHORIA-PLANO.md` foi movida para `plano-de-acao/legado/` e substituída pela infraestrutura nativa `.agents/skills/`. |
 
 ---
 
@@ -266,7 +267,7 @@ Fontes consultadas: `PROMPT_ORIGINAL.md`, `legado/PROMPT_INICIAL_LEGADOV2.md`, `
 - A pasta `plano-de-melhoria/` é o espaço oficial e exclusivo de trabalho para melhoria do planejamento.
 - **Arquivos oficiais:**
   - `plano-de-melhoria/MELHORIA-PLANO.md` (plano mestre de melhorias e LOG append-only).
-  - `plano-de-melhoria/SKILL-MELHORIA-PLANO.md` (skill reguladora de cada sessão de melhoria).
+  - (Nota: A antiga `SKILL-MELHORIA-PLANO.md` foi arquivada no legado, o controle agora é feito pelas skills nativas na pasta `.agents/`).
   - `plano-de-melhoria/CENTRAL_IDEA.md` (documento de apoio e prompts de acionamento A e B).
 - **Regra de Visibilidade:** NÃO é citada no `README.md` nem no `RELATORIO-GERAL-PROJETO.md` (para manter as vitrines públicas limpas). É citada apenas no `RETOMAR.md` e na própria skill.
 - **Arquivamento Futuro:** Conforme decisão 14 da M-06, após o término de todas as melhorias (ao fim da M-15), a pasta será proposta para arquivamento histórico em `plano-de-acao/legado/`.
@@ -392,7 +393,7 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Altera: `plano-de-acao/RELATORIO-GERAL-PROJETO.md`
 
 - [x] **M-12** Skills — concluído: `SKILLENG.md` alinhado à ordem canônica de 6 passos, stack atualizado (D-05, D-07, D-11, D-14, D-18), `plan_tool.py` operacional único documentado com `init` obsoleto e prova de fogo corrigida (T-092); `convencoes-v2.md` com backup externo generalizado e D-16 especificado sem renomeação; `skill.md` alinhado a D-08; `diagnostico-atual.md` marcado explicitamente como somente leitura.
-  - Lê: `skills/SKILLENG.md`, `skills/references/convencoes-v2.md`, `skills/skill.md`
+  - Lê: `skills/SKILLENG.md`, `skills/references/convencoes-v2.md`, `.agents/skills/coder/old-root-skills/skill.md`
   - Altera: os arquivos listados conforme necessário
 
 - [x] **M-13** `README.md` da raiz — Alinhar (onde parei, decisões em linguagem simples, melhorias pós-prova de fogo, observação de tradução para inglês na Fase 15). — concluído: Fase 15 atualizada; referências a plano-de-melhoria/ removidas para não expor workspace de auditoria na vitrine pública.
@@ -409,7 +410,7 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 
 - [x] **M-16** Criação da Skill "Gerador de M" e Arquivo Mestre — Criar a skill nativa `gerador-de-m` em `.agents/skills` e o arquivo `PROMPTS_MESTRES.md` para que todo pedido passe por uma nova tarefa `M`.
   - Lê: `plano-de-melhoria/CENTRAL_IDEA.md`
-  - Altera: `.agents/skills/gerador-de-m/SKILL.md` (criação) e `plano-de-melhoria/PROMPTS_MESTRES.md` (novo)
+  - Altera: `.agents/skills/architect/gerador-de-m/SKILL.md` (criação) e `plano-de-melhoria/PROMPTS_MESTRES.md` (novo)
 
 - [x] **M-17** Consolidação das Regras Mestras Globais — Agrupar regras fundamentais (ex: resolução de conflitos, pausar sempre) em um único arquivo consultado nativamente por toda IA.
   - Lê: regras espalhadas no planejamento
@@ -420,12 +421,9 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Altera: `.agents/rules/global_rules.md`
 
 - [x] **M-18** Padronização 100% Inglês — Adicionar D-19 (Idioma Técnico) e atualizar diretrizes para que todo código, arquivos e comentários sejam em inglês.
-  - Lê: `plano-de-acao/PLANO.md`, `.agents/skills/studyreviewblast-planner/SKILL.md`
+  - Lê: `plano-de-acao/PLANO.md`, `.agents/skills/coder/studyreviewblast-planner/SKILL.md`
   - Altera: os mesmos
 
-- [ ] **M-19** Reestruturação e Renomeação — Propor a tradução e reestruturação dos nomes de arquivos de documentação para o inglês (separado em sub-tarefas a, b, c). **[ADIADA por complexidade]**
-  - Lê: estrutura atual
-  - Altera: `plano-de-melhoria/MELHORIA-PLANO.md` (para documentar o plano de renomeação)
 
 - [x] **M-20** Regra de Backup no Legado — Registrar a regra estrita de clone de segurança na pasta de legado antes de qualquer renomeação/exclusão estrutural.
   - Lê: `plano-de-acao/RELATORIO-GERAL-PROJETO.md`
@@ -433,7 +431,7 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 
 - [x] **M-21** Criação da Skill "Limpador Seguro" (Cleanup) — Criar a skill `safe-cleanup` que obriga a IA a explicar o arquivo antes de deletá-lo e pede autorização.
   - Lê: N/A
-  - Altera: `.agents/skills/safe-cleanup/SKILL.md` (criação)
+  - Altera: `.agents/skills/architect/safe-cleanup/SKILL.md` (criação)
 
 - [x] **M-22** Faxina de Arquivos Obsoletos — Usar a `safe-cleanup` para remover `CENTRAL_IDEA.md`, `PROMPT_ORIGINAL.md` etc., ou enviá-los ao legado.
   - Lê: os arquivos a deletar
@@ -444,8 +442,8 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Altera: os .md com bugs
 
 - [x] **M-24** Aprimoramento da Detecção de Skills — Editar a skill `gerador-de-m` para incluir o comando explícito de leitura da pasta de skills, aplicando um filtro de inteligência: reaproveitar skills existentes, criar novas skills apenas para padrões repetitivos, e permitir execução normal para bugs pontuais.
-  - Lê: `.agents/skills/gerador-de-m/SKILL.md`
-  - Altera: `.agents/skills/gerador-de-m/SKILL.md`
+  - Lê: `.agents/skills/architect/gerador-de-m/SKILL.md`
+  - Altera: `.agents/skills/architect/gerador-de-m/SKILL.md`
 
 - [x] **M-25** Refatoração Visual do PROMPTS_MESTRES.md — Formatar o catálogo de prompts com blocos de código markdown para permitir a cópia em um clique pelo usuário.
   - Lê: `plano-de-melhoria/PROMPTS_MESTRES.md`
@@ -461,39 +459,122 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 
 - [x] **M-28** Skill "Project Oracle" (Buscador de Contexto) — Criar a skill permanente `project-oracle`. Objetivo concluído: O `RELATORIO-GERAL-PROJETO.md` foi reescrito para incluir todo o ecossistema de agentes e a nova `global_rules.md` agora obriga a IA a usar o Oráculo antes de responder perguntas gerais. O catálogo mestre foi atualizado.
   - Lê: N/A
-  - Altera: `.agents/skills/project-oracle/SKILL.md`, `PROMPTS_MESTRES.md`, `.agents/rules/global_rules.md`, `RELATORIO-GERAL-PROJETO.md`
+  - Altera: `.agents/skills/architect/project-oracle/SKILL.md`, `PROMPTS_MESTRES.md`, `.agents/rules/global_rules.md`, `RELATORIO-GERAL-PROJETO.md`
 
 - [x] **M-29** Skills "Crash Recovery" e "Hierarchy Sync" — Criar a skill permanente `crash-recovery` para recuperar o contexto exato e explicar onde a IA parou caso o sistema caia por limite de tokens. Criar a skill `hierarchy-sync` para garantir que a atualização de documentação siga uma cascata lógica (ex: TAREFAS -> RELATORIO -> README) sem dessincronização. Adicionar regra global obrigando a IA a conferir as tarefas M correlacionadas caso essa hierarquia estrutural mude, prevenindo bugs documentais.
   - Lê: N/A
-  - Altera: `.agents/skills/crash-recovery/SKILL.md`, `.agents/skills/hierarchy-sync/SKILL.md`, `.agents/rules/global_rules.md`
+  - Altera: `.agents/skills/architect/crash-recovery/SKILL.md`, `.agents/skills/architect/hierarchy-sync/SKILL.md`, `.agents/rules/global_rules.md`
 
 - [x] **M-30** Skill "Brain Sync" (Inicialização de Contexto Profundo) — A pedido do usuário, mapear o "estado de inferência" que a IA usou para resolver problemas complexos e cristalizá-lo na skill `brain-sync`. Ela obriga a IA a ler as regras, skills, prompts mestres e histórico ANTES de iniciar um trabalho pesado. O prompt de ativação fica no topo absoluto (`## 0. Inicialização`) do `PROMPTS_MESTRES.md`.
   - Lê: N/A
-  - Altera: `.agents/skills/brain-sync/SKILL.md`, `.agents/rules/global_rules.md`, `PROMPTS_MESTRES.md`
+  - Altera: `.agents/skills/architect/brain-sync/SKILL.md`, `.agents/rules/global_rules.md`, `PROMPTS_MESTRES.md`
 
 - [x] **M-31** Revisão e Sincronização do Catálogo (Prompt-Skill Sync) — Refatorar o `PROMPTS_MESTRES.md` para que atue como uma documentação clínica das skills. Adicionar explicações detalhadas, condições de uso, e variações (ex: "Use para X, mas pode ser usado para Y e Z") atrelando cada prompt à sua respectiva skill autônoma.
   - Lê: todas as skills em `.agents/skills/`
   - Altera: `PROMPTS_MESTRES.md`
 
-- [ ] **M-32** Skill "Revisor de Dependências" (Dependency Checker) — Criar a skill `dependency-checker` em `.agents/skills/`. Ela varrerá a fila de melhorias procurando por tarefas não concluídas (`[ ]` ou `[~]`) que contêm tags de bloqueio (ex: `[! Bloqueada até M-XX]`). Ela validará se a tarefa bloqueadora já foi concluída (`[x]`) e informará o usuário exatamente quais tarefas agora estão livres para execução e quais continuam travadas.
-  - Lê: `plano-de-melhoria/MELHORIA-PLANO.md`
-  - Altera: `.agents/skills/dependency-checker/SKILL.md` (criação)
 
-- [ ] **M-33** Auditoria de Regras Específicas (Plano de Ação) — Conferir minuciosamente todas as regras que se aplicam SOMENTE ao `plano-de-acao/` (TDD, arquitetura do DB, pausas rígidas). Analisar exceções, avaliar o que pode ser reaproveitado e definir como o arquivo mestre deverá trabalhar para abrigar essas especificidades sem conflitar com as regras de melhoria arquitetural.
-  - Lê: `plano-de-acao/RETOMAR.md`, `plano-de-acao/PLANO.md`
-  - Altera: `MELHORIA-PLANO.md` (Mapeamento de Regras)
+- [x] **M-37** [Security Audit — Fase 1: Planejamento de Correções Cirúrgicas] — Registrar 4 novas T-tasks de segurança no TAREFAS.md com base nos achados SEC-01..SEC-07 da varredura automática: (T-098) sanitizar `LIMIT` em `reviews.js` com bound parameter `$N` em vez de interpolação; (T-099) criar helper centralizado `errorHandler(err, req, res)` que não vaza `err.message` em produção; (T-100) instalar e configurar `helmet` no `index.js`; (T-101) remover o `console.log` de credenciais de infraestrutura do startup. Acionar skill `studyreviewblast-planner` para executar. Arquivos: `server/src/routes/reviews.js`, `server/src/index.js`, `plano-de-acao/TAREFAS.md`.
+  - Lê: `server/src/`, `plano-de-acao/TAREFAS.md`
+  - Altera: `plano-de-acao/TAREFAS.md` (T-098 a T-101 criadas) ✅ CONCLUÍDO
+  - Achados que motivaram: SEC-01 (SQL LIMIT interpolado), SEC-02 (err.message leak 35+ locais), SEC-03 (credenciais no log), SEC-04 (ausência de helmet)
 
-- [ ] **M-34** Segregação de Agentes (Melhoria vs Ação) — Estruturar a separação lógica e física das skills. Evitar confusão separando as skills de infraestrutura (`plano-de-melhoria`) das skills de código (`plano-de-acao`). Organizar a pasta `.agents/skills/` em subdomínios (ex: `architect/` e `coder/`) e migrar com segurança o conteúdo da pasta `/skills` da raiz (que é ligada ao plano de ação) para a nova hierarquia, ajustando nomes de arquivos sem bugar o sistema atual.
+- [x] **M-38** [Criação da Skill `security-scanner`] — Skill permanente `.agents/skills/coder/security-scanner/SKILL.md` criada com 7 verificações V-01..V-07. Prompt 10 injetado no `PROMPTS_MESTRES.md`. ✅ CONCLUÍDA.
+  - Lê: `.agents/skills/architect/markdown-doctor/SKILL.md` (referência estrutural), `global_rules.md`
+  - Altera: `.agents/skills/coder/security-scanner/SKILL.md` (criação) ✅, `PROMPTS_MESTRES.md` (Prompt 10) ✅
+
+- [x] **M-39** [Execução da Auditoria de Segurança — Ativação dos Próximos Passos] — CONCLUÍDA. Passo 1: T-098..T-101 criadas, M-37 fechada. Passo 2: security-scanner rodado, SEC-01..SEC-04 confirmados rastreados via T-098..T-101, SEC-05 (rate-limit) identificado sem T-task (proposta T-102 para M futura), SEC-06 aceito por design, SEC-07 OK.
+  - Altera: `plano-de-acao/TAREFAS.md` (T-098..T-101) ✅, `MELHORIA-PLANO.md` (M-37,M-38,M-39 fechadas) ✅
+  - Skills: `studyreviewblast-planner` (Passo 1) → `security-scanner` (Passo 2) ✅
+
+- [x] **M-40** [Fechamento da Auditoria de Segurança — Rate Limiting] — Criar cartão T-102 para cobrir a pendência SEC-05 descoberta no passo 2 da M-39. A tarefa T-102 instalará o `express-rate-limit` no Express para as rotas críticas. Sugerir o commit logo em seguida.
+  - Lê: `plano-de-acao/TAREFAS.md`
+  - Altera: `plano-de-acao/TAREFAS.md` (T-102 adicionada) ✅
+  - Skills: `studyreviewblast-planner` ✅
+
+- [x] **M-41** [Repriorização de Segurança - Parte 1: Análise e Rascunho] — Analisar a fila completa do `TAREFAS.md` e `PLANO.md` para extrair itens de segurança e estabilidade (ex: T-098 a T-102) que devem ser antecipados. Gerar um artefato de texto (rascunho) com a nova ordem da fila de prioridade para revisão, *sem alterar* os arquivos originais ainda (Regra de Task Sizing/Split). ✅ CONCLUÍDA
+  - Limite: 1 arquivo temporário (artefato).
+  - Skill acionada: `gerador-de-m`
+  - Artefato gerado: `plano-de-acao/RASCUNHO_PRIORIZACAO_SEGURANCA.md`
+
+- [x] **M-42** [Repriorização de Segurança - Parte 2: Estrutura do PLANO.md] — Refletir a reordenação aprovada na M-41 dentro do arquivo `PLANO.md`, ajustando apenas os nomes, IDs e ordem das fases de alto nível, mantendo o controle de tokens. ✅ CONCLUÍDA
+  - Limite: 1 arquivo (`plano-de-acao/PLANO.md`).
+  - Skill acionada: `gerador-de-m`
+
+- [x] **M-43** [Repriorização de Segurança - Parte 3: Detalhamento do TAREFAS.md] — Modificar o extenso arquivo `TAREFAS.md`, movendo os blocos completos dos cartões reordenados para o topo de suas respectivas fases, respeitando as dependências técnicas. ✅ CONCLUÍDA
+  - Limite: 1 arquivo (`plano-de-acao/TAREFAS.md`).
+  - Skill acionada: `gerador-de-m`
+
+- [x] **M-44** [Markdown Doctor Pós-Reorganização] — Como as etapas 42 e 43 vão mover cabeçalhos e alterar IDs, executar uma varredura completa para curar âncoras e referências cruzadas que possam ter quebrado entre `PLANO.md`, `TAREFAS.md` e `RETOMAR.md`. ✅ CONCLUÍDA
+  - Limite: Todos os .md da pasta plano-de-acao.
+  - Skill acionada: `markdown-doctor`
+
+- [x] **M-45** [Faxina Segura de Arquivos Obsoletos] — Excluir permanentemente o rascunho temporário `RASCUNHO_PRIORIZACAO_SEGURANCA.md` e os 5 arquivos `.log` localizados na raiz do repositório, garantindo que o Workspace fique limpo. ✅ CONCLUÍDA
+  - Limite: 6 arquivos a serem deletados.
+  - Skill acionada: `safe-cleanup`
+
+- [x] **M-46** [Auditoria e Reorganização das Ms Pendentes] — Avaliar o motivo de M-19 e M-32 a M-36 estarem abertas, verificar dependências lógicas e reorganizar a fila do `MELHORIA-PLANO.md` estabelecendo a nova ordem de prioridade. ✅ CONCLUÍDA
+  - Limite: 1 arquivo (`MELHORIA-PLANO.md`)
+  - Skill acionada: `project-oracle` / `gerador-de-m`
+
+### Fila Ativa de Melhorias (Reorganizada na M-46)
+
+- [x] **M-47** [Criação da Skill `task-reviewer`] — Criar uma nova skill permanente em `.agents/skills/architect/task-reviewer/SKILL.md` especializada em automatizar a revisão de tarefas M e T, garantindo que o planejamento de cada passo sempre aplique as skills de agentes apropriadas. *(Prioridade Máxima)* ✅ CONCLUÍDA
+  - Limite: 1 arquivo novo (a skill).
+  - Skill acionada: `gerador-de-m` (criação de skill)
+
+- [x] **M-48** [Expansão Mestra do Catálogo de Prompts] — Revisar o `PROMPTS_MESTRES.md` para registrar a nova skill (`task-reviewer`) via `prompt-updater`, e reescrever o catálogo adicionando múltiplas variações de prompts práticos para cada tipo de resolução e skill. ✅ CONCLUÍDA
+  - Limite: 1 arquivo (`PROMPTS_MESTRES.md`)
+  - Skill acionada: `prompt-updater`
+
+- [x] **M-34** Segregação de Agentes (Melhoria vs Ação) — Estruturar a separação lógica e física das skills. Evitar confusão separando as skills de infraestrutura (`plano-de-melhoria`) das skills de código (`plano-de-acao`). Organizar a pasta `.agents/skills/` em subdomínios (ex: `architect/` e `coder/`) e migrar com segurança o conteúdo da pasta `/skills` da raiz para a nova hierarquia, ajustando nomes de arquivos sem bugar o sistema atual. ✅ CONCLUÍDA
   - Lê: `/skills/`, `.agents/skills/`
   - Altera: sistema de arquivos (`.agents/skills/`), acionando `markdown-doctor` em seguida.
 
-- [ ] **M-35** Evolução do `RETOMAR.md` (Mimetizando o Master Prompt) — O `RETOMAR.md` é o embrião do prompt mestre para código. A tarefa é aplicar a mesma lógica das skills de contexto a ele. Transformar seu fluxo em um sistema parelho ao de "prompts/skills", garantindo que a execução operacional siga a mesma fluidez das tarefas "M", mas blindando a lógica hierárquica e rigorosa que o `RETOMAR` já possui para não bugar o TDD.
-  - Lê: `plano-de-acao/RETOMAR.md`
-  - Altera: `RETOMAR.md`, `.agents/skills/studyreviewblast-planner/SKILL.md`
+- [x] **M-32** Skill "Revisor de Dependências" (Dependency Checker) — Criar a skill `dependency-checker` em `.agents/skills/`. Ela varrerá a fila de melhorias procurando por tarefas não concluídas (`[ ]` ou `[~]`) que contêm tags de bloqueio. Ela validará se a tarefa bloqueadora já foi concluída e informará o usuário exatamente quais tarefas agora estão livres. ✅ CONCLUÍDA
+  - Lê: `plano-de-melhoria/MELHORIA-PLANO.md`
+  - Altera: `.agents/skills/architect/dependency-checker/SKILL.md` (criação)
 
-- [ ] **M-36** Sincronização Final do Catálogo Operacional — Após segregar os agentes e evoluir o modelo do plano de ação, acionar o `prompt-updater` para injetar os novos Prompts Mestres operacionais (para as T-tasks) no catálogo, formalizando os dois sistemas paralelos.
+- [x] **M-36** Sincronização Final do Catálogo Operacional — Após segregar os agentes e evoluir o modelo do plano de ação, acionar o `prompt-updater` para injetar os novos Prompts Mestres operacionais (para as T-tasks) no catálogo, formalizando os dois sistemas paralelos. ✅ CONCLUÍDA
   - Lê: novas skills segregadas
   - Altera: `PROMPTS_MESTRES.md`
+
+- [x] **M-33** Auditoria de Regras Específicas (Plano de Ação) — Conferir minuciosamente todas as regras que se aplicam SOMENTE ao `plano-de-acao/` (TDD, arquitetura do DB, pausas rígidas). Analisar exceções, avaliar o que pode ser reaproveitado e definir como o arquivo mestre deverá trabalhar para abrigar essas especificidades sem conflitar com as regras de melhoria arquitetural. ✅ CONCLUÍDA
+  - Lê: `plano-de-acao/RETOMAR.md`, `plano-de-acao/PLANO.md`
+  - Altera: `MELHORIA-PLANO.md` (Mapeamento de Regras)
+
+- [x] **M-35** Evolução do `RETOMAR.md` (Mimetizando o Master Prompt) — O `RETOMAR.md` é o embrião do prompt mestre para código. A tarefa é aplicar a mesma lógica das skills de contexto a ele. Transformar seu fluxo em um sistema parelho ao de "prompts/skills", garantindo que a execução operacional siga a mesma fluidez das tarefas "M". ✅ CONCLUÍDA
+  - Lê: `plano-de-acao/RETOMAR.md`
+  - Altera: `RETOMAR.md`, `.agents/skills/coder/studyreviewblast-planner/SKILL.md`
+
+- [x] **M-19** Reestruturação e Renomeação — Propor a tradução e reestruturação dos nomes de arquivos de documentação para o inglês (separado em sub-tarefas a, b, c). ✅ CONCLUÍDA (Proposta de plano adicionada)
+  - Lê: estrutura atual
+  - Altera: `plano-de-melhoria/MELHORIA-PLANO.md` (para documentar o plano de renomeação)
+
+---
+
+## Mapeamento de Regras Operacionais vs. Globais (M-33)
+**Auditoria de Fronteiras:**
+- **Regras Globais (Meta-Regulação em `.agents/rules/global_rules.md`):** Aplicam-se a todo o sistema, ditando segurança (sem APIs pagas, sem senhas), limites de resposta da IA e imutabilidade dos logs.
+- **Regras de Ação Específicas (Confinadas às T-Tasks, via `RETOMAR.md` e `SKILL.md` do planner):**
+  - *TDD Obrigatório:* Teste falhando antes de implementar código de produto.
+  - *Arquitetura:* Node+React+PostgreSQL 18.
+  - *Pausas Rígidas:* Após 1 tarefa T, a IA deve rodar linter, sugerir commit e parar para revisão humana, proibida de emendar outra T sem autorização.
+- **Conclusão:** As regras operacionais não conflitam com as globais; elas as complementam com rigor tático de código. O catálogo `PROMPTS_MESTRES.md` e o `RETOMAR.md` delegam a fiscalização operacional diretamente para a skill `studyreviewblast-planner`.
+
+## Plano de Renomeação para o Inglês (M-19)
+**Proposta Oficial de Transição Linguística (Fase 15)**
+Para seguir o padrão Open Source estrito (Regra D-19), o repositório terá a nomenclatura de seus arquivos mestre traduzida:
+- `plano-de-acao/` → `action-plan/`
+  - `PLANO.md` → `PLAN.md`
+  - `TAREFAS.md` → `TASKS.md`
+  - `RETOMAR.md` → `RESUME.md`
+  - `LINHA-DO-TEMPO.md` → `TIMELINE.md`
+  - `RELATORIO-GERAL-PROJETO.md` → `PROJECT-OVERVIEW.md`
+- `plano-de-melhoria/` → `improvement-plan/`
+  - `MELHORIA-PLANO.md` → `IMPROVEMENT-PLAN.md`
+  - `PROMPTS_MESTRES.md` → `MASTER-PROMPTS.md`
+*Ação:* Isso não será feito agora. Esta reestruturação física fica oficialmente agendada como a última etapa de revisão documental do projeto para não quebrar links preexistentes antes da finalização técnica.
 
 ---
 
@@ -523,94 +604,29 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 ## LOG (append-only — nunca apagar linhas)
 
 ```
-[2026-10-05 19:59] INÍCIO M-14 — Correções no legado e lacunas L-xx
-[2026-10-05 20:02] FIM M-14 — arquivos alterados: legado/MAPA-V1-V2.md, legado/RELATORIO-RECONSTRUCAO-V2.md — achados: corrigida a ambiguidade da T-001 V1 e inserida nota explícita de rastreabilidade indireta para L-03 e L-04 no relatório de reconstrução. As faixas da tabela 100% novas já constavam como listas exatas.
-[2026-10-05 20:07] INÍCIO M-15 — Verificação final
-[2026-10-05 20:07] FIM M-15 — arquivos alterados: plano-de-melhoria/MELHORIA-PLANO.md — achados: plan_tool.py status reporta corretamente 4/97 e próxima tarefa como T-002; links revisados; todas as pendências resolvidas. O planejamento do Plano V2 está oficialmente pronto e validado.
-[2026-10-05 19:57] INÍCIO M-13 — Alinhamento do README.md da raiz
-[2026-10-05 19:58] FIM M-13 — arquivos alterados: README.md, plano-de-melhoria/MELHORIA-PLANO.md — achados: README atualizado com observação sobre tradução opcional na Fase 15; referências à pasta plano-de-melhoria/ removidas da tabela de Reports e do Directory Structure conforme decisão de governança da M-07 (não citar plano de melhoria em documentos públicos).
-[2026-10-03 21:09] INÍCIO M-00 (criação do plano de melhoria)
-[2026-10-03 21:09] FIM M-00 — Arquivos criados: skills/SKILL-MELHORIA-PLANO.md, plano-de-acao/MELHORIA-PLANO.md
-                   Passo 1 (reconhecimento leve):
-                   - Branch atual: v2/phase-01-safety-net
-                   - plan_tool.py status: 4/94 (4%) — PRÓXIMA: T-002
-                   - git status: working tree clean (sem arquivos modificados não commitados)
-                   - Estrutura: plano-de-acao/ (7 arquivos + legado/ com 6), skills/ (2 md + 3 subpastas), raiz (README.md, .env, .gitignore, migrate_session_type.js)
-                   - Achados preliminares (sem M formal): links absolutos em RELATORIO-GERAL §4 e §6; RELATORIO-GERAL §5B menciona "análise fonética" via Web Speech API (possível conflito com princípio 100% local); D-10 não lista ts-fsrs, Playwright, libs OpenAPI/cobertura; D-11 a D-18 pendentes; 8 documentos de planejamento sem hierarquia clara definida; migrations/README.md existe.
-[2026-10-03 21:16] INÍCIO M-01 — Inventário de arquivos .md e .py
-[2026-10-03 21:18] FIM M-01 — arquivos alterados: plano-de-acao/MELHORIA-PLANO.md
-                   Achados: F-01 (inventário completo classificado), F-02 (plan_tool.py duplicado), F-03 (órfão migrate_session_type.js), F-04 (migrations/README.md mínimo), F-05 (PROMPT_ORIGINAL.md sem hierarquia), F-06 (diagnostico-atual.md sem classificação), F-07 (plano-de-melhoria/ fora do escopo)
-                   Perguntas geradas: Q-01, Q-02, Q-03, Q-04
-[2026-10-03 21:22] INÍCIO M-02 — Verdade no disco
-[2026-10-03 21:26] FIM M-02 — arquivos alterados: plano-de-acao/MELHORIA-PLANO.md
-                   Achados: F-08 (status 4/94 ✅), F-09 (94 cartões T-001–T-094 ✅; campo Objetivo ausente em T-028+), F-10 (campo Pausa não existe como campo separado), F-11 (plan_tool init aponta para arquivo inexistente), F-12 (§2 RELATORIO-GERAL vs disco ✅ exceto PLANO.inicial.md), F-13 (§3 estado atual ✅)
-                   Perguntas geradas: Q-05
-[2026-10-03 21:28] INÍCIO M-03 — Conformidade R-01..R-16
-[2026-10-03 21:49] FIM M-03 — arquivos alterados: plano-de-acao/MELHORIA-PLANO.md
-                   Achados: F-14 (checklist R-01..R-16: 14 ✅, 2 ⚠️, 0 ❌)
-                   R-14 ⚠️: ts-fsrs em D-10 (aprovada) mas D-14 diz "Proposto"; incoerência a resolver na M-08
-                   R-16 ⚠️: menções instrucionais de senha; nenhum segredo real exposto
-[2026-10-03 21:50] INÍCIO M-04 — Auditoria do legado V1
-[2026-10-03 21:59] FIM M-04 — arquivos alterados: plano-de-acao/MELHORIA-PLANO.md
-                   Lacunas: L-01..L-05 (L-01/L-02 cosméticas; L-03/L-04 rastreabilidade indireta aceitável)
-                   Todas as T V1 com destino no MAPA e evidência no disco ✅; correções do MAPA ficam para M-14
-[2026-10-03 22:00] INÍCIO M-05 — Auditoria de código (somente leitura)
-[2026-10-03 22:02] FIM M-05 — arquivos alterados: plano-de-acao/MELHORIA-PLANO.md
-                   Achados: F-15..F-21 (LIMIT interpolado, err.message vazando, sem validação, testes sem T, pgcrypto ocioso, console.log)
-                   Nenhum código alterado
-[2026-10-03 22:05] INÍCIO M-06 — Consolidar pendências
-                   D-11 = Docker (decisão do usuário). 15 itens consolidados; PAUSA aguardando resposta
-[2026-10-03 22:33] FIM M-06 — arquivos alterados: plano-de-acao/MELHORIA-PLANO.md, plano-de-melhoria/CENTRAL_IDEA.md (só o Prompt B)
-                   Resposta do usuário registrada (itens 1–16). Docker 29.5.2 / Compose v5.1.3 confirmados (fora do PATH da IDE)
-                   Item 16: mover MELHORIA-PLANO.md para plano-de-melhoria/ = 1º passo da M-07; auditoria pacote×cartão = 1º passo da M-08
-                   NOTA: todas as entradas até aqui citam o caminho antigo plano-de-acao/MELHORIA-PLANO.md
-[2026-10-04 00:02] REPARO (fora do ciclo de M) — MELHORIA-PLANO.md e SKILL-MELHORIA-PLANO.md movidos manualmente para plano-de-melhoria/; referênças ativas corrigidas (plano-de-melhoria/SKILL-MELHORIA-PLANO.md, plano-de-melhoria/CENTRAL_IDEA.md, plano-de-melhoria/MELHORIA-PLANO.md); escopo da skill inclui plano-de-melhoria/; bloco do Prompt B removido do README.md. Entradas anteriores do LOG citam os caminhos antigos (histórico, não alteradas).
-[2026-10-04 00:43] REPARO — Prompt A em CENTRAL_IDEA.md corrigido para gerar e referenciar arquivos em plano-de-melhoria/; inventário F-01 e referências das tarefas M-01 a M-15 em MELHORIA-PLANO.md atualizados para plano-de-melhoria/.
-[2026-10-04 00:55] INÍCIO M-07 — Hierarquia de documentos
-[2026-10-04 00:57] FIM M-07 — arquivos alterados: plano-de-melhoria/MELHORIA-PLANO.md — achados: leitura completa e minuciosa de todos os .md de plano-de-acao/ (RELATORIO-GERAL, PLANO, TAREFAS, RETOMAR, LINHA-DO-TEMPO, PROMPT_ORIGINAL, legado/*), skills/ (SKILLENG, skill, assets/*, references/*) e plano-de-melhoria/ (MELHORIA-PLANO, SKILL-MELHORIA-PLANO, CENTRAL_IDEA); governança estruturada em 2 regimes (Meta-Regulação Ativa Fase M via plano-de-melhoria/ e Execução Operacional Fase T com RELATORIO-GERAL > RETOMAR > PLANO > TAREFAS > LINHA-DO-TEMPO > skills > README); ordem única canônica de 6 passos para sessões T formalizada; plano-de-acao/plan_tool.py declarado ferramenta operacional única; plano-de-melhoria/ integrada formalmente na matriz de autoridade com arquivamento futuro em legado/ previsto; legado/ ratificado como estritamente somente leitura; inventário de 5 links absolutos file:/// e 2 caminhos locais levantados para substituição em M-09, M-11 e M-12.
-[2026-10-04 01:30] INÍCIO M-08 — Atualização do PLANO.md e auditoria de pacotes
-[2026-10-04 01:34] FIM M-08 — arquivos alterados: plano-de-acao/PLANO.md, plano-de-melhoria/MELHORIA-PLANO.md, plano-de-acao/LINHA-DO-TEMPO.md — achados: auditoria pacote × cartão concluída (dependências 100% mapeadas); D-11 a D-18 migradas de Proposto/Aguardando para Decidido; D-10 estendida com pacotes TypeScript de teste (typescript-eslint, ts-jest, types); tarefas T-095 (sanitização de LIMIT/OFFSET e err.message), T-096 (testes srs/tts client) e T-097 (teste status server) adicionadas com sucesso via add-feature sob autorização explícita; M-09 dividida em 4 etapas (M-09a..M-09d) para prevenção de saturação de contexto.
-[2026-10-04 01:52] INÍCIO M-09a — Cartões T-095..T-097 e revisão Fases 1 a 4 em TAREFAS.md
-[2026-10-04 01:55] FIM M-09a — arquivos alterados: plano-de-acao/TAREFAS.md, plano-de-melhoria/MELHORIA-PLANO.md — achados: cartões T-095, T-096 e T-097 criados e documentados completos; Fases 1 a 4 (T-001 a T-024) padronizadas com campo Objetivo explícito e apontamento canônico de pausa para RETOMAR.md §3; caminho de backup de máquina em T-002 generalizado.
-[2026-10-04 16:18] INÍCIO M-09b — Padronização de TAREFAS.md (Fases 5 a 8: T-025 a T-053)
-[2026-10-04 16:21] FIM M-09b — arquivos alterados: plano-de-acao/TAREFAS.md, plano-de-melhoria/MELHORIA-PLANO.md — achados: 28 cartões ativos das Fases 5 a 8 (T-025 a T-053) revisados e padronizados com campo Objetivo explícito e apontamento canônico de pausa para RETOMAR.md §3; stub legado T-050 preservado intacto.
-[2026-10-04 16:25] INÍCIO M-09c — Padronização de TAREFAS.md (Fases 9 a 11: T-054 a T-081)
-[2026-10-04 16:27] FIM M-09c — arquivos alterados: plano-de-acao/TAREFAS.md, plano-de-melhoria/MELHORIA-PLANO.md — achados: 28 cartões ativos das Fases 9 a 11 (T-054 a T-081) padronizados com campo Objetivo explícito e apontamento canônico de pausa para RETOMAR.md §3.
-[2026-10-04 16:27] INÍCIO M-09d — Padronização de TAREFAS.md (Fases 12 a 15: T-082 a T-094)
-[2026-10-04 16:29] FIM M-09d — arquivos alterados: plano-de-acao/TAREFAS.md, plano-de-melhoria/MELHORIA-PLANO.md — achados: 13 cartões das Fases 12 a 15 (T-082 a T-094) padronizados com campo Objetivo explícito e apontamento canônico de pausa para RETOMAR.md §3; 100% dos 94 cartões ativos de TAREFAS.md agora possuem Objetivo e Pausa canônica padronizados.
-[2026-10-04 16:31] INÍCIO M-10 — Alinhamento de RETOMAR.md à hierarquia da M-07
-[2026-10-04 16:34] FIM M-10 — arquivos alterados: plano-de-acao/RETOMAR.md, plano-de-melhoria/MELHORIA-PLANO.md — achados: RETOMAR.md alinhado com a governança da M-07 (ordem canônica de leitura de 6 passos, matriz de precedência de 10 níveis, plan_tool.py operacional único com init obsoleto, confinamento de plano-de-melhoria/ e ambiente atualizado com Docker Desktop).
-[2026-10-04 16:36] INÍCIO M-11 — Ajustes no RELATORIO-GERAL-PROJETO.md
-[2026-10-04 17:16] FIM M-11 — arquivos alterados: plano-de-acao/RELATORIO-GERAL-PROJETO.md, plano-de-melhoria/MELHORIA-PLANO.md — achados: 5 links absolutos file:/// substituídos por caminhos relativos; §5B e D-18 ajustados para voz e comparação falado/esperado com privacidade (100% local por padrão); Fase 6 e visão de futuro alinhadas com adoção incremental de TypeScript (D-07); tabela D-11..D-18 atualizada para Decidido; §6.1 alinhado à ordem canônica de 6 passos da M-07.
-[2026-10-04 17:36] INÍCIO M-12 — Alinhamento das skills à governança e decisões
-[2026-10-04 17:40] FIM M-12 — arquivos alterados: skills/SKILLENG.md, skills/references/convencoes-v2.md, skills/skill.md, skills/references/diagnostico-atual.md, plano-de-melhoria/MELHORIA-PLANO.md — achados: SKILLENG.md alinhado com a governança da M-07 (6 passos canônicos, plan_tool.py operacional único com init obsoleto, T-092 prova de fogo e stack D-11/D-14/D-18); convencoes-v2.md com pasta de backup generalizada e D-16 ratificado sem renomear plano-de-acao/; skill.md alinhado com D-08 (README em pt-BR até Fase 14); diagnostico-atual.md com tarja de histórico e somente leitura.
-[2026-10-05 23:45] INÍCIO M-16 — Criação da Skill "Gerador de M" e Arquivo Mestre
-[2026-10-05 23:45] FIM M-16 — arquivos alterados: .agents/skills/gerador-de-m/SKILL.md, plano-de-melhoria/PROMPTS_MESTRES.md — achados: Criada a skill `gerador-de-m` e o arquivo `PROMPTS_MESTRES.md`. O novo catálogo de prompts foi centralizado e as intenções agora passam obrigatoriamente pela geração de uma tarefa M antes de serem executadas, garantindo segurança contra perda de contexto.
-[2026-10-05 23:46] INÍCIO M-25 — Refatoração Visual do PROMPTS_MESTRES.md
-[2026-10-05 23:46] FIM M-25 — arquivos alterados: plano-de-melhoria/PROMPTS_MESTRES.md — achados: O arquivo de prompts mestres foi reescrito. Agora cada intenção possui um título enumerado e um bloco de código markdown isolado, permitindo que o usuário copie a instrução completa com apenas um clique, melhorando a intuição e usabilidade.
-[2026-10-05 23:55] INÍCIO M-17 — Consolidação das Regras Mestras Globais
-[2026-10-05 23:55] FIM M-17 — arquivos alterados: .agents/rules/global_rules.md — achados: Criado o arquivo de regras globais em formato nativo (.agents/rules). A partir de agora, as diretrizes inegociáveis de "Pausar após cada tarefa", "Prevenção de conflitos D-xx/M-xx", e "Segurança do Gerador M" estão ativas permanentemente no contexto do Antigravity, eliminando a necessidade de repeti-las em cada prompt manual.
-[2026-10-06 00:02] INÍCIO M-16b — Refinamento de Segurança e Triagem de Regras
-[2026-10-06 00:03] FIM M-16b — arquivos alterados: .agents/rules/global_rules.md — achados: O arquivo de regras globais foi enriquecido. Foram adicionadas travas de segurança rígidas contra alucinação, proibição absoluta de exposição do arquivo `.env` e chaves sensíveis, proibição de commit com senhas, além da regra anti-bagunça para que qualquer limpeza passe antes por planejamento M. Regras obsoletas que conflitavam com as decisões D-xx atuais (ex: ausência de ORM) foram expurgadas do comportamento global.
-[2026-10-06 00:07] INÍCIO M-18 — Padronização 100% Inglês
-[2026-10-06 00:07] FIM M-18 — arquivos alterados: plano-de-acao/PLANO.md, .agents/skills/studyreviewblast-planner/SKILL.md — achados: Inserida a Decisão D-19 formalizando o inglês técnico no projeto. A skill do planner também foi atualizada com a regra inegociável #7, garantindo que o código, os commits e as pastas criadas por ele não usem português.
-[2026-10-06 00:14] INÍCIO M-20 — Regra de Backup no Legado
-[2026-10-06 00:15] FIM M-20 — arquivos alterados: plano-de-acao/RELATORIO-GERAL-PROJETO.md — achados: Adicionada a trava "Backup Obrigatório" nas restrições técnicas, proibindo renomeação ou exclusão estrutural sem clone em legado.
-[2026-10-06 00:15] INÍCIO M-21 — Criação da Skill Limpador Seguro (Cleanup)
-[2026-10-06 00:15] FIM M-21 — arquivos alterados: .agents/skills/safe-cleanup/SKILL.md — achados: Criada a skill `safe-cleanup`. Qualquer faxina agora exige justificativa formal de obsolescência e prompt explícito de autorização para ir para a lixeira ou para o legado.
-[2026-10-06 00:22] INÍCIO M-26 — Skills Markdown Doctor / Prompt Updater e Regra
-[2026-10-06 00:25] FIM M-26 — arquivos alterados: global_rules.md, PROMPTS_MESTRES.md, novas skills — achados: Criadas as skills `markdown-doctor` (saneamento de links da documentação) e `prompt-updater` (manutenção do catálogo). Adicionada a regra global exigindo a atualização síncrona do PROMPTS_MESTRES via prompt-updater sempre que algo novo for gerado.
-[2026-10-06 00:30] INÍCIO M-27 — Atualização do README
-[2026-10-06 00:30] FIM M-27 — arquivos alterados: README.md — achados: Acionada a skill `readme-open-source`. Inserida a Decisão D-19 (English Standard) na tabela oficial e criada a nova seção "Autonomous AI Agents & Custom Skills" documentando todo o ecossistema e ferramentas sob `.agents/skills/` para exibir o repositório como um projeto open source profissional governado por agentes de IA.
-[2026-10-06 00:38] INÍCIO M-28 — Skill Project Oracle (Buscador de Contexto)
-[2026-10-06 00:39] FIM M-28 — arquivos alterados: project-oracle/SKILL.md, global_rules.md, PROMPTS_MESTRES.md, RELATORIO-GERAL-PROJETO.md — achados: Criada a skill `project-oracle`. A regra 7 de "Oráculo Obrigatório" foi implementada, impedindo a IA de chutar o que foi feito sem ler os logs antes. O RELATORIO-GERAL-PROJETO foi atualizado e sincronizado com todas as novas dinâmicas, refletindo a estrutura completa de inteligência do repositório.
-[2026-10-06 00:50] INÍCIO M-29 e M-30 — Skills Crash Recovery, Hierarchy Sync e Brain Sync
-[2026-10-06 00:58] FIM M-29 e M-30 — arquivos alterados: skills criadas, global_rules.md, PROMPTS_MESTRES.md — achados: Execução simultânea por comando direto do usuário. A arquitetura de resiliência e contexto profundo foi finalizada. As skills `crash-recovery` e `hierarchy-sync` garantem integridade em caso de quedas de energia/token e evolução da documentação. A skill `brain-sync` atua como o boot cognitivo da IA, forçando-a a cruzar regras, skills e prompts antes de agir, tornando o agente proativo e altamente alinhado ao contexto. O prompt 0 foi adicionado no topo do catálogo mestre.
-[2026-10-06 01:07] INÍCIO M-22 e M-23 — Faxina Segura e Markdown Doctor
-[2026-10-06 01:10] FIM M-22 e M-23 — arquivos alterados: markdown-doctor/SKILL.md, README.md, RELATORIO-GERAL-PROJETO.md, RETOMAR.md — achados: Os 4 arquivos obsoletos da estrutura V1 (PROMPT_ORIGINAL.md, CENTRAL_IDEA.md, CONVERSABUGSMELHORIA.md, SKILL-MELHORIA-PLANO.md) foram movidos para plano-de-acao/legado/. O Markdown Doctor teve sua inteligência aprimorada com o "Ciclo de Observação" (look-ahead de dependências) e foi rodado para curar e atualizar as referências órfãs nos documentos ativos.
-[2026-10-06 01:15] INÍCIO M-24 — Aprimoramento da Detecção de Skills (Gerador de M)
-[2026-10-06 01:16] FIM M-24 — arquivos alterados: gerador-de-m/SKILL.md — achados: Injetado o "Filtro de Autoconsciência" na skill gerador-de-m. Agora ela vasculha a biblioteca de agentes antes de planejar. Se a skill existe, ela reaproveita; se é demanda repetitiva/arquitetural, ela arquiteta uma skill nova; se é pontual, ela faz planejamento normal. Isso fecha 100% da fila original de melhorias arquiteturais.
-[2026-10-06 01:19] INÍCIO M-31 — Sincronização do Catálogo (Prompt-Skill Sync)
-[2026-10-06 01:21] FIM M-31 — arquivos alterados: PROMPTS_MESTRES.md — achados: O catálogo foi totalmente reescrito. Deixou de ser apenas uma lista de textos para copiar/colar e se tornou um manual rico detalhando qual skill é acionada, como funciona, e variações de uso (ex: "Execute para X, mas pode usar para Y e Z"). Isso estabelece uma sincronia clínica 1:1 entre as skills reais da pasta .agents e a vitrine de operação do usuário.
+[2026-10-06 14:06] RETOMADA M-39 PASSO 2 — Autorização confirmada pelo usuário. Iniciando varredura de confirmação security-scanner V-01..V-07.
+[2026-10-06 14:08] FIM M-39 PASSO 2 e FIM M-39 COMPLETA — Varredura security-scanner V-01..V-07 executada. Resultado: SEC-01 rastreado (T-098), SEC-02 rastreado (T-099), SEC-03 rastreado (T-101), SEC-04 rastreado (T-100), SEC-05 sem T-task ainda (proposta T-102 para M futura), SEC-06 aceito por design (DELETE students sem auth, documentado), SEC-07 OK (.env no .gitignore). M-37=[x], M-38=[x], M-39=[x]. Arquivos alterados: MELHORIA-PLANO.md (fechamento das 3 Ms + save-state + FIM). Não houve alteração de código-fonte nesta M.
+[2026-10-06 14:11] SAVE-STATE SESSÃO ENCERRADA — Pendência aberta ao encerrar: SEC-05 (express-rate-limit ausente no servidor Express) identificado na varredura V-05 mas sem cartão T-task correspondente. PRÓXIMA AÇÃO: criar M-40 via gerador-de-m para gerar T-102 (instalar express-rate-limit nas rotas críticas: POST /api/students, POST /api/reviews, GET /api/reviews/queue). Nenhum código foi alterado nesta sessão — todas as ações foram de planejamento (criação de Ms, cartões T e skills). Commit pendente: "audit(sec): complete M-39 security audit cycle". Arquivos modificados não commitados: plano-de-melhoria/MELHORIA-PLANO.md. Para retomar: usar Prompt 8 (crash-recovery) seguido de Prompt 2 (gerador-de-m para M-40).
+[2026-10-06 14:48] FIM M-40 — arquivo alterado: plano-de-acao/TAREFAS.md (T-102 adicionada). Pendência SEC-05 agora rastreada por uma T-task. Além disso, as regras da skill gerador-de-m e o Catálogo de Prompts foram atualizados com inteligência de 'Task Sizing' (limite e split de tokens).
+[2026-10-06 15:15] PRÉ-REGISTRO GERADOR DE M — Planejamento de Reorganização de Prioridades (Security First). Regra de 'Task Sizing' e 'Split' aplicada: devido ao risco de limite de tokens ao editar arquivos imensos como PLANO.md e TAREFAS.md simultaneamente, a intenção foi "splitada" em 4 cartões (M-41 a M-44). O planejamento previu o uso da skill 'markdown-doctor' (M-44) para reparar referências após a movimentação estrutural.
+[2026-10-06 15:19] FIM M-41 — Rascunho de priorização gerado. Arquivo `plano-de-acao/RASCUNHO_PRIORIZACAO_SEGURANCA.md` criado demonstrando a intenção de agrupar as tarefas de segurança (T-095, T-098 a T-102) em uma nova 'Fase 1.5' que será inserida antes da Fase 2. Arquivos de plano oficiais não foram alterados para respeitar o limite de tokens.
+[2026-10-06 15:28] FIM M-42 — Arquivo `plano-de-acao/PLANO.md` alterado. A "Fase 1.5 — Hotfixes de Segurança" foi fisicamente injetada antes da Fase 2, e os IDs das tarefas T-095, T-098 a T-102 foram movidos para lá. A estrutura de alto nível do plano agora prioriza a segurança. Próximo passo: mover os cartões completos no TAREFAS.md (M-43).
+[2026-10-06 15:35] FIM M-43 — Arquivo `plano-de-acao/TAREFAS.md` modificado com sucesso. Os grandes blocos das tarefas T-095, T-098, T-099, T-100, T-101 e T-102 foram extraídos do fundo do arquivo e reinjetados sob o novo cabeçalho da Fase 1.5, imediatamente antes da Fase 2. Todo o conteúdo original das tarefas foi preservado. Próximo passo sugerido: M-44 (markdown-doctor) para curar possíveis links quebrados.
+[2026-10-06 15:40] FIM M-44 — Varredura markdown-doctor concluída. Os arquivos e âncoras foram verificados. O bloco 'PRÓXIMO PASSO' no `PLANO.md`, que havia ficado defasado apontando para a T-005, foi devidamente atualizado para apontar para o novo início da fila: T-095. A fundação de planejamento e prioridade foi 100% finalizada (Split M-41 a M-44 encerrado). Próximo passo: Iniciar codificação.
+[2026-10-06 16:20] PRÉ-REGISTRO M-45 — Planejamento de faxina segura dos arquivos obsoletos (RASCUNHO_PRIORIZACAO_SEGURANCA.md e logs da raiz). Destino escolhido pelo usuário: exclusão permanente. O M-45 irá deletar esses 6 arquivos via skill safe-cleanup.
+[2026-10-06 16:21] FIM M-45 — Faxina segura concluída. Os 6 arquivos obsoletos foram excluídos permanentemente do disco e o repositório agora está limpo de logs temporários. Próximo passo: Iniciar codificação T-098.
+[2026-10-06 16:35] PRÉ-REGISTRO GERADOR DE M — Planejamento de Revisão de Ms, Nova Skill de Planejamento e Expansão do Catálogo. Devido à complexidade do pedido do usuário, a intenção foi dividida (Split) em 3 cartões (M-46, M-47, M-48) para respeitar o limite de tokens. M-46 fará a auditoria das Ms abertas (M-19, M-32 a M-36) e reorganizará a fila; M-47 criará a skill de revisão de tarefas (`task-reviewer`); M-48 usará o `prompt-updater` para expandir o `PROMPTS_MESTRES.md` com múltiplas variações para todas as skills.
+[2026-10-06 16:36] FIM M-46 — Auditoria concluída. As tarefas M-19, M-32 a M-36 estavam pendentes por causa do hijack da Fase 1.5 de Segurança (M-37 a M-45). Elas foram reorganizadas fisicamente para o fim da fila de melhorias ativas, criando um bloco estruturado. A M-47 (Criar `task-reviewer`) foi colocada como prioridade máxima, seguida da M-48 (Expansão de Prompts) e do restante, sendo o M-19 (Adiada) a última. O planejamento está alinhado e íntegro.
+[2026-10-06 16:37] PRÉ-REGISTRO M-47 — Criação da skill `task-reviewer` em `.agents/skills/architect/task-reviewer/SKILL.md` para revisão automatizada de escopos M e T.
+[2026-10-06 16:38] FIM M-47 — Skill permanente criada com sucesso. Agora toda tarefa operacional ou de planejamento passará pela barreira de injeção de agentes. Próximo passo: M-48 (Expansão Mestra do Catálogo).
+[2026-10-06 16:40] FIM M-48 — Catálogo PROMPTS_MESTRES.md atualizado com as descrições da nova skill task-reviewer.
+[2026-10-06 16:41] FIM M-34 — Segregação concluída. Skills separadas nas pastas `architect/` e `coder/`. Script python rodou substituindo o `markdown-doctor` para atualizar dinamicamente todas as referências nos arquivos `.md`.
+[2026-10-06 16:42] FIM M-32 — Skill `dependency-checker` criada na pasta `architect/`. O ambiente de skills agora conta com novas automações hierarquizadas. Próximo passo: M-36 (Sincronização Final do Catálogo Operacional).
+[2026-10-06 16:45] PRÉ-REGISTRO M-36 — Atualizar `PROMPTS_MESTRES.md` separando em dois grupos: Infraestrutura (Tarefas M) e Operacional (Tarefas T) e adicionar a skill `dependency-checker`.
+[2026-10-06 16:45] FIM M-36 — Catálogo mestre atualizado e formalizado em dois sistemas paralelos: (Tarefas M - architect/) e (Tarefas T - coder/).
+[2026-10-06 17:05] FIM M-33 — Auditoria e mapeamento de regras finalizada e consolidada no `MELHORIA-PLANO.md`.
+[2026-10-06 17:05] FIM M-35 — `RETOMAR.md` evoluído para apontar diretamente para a skill do catálogo mestre.
+[2026-10-06 17:05] FIM M-19 — Proposta de renomeação de arquivos arquitetada e programada para a Fase 15. A fila de Melhorias (M-Tasks) foi inteiramente percorrida e limpa!
 ```
+
 

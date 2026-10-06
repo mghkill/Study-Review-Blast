@@ -378,6 +378,31 @@ describe('Reviews API', () => {
     expect(Array.isArray(res.body)).toBe(true);
   });
 
+  it('GET /api/reviews/history — ignora limit inválido (T-095)', async () => {
+    const res = await request(app)
+      .get('/api/reviews/history?limit=invalid_string')
+      .set('X-Student-Id', String(testStudentId));
+    expect(res.status).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+  });
+
+  it('GET /api/reviews/history — sanitiza erro sem vazar detalhes (T-095)', async () => {
+    const db = require('../src/db/connection');
+    const spy = jest.spyOn(db, 'query')
+      .mockResolvedValueOnce({ rows: [{ id: testStudentId }] }) // Passa no requireStudent
+      .mockRejectedValueOnce(new Error('syntax error at or near mock')); // Falha na query real
+    
+    const res = await request(app)
+      .get('/api/reviews/history')
+      .set('X-Student-Id', String(testStudentId));
+      
+    expect(res.status).toBe(500);
+    expect(res.body.error).toBe('Erro ao carregar histórico de revisões'); // defaultMsg
+    expect(res.body.error).not.toContain('syntax error');
+    
+    spy.mockRestore();
+  });
+
   it('GET /api/reviews/errors — retorna erros por categoria', async () => {
     const res = await request(app)
       .get('/api/reviews/errors')

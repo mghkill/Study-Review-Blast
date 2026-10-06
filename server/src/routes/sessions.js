@@ -18,7 +18,7 @@ const SESSION_TYPE_MAP = {
 router.use(requireStudent);
 
 // POST /api/sessions
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
   try {
     const sid = req.studentId;
     const { sessionType = 'mixed', quizId, quiz_id } = req.body;
@@ -41,12 +41,12 @@ router.post('/', async (req, res) => {
     `, [sid, normalizedType, targetQuizId]);
     res.status(201).json(result.rows[0]);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 });
 
 // PATCH /api/sessions/:id
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', async (req, res, next) => {
   try {
     const sid = req.studentId;
     const { id } = req.params;
@@ -70,12 +70,12 @@ router.patch('/:id', async (req, res) => {
 
     res.json(result.rows[0]);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 });
 
 // GET /api/sessions?limit=10
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
   try {
     const sid = req.studentId;
     const { limit = 10 } = req.query;
@@ -97,7 +97,7 @@ router.get('/', async (req, res) => {
     `, [sid, limit]);
     res.json(result.rows);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 });
 

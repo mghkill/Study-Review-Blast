@@ -78,10 +78,12 @@ Execute nesta ordem exata e pare após o passo 6:
 
 ## 4. Prompt diário (copie e cole)
 
+A governança agora é gerida pelo **Catálogo Mestre Operacional**. Para continuar o trabalho, acione a skill de desenvolvimento:
+
+```text
+Ative a skill studyreviewblast-planner. Minha solicitação é: Continuar a programação executando a próxima tarefa T-xx pendente na fila operacional do PLANO.md, aplicando TDD e sugerindo os commits exatos no final.
 ```
-Leia plano-de-acao/RETOMAR.md e execute a T-0XX.
-```
-(Substitua `0XX` pelo número da tarefa mostrado em `PLANO.md → PRÓXIMO PASSO`.)
+(Substitua `T-xx` pelo número da tarefa mostrado em `PLANO.md → PRÓXIMO PASSO`.)
 
 ---
 

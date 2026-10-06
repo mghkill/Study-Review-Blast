@@ -10,8 +10,8 @@
 
 ## PRÓXIMO PASSO
 <!-- proximo:start -->
-- Atualizado em 2026-10-05 21:06
-- Iniciar **T-005** — [P] `package.json` na raiz só para ferramentas, com `npm test` e `npm run lint` delegando para server e client (D-09)
+- Atualizado em 2026-10-06 17:50
+- Iniciar **T-100** — [P] Instalar e configurar helmet para headers de segurança HTTP (SEC-04)
 <!-- proximo:end -->
 
 ## Regras fixas (só mudam se o usuário pedir)
@@ -67,6 +67,14 @@ Explicação em linguagem simples no README (seção "Decisões explicadas").
 - [x] T-002 [P] Backup novo do banco (`pg_dump -Fc`) fora do repositório + restauração de teste com contagem por tabela ✔ 2026-10-05 20:25
 - [x] T-003 [P] Baseline: testes, lint, `npm audit` e smoke das telas; registrar números ✔ 2026-10-05 20:39
 - [x] T-004 [M] Matriz de usabilidade `docs/usability-matrix.md` (tela × rota × tabela × teste; dados que existem no banco e não aparecem no front) [v1 T-060] ✔ 2026-10-05 21:06
+
+## Fase 1.5 — Hotfixes de Segurança (Security First)
+- [x] T-095 [P] Parametrizar LIMIT e OFFSET e criar sanitizador de erros na API sem vazar err.message nem SQL ✔ 2026-10-06 15:48
+- [x] T-098 [P] Sanitizar LIMIT interpolado em reviews.js (SEC-01) ✔ 2026-10-06 17:46
+- [x] T-099 [P] Remover vazamento de err.message genérico em 35 rotas (SEC-02) ✔ 2026-10-06 17:50
+- [ ] T-100 [P] Instalar e configurar helmet para headers de segurança HTTP (SEC-04)
+- [ ] T-101 [P] Remover console.log que vaza dados de infraestrutura no startup (SEC-03)
+- [ ] T-102 [P] Instalar e configurar express-rate-limit nas rotas críticas (SEC-05)
 
 ## Fase 2 — Qualidade e ferramentas base
 - [ ] T-005 [P] `package.json` na raiz só para ferramentas, com `npm test` e `npm run lint` delegando para server e client (D-09)
@@ -185,9 +193,6 @@ Explicação em linguagem simples no README (seção "Decisões explicadas").
 ## Fase 15 — Tradução final
 - [ ] T-093 [M] README em inglês + `README.pt-BR.md` com links cruzados (D-08)
 - [ ] T-094 [M] Planejamento em inglês: renomear `plano-de-acao/` e arquivos, ajustar `plan_tool.py`, skills em inglês (D-16)
-
-## Funcionalidade adicionada Nº 1 — Seguranca e Sanitizacao da API pre-ORM (em 2026-10-04 01:32)
-- [ ] T-095 [P] Parametrizar LIMIT e OFFSET e criar sanitizador de erros na API sem vazar err.message nem SQL
 
 ## Funcionalidade adicionada Nº 2 — Correcao de Testes Conhecidos (em 2026-10-04 01:32)
 - [ ] T-096 [P] Corrigir testes legados do client (srs.test.js e tts.test.js)

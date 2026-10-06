@@ -31,11 +31,10 @@ app.get('/api/health', async (req, res) => {
   }
 });
 
+const { errorHandler } = require('./middleware/errorHandler');
+
 // ─── Error handler ───────────────────────────────────────
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: err.message });
-});
+app.use(errorHandler);
 
 // ─── Start ───────────────────────────────────────────────
 app.listen(PORT, () => {

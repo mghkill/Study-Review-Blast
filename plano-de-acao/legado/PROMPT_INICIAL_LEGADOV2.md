@@ -7,7 +7,7 @@ Esta tarefa é APENAS DE PLANEJAMENTO. NÃO altere código-fonte, testes, migrat
 Objetivo original: reconstruir o plano do projeto em um "V2" melhor, reaproveitando o plano antigo (V1), com tarefas pequenas (uma por sessão), teste escrito antes, front incluso em cada tarefa, nada pago, ORM, TypeScript, segurança, tradução para inglês/i18n, quiz estilo Anki com FSRS, voz gratuita, CI, documentação, prova de fogo (T-090 antigo) e README como guia mestre.
 
 Já feito (segundo o log):
-- Leu RETOMAR.md, PLANO.md, LINHA-DO-TEMPO.md, plan_tool.py, PROMPT_ORIGINAL.md, skills/skill.md e skills/SKILLENG.md, e o código para entender.
+- Leu RETOMAR.md, PLANO.md, LINHA-DO-TEMPO.md, plan_tool.py, PROMPT_ORIGINAL.md, .agents/skills/coder/old-root-skills/skill.md e skills/SKILLENG.md, e o código para entender.
 - Moveu para plano-de-acao/legado/: PLANO-v1.md, RETOMAR-v1.md e (de skills/assets/) PLANO.inicial-v1.md.
 - Criou o novo plano-de-acao/PLANO.md (V2): 15 fases, 94 tarefas, decisões D-01 a D-18, dependências aprovadas (D-10), regras fixas. `py plano-de-acao/plan_tool.py status` já lê o V2 (3/94 marcadas, próxima T-001) sem mudar o script.
 - Estava escrevendo plano-de-acao/TAREFAS.md (cartões detalhados de cada tarefa) quando acabaram os tokens. NÃO SEI se terminou.
@@ -15,7 +15,7 @@ Já feito (segundo o log):
 ## Passo 0: verificar antes de agir
 1. Liste plano-de-acao/ (recursivo), skills/ e rode `git status`.
 2. Leia o PLANO.md V2 inteiro e o TAREFAS.md que existir. Para CADA uma das 94 tarefas do PLANO.md, confira se existe cartão no TAREFAS.md e se está completo.
-3. Leia legado/PLANO-v1.md, legado/RETOMAR-v1.md, PROMPT_ORIGINAL.md, LINHA-DO-TEMPO.md, skills/skill.md, skills/SKILLENG.md e o README.md da raiz.
+3. Leia legado/PLANO-v1.md, legado/RETOMAR-v1.md, PROMPT_ORIGINAL.md, LINHA-DO-TEMPO.md, .agents/skills/coder/old-root-skills/skill.md, skills/SKILLENG.md e o README.md da raiz.
 4. Faça uma lista curta do que está pronto, incompleto e faltando. NÃO refaça o que já está bom. Mantenha as decisões D-xx, a numeração, as fases e o formato do PLANO.md.
 
 ## Passo 1: completar o que falta (nesta ordem)

@@ -66,6 +66,7 @@ Unlike conventional platforms that require perpetual cloud connectivity, paid su
 - [x] **Comprehensive Vocabulary Catalog:** Vocabulary management covering verbs, meanings, usage contexts, example sentences, and associated canonical verb tenses.
 - [x] **Heuristic SRS Review Queue:** Smart scheduling based on recall difficulty, calculation of dynamic review intervals, and diagnostic error analysis grouped by category.
 - [x] **Student Sentence Composition:** Learners can draft and persist custom sentences during active review sessions.
+- [x] **Pre-development Security Layer:** Early implementation of query sanitization, `LIMIT` parameterization, and centralized API error masking to prevent internal database leakages.
 - [x] **Canonical 12 English Verb Tenses:** Dedicated relational structure for functional grammar and verb conjugation practice.
 - [x] **Native Browser Speech Synthesis:** Text-to-speech audio powered by the browser's native `SpeechSynthesis` (Web Speech API) with zero network dependency.
 - [x] **Analytical Dashboard:** Visual retention charts, study volume, and error frequency metrics powered by Chart.js.
@@ -243,24 +244,17 @@ If your session terminates due to context window limits, client switching, or re
 
 ---
 
-## AI Development Skills & Prompts
+## AI Development Architecture & Master Prompts
 
-This repository is designed to be co-developed with agentic AI assistants. It includes predefined prompts and custom skills to guide the AI's behavior reliably without losing context:
+The governance of this repository is heavily driven by Autonomous AI Agents structured in a two-tier system, documented natively inside the [Master Prompts Catalog (`PROMPTS_MESTRES.md`)](./plano-de-melhoria/PROMPTS_MESTRES.md).
 
-### 1. Operational Execution (The "T" Tasks)
-* **Skill:** `studyreviewblast-planner` (located in [`skills/SKILLENG.md`](./skills/SKILLENG.md))
-* **Purpose:** Drives the day-to-day execution of the project. It forces the AI to follow the atomic workflow (1 task per session), write tests first, and pause for commits.
-* **How to use:** Trigger the skill and prompt the AI with:
-  > `Leia plano-de-acao/RETOMAR.md e execute a T-0XX.`
+### 1. Planning and Architecture (`architect/` Agents)
+The `plano-de-melhoria/` folder governs the architectural roadmap (the "M" Tasks). The agents in `.agents/skills/architect/` ensure the project stays sane, checking dependencies, reviewing plans, and generating tasks based on capacity constraints (Task Sizing).
 
-### 2. Planning Refinement (The "M" Tasks)
-* **Skill:** `SKILL-MELHORIA-PLANO` (obsoleta, preservada em [`plano-de-acao/legado/SKILL-MELHORIA-PLANO.md`](./plano-de-acao/legado/SKILL-MELHORIA-PLANO.md))
-* **Purpose:** Allows the AI to audit the project and improve the action plan itself without touching source code.
-* **How to use:** O projeto agora utiliza as skills nativas do diretório `.agents/skills/`. O antigo processo (preservado em [`plano-de-acao/legado/CENTRAL_IDEA.md`](./plano-de-acao/legado/CENTRAL_IDEA.md)) foi superado pelo novo ecossistema.
-
-### 3. Open Source Documentation
-* **Skill:** `readme-open-source` (located in [`skills/skill.md`](./skills/skill.md))
-* **Purpose:** Instructs the AI to analyze the actual codebase and generate/update this README file with accurate stack versions and setup instructions.
+### 2. Operational Code Execution (`coder/` Agents)
+The `plano-de-acao/` folder governs the execution of code tasks (the "T" Tasks). The primary engine is the `studyreviewblast-planner` agent located in `.agents/skills/coder/studyreviewblast-planner/`.
+* **Purpose:** It forces the AI to follow the atomic workflow (1 task per session), write TDD tests first, execute linter checks, and pause for commits.
+* **How to resume work:** Activate the `studyreviewblast-planner` skill and ask to execute the next pending T-Task. The Master Catalog handles the context injection.
 
 ---
 
@@ -273,6 +267,7 @@ The development roadmap is structured into **15 core phases** plus approved expa
 | Phase | Phase Title | Task Scope | Key Deliverables | Status |
 |---|---|---|---|---|
 | **Phase 1** | Safety Net & Baseline | T-001 to T-004 | Clean branch, verified backup (`pg_dump -Fc`), baseline test metrics, usability matrix | In Progress (T-001 ✔) |
+| **Phase 1.5** | Security Hotfixes | T-095 to T-102 | Pre-development critical security fixes (rate limits, query sanitization, error masking) | In Progress (T-095 ✔) |
 | **Phase 2** | Tooling & Code Quality | T-005 to T-011 | Root package.json, ESLint Flat, Prettier, Husky, lint-staged, commitlint, GitHub Actions CI | Pending |
 | **Phase 3** | Reproducible Environment | T-012 to T-015 | Isolated `<DB_NAME>_test` database, Zod-validated `.env`, optional compose.yml | Pending |
 | **Phase 4** | Versioned Migrations & SQL Logic | T-016 to T-024 | Node migration runner, SHA-256 checksums, `updated_at` triggers, foreign key indexes | In Progress (T-016, T-017 ✔) |
@@ -482,9 +477,14 @@ This repository features a robust, self-documenting ecosystem of custom skills f
 All skills are natively loaded from `.agents/skills/`:
 - **`studyreviewblast-planner`**: The core engineering skill that strictly enforces TDD, no-secrets policies, and database migration rules.
 - **`gerador-de-m`**: Automates the creation of architectural improvement plans (`M-xx`) before any code is touched, enforcing planning-first development.
+- **`project-oracle`**: The context search engine. Forces the AI to read the timeline and reports before answering user questions to eliminate hallucinations.
+- **`hierarchy-sync`**: Ensures that architectural updates cascade correctly (Logs -> Reports -> README) to prevent documentation asymmetry.
+- **`brain-sync`**: Deep context initializer. Forces the AI to read global rules, skill catalogs, and master prompts before starting complex work.
+- **`crash-recovery`**: Recovers context from sudden failures (e.g., token limits) to ensure seamless resumption.
+- **`security-scanner`**: Static security analysis engine to detect vulnerabilities (SQL Injection, leaks) and generate M-tasks.
 - **`safe-cleanup`**: A governance skill that prevents accidental deletion of files, demanding formal justification and user approval before moving legacy data.
-- **`markdown-doctor`**: An autonomous documentation healer that scans and fixes broken markdown links across the repository after folder restructures.
-- **`prompt-updater`**: Automatically injects new capabilities into the master prompt catalog (`PROMPTS_MESTRES.md`) whenever a new skill is born.
+- **`markdown-doctor`**: An autonomous documentation healer that scans and fixes broken markdown links across the repository.
+- **`prompt-updater`**: Automatically injects new capabilities into the master prompt catalog (`PROMPTS_MESTRES.md`).
 - **`readme-open-source`**: Analyzes the repository stack and automatically generates/updates this professional README.
 
 To view the master rules these agents obey, see `.agents/rules/global_rules.md`.

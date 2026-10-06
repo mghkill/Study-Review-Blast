@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require('../db/connection');
 const { requireStudent } = require('../middleware/requireStudent');
 const { tenseToCode } = require('../services/tenses');
+const { sendError } = require('../utils/errors');
 
 router.use(requireStudent);
 
@@ -27,7 +28,7 @@ router.get('/', async (req, res) => {
     const result = await db.query(query, params);
     res.json(result.rows);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    sendError(res, err, 'Erro no servidor (Sentenças)');
   }
 });
 
@@ -52,7 +53,7 @@ router.post('/', async (req, res) => {
     `, [vocabularyItemId, sid, sentence_text, translation, tense, tenseCode, context_id, notes, source]);
     res.status(201).json(result.rows[0]);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    sendError(res, err, 'Erro no servidor (Sentenças)');
   }
 });
 
@@ -77,7 +78,7 @@ router.patch('/:id', async (req, res) => {
     if (!result.rows[0]) return res.status(404).json({ error: 'Not found' });
     res.json(result.rows[0]);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    sendError(res, err, 'Erro no servidor (Sentenças)');
   }
 });
 
@@ -92,7 +93,7 @@ router.delete('/:id', async (req, res) => {
     if (!result.rows[0]) return res.status(404).json({ error: 'Not found' });
     res.json({ success: true });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    sendError(res, err, 'Erro no servidor (Sentenças)');
   }
 });
 
@@ -113,7 +114,7 @@ router.get('/paragraphs', async (req, res) => {
     `, [sid]);
     res.json(result.rows);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    sendError(res, err, 'Erro no servidor (Sentenças)');
   }
 });
 
@@ -145,7 +146,7 @@ router.post('/paragraphs', async (req, res) => {
       client.release();
     }
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    sendError(res, err, 'Erro no servidor (Sentenças)');
   }
 });
 
