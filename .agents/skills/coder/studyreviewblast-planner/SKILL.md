@@ -21,7 +21,7 @@ O usuário usa **Windows** com Python 3.14 (`py --version`) e Docker Desktop 29.
 
 ## Ao começar qualquer sessão (Ordem Canônica M-07)
 1. Leia `plano-de-acao/RELATORIO-GERAL-PROJETO.md` (no onboarding inicial, ao trocar de modelo de IA ou após compactação de contexto).
-2. Leia `plano-de-acao/RETOMAR.md` — é o guia de conduta e protocolo diário de execução e pausa.
+2. Leia `plano-de-acao/RETOMAR.md` — é o guia de conduta e protocolo diário de execução e pausa (e onde fica o seu Prompt Canônico).
 3. Leia o bloco `## PRÓXIMO PASSO` em `plano-de-acao/PLANO.md` para identificar a tarefa da sessão.
 4. Leia o cartão específico da tarefa em `plano-de-acao/TAREFAS.md` (bloco `### T-0XX`).
 5. Leia as últimas 20 linhas de `plano-de-acao/LINHA-DO-TEMPO.md` e arquivos de referência indicados.

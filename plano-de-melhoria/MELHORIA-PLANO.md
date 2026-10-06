@@ -537,17 +537,42 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Lê: novas skills segregadas
   - Altera: `PROMPTS_MESTRES.md`
 
-- [ ] **M-33** Auditoria de Regras Específicas (Plano de Ação) — Conferir minuciosamente todas as regras que se aplicam SOMENTE ao `plano-de-acao/` (TDD, arquitetura do DB, pausas rígidas). Analisar exceções, avaliar o que pode ser reaproveitado e definir como o arquivo mestre deverá trabalhar para abrigar essas especificidades sem conflitar com as regras de melhoria arquitetural.
+- [x] **M-33** Auditoria de Regras Específicas (Plano de Ação) — Conferir minuciosamente todas as regras que se aplicam SOMENTE ao `plano-de-acao/` (TDD, arquitetura do DB, pausas rígidas). Analisar exceções, avaliar o que pode ser reaproveitado e definir como o arquivo mestre deverá trabalhar para abrigar essas especificidades sem conflitar com as regras de melhoria arquitetural. ✅ CONCLUÍDA
   - Lê: `plano-de-acao/RETOMAR.md`, `plano-de-acao/PLANO.md`
   - Altera: `MELHORIA-PLANO.md` (Mapeamento de Regras)
 
-- [ ] **M-35** Evolução do `RETOMAR.md` (Mimetizando o Master Prompt) — O `RETOMAR.md` é o embrião do prompt mestre para código. A tarefa é aplicar a mesma lógica das skills de contexto a ele. Transformar seu fluxo em um sistema parelho ao de "prompts/skills", garantindo que a execução operacional siga a mesma fluidez das tarefas "M".
+- [x] **M-35** Evolução do `RETOMAR.md` (Mimetizando o Master Prompt) — O `RETOMAR.md` é o embrião do prompt mestre para código. A tarefa é aplicar a mesma lógica das skills de contexto a ele. Transformar seu fluxo em um sistema parelho ao de "prompts/skills", garantindo que a execução operacional siga a mesma fluidez das tarefas "M". ✅ CONCLUÍDA
   - Lê: `plano-de-acao/RETOMAR.md`
   - Altera: `RETOMAR.md`, `.agents/skills/coder/studyreviewblast-planner/SKILL.md`
 
-- [ ] **M-19** Reestruturação e Renomeação — Propor a tradução e reestruturação dos nomes de arquivos de documentação para o inglês (separado em sub-tarefas a, b, c). **[ADIADA por complexidade]**
+- [x] **M-19** Reestruturação e Renomeação — Propor a tradução e reestruturação dos nomes de arquivos de documentação para o inglês (separado em sub-tarefas a, b, c). ✅ CONCLUÍDA (Proposta de plano adicionada)
   - Lê: estrutura atual
   - Altera: `plano-de-melhoria/MELHORIA-PLANO.md` (para documentar o plano de renomeação)
+
+---
+
+## Mapeamento de Regras Operacionais vs. Globais (M-33)
+**Auditoria de Fronteiras:**
+- **Regras Globais (Meta-Regulação em `.agents/rules/global_rules.md`):** Aplicam-se a todo o sistema, ditando segurança (sem APIs pagas, sem senhas), limites de resposta da IA e imutabilidade dos logs.
+- **Regras de Ação Específicas (Confinadas às T-Tasks, via `RETOMAR.md` e `SKILL.md` do planner):**
+  - *TDD Obrigatório:* Teste falhando antes de implementar código de produto.
+  - *Arquitetura:* Node+React+PostgreSQL 18.
+  - *Pausas Rígidas:* Após 1 tarefa T, a IA deve rodar linter, sugerir commit e parar para revisão humana, proibida de emendar outra T sem autorização.
+- **Conclusão:** As regras operacionais não conflitam com as globais; elas as complementam com rigor tático de código. O catálogo `PROMPTS_MESTRES.md` e o `RETOMAR.md` delegam a fiscalização operacional diretamente para a skill `studyreviewblast-planner`.
+
+## Plano de Renomeação para o Inglês (M-19)
+**Proposta Oficial de Transição Linguística (Fase 15)**
+Para seguir o padrão Open Source estrito (Regra D-19), o repositório terá a nomenclatura de seus arquivos mestre traduzida:
+- `plano-de-acao/` → `action-plan/`
+  - `PLANO.md` → `PLAN.md`
+  - `TAREFAS.md` → `TASKS.md`
+  - `RETOMAR.md` → `RESUME.md`
+  - `LINHA-DO-TEMPO.md` → `TIMELINE.md`
+  - `RELATORIO-GERAL-PROJETO.md` → `PROJECT-OVERVIEW.md`
+- `plano-de-melhoria/` → `improvement-plan/`
+  - `MELHORIA-PLANO.md` → `IMPROVEMENT-PLAN.md`
+  - `PROMPTS_MESTRES.md` → `MASTER-PROMPTS.md`
+*Ação:* Isso não será feito agora. Esta reestruturação física fica oficialmente agendada como a última etapa de revisão documental do projeto para não quebrar links preexistentes antes da finalização técnica.
 
 ---
 
@@ -693,6 +718,9 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 [2026-10-06 16:42] FIM M-32 — Skill `dependency-checker` criada na pasta `architect/`. O ambiente de skills agora conta com novas automações hierarquizadas. Próximo passo: M-36 (Sincronização Final do Catálogo Operacional).
 [2026-10-06 16:45] PRÉ-REGISTRO M-36 — Atualizar `PROMPTS_MESTRES.md` separando em dois grupos: Infraestrutura (Tarefas M) e Operacional (Tarefas T) e adicionar a skill `dependency-checker`.
 [2026-10-06 16:45] FIM M-36 — Catálogo mestre atualizado e formalizado em dois sistemas paralelos: (Tarefas M - architect/) e (Tarefas T - coder/).
+[2026-10-06 17:05] FIM M-33 — Auditoria e mapeamento de regras finalizada e consolidada no `MELHORIA-PLANO.md`.
+[2026-10-06 17:05] FIM M-35 — `RETOMAR.md` evoluído para apontar diretamente para a skill do catálogo mestre.
+[2026-10-06 17:05] FIM M-19 — Proposta de renomeação de arquivos arquitetada e programada para a Fase 15. A fila de Melhorias (M-Tasks) foi inteiramente percorrida e limpa!
 ```
 
 
