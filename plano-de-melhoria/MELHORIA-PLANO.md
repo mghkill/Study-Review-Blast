@@ -411,9 +411,13 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Lê: `plano-de-melhoria/CENTRAL_IDEA.md`
   - Altera: `.agents/skills/gerador-de-m/SKILL.md` (criação) e `plano-de-melhoria/PROMPTS_MESTRES.md` (novo)
 
-- [ ] **M-17** Consolidação das Regras Mestras Globais — Agrupar regras fundamentais (ex: resolução de conflitos) em um único arquivo consultado por todas as skills.
+- [x] **M-17** Consolidação das Regras Mestras Globais — Agrupar regras fundamentais (ex: resolução de conflitos, pausar sempre) em um único arquivo consultado nativamente por toda IA.
   - Lê: regras espalhadas no planejamento
-  - Altera: `plano-de-melhoria/MELHORIA-PLANO.md` (ou novo doc de regras)
+  - Altera: `.agents/rules/global_rules.md` (criação)
+
+- [x] **M-16b** Refinamento de Segurança e Triagem de Regras — Varrer o projeto para extrair regras atuais de segurança (zero alucinação, proteção de `.env`, zero senhas em commit) e expurgar regras obsoletas (ex: ausência de ORM).
+  - Lê: `RETOMAR.md`, `PROMPT_ORIGINAL.md`, `RELATORIO-GERAL-PROJETO.md`
+  - Altera: `.agents/rules/global_rules.md`
 
 - [ ] **M-18** Padronização 100% Inglês — Adicionar D-19 (Idioma Técnico) e atualizar diretrizes para que todo código, arquivos e comentários sejam em inglês.
   - Lê: `plano-de-acao/PLANO.md`, `skills/SKILLENG.md`
@@ -438,6 +442,14 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 - [ ] **M-23** Correção de Bugs Pós-Limpeza — Tarefa de revisão final para consertar eventuais links quebrados ou conflitos gerados pelas renomeações.
   - Lê: todos os .md
   - Altera: os .md com bugs
+
+- [ ] **M-24** Aprimoramento da Detecção de Skills — Editar a skill `gerador-de-m` para incluir o comando explícito: "Antes de formular o M, leia a pasta `.agents/skills/`. Se não houver skill para a intenção, gere o M focado na *criação* de uma nova skill."
+  - Lê: `.agents/skills/gerador-de-m/SKILL.md`
+  - Altera: `.agents/skills/gerador-de-m/SKILL.md`
+
+- [x] **M-25** Refatoração Visual do PROMPTS_MESTRES.md — Formatar o catálogo de prompts com blocos de código markdown para permitir a cópia em um clique pelo usuário.
+  - Lê: `plano-de-melhoria/PROMPTS_MESTRES.md`
+  - Altera: `plano-de-melhoria/PROMPTS_MESTRES.md`
 
 ---
 
@@ -530,5 +542,11 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 [2026-10-04 17:40] FIM M-12 — arquivos alterados: skills/SKILLENG.md, skills/references/convencoes-v2.md, skills/skill.md, skills/references/diagnostico-atual.md, plano-de-melhoria/MELHORIA-PLANO.md — achados: SKILLENG.md alinhado com a governança da M-07 (6 passos canônicos, plan_tool.py operacional único com init obsoleto, T-092 prova de fogo e stack D-11/D-14/D-18); convencoes-v2.md com pasta de backup generalizada e D-16 ratificado sem renomear plano-de-acao/; skill.md alinhado com D-08 (README em pt-BR até Fase 14); diagnostico-atual.md com tarja de histórico e somente leitura.
 [2026-10-05 23:45] INÍCIO M-16 — Criação da Skill "Gerador de M" e Arquivo Mestre
 [2026-10-05 23:45] FIM M-16 — arquivos alterados: .agents/skills/gerador-de-m/SKILL.md, plano-de-melhoria/PROMPTS_MESTRES.md — achados: Criada a skill `gerador-de-m` e o arquivo `PROMPTS_MESTRES.md`. O novo catálogo de prompts foi centralizado e as intenções agora passam obrigatoriamente pela geração de uma tarefa M antes de serem executadas, garantindo segurança contra perda de contexto.
+[2026-10-05 23:46] INÍCIO M-25 — Refatoração Visual do PROMPTS_MESTRES.md
+[2026-10-05 23:46] FIM M-25 — arquivos alterados: plano-de-melhoria/PROMPTS_MESTRES.md — achados: O arquivo de prompts mestres foi reescrito. Agora cada intenção possui um título enumerado e um bloco de código markdown isolado, permitindo que o usuário copie a instrução completa com apenas um clique, melhorando a intuição e usabilidade.
+[2026-10-05 23:55] INÍCIO M-17 — Consolidação das Regras Mestras Globais
+[2026-10-05 23:55] FIM M-17 — arquivos alterados: .agents/rules/global_rules.md — achados: Criado o arquivo de regras globais em formato nativo (.agents/rules). A partir de agora, as diretrizes inegociáveis de "Pausar após cada tarefa", "Prevenção de conflitos D-xx/M-xx", e "Segurança do Gerador M" estão ativas permanentemente no contexto do Antigravity, eliminando a necessidade de repeti-las em cada prompt manual.
+[2026-10-06 00:02] INÍCIO M-16b — Refinamento de Segurança e Triagem de Regras
+[2026-10-06 00:03] FIM M-16b — arquivos alterados: .agents/rules/global_rules.md — achados: O arquivo de regras globais foi enriquecido. Foram adicionadas travas de segurança rígidas contra alucinação, proibição absoluta de exposição do arquivo `.env` e chaves sensíveis, proibição de commit com senhas, além da regra anti-bagunça para que qualquer limpeza passe antes por planejamento M. Regras obsoletas que conflitavam com as decisões D-xx atuais (ex: ausência de ORM) foram expurgadas do comportamento global.
 ```
 

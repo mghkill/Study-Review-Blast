@@ -1,26 +1,51 @@
 # Catálogo Mestre de Prompts (PROMPTS_MESTRES.md)
 
-Este é o ÚNICO arquivo de prompts que você precisa consultar para o desenvolvimento guiado por IA deste projeto.
+Este é o ÚNICO arquivo de prompts que você precisa consultar para o desenvolvimento guiado por IA deste projeto. Basta ler o título do que deseja, copiar o bloco correspondente com um clique e colar no chat.
 
-## O Prompt Universal
+## 1. Atualizar Documentação (README)
+```text
+Ative a skill gerador-de-m. Minha solicitação é: Atualizar o README do projeto com as últimas novidades.
+```
 
-Sempre que quiser fazer qualquer coisa no projeto (programar, limpar, organizar, corrigir bugs), copie e cole o bloco abaixo no chat, substituindo a parte em colchetes pela sua intenção.
+## 2. Continuar a Programação Diária
+```text
+Ative a skill gerador-de-m. Minha solicitação é: Continuar a programação (executar a próxima T-xx operacional pendente).
+```
 
-> "Ative a skill `gerador-de-m`. Minha solicitação é: **[SUA INTENÇÃO AQUI]**"
+## 3. Executar Próxima Melhoria de Planejamento
+```text
+Ative a skill gerador-de-m. Minha solicitação é: Executar a próxima melhoria planejada na fila do plano-de-melhoria.
+```
+
+## 4. Limpeza Segura (Arquivos antigos)
+```text
+Ative a skill gerador-de-m. Minha solicitação é: Limpar os arquivos de prompt antigos do projeto e arquivá-los no legado.
+```
+
+## 5. Criar uma Nova Skill
+```text
+Ative a skill gerador-de-m. Minha solicitação é: Criar uma nova skill permanente para automatizar a tarefa X.
+```
+
+## 6. Correção de Bugs
+```text
+Ative a skill gerador-de-m. Minha solicitação é: Corrigir o bug X que encontrei na rota Y.
+```
+
+## 7. Padronização Global de Idioma
+```text
+Ative a skill gerador-de-m. Minha solicitação é: Garantir a padronização 100% inglês em todos os comentários e pastas.
+```
+
+## 8. Renomear/Reorganizar Arquivos
+```text
+Ative a skill gerador-de-m. Minha solicitação é: Renomear arquivos de documentação para inglês estruturadamente.
+```
 
 ---
 
-## Catálogo de Intenções Rápidas (Copie e cole no bloco acima)
-
-Você pode usar suas próprias palavras, ou copiar um dos exemplos abaixo para tarefas comuns:
-
-*   "Atualizar o README do projeto com as últimas novidades."
-*   "Continuar a programação (executar a próxima T-xx operacional pendente)."
-*   "Executar a próxima melhoria planejada na fila do plano-de-melhoria."
-*   "Limpar os arquivos de prompt antigos do projeto e arquivá-los no legado."
-*   "Corrigir o bug X que encontrei na rota Y."
-*   "Garantir a padronização 100% inglês em todos os comentários e pastas."
-*   "Renomear arquivos de documentação para inglês estruturadamente."
+> **Como a IA sabe qual skill usar?**
+> A skill `gerador-de-m` é inteligente. Quando você faz um pedido, ela primeiro vasculha a pasta `.agents/skills/` para ver se já temos uma skill que resolva isso (como a `readme-open-source`). Se não existir, ela mesma propõe a criação de uma **nova skill** na tarefa M que ela vai gerar para você aprovar.
 
 ---
 
