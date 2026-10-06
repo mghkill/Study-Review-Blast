@@ -10,6 +10,7 @@ const {
   generateAuditText,
 } = require('../services/srs');
 const { tenseToCode } = require('../services/tenses');
+const { sendError } = require('../utils/errors');
 
 router.use(requireStudent);
 
@@ -89,7 +90,7 @@ router.get('/queue', async (req, res) => {
 
     res.json({ items: withAudit, total: withAudit.length, mode });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    sendError(res, err, 'Erro ao carregar fila de revisão');
   }
 });
 
@@ -300,7 +301,7 @@ router.post('/', async (req, res) => {
       client.release();
     }
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    sendError(res, err, 'Erro ao registrar revisão');
   }
 });
 
@@ -317,11 +318,15 @@ router.get('/history', async (req, res) => {
     `;
     const params = [sid];
     if (vocabId) { query += ` AND r.vocabulary_item_id = $2`; params.push(vocabId); }
-    query += ` ORDER BY r.reviewed_at DESC LIMIT ${parseInt(limit)}`;
+    
+    const safeLimit = Math.max(1, Math.min(parseInt(limit, 10) || 20, 200));
+    params.push(safeLimit);
+    query += ` ORDER BY r.reviewed_at DESC LIMIT $${params.length}`;
+    
     const result = await db.query(query, params);
     res.json(result.rows);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    sendError(res, err, 'Erro ao carregar histórico de revisões');
   }
 });
 
@@ -345,7 +350,7 @@ router.get('/errors', async (req, res) => {
     `, [sid]);
     res.json(result.rows);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    sendError(res, err, 'Erro ao carregar relatório de erros');
   }
 });
 
@@ -383,7 +388,7 @@ router.post('/student-sentence', async (req, res) => {
 
     res.status(201).json(result.rows[0]);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    sendError(res, err, 'Erro ao salvar sentença do estudante');
   }
 });
 

@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require('../db/connection');
 const { requireStudent } = require('../middleware/requireStudent');
 const { tenseToCode } = require('../services/tenses');
+const { sendError } = require('../utils/errors');
 
 // Todas as rotas de vocabulário exigem X-Student-Id
 router.use(requireStudent);
@@ -59,7 +60,7 @@ router.get('/', async (req, res) => {
     const result = await db.query(query, params);
     res.json(result.rows);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    sendError(res, err, 'Erro no servidor (Vocabulário)');
   }
 });
 
@@ -135,7 +136,7 @@ router.get('/:id', async (req, res) => {
       errorSummary: errorsRes.rows,
     });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    sendError(res, err, 'Erro no servidor (Vocabulário)');
   }
 });
 
@@ -228,7 +229,7 @@ router.post('/', async (req, res) => {
       client.release();
     }
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    sendError(res, err, 'Erro no servidor (Vocabulário)');
   }
 });
 
@@ -254,7 +255,7 @@ router.patch('/:id', async (req, res) => {
     if (!result.rows[0]) return res.status(404).json({ error: 'Not found' });
     res.json(result.rows[0]);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    sendError(res, err, 'Erro no servidor (Vocabulário)');
   }
 });
 
@@ -283,7 +284,7 @@ router.delete('/:id', async (req, res) => {
       client.release();
     }
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    sendError(res, err, 'Erro no servidor (Vocabulário)');
   }
 });
 
@@ -306,7 +307,7 @@ router.post('/:id/sentences', async (req, res) => {
     `, [id, sid, sentence_text, translation, tense, tenseCode, context_id, notes, source]);
     res.status(201).json(result.rows[0]);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    sendError(res, err, 'Erro no servidor (Vocabulário)');
   }
 });
 
@@ -330,7 +331,7 @@ router.patch('/:id/sentences/:sentenceId', async (req, res) => {
     if (!result.rows[0]) return res.status(404).json({ error: 'Not found' });
     res.json(result.rows[0]);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    sendError(res, err, 'Erro no servidor (Vocabulário)');
   }
 });
 
@@ -346,7 +347,7 @@ router.delete('/:id/sentences/:sentenceId', async (req, res) => {
     if (!result.rows[0]) return res.status(404).json({ error: 'Not found' });
     res.json({ ok: true });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    sendError(res, err, 'Erro no servidor (Vocabulário)');
   }
 });
 
@@ -367,7 +368,7 @@ router.post('/:id/contexts', async (req, res) => {
     `, [id, sid, context_name, description, example_structure]);
     res.status(201).json(result.rows[0]);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    sendError(res, err, 'Erro no servidor (Vocabulário)');
   }
 });
 
@@ -387,7 +388,7 @@ router.patch('/:id/meanings/:meaningId', async (req, res) => {
     if (!result.rows[0]) return res.status(404).json({ error: 'Not found' });
     res.json(result.rows[0]);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    sendError(res, err, 'Erro no servidor (Vocabulário)');
   }
 });
 

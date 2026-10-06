@@ -10,8 +10,8 @@
 
 ## PRÓXIMO PASSO
 <!-- proximo:start -->
-- Atualizado em 2026-10-05 21:06
-- Iniciar **T-005** — [P] `package.json` na raiz só para ferramentas, com `npm test` e `npm run lint` delegando para server e client (D-09)
+- Atualizado em 2026-10-06 15:48
+- Iniciar **T-098** — [P] Sanitizar LIMIT interpolado em reviews.js (SEC-01)
 <!-- proximo:end -->
 
 ## Regras fixas (só mudam se o usuário pedir)
@@ -69,7 +69,7 @@ Explicação em linguagem simples no README (seção "Decisões explicadas").
 - [x] T-004 [M] Matriz de usabilidade `docs/usability-matrix.md` (tela × rota × tabela × teste; dados que existem no banco e não aparecem no front) [v1 T-060] ✔ 2026-10-05 21:06
 
 ## Fase 1.5 — Hotfixes de Segurança (Security First)
-- [ ] T-095 [P] Parametrizar LIMIT e OFFSET e criar sanitizador de erros na API sem vazar err.message nem SQL
+- [x] T-095 [P] Parametrizar LIMIT e OFFSET e criar sanitizador de erros na API sem vazar err.message nem SQL ✔ 2026-10-06 15:48
 - [ ] T-098 [P] Sanitizar LIMIT interpolado em reviews.js (SEC-01)
 - [ ] T-099 [P] Remover vazamento de err.message genérico em 35 rotas (SEC-02)
 - [ ] T-100 [P] Instalar e configurar helmet para headers de segurança HTTP (SEC-04)

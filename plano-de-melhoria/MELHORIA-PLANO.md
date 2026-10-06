@@ -525,7 +525,7 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Limite: 1 arquivo (`plano-de-acao/TAREFAS.md`).
   - Skill acionada: `gerador-de-m`
 
-- [ ] **M-44** [Markdown Doctor Pós-Reorganização] — Como as etapas 42 e 43 vão mover cabeçalhos e alterar IDs, executar uma varredura completa para curar âncoras e referências cruzadas que possam ter quebrado entre `PLANO.md`, `TAREFAS.md` e `RETOMAR.md`.
+- [x] **M-44** [Markdown Doctor Pós-Reorganização] — Como as etapas 42 e 43 vão mover cabeçalhos e alterar IDs, executar uma varredura completa para curar âncoras e referências cruzadas que possam ter quebrado entre `PLANO.md`, `TAREFAS.md` e `RETOMAR.md`. ✅ CONCLUÍDA
   - Limite: Todos os .md da pasta plano-de-acao.
   - Skill acionada: `markdown-doctor`
 
@@ -661,6 +661,7 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 [2026-10-06 15:19] FIM M-41 — Rascunho de priorização gerado. Arquivo `plano-de-acao/RASCUNHO_PRIORIZACAO_SEGURANCA.md` criado demonstrando a intenção de agrupar as tarefas de segurança (T-095, T-098 a T-102) em uma nova 'Fase 1.5' que será inserida antes da Fase 2. Arquivos de plano oficiais não foram alterados para respeitar o limite de tokens.
 [2026-10-06 15:28] FIM M-42 — Arquivo `plano-de-acao/PLANO.md` alterado. A "Fase 1.5 — Hotfixes de Segurança" foi fisicamente injetada antes da Fase 2, e os IDs das tarefas T-095, T-098 a T-102 foram movidos para lá. A estrutura de alto nível do plano agora prioriza a segurança. Próximo passo: mover os cartões completos no TAREFAS.md (M-43).
 [2026-10-06 15:35] FIM M-43 — Arquivo `plano-de-acao/TAREFAS.md` modificado com sucesso. Os grandes blocos das tarefas T-095, T-098, T-099, T-100, T-101 e T-102 foram extraídos do fundo do arquivo e reinjetados sob o novo cabeçalho da Fase 1.5, imediatamente antes da Fase 2. Todo o conteúdo original das tarefas foi preservado. Próximo passo sugerido: M-44 (markdown-doctor) para curar possíveis links quebrados.
+[2026-10-06 15:40] FIM M-44 — Varredura markdown-doctor concluída. Os arquivos e âncoras foram verificados. O bloco 'PRÓXIMO PASSO' no `PLANO.md`, que havia ficado defasado apontando para a T-005, foi devidamente atualizado para apontar para o novo início da fila: T-095. A fundação de planejamento e prioridade foi 100% finalizada (Split M-41 a M-44 encerrado). Próximo passo: Iniciar codificação.
 ```
 
 
