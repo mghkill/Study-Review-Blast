@@ -529,6 +529,10 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Limite: Todos os .md da pasta plano-de-acao.
   - Skill acionada: `markdown-doctor`
 
+- [x] **M-45** [Faxina Segura de Arquivos Obsoletos] — Excluir permanentemente o rascunho temporário `RASCUNHO_PRIORIZACAO_SEGURANCA.md` e os 5 arquivos `.log` localizados na raiz do repositório, garantindo que o Workspace fique limpo. ✅ CONCLUÍDA
+  - Limite: 6 arquivos a serem deletados.
+  - Skill acionada: `safe-cleanup`
+
 ---
 
 ## Checklist de requisitos (para a M-03)
@@ -662,6 +666,8 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 [2026-10-06 15:28] FIM M-42 — Arquivo `plano-de-acao/PLANO.md` alterado. A "Fase 1.5 — Hotfixes de Segurança" foi fisicamente injetada antes da Fase 2, e os IDs das tarefas T-095, T-098 a T-102 foram movidos para lá. A estrutura de alto nível do plano agora prioriza a segurança. Próximo passo: mover os cartões completos no TAREFAS.md (M-43).
 [2026-10-06 15:35] FIM M-43 — Arquivo `plano-de-acao/TAREFAS.md` modificado com sucesso. Os grandes blocos das tarefas T-095, T-098, T-099, T-100, T-101 e T-102 foram extraídos do fundo do arquivo e reinjetados sob o novo cabeçalho da Fase 1.5, imediatamente antes da Fase 2. Todo o conteúdo original das tarefas foi preservado. Próximo passo sugerido: M-44 (markdown-doctor) para curar possíveis links quebrados.
 [2026-10-06 15:40] FIM M-44 — Varredura markdown-doctor concluída. Os arquivos e âncoras foram verificados. O bloco 'PRÓXIMO PASSO' no `PLANO.md`, que havia ficado defasado apontando para a T-005, foi devidamente atualizado para apontar para o novo início da fila: T-095. A fundação de planejamento e prioridade foi 100% finalizada (Split M-41 a M-44 encerrado). Próximo passo: Iniciar codificação.
+[2026-10-06 16:20] PRÉ-REGISTRO M-45 — Planejamento de faxina segura dos arquivos obsoletos (RASCUNHO_PRIORIZACAO_SEGURANCA.md e logs da raiz). Destino escolhido pelo usuário: exclusão permanente. O M-45 irá deletar esses 6 arquivos via skill safe-cleanup.
+[2026-10-06 16:21] FIM M-45 — Faxina segura concluída. Os 6 arquivos obsoletos foram excluídos permanentemente do disco e o repositório agora está limpo de logs temporários. Próximo passo: Iniciar codificação T-098.
 ```
 
 
