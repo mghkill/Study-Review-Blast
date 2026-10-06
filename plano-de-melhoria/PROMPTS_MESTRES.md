@@ -31,6 +31,7 @@ Ative a skill studyreviewblast-planner. Minha solicitação é: [INSERIR AÇÃO,
 **Como Funciona:** Delega à IA a responsabilidade de auditar o projeto, reorganizar prioridades e planejar melhorias estruturais *sem tocar no código fonte*. Possui inteligência de **Task Sizing**: se uma tarefa modificar muitos arquivos (>3-4), a IA alertará sobre o risco de estouro de token e sugerirá um "Split" (distribuição) em tarefas menores. Garante que segurança sempre tenha prioridade.
 **Variações de Uso:**
 - *Fila de Melhorias (Padrão):* "Execute a próxima melhoria planejada na fila."
+- *Execução de M Específico:* "Executar a M-41 gerando o rascunho com a nova priorização de segurança no projeto."
 - *Planejamento e Split:* "Gere um cartão M para refatorar o backend. Se for grande demais, faça o split em vários Ms."
 - *Repriorização:* "Varra as pendências abertas e reorganize a fila dando prioridade para segurança."
 **Prompt Padrão:**
