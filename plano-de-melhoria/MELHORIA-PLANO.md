@@ -443,9 +443,29 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Lê: todos os .md
   - Altera: os .md com bugs
 
-- [ ] **M-24** Aprimoramento da Detecção de Skills — Editar a skill `gerador-de-m` para incluir o comando explícito: "Antes de formular o M, leia a pasta `.agents/skills/`. Se não houver skill para a intenção, gere o M focado na *criação* de uma nova skill."
+- [x] **M-24** Aprimoramento da Detecção de Skills — Editar a skill `gerador-de-m` para incluir o comando explícito de leitura da pasta de skills, aplicando um filtro de inteligência: reaproveitar skills existentes, criar novas skills apenas para padrões repetitivos, e permitir execução normal para bugs pontuais.
   - Lê: `.agents/skills/gerador-de-m/SKILL.md`
   - Altera: `.agents/skills/gerador-de-m/SKILL.md`
+
+- [x] **M-31** Revisão e Sincronização do Catálogo (Prompt-Skill Sync) — Refatorar o `PROMPTS_MESTRES.md` para que atue como uma documentação clínica das skills. Adicionar explicações detalhadas, condições de uso, e variações (ex: "Use para X, mas pode ser usado para Y e Z") atrelando cada prompt à sua respectiva skill autônoma.
+  - Lê: todas as skills em `.agents/skills/`
+  - Altera: `PROMPTS_MESTRES.md`
+
+- [ ] **M-32** Skill "Revisor de Dependências" (Dependency Checker) — Criar a skill `dependency-checker` em `.agents/skills/`. Ela varrerá a fila de melhorias procurando por tarefas não concluídas (`[ ]` ou `[~]`) que contêm tags de bloqueio (ex: `[! Bloqueada até M-XX]`). Ela validará se a tarefa bloqueadora já foi concluída (`[x]`) e informará o usuário exatamente quais tarefas agora estão livres para execução e quais continuam travadas.
+  - Lê: `plano-de-melhoria/MELHORIA-PLANO.md`
+  - Altera: `.agents/skills/dependency-checker/SKILL.md` (criação)
+
+- [ ] **M-33** Agentificação do Plano de Ação (Fase 1: Desenho Arquitetural) — Analisar o modelo engessado do `plano-de-acao/` (TAREFAS.md, PLANO.md, RETOMAR.md) e planejar como ele será convertido no novo modelo dinâmico governado por `.agents/`. O objetivo é que as tarefas "T" operacionais passem a ser gerenciadas por regras globais e skills automatizadas, eliminando a necessidade de ler documentos estáticos de "como agir".
+  - Lê: `plano-de-acao/*`
+  - Altera: `MELHORIA-PLANO.md` (gerando os requisitos de conversão)
+
+- [ ] **M-34** Agentificação do Plano de Ação (Fase 2: Criação de Skills e Regras) — Reutilizar, adaptar ou criar novas skills (ex: modernizando o `studyreviewblast-planner`) e extrair as regras técnicas do `RETOMAR.md` para transformá-las em Regras Globais e Prompts Mestres operacionais definitivos no `PROMPTS_MESTRES.md`.
+  - Lê: `RETOMAR.md`, `TAREFAS.md`
+  - Altera: `.agents/skills/`, `.agents/rules/`, `PROMPTS_MESTRES.md`
+
+- [ ] **M-35** Agentificação do Plano de Ação (Fase 3: Limpeza e Transição) — Finalizar a transição. Atualizar o Oráculo e a Sincronização Hierárquica para reconhecer o novo modelo de desenvolvimento T. Movimentar os documentos obsoletos do `plano-de-acao/` (que agora viraram skills) para o legado e curar a documentação final usando o Markdown Doctor.
+  - Lê: N/A
+  - Altera: sistema de arquivos (legado), `README.md`
 
 - [x] **M-25** Refatoração Visual do PROMPTS_MESTRES.md — Formatar o catálogo de prompts com blocos de código markdown para permitir a cópia em um clique pelo usuário.
   - Lê: `plano-de-melhoria/PROMPTS_MESTRES.md`
@@ -584,5 +604,9 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 [2026-10-06 00:58] FIM M-29 e M-30 — arquivos alterados: skills criadas, global_rules.md, PROMPTS_MESTRES.md — achados: Execução simultânea por comando direto do usuário. A arquitetura de resiliência e contexto profundo foi finalizada. As skills `crash-recovery` e `hierarchy-sync` garantem integridade em caso de quedas de energia/token e evolução da documentação. A skill `brain-sync` atua como o boot cognitivo da IA, forçando-a a cruzar regras, skills e prompts antes de agir, tornando o agente proativo e altamente alinhado ao contexto. O prompt 0 foi adicionado no topo do catálogo mestre.
 [2026-10-06 01:07] INÍCIO M-22 e M-23 — Faxina Segura e Markdown Doctor
 [2026-10-06 01:10] FIM M-22 e M-23 — arquivos alterados: markdown-doctor/SKILL.md, README.md, RELATORIO-GERAL-PROJETO.md, RETOMAR.md — achados: Os 4 arquivos obsoletos da estrutura V1 (PROMPT_ORIGINAL.md, CENTRAL_IDEA.md, CONVERSABUGSMELHORIA.md, SKILL-MELHORIA-PLANO.md) foram movidos para plano-de-acao/legado/. O Markdown Doctor teve sua inteligência aprimorada com o "Ciclo de Observação" (look-ahead de dependências) e foi rodado para curar e atualizar as referências órfãs nos documentos ativos.
+[2026-10-06 01:15] INÍCIO M-24 — Aprimoramento da Detecção de Skills (Gerador de M)
+[2026-10-06 01:16] FIM M-24 — arquivos alterados: gerador-de-m/SKILL.md — achados: Injetado o "Filtro de Autoconsciência" na skill gerador-de-m. Agora ela vasculha a biblioteca de agentes antes de planejar. Se a skill existe, ela reaproveita; se é demanda repetitiva/arquitetural, ela arquiteta uma skill nova; se é pontual, ela faz planejamento normal. Isso fecha 100% da fila original de melhorias arquiteturais.
+[2026-10-06 01:19] INÍCIO M-31 — Sincronização do Catálogo (Prompt-Skill Sync)
+[2026-10-06 01:21] FIM M-31 — arquivos alterados: PROMPTS_MESTRES.md — achados: O catálogo foi totalmente reescrito. Deixou de ser apenas uma lista de textos para copiar/colar e se tornou um manual rico detalhando qual skill é acionada, como funciona, e variações de uso (ex: "Execute para X, mas pode usar para Y e Z"). Isso estabelece uma sincronia clínica 1:1 entre as skills reais da pasta .agents e a vitrine de operação do usuário.
 ```
 

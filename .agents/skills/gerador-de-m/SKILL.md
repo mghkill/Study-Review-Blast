@@ -9,8 +9,11 @@ Esta skill atua como uma barreira de segurança para o projeto. Quando acionada,
 
 ## Regras Inegociáveis
 1. **Nunca execute a intenção diretamente.**
-2. Vá até `plano-de-melhoria/MELHORIA-PLANO.md`.
-3. Adicione uma nova tarefa na seção "Tarefas de Melhoria" com a numeração consecutiva correta (ex: `M-17`, `M-18`...).
-4. A tarefa gerada deve conter o formato:
-   `- [ ] **M-XX** [Título] — [Explicação detalhada do que vai fazer, qual skill acionar e arquivos envolvidos].`
-5. Pare imediatamente após escrever no arquivo e peça a aprovação do usuário antes de iniciar a execução desta nova tarefa.
+2. **Filtro de Autoconsciência (Look Ahead de Skills):** Antes de planejar, vasculhe a pasta `.agents/skills/`.
+   - Se já existir uma skill que resolve o pedido, incorpore-a no planejamento do M (não invente a roda).
+   - Se NÃO existir, avalie a natureza do pedido: Se for um padrão repetitivo ou arquitetural, gere a tarefa focada na **criação de uma nova skill**. Se for um bug pontual, crie a tarefa normal de execução.
+3. Vá até `plano-de-melhoria/MELHORIA-PLANO.md`.
+4. Adicione uma nova tarefa na seção "Tarefas de Melhoria" com a numeração consecutiva (ex: `M-17`).
+5. A tarefa gerada deve conter o formato:
+   `- [ ] **M-XX** [Título] — [Explicação detalhada, skill a ser acionada e arquivos].`
+6. Pare imediatamente e peça a aprovação do usuário antes de iniciar a execução desta nova tarefa.
