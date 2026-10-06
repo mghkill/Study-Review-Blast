@@ -50,6 +50,12 @@ Ative a skill gerador-de-m. Minha solicitação é: [INSERIR AÇÃO DE PLANEJAME
 Ative a skill project-oracle. Minha solicitação é: [INSERIR AÇÃO DE BUSCA, ex: Buscar nos logs do plano-de-melhoria o que foi feito nas últimas horas e me dar um resumo exato do estado atual do projeto, referenciando apenas fatos e documentos oficiais].
 ```
 
+```text 
+# Real example
+
+Ative a skill project-oracle. Minha solicitação é: Buscar nos arquivos de planejamento e me dar um resumo exato das próximas 5 prioridades pendentes na fila da Fase 1.5.
+```
+
 ## 4. README Open Source (Atualizar Documentação Pública)
 **Skill Relacionada:** `readme-open-source`
 **Como Funciona:** Varre o ecossistema atual do repositório (skills ativas, versões de dependências, arquitetura) e gera um `README.md` de altíssimo nível, padrão open-source.
@@ -91,6 +97,11 @@ Ative a skill safe-cleanup. Minha solicitação é: [INSERIR AÇÃO DE FAXINA, e
 **Prompt Padrão:**
 ```text
 Ative a skill hierarchy-sync. Minha solicitação é: [INSERIR AÇÃO DE SINCRONIZAÇÃO, ex: Atualizar os relatórios globais do projeto seguindo a cascata hierárquica oficial, começando do fundo (LOGS) até o topo (README), garantindo consistência total].
+```
+
+```text 
+# Real example
+Ative a skill hierarchy-sync. Minha solicitação é: Atualizar os relatórios globais do projeto seguindo a cascata hierárquica oficial, começando do fundo (LOGS) até o topo (README e RELATORIO-GERAL), garantindo consistência total após a grande reorganização de segurança que fizemos.
 ```
 
 ## 8. Crash Recovery (Recuperação de Pane e Retomada de Sessão)

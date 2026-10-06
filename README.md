@@ -273,6 +273,7 @@ The development roadmap is structured into **15 core phases** plus approved expa
 | Phase | Phase Title | Task Scope | Key Deliverables | Status |
 |---|---|---|---|---|
 | **Phase 1** | Safety Net & Baseline | T-001 to T-004 | Clean branch, verified backup (`pg_dump -Fc`), baseline test metrics, usability matrix | In Progress (T-001 ✔) |
+| **Phase 1.5** | Security Hotfixes | T-095 to T-102 | Pre-development critical security fixes (rate limits, query sanitization, error masking) | In Progress (T-095 ✔) |
 | **Phase 2** | Tooling & Code Quality | T-005 to T-011 | Root package.json, ESLint Flat, Prettier, Husky, lint-staged, commitlint, GitHub Actions CI | Pending |
 | **Phase 3** | Reproducible Environment | T-012 to T-015 | Isolated `<DB_NAME>_test` database, Zod-validated `.env`, optional compose.yml | Pending |
 | **Phase 4** | Versioned Migrations & SQL Logic | T-016 to T-024 | Node migration runner, SHA-256 checksums, `updated_at` triggers, foreign key indexes | In Progress (T-016, T-017 ✔) |
@@ -486,6 +487,7 @@ All skills are natively loaded from `.agents/skills/`:
 - **`hierarchy-sync`**: Ensures that architectural updates cascade correctly (Logs -> Reports -> README) to prevent documentation asymmetry.
 - **`brain-sync`**: Deep context initializer. Forces the AI to read global rules, skill catalogs, and master prompts before starting complex work.
 - **`crash-recovery`**: Recovers context from sudden failures (e.g., token limits) to ensure seamless resumption.
+- **`security-scanner`**: Static security analysis engine to detect vulnerabilities (SQL Injection, leaks) and generate M-tasks.
 - **`safe-cleanup`**: A governance skill that prevents accidental deletion of files, demanding formal justification and user approval before moving legacy data.
 - **`markdown-doctor`**: An autonomous documentation healer that scans and fixes broken markdown links across the repository.
 - **`prompt-updater`**: Automatically injects new capabilities into the master prompt catalog (`PROMPTS_MESTRES.md`).

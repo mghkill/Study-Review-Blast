@@ -44,6 +44,8 @@ Study-Review-Blast/
 │       │   └── requireStudent.js      # Middleware que valida e injeta req.studentId via X-Student-Id
 │       ├── services/
 │       │   └── srs.js                 # Algoritmo heurístico original de repetição espaçada
+│       ├── utils/
+│       │   └── errors.js              # Helper centralizado para tratamento seguro de erros
 │       └── db/
 │           ├── connection.js          # Pool de conexões do pg
 │           ├── migrator.js            # Executor transacional de migrações em Node puro
@@ -154,6 +156,7 @@ Ao longo das **15 fases do Plano V2** ([`plano-de-acao/PLANO.md`](./PLANO.md)), 
 [Hoje: JavaScript puro, scripts soltos, SRS rudimentar]
                          ⬇️
 Fase 1: Rede de segurança (branch limpa, backup verificado, baseline real)
+Fase 1.5: Hotfixes de Segurança (Correções críticas pré-desenvolvimento)
 Fase 2: Infraestrutura profissional (Root package.json, ESLint Flat, Prettier, Husky, Commitlint, CI GitHub Actions)
 Fase 3: Ambiente reproduzível (Banco de testes _test isolado, validação Zod no .env, compose.yml opcional)
 Fase 4: Blindagem das migrações SQL (checksum SHA-256, triggers updated_at, índices em FKs)
@@ -269,11 +272,15 @@ Toda tarefa executada termina obrigatoriamente com a **PAUSA**:
 
 O repositório é ativamente gerido e governado por agentes de inteligência artificial autônomos (Antigravity). As seguintes skills nativas existem em `.agents/skills/` para garantir a manutenção, segurança e evolução:
 
+- **`brain-sync`**: Carregamento de contexto profundo para evitar perda de foco e alinhar a IA com as regras globais.
 - **`studyreviewblast-planner`**: Motor de engenharia que codifica seguindo estritamente o TDD e as regras arquiteturais.
 - **`gerador-de-m`**: Garante que o planejamento preceda a codificação. Formula as melhorias `M-xx`.
 - **`project-oracle`**: O buscador de contexto. Força a IA a ler a `LINHA-DO-TEMPO.md` e os relatórios antes de responder perguntas abertas do usuário.
 - **`safe-cleanup`**: Trava de segurança que impede a deleção arbitrária de arquivos, exigindo justificativa e autorização.
 - **`markdown-doctor`**: Cura de links quebrados. Varre a documentação consertando referências órfãs.
+- **`hierarchy-sync`**: Sincronização em cascata (Logs -> Relatório -> README) para evitar divergência de informações.
+- **`crash-recovery`**: Recuperação de contexto pós-pane, permitindo retomar de onde a sessão anterior parou.
+- **`security-scanner`**: Bateria de verificações estáticas para detectar e documentar vulnerabilidades de segurança (SQL Injection, vazamentos, etc).
 - **`prompt-updater`**: Mantém o arquivo `PROMPTS_MESTRES.md` sempre sincronizado com as novas skills.
 - **`readme-open-source`**: Mantém o `README.md` raiz com padrão profissional e com a arquitetura sempre em dia.
 
