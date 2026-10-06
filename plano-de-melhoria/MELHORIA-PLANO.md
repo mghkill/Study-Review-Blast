@@ -533,7 +533,7 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Lê: `plano-de-melhoria/MELHORIA-PLANO.md`
   - Altera: `.agents/skills/architect/dependency-checker/SKILL.md` (criação)
 
-- [ ] **M-36** Sincronização Final do Catálogo Operacional — Após segregar os agentes e evoluir o modelo do plano de ação, acionar o `prompt-updater` para injetar os novos Prompts Mestres operacionais (para as T-tasks) no catálogo, formalizando os dois sistemas paralelos.
+- [x] **M-36** Sincronização Final do Catálogo Operacional — Após segregar os agentes e evoluir o modelo do plano de ação, acionar o `prompt-updater` para injetar os novos Prompts Mestres operacionais (para as T-tasks) no catálogo, formalizando os dois sistemas paralelos. ✅ CONCLUÍDA
   - Lê: novas skills segregadas
   - Altera: `PROMPTS_MESTRES.md`
 
@@ -691,6 +691,8 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 [2026-10-06 16:40] FIM M-48 — Catálogo PROMPTS_MESTRES.md atualizado com as descrições da nova skill task-reviewer.
 [2026-10-06 16:41] FIM M-34 — Segregação concluída. Skills separadas nas pastas `architect/` e `coder/`. Script python rodou substituindo o `markdown-doctor` para atualizar dinamicamente todas as referências nos arquivos `.md`.
 [2026-10-06 16:42] FIM M-32 — Skill `dependency-checker` criada na pasta `architect/`. O ambiente de skills agora conta com novas automações hierarquizadas. Próximo passo: M-36 (Sincronização Final do Catálogo Operacional).
+[2026-10-06 16:45] PRÉ-REGISTRO M-36 — Atualizar `PROMPTS_MESTRES.md` separando em dois grupos: Infraestrutura (Tarefas M) e Operacional (Tarefas T) e adicionar a skill `dependency-checker`.
+[2026-10-06 16:45] FIM M-36 — Catálogo mestre atualizado e formalizado em dois sistemas paralelos: (Tarefas M - architect/) e (Tarefas T - coder/).
 ```
 
 

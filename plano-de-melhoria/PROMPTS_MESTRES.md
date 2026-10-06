@@ -4,6 +4,8 @@ Este é o ÚNICO arquivo de prompts que você precisa consultar para governar es
 
 ---
 
+### Sistema de Infraestrutura e Planejamento (Tarefas M - `architect/`)
+
 ## 0. Brain Sync (Carregamento de Contexto Profundo)
 **Skill Relacionada:** `brain-sync`
 **Como Funciona:** Força a IA a ler as regras inegociáveis, o histórico e o catálogo de skills antes de iniciar qualquer trabalho pesado. Isso "traz a IA para a realidade" do projeto.
@@ -15,18 +17,7 @@ Este é o ÚNICO arquivo de prompts que você precisa consultar para governar es
 Ative a skill brain-sync. Minha solicitação é: Carregue seu contexto profundo lendo as regras globais, o catálogo de skills, o prompt mestre e o estado do projeto em [INSERIR ARQUIVOS AQUI, ex: plano-de-acao/RELATORIO-GERAL-PROJETO.md e plano-de-melhoria/MELHORIA-PLANO.md] para se alinhar completamente à minha linha de raciocínio antes de começarmos a trabalhar.
 ```
 
-## 1. Planner de Tarefas (Executar T-Tasks de Código)
-**Skill Relacionada:** `studyreviewblast-planner`
-**Como Funciona:** Aciona a skill responsável por gerenciar o ciclo de desenvolvimento das tarefas operacionais do código da aplicação (T-001, T-002...), aplicando testes primeiro (TDD), pausas e commits lógicos.
-**Variações de Uso:**
-- *Sequencial (Padrão):* "Execute a próxima T-xx pendente."
-- *Cirúrgica:* "Leia o RETOMAR.md e execute apenas a parte do Frontend da T-005."
-**Prompt Padrão:**
-```text
-Ative a skill studyreviewblast-planner. Minha solicitação é: [INSERIR AÇÃO, ex: Continuar a programação executando a próxima tarefa T-xx pendente na fila operacional do TAREFAS.md, aplicando TDD e sugerindo os commits exatos no final].
-```
-
-## 2. Gerador de M (Planejar, Priorizar e Dividir Tarefas M)
+## 1. Gerador de M (Planejar, Priorizar e Dividir Tarefas M)
 **Skill Relacionada:** `gerador-de-m`
 **Como Funciona:** Delega à IA a responsabilidade de auditar o projeto, reorganizar prioridades e planejar melhorias estruturais *sem tocar no código fonte*. Possui inteligência de **Task Sizing**: se uma tarefa modificar muitos arquivos (>3-4), a IA alertará sobre o risco de estouro de token e sugerirá um "Split" (distribuição) em tarefas menores. Garante que segurança sempre tenha prioridade.
 **Variações de Uso:**
@@ -39,7 +30,7 @@ Ative a skill studyreviewblast-planner. Minha solicitação é: [INSERIR AÇÃO,
 Ative a skill gerador-de-m. Minha solicitação é: [INSERIR AÇÃO DE PLANEJAMENTO, ex: Avaliar o projeto e gerar o cartão M-XX para implementar X funcionalidade, aplicando regras de Task Sizing, Split se necessário e mantendo itens de segurança e estabilidade no topo da prioridade de execução].
 ```
 
-## 3. Project Oracle (Buscar Histórico e Resumir Status)
+## 2. Project Oracle (Buscar Histórico e Resumir Status)
 **Skill Relacionada:** `project-oracle`
 **Como Funciona:** Quando você está perdido, esta skill obriga a IA a vasculhar os logs e documentos mestre antes de te dar um status. Evita completamente que a IA minta ou tenha alucinações.
 **Variações de Uso:**
@@ -56,7 +47,7 @@ Ative a skill project-oracle. Minha solicitação é: [INSERIR AÇÃO DE BUSCA, 
 Ative a skill project-oracle. Minha solicitação é: Buscar nos arquivos de planejamento e me dar um resumo exato das próximas 5 prioridades pendentes na fila da Fase 1.5.
 ```
 
-## 4. README Open Source (Atualizar Documentação Pública)
+## 3. README Open Source (Atualizar Documentação Pública)
 **Skill Relacionada:** `readme-open-source`
 **Como Funciona:** Varre o ecossistema atual do repositório (skills ativas, versões de dependências, arquitetura) e gera um `README.md` de altíssimo nível, padrão open-source.
 **Variações de Uso:**
@@ -67,7 +58,7 @@ Ative a skill project-oracle. Minha solicitação é: Buscar nos arquivos de pla
 Ative a skill readme-open-source. Minha solicitação é: [INSERIR AÇÃO DO README, ex: Atualizar o README do projeto com a arquitetura atualizada, tecnologias recentes, badges apropriadas e as novas diretrizes do projeto em inglês e português].
 ```
 
-## 5. Markdown Doctor (Curar Links e Referências Quebradas)
+## 4. Markdown Doctor (Curar Links e Referências Quebradas)
 **Skill Relacionada:** `markdown-doctor`
 **Como Funciona:** Varre todos os arquivos `.md` procurando links ou referências a arquivos que foram movidos ou deletados, e os conserta. Contém regra de verificação (look-ahead).
 **Variações de Uso:**
@@ -78,7 +69,7 @@ Ative a skill readme-open-source. Minha solicitação é: [INSERIR AÇÃO DO REA
 Ative a skill markdown-doctor. Minha solicitação é: [INSERIR AÇÃO DE CURA, ex: Varrer todos os arquivos markdown do projeto e curar quaisquer links e referências cruzadas que estejam apontando para caminhos inexistentes ou desatualizados].
 ```
 
-## 6. Safe Cleanup (Faxina Segura de Arquivos Obsoletos)
+## 5. Safe Cleanup (Faxina Segura de Arquivos Obsoletos)
 **Skill Relacionada:** `safe-cleanup`
 **Como Funciona:** Uma lixeira inteligente. Exige que a IA prove por que o arquivo é inútil antes de mandá-lo para a pasta de histórico (`legado/`) ou apagá-lo.
 **Variações de Uso:**
@@ -89,7 +80,7 @@ Ative a skill markdown-doctor. Minha solicitação é: [INSERIR AÇÃO DE CURA, 
 Ative a skill safe-cleanup. Minha solicitação é: [INSERIR AÇÃO DE FAXINA, ex: Encontrar arquivos temporários ou de documentação obsoleta na raiz do projeto e movê-los com segurança para a pasta de histórico/legado, detalhando as razões antes de agir].
 ```
 
-## 7. Hierarchy Sync (Sincronização em Cascata de Documentos)
+## 6. Hierarchy Sync (Sincronização em Cascata de Documentos)
 **Skill Relacionada:** `hierarchy-sync`
 **Como Funciona:** Garante que qualquer alteração flua na ordem correta: Log (baixo) -> Relatório (meio) -> README (topo), evitando assimetria de informações.
 **Variações de Uso:**
@@ -104,7 +95,7 @@ Ative a skill hierarchy-sync. Minha solicitação é: [INSERIR AÇÃO DE SINCRON
 Ative a skill hierarchy-sync. Minha solicitação é: Atualizar os relatórios globais do projeto seguindo a cascata hierárquica oficial, começando do fundo (LOGS) até o topo (README e RELATORIO-GERAL), garantindo consistência total após a grande reorganização de segurança que fizemos.
 ```
 
-## 8. Crash Recovery (Recuperação de Pane e Retomada de Sessão)
+## 7. Crash Recovery (Recuperação de Pane e Retomada de Sessão)
 **Skill Relacionada:** `crash-recovery`
 **Como Funciona:** Seu salva-vidas para quedas de energia, limite de tokens estourado ou perdas de sessão. Depende intrinsecamente da Regra Global §6 (Pré-Registro de Save State em LOG) para funcionar.
 **Variações de Uso:**
@@ -115,7 +106,7 @@ Ative a skill hierarchy-sync. Minha solicitação é: Atualizar os relatórios g
 Ative a skill crash-recovery. Minha solicitação é: [INSERIR CONTEXTO DO CRASH, ex: Houve uma queda abrupta na última sessão. Identifique onde estávamos baseado no último SAVE-STATE registrado nos logs e me explique qual é o próximo passo exato para retomarmos sem perder histórico ou duplicar esforços].
 ```
 
-## 9. Criação e Atualização de Skills Permanentes
+## 8. Criação e Atualização de Skills Permanentes
 **Skills Relacionadas:** `gerador-de-m` em união com `prompt-updater`
 **Como Funciona:** Desenha uma nova inteligência permanente (ou atualiza) e garante que o prompt seja registrado.
 **Variações de Uso:**
@@ -126,26 +117,51 @@ Ative a skill crash-recovery. Minha solicitação é: [INSERIR CONTEXTO DO CRASH
 Ative a skill gerador-de-m. Minha solicitação é: [INSERIR IDEIA DA SKILL, ex: Criar uma nova skill permanente para automatizar XYZ no projeto. Após criar a skill, agende um cartão para que a skill prompt-updater adicione esse novo recurso no Catálogo Mestre de Prompts].
 ```
 
-## 10. Security Scanner (Varredura de Segurança e Auditoria)
-**Skill Relacionada:** `security-scanner`
-**Como Funciona:** Executa uma bateria de 7 verificações estáticas (V-01 a V-07) em busca de vulnerabilidades recorrentes. Gera achados no formato SEC-xx e propõe cartões M — **nunca altera código diretamente**.
-**Variações de Uso:**
-- *Auditoria Completa:* "Rodar varredura de segurança."
-- *Pós-Modificação:* "Execute na rota recém criada."
-**Prompt Padrão:**
-```text
-Ative a skill security-scanner. Minha solicitação é: [INSERIR ESCOPO DA VARREDURA, ex: Varrer o backend em server/src/ com as verificações de segurança ativas, gerar o relatório de achados SEC-xx e apenas propor os cartões M correspondentes no MELHORIA-PLANO.md, sem alterar o código de aplicação].
-```
-
-## 11. Task Reviewer (Revisão e Planejamento de Escopo)
+## 9. Task Reviewer (Revisão e Planejamento de Escopo)
 **Skill Relacionada:** `task-reviewer`
 **Como Funciona:** Atua como uma barreira de qualidade antes da execução de tarefas (M-xx ou T-xx). Garante que a tarefa seja analisada e que skills de agentes (como security-scanner ou markdown-doctor) sejam aplicadas preventivamente no planejamento.
 **Variações de Uso:**
-- *Revisão de Melhoria (M):* "Revise a M-48 antes de executarmos."
+- *Revisão de Melhoria (M):* "Revise a próxima M antes de executarmos."
 - *Revisão Operacional (T):* "Revise a T-102 e veja quais skills preciso injetar."
 **Prompt Padrão:**
 ```text
 Ative a skill task-reviewer. Minha solicitação é: [INSERIR AÇÃO DE REVISÃO, ex: Revisar a próxima tarefa pendente e me sugerir o planejamento enriquecido com as skills de IA necessárias, antes de iniciarmos a execução].
+```
+
+## 10. Revisor de Dependências (Dependency Checker)
+**Skill Relacionada:** `dependency-checker`
+**Como Funciona:** Resolve o gargalo de tarefas órfãs travadas por tags de dependência antigas. Varre a fila de tarefas abertas para verificar se os bloqueios listados já foram resolvidos, liberando as tarefas.
+**Variações de Uso:**
+- *Destravamento da fila:* "Verifique se alguma M bloqueada já pode ser executada."
+**Prompt Padrão:**
+```text
+Ative a skill dependency-checker. Minha solicitação é: [INSERIR AÇÃO DE VERIFICAÇÃO, ex: Varrer a fila de melhorias procurando tarefas bloqueadas. Valide se a tarefa bloqueadora já foi concluída e destrave as que estiverem prontas, me avisando quais tarefas estão livres agora].
+```
+
+---
+
+### Sistema Operacional e de Código (Tarefas T - `coder/`)
+
+## 11. Planner de Tarefas (Executar T-Tasks de Código)
+**Skill Relacionada:** `studyreviewblast-planner`
+**Como Funciona:** Aciona a skill responsável por gerenciar o ciclo de desenvolvimento das tarefas operacionais do código da aplicação (T-001, T-002...), aplicando testes primeiro (TDD), pausas e commits lógicos.
+**Variações de Uso:**
+- *Sequencial (Padrão):* "Execute a próxima T-xx pendente."
+- *Cirúrgica:* "Leia o RETOMAR.md e execute apenas a parte do Frontend da T-005."
+**Prompt Padrão:**
+```text
+Ative a skill studyreviewblast-planner. Minha solicitação é: [INSERIR AÇÃO, ex: Continuar a programação executando a próxima tarefa T-xx pendente na fila operacional do TAREFAS.md, aplicando TDD e sugerindo os commits exatos no final].
+```
+
+## 12. Security Scanner (Varredura de Segurança e Auditoria)
+**Skill Relacionada:** `security-scanner`
+**Como Funciona:** Executa uma bateria de verificações estáticas (V-01 a V-07) em busca de vulnerabilidades recorrentes. Gera achados no formato SEC-xx e propõe cartões M ou T — **nunca altera código diretamente**.
+**Variações de Uso:**
+- *Auditoria Completa:* "Rodar varredura de segurança geral."
+- *Pós-Modificação:* "Execute na rota que acabamos de criar."
+**Prompt Padrão:**
+```text
+Ative a skill security-scanner. Minha solicitação é: [INSERIR ESCOPO DA VARREDURA, ex: Varrer o backend em server/src/ com as verificações de segurança ativas, gerar o relatório de achados SEC-xx e propor cartões de correção, sem alterar o código de aplicação].
 ```
 
 ---
