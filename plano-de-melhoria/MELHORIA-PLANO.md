@@ -517,7 +517,7 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Skill acionada: `gerador-de-m`
   - Artefato gerado: `plano-de-acao/RASCUNHO_PRIORIZACAO_SEGURANCA.md`
 
-- [ ] **M-42** [Repriorização de Segurança - Parte 2: Estrutura do PLANO.md] — Refletir a reordenação aprovada na M-41 dentro do arquivo `PLANO.md`, ajustando apenas os nomes, IDs e ordem das fases de alto nível, mantendo o controle de tokens.
+- [x] **M-42** [Repriorização de Segurança - Parte 2: Estrutura do PLANO.md] — Refletir a reordenação aprovada na M-41 dentro do arquivo `PLANO.md`, ajustando apenas os nomes, IDs e ordem das fases de alto nível, mantendo o controle de tokens. ✅ CONCLUÍDA
   - Limite: 1 arquivo (`plano-de-acao/PLANO.md`).
   - Skill acionada: `gerador-de-m`
 
@@ -659,6 +659,7 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 [2026-10-06 14:48] FIM M-40 — arquivo alterado: plano-de-acao/TAREFAS.md (T-102 adicionada). Pendência SEC-05 agora rastreada por uma T-task. Além disso, as regras da skill gerador-de-m e o Catálogo de Prompts foram atualizados com inteligência de 'Task Sizing' (limite e split de tokens).
 [2026-10-06 15:15] PRÉ-REGISTRO GERADOR DE M — Planejamento de Reorganização de Prioridades (Security First). Regra de 'Task Sizing' e 'Split' aplicada: devido ao risco de limite de tokens ao editar arquivos imensos como PLANO.md e TAREFAS.md simultaneamente, a intenção foi "splitada" em 4 cartões (M-41 a M-44). O planejamento previu o uso da skill 'markdown-doctor' (M-44) para reparar referências após a movimentação estrutural.
 [2026-10-06 15:19] FIM M-41 — Rascunho de priorização gerado. Arquivo `plano-de-acao/RASCUNHO_PRIORIZACAO_SEGURANCA.md` criado demonstrando a intenção de agrupar as tarefas de segurança (T-095, T-098 a T-102) em uma nova 'Fase 1.5' que será inserida antes da Fase 2. Arquivos de plano oficiais não foram alterados para respeitar o limite de tokens.
+[2026-10-06 15:28] FIM M-42 — Arquivo `plano-de-acao/PLANO.md` alterado. A "Fase 1.5 — Hotfixes de Segurança" foi fisicamente injetada antes da Fase 2, e os IDs das tarefas T-095, T-098 a T-102 foram movidos para lá. A estrutura de alto nível do plano agora prioriza a segurança. Próximo passo: mover os cartões completos no TAREFAS.md (M-43).
 ```
 
 
