@@ -13,9 +13,10 @@ const { tenseToCode } = require('../services/tenses');
 const { sendError } = require('../utils/errors');
 
 router.use(requireStudent);
+const { strictLimiter } = require('../middleware/rateLimiters');
 
 // GET /api/reviews/queue?mode=mixed&limit=10&vocabId=3&level=B1&status=red
-router.get('/queue', async (req, res) => {
+router.get('/queue', strictLimiter, async (req, res) => {
   try {
     const sid = req.studentId;
     const { mode = 'mixed', limit = 13, vocabId, level, status } = req.query;
@@ -95,7 +96,7 @@ router.get('/queue', async (req, res) => {
 });
 
 // POST /api/reviews
-router.post('/', async (req, res) => {
+router.post('/', strictLimiter, async (req, res) => {
   try {
     const sid = req.studentId;
     const {

@@ -3,9 +3,22 @@ require('dotenv').config({ path: path.join(__dirname, '../../.env') });
 require('dotenv').config({ path: path.join(__dirname, '../.env'), override: true });
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+// ─── Security Middlewares ─────────────────────────────────
+app.use(helmet());
+
+const globalLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000,
+  max: 500,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use(globalLimiter);
 
 // ─── Middleware ───────────────────────────────────────────
 app.use(cors({ origin: ['http://localhost:5173', 'http://localhost:3000'] }));
@@ -40,5 +53,5 @@ app.use(errorHandler);
 app.listen(PORT, () => {
   console.log(`\n🚀 English Study API running at http://localhost:${PORT}`);
   console.log(`   Health: http://localhost:${PORT}/api/health`);
-  console.log(`   DB: ${process.env.DB_NAME}@${process.env.DB_HOST}:${process.env.DB_PORT}`);
+  console.log(`   DB: connected`);
 });

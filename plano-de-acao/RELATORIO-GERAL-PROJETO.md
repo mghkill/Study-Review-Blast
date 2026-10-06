@@ -147,8 +147,8 @@ Graças às 26 tarefas concluídas no V1 (preservadas no legado) e ao planejamen
 4. **Motor de Planejamento Operacional:**
    - 97 tarefas dimensionadas para execução de **1 sessão por tarefa**, evitando esgotamento de tokens de contexto (incluindo as recentes tarefas de hotfixes e correção de testes).
    - Script `plan_tool.py` operacional e integrado ao fluxo de trabalho.
-5. **Segurança e Sanitização Preemptiva (Fase 1.5):**
-   - Implementação de camada de segurança inicial com sanitização de erros centralizada (ocultando detalhes internos de SQL do cliente) e proteção contra injeção por interpolação de limites.
+5. **Segurança e Sanitização Preemptiva (Fase 1.5 Concluída):**
+   - Implementação de camada de segurança inicial com sanitização de erros centralizada (ocultando detalhes internos de SQL do cliente), proteção contra injeção por interpolação de limites, headers de segurança HTTP (Helmet) e Rate Limiting restrito em rotas de alto risco.
 
 
 ---

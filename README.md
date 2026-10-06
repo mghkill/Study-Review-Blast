@@ -66,7 +66,7 @@ Unlike conventional platforms that require perpetual cloud connectivity, paid su
 - [x] **Comprehensive Vocabulary Catalog:** Vocabulary management covering verbs, meanings, usage contexts, example sentences, and associated canonical verb tenses.
 - [x] **Heuristic SRS Review Queue:** Smart scheduling based on recall difficulty, calculation of dynamic review intervals, and diagnostic error analysis grouped by category.
 - [x] **Student Sentence Composition:** Learners can draft and persist custom sentences during active review sessions.
-- [x] **Pre-development Security Layer:** Early implementation of query sanitization, `LIMIT` parameterization, and centralized API error masking to prevent internal database leakages.
+- [x] **Pre-development Security Layer:** Early implementation of query sanitization, `LIMIT` parameterization, centralized API error masking, HTTP security headers (Helmet), and route-specific Rate Limiting to prevent internal database leakages and abuse.
 - [x] **Canonical 12 English Verb Tenses:** Dedicated relational structure for functional grammar and verb conjugation practice.
 - [x] **Native Browser Speech Synthesis:** Text-to-speech audio powered by the browser's native `SpeechSynthesis` (Web Speech API) with zero network dependency.
 - [x] **Analytical Dashboard:** Visual retention charts, study volume, and error frequency metrics powered by Chart.js.
@@ -103,6 +103,8 @@ The project is built on an audited, high-performance stack. All versions below a
 | **HTTP Integration Testing** | Supertest | `^7.3.0` | `7.3.0` | Programmatic HTTP endpoint testing | `server/package.json` |
 | **Frontend Testing** | Vitest | `^5.0.3` | `5.0.3` | Vite-native test runner for frontend components | `client/package.json` |
 | **Frontend Linter** | Oxlint | `^1.81.0` | `1.81.0` | Rust-based high-speed static analyzer for React | `client/package.json` |
+| **HTTP Security** | Helmet | `^8.3.0` | `8.3.0` | Secure HTTP headers generation against XSS and injection | `server/package.json` |
+| **DDoS Protection** | Express Rate Limit | `^8.7.1` | `8.7.1` | Throttling requests to protect API endpoints | `server/package.json` |
 <!-- stack:end -->
 
 ---
@@ -267,7 +269,7 @@ The development roadmap is structured into **15 core phases** plus approved expa
 | Phase | Phase Title | Task Scope | Key Deliverables | Status |
 |---|---|---|---|---|
 | **Phase 1** | Safety Net & Baseline | T-001 to T-004 | Clean branch, verified backup (`pg_dump -Fc`), baseline test metrics, usability matrix | In Progress (T-001 ✔) |
-| **Phase 1.5** | Security Hotfixes | T-095 to T-102 | Pre-development critical security fixes (rate limits, query sanitization, error masking) | In Progress (T-095 ✔) |
+| **Phase 1.5** | Security Hotfixes | T-095 to T-102 | Pre-development critical security fixes (rate limits, query sanitization, error masking) | Completed (T-102 ✔) |
 | **Phase 2** | Tooling & Code Quality | T-005 to T-011 | Root package.json, ESLint Flat, Prettier, Husky, lint-staged, commitlint, GitHub Actions CI | Pending |
 | **Phase 3** | Reproducible Environment | T-012 to T-015 | Isolated `<DB_NAME>_test` database, Zod-validated `.env`, optional compose.yml | Pending |
 | **Phase 4** | Versioned Migrations & SQL Logic | T-016 to T-024 | Node migration runner, SHA-256 checksums, `updated_at` triggers, foreign key indexes | In Progress (T-016, T-017 ✔) |
