@@ -499,17 +499,13 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Altera: `plano-de-acao/TAREFAS.md` (T-098 a T-101 criadas) ✅ CONCLUÍDO
   - Achados que motivaram: SEC-01 (SQL LIMIT interpolado), SEC-02 (err.message leak 35+ locais), SEC-03 (credenciais no log), SEC-04 (ausência de helmet)
 
-- [~] **M-38** [Criação da Skill `security-scanner`] — Criar a skill permanente `.agents/skills/security-scanner/SKILL.md` seguindo o mesmo padrão estrutural das skills existentes (markdown-doctor, safe-cleanup). A skill define varreduras recorrentes de segurança no backend: (1) interpolação direta em queries SQL; (2) `err.message` em respostas HTTP; (3) variáveis de ambiente em `console.log`; (4) ausência de `helmet` e `express-rate-limit`; (5) rotas destrutivas sem autenticação. Ao concluir, acionar `prompt-updater` para registrar o **Prompt 10** no `PROMPTS_MESTRES.md`. Arquivos: `.agents/skills/security-scanner/SKILL.md` (criação), `plano-de-melhoria/PROMPTS_MESTRES.md`.
+- [x] **M-38** [Criação da Skill `security-scanner`] — Skill permanente `.agents/skills/security-scanner/SKILL.md` criada com 7 verificações V-01..V-07. Prompt 10 injetado no `PROMPTS_MESTRES.md`. ✅ CONCLUÍDA.
   - Lê: `.agents/skills/markdown-doctor/SKILL.md` (referência estrutural), `global_rules.md`
-  - Altera: `.agents/skills/security-scanner/SKILL.md` (criação), `PROMPTS_MESTRES.md`
+  - Altera: `.agents/skills/security-scanner/SKILL.md` (criação) ✅, `PROMPTS_MESTRES.md` (Prompt 10) ✅
 
-- [~] **M-39** [Execução da Auditoria de Segurança — Ativação dos Próximos Passos] — Orquestrar a execução sequencial de duas ações derivadas dos achados SEC-01..SEC-07:
-  **PASSO 1** — Concluir M-37: Acionar `studyreviewblast-planner` para adicionar 4 cartões em `plano-de-acao/TAREFAS.md`: T-098 (sanitizar LIMIT em reviews.js), T-099 (helper errorHandler centralizado), T-100 (instalar helmet no index.js), T-101 (remover console.log com credenciais de infraestrutura). Fechar M-37 como `[x]`. Sugerir: `git add . && git commit -m "plan(sec): add security T-tasks T-098..T-101"`.
-  **PASSO 2** — Rodar `security-scanner` (varredura de confirmação) após autorização. Confirmar que SEC-01..SEC-04 estão rastreados e que não surgiram novos achados. Sugerir: `git add . && git commit -m "audit(sec): run security-scanner, confirm SEC-01..SEC-04 tracked"`.
-  **REGRA DE PAUSA:** PAUSAR obrigatoriamente ao fim de cada PASSO e aguardar autorização antes de avançar (Regra Global §1).
-  - Lê: `plano-de-acao/TAREFAS.md`, `server/src/routes/reviews.js`, `server/src/index.js`, `server/src/middleware/`
-  - Altera: `plano-de-acao/TAREFAS.md` (T-098 a T-101), `plano-de-melhoria/MELHORIA-PLANO.md` (M-37 fechado)
-  - Skills: `studyreviewblast-planner` (Passo 1) → `security-scanner` (Passo 2)
+- [x] **M-39** [Execução da Auditoria de Segurança — Ativação dos Próximos Passos] — CONCLUÍDA. Passo 1: T-098..T-101 criadas, M-37 fechada. Passo 2: security-scanner rodado, SEC-01..SEC-04 confirmados rastreados via T-098..T-101, SEC-05 (rate-limit) identificado sem T-task (proposta T-102 para M futura), SEC-06 aceito por design, SEC-07 OK.
+  - Altera: `plano-de-acao/TAREFAS.md` (T-098..T-101) ✅, `MELHORIA-PLANO.md` (M-37,M-38,M-39 fechadas) ✅
+  - Skills: `studyreviewblast-planner` (Passo 1) → `security-scanner` (Passo 2) ✅
 
 ---
 
@@ -634,5 +630,8 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 [2026-10-06 13:40] PRÉ-REGISTRO M-39 — Orquestração da execução dos próximos passos da auditoria. Passo 1: criar T-098..T-101 em TAREFAS.md e fechar M-37. Passo 2 (após autorização): rodar security-scanner de confirmação. Regra de commit explícita entre os dois passos.
 [2026-10-06 13:40] INÍCIO M-39 — Passo 1: adicionando cartões T-098..T-101 em plano-de-acao/TAREFAS.md.
 [2026-10-06 13:42] FIM M-39 PASSO 1 — arquivo alterado: plano-de-acao/TAREFAS.md (T-098..T-101 adicionadas), MELHORIA-PLANO.md (M-37 fechado como [x]). PAUSADO. Aguardando autorização para Passo 2 (security-scanner de confirmação).
+[2026-10-06 13:57] SAVE-STATE (crash-recovery) M-39 PASSO 2 — Sistema sobrecarregado antes de iniciar o Passo 2. Estado no momento do crash: Passo 1 100% concluído e persistido no disco. Arquivos modificados nesta sessão: plano-de-acao/TAREFAS.md (+T-098..T-101), plano-de-melhoria/MELHORIA-PLANO.md (M-37=[x], M-38=[~], M-39=[~], LOG atualizado), .agents/skills/security-scanner/SKILL.md (criada), plano-de-melhoria/PROMPTS_MESTRES.md (Prompt 10 injetado). PRÓXIMO PASSO: Passo 2 da M-39 — rodar security-scanner V-01..V-07 como varredura de confirmação sobre server/src/. Verificar SEC-01..SEC-04 rastreados via T-098..T-101. Checar SEC-05 (rate-limit) e SEC-06 (DELETE sem auth) ainda abertos. Fechar M-38 e M-39 como [x] ao concluir. Commit sugerido: "audit(sec): run security-scanner confirmation, close M-38 M-39".
+[2026-10-06 14:06] RETOMADA M-39 PASSO 2 — Autorização confirmada pelo usuário. Iniciando varredura de confirmação security-scanner V-01..V-07.
+[2026-10-06 14:08] FIM M-39 PASSO 2 e FIM M-39 COMPLETA — Varredura security-scanner V-01..V-07 executada. Resultado: SEC-01 rastreado (T-098), SEC-02 rastreado (T-099), SEC-03 rastreado (T-101), SEC-04 rastreado (T-100), SEC-05 sem T-task ainda (proposta T-102 para M futura), SEC-06 aceito por design (DELETE students sem auth, documentado), SEC-07 OK (.env no .gitignore). M-37=[x], M-38=[x], M-39=[x]. Arquivos alterados: MELHORIA-PLANO.md (fechamento das 3 Ms + save-state + FIM). Não houve alteração de código-fonte nesta M.
 ```
 
