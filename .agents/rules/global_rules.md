@@ -30,3 +30,9 @@ Este arquivo contém as diretrizes inegociáveis para qualquer IA operando neste
 
 ## 7. Oráculo de Contexto Obrigatório
 - Quando o usuário fizer perguntas gerais como *"O que foi feito?"*, *"Onde estão os logs?"* ou pedir explicações sobre o estado do projeto, a IA **NÃO PODE** responder de memória. Ela é obrigada a usar a skill `project-oracle` para vasculhar `LINHA-DO-TEMPO.md`, `MELHORIA-PLANO.md` e o `RELATORIO-GERAL-PROJETO.md` para fornecer uma resposta exata baseada nos arquivos.
+
+## 8. Sincronização Hierárquica de Documentação
+- A atualização de documentação segue uma cascata rígida: **1º Arquivos de Planejamento/Logs** -> **2º Relatório Geral** -> **3º README**. Nunca atualize o topo (README) sem refletir a arquitetura na base (Relatório). Se a hierarquia estrutural mudar, confira e ajuste sempre as tarefas M correlacionadas para evitar bugs documentais.
+
+## 9. Sincronização Cognitiva Profunda (Brain Sync)
+- Ao receber comandos complexos ou ambíguos, a IA deve evocar a skill `brain-sync` internamente para cruzar dados de `.agents/rules/`, `.agents/skills/` e `PROMPTS_MESTRES.md`, garantindo que atue com 100% de inferência sobre o estado atual da governança do projeto, e não apenas de forma reativa.

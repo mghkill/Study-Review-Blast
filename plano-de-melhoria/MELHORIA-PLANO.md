@@ -463,9 +463,13 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Lê: N/A
   - Altera: `.agents/skills/project-oracle/SKILL.md`, `PROMPTS_MESTRES.md`, `.agents/rules/global_rules.md`, `RELATORIO-GERAL-PROJETO.md`
 
-- [ ] **M-29** Skills "Crash Recovery" e "Hierarchy Sync" — Criar a skill permanente `crash-recovery` para recuperar o contexto exato e explicar onde a IA parou caso o sistema caia por limite de tokens. Criar a skill `hierarchy-sync` para garantir que a atualização de documentação siga uma cascata lógica (ex: TAREFAS -> RELATORIO -> README) sem dessincronização. Adicionar regra global obrigando a IA a conferir as tarefas M correlacionadas caso essa hierarquia estrutural mude, prevenindo bugs documentais.
+- [x] **M-29** Skills "Crash Recovery" e "Hierarchy Sync" — Criar a skill permanente `crash-recovery` para recuperar o contexto exato e explicar onde a IA parou caso o sistema caia por limite de tokens. Criar a skill `hierarchy-sync` para garantir que a atualização de documentação siga uma cascata lógica (ex: TAREFAS -> RELATORIO -> README) sem dessincronização. Adicionar regra global obrigando a IA a conferir as tarefas M correlacionadas caso essa hierarquia estrutural mude, prevenindo bugs documentais.
   - Lê: N/A
   - Altera: `.agents/skills/crash-recovery/SKILL.md`, `.agents/skills/hierarchy-sync/SKILL.md`, `.agents/rules/global_rules.md`
+
+- [x] **M-30** Skill "Brain Sync" (Inicialização de Contexto Profundo) — A pedido do usuário, mapear o "estado de inferência" que a IA usou para resolver problemas complexos e cristalizá-lo na skill `brain-sync`. Ela obriga a IA a ler as regras, skills, prompts mestres e histórico ANTES de iniciar um trabalho pesado. O prompt de ativação fica no topo absoluto (`## 0. Inicialização`) do `PROMPTS_MESTRES.md`.
+  - Lê: N/A
+  - Altera: `.agents/skills/brain-sync/SKILL.md`, `.agents/rules/global_rules.md`, `PROMPTS_MESTRES.md`
 
 ---
 
@@ -576,5 +580,7 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 [2026-10-06 00:30] FIM M-27 — arquivos alterados: README.md — achados: Acionada a skill `readme-open-source`. Inserida a Decisão D-19 (English Standard) na tabela oficial e criada a nova seção "Autonomous AI Agents & Custom Skills" documentando todo o ecossistema e ferramentas sob `.agents/skills/` para exibir o repositório como um projeto open source profissional governado por agentes de IA.
 [2026-10-06 00:38] INÍCIO M-28 — Skill Project Oracle (Buscador de Contexto)
 [2026-10-06 00:39] FIM M-28 — arquivos alterados: project-oracle/SKILL.md, global_rules.md, PROMPTS_MESTRES.md, RELATORIO-GERAL-PROJETO.md — achados: Criada a skill `project-oracle`. A regra 7 de "Oráculo Obrigatório" foi implementada, impedindo a IA de chutar o que foi feito sem ler os logs antes. O RELATORIO-GERAL-PROJETO foi atualizado e sincronizado com todas as novas dinâmicas, refletindo a estrutura completa de inteligência do repositório.
+[2026-10-06 00:50] INÍCIO M-29 e M-30 — Skills Crash Recovery, Hierarchy Sync e Brain Sync
+[2026-10-06 00:58] FIM M-29 e M-30 — arquivos alterados: skills criadas, global_rules.md, PROMPTS_MESTRES.md — achados: Execução simultânea por comando direto do usuário. A arquitetura de resiliência e contexto profundo foi finalizada. As skills `crash-recovery` e `hierarchy-sync` garantem integridade em caso de quedas de energia/token e evolução da documentação. A skill `brain-sync` atua como o boot cognitivo da IA, forçando-a a cruzar regras, skills e prompts antes de agir, tornando o agente proativo e altamente alinhado ao contexto. O prompt 0 foi adicionado no topo do catálogo mestre.
 ```
 

@@ -2,6 +2,11 @@
 
 Este é o ÚNICO arquivo de prompts que você precisa consultar para o desenvolvimento guiado por IA deste projeto. Basta ler o título do que deseja, copiar o bloco correspondente com um clique e colar no chat.
 
+## 0. Inicialização de Contexto Profundo (Brain Sync)
+```text
+Ative a skill brain-sync. Minha solicitação é: Carregue seu contexto profundo lendo as regras globais, o catálogo de skills, o prompt mestre e o estado do projeto para se alinhar completamente à minha linha de raciocínio antes de começarmos a trabalhar.
+```
+
 ## 1. Atualizar Documentação (README)
 ```text
 Ative a skill gerador-de-m. Minha solicitação é: Atualizar o README do projeto com as últimas novidades.
@@ -55,6 +60,16 @@ Ative a skill gerador-de-m. Minha solicitação é: Acionar o prompt-updater par
 ## 11. Buscar Contexto do Projeto (Project Oracle)
 ```text
 Ative a skill project-oracle. Minha solicitação é: Buscar nos logs o que foi feito nas últimas horas e me dar um resumo do estado atual do projeto.
+```
+
+## 12. Recuperação de Pane (Crash Recovery)
+```text
+Ative a skill crash-recovery. Minha solicitação é: O sistema caiu na última sessão. Descubra onde estávamos e me explique qual é o próximo passo para retomarmos sem perder nada.
+```
+
+## 13. Sincronizar Hierarquia de Documentos (Hierarchy Sync)
+```text
+Ative a skill hierarchy-sync. Minha solicitação é: Atualizar os relatórios e documentos do projeto seguindo a cascata hierárquica oficial, garantindo que nada fique defasado.
 ```
 
 ---
