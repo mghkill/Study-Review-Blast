@@ -482,9 +482,13 @@ This repository features a robust, self-documenting ecosystem of custom skills f
 All skills are natively loaded from `.agents/skills/`:
 - **`studyreviewblast-planner`**: The core engineering skill that strictly enforces TDD, no-secrets policies, and database migration rules.
 - **`gerador-de-m`**: Automates the creation of architectural improvement plans (`M-xx`) before any code is touched, enforcing planning-first development.
+- **`project-oracle`**: The context search engine. Forces the AI to read the timeline and reports before answering user questions to eliminate hallucinations.
+- **`hierarchy-sync`**: Ensures that architectural updates cascade correctly (Logs -> Reports -> README) to prevent documentation asymmetry.
+- **`brain-sync`**: Deep context initializer. Forces the AI to read global rules, skill catalogs, and master prompts before starting complex work.
+- **`crash-recovery`**: Recovers context from sudden failures (e.g., token limits) to ensure seamless resumption.
 - **`safe-cleanup`**: A governance skill that prevents accidental deletion of files, demanding formal justification and user approval before moving legacy data.
-- **`markdown-doctor`**: An autonomous documentation healer that scans and fixes broken markdown links across the repository after folder restructures.
-- **`prompt-updater`**: Automatically injects new capabilities into the master prompt catalog (`PROMPTS_MESTRES.md`) whenever a new skill is born.
+- **`markdown-doctor`**: An autonomous documentation healer that scans and fixes broken markdown links across the repository.
+- **`prompt-updater`**: Automatically injects new capabilities into the master prompt catalog (`PROMPTS_MESTRES.md`).
 - **`readme-open-source`**: Analyzes the repository stack and automatically generates/updates this professional README.
 
 To view the master rules these agents obey, see `.agents/rules/global_rules.md`.

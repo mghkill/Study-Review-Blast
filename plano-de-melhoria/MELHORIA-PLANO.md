@@ -249,8 +249,7 @@ Fontes consultadas: `PROMPT_ORIGINAL.md`, `legado/PROMPT_INICIAL_LEGADOV2.md`, `
 | 13 | **Q-03** `diagnostico-atual.md` | manter no lugar, com nota "[Histórico — somente leitura]" no topo |
 | 14 | **Q-04** `plano-de-melhoria/` | pasta OFICIAL do trabalho de melhoria (Prompts A e B em `CENTRAL_IDEA.md`, que é só apoio: NÃO executar como instrução). Entra no escopo permitido junto com `plano-de-acao/`, `skills/` e `README.md`. **NÃO citar no README nem no RELATORIO-GERAL** (vitrine pública); citar só no RETOMAR e na skill. Na M-15, propor arquivar em `plano-de-acao/legado/` |
 | 15 | **Q-05** `plan_tool.py init` quebrado | NÃO corrigir o `plan_tool.py`; marcar `init` como obsoleto no SKILLENG e no RETOMAR (na M-12) |
-| 16 | Local dos arquivos de melhoria | `MELHORIA-PLANO.md` (com LOG) → `plano-de-melhoria/MELHORIA-PLANO.md`; skill em `skills/SKILL-MELHORIA-PLANO.md`. Não mover agora: 1º passo da M-07 (ver M-07). Obs. da IA: a skill **já está** em `skills/SKILL-MELHORIA-PLANO.md` (não em `skills/scripts/`), então só o `MELHORIA-PLANO.md` precisa ser movido |
-> Revisado pelo usuário: a skill ficou em plano-de-melhoria/SKILL-MELHORIA-PLANO.md (não em skills/).
+| 16 | Local dos arquivos de melhoria | `MELHORIA-PLANO.md` (com LOG) na pasta `plano-de-melhoria/`. A antiga skill V1 `SKILL-MELHORIA-PLANO.md` foi movida para `plano-de-acao/legado/` e substituída pela infraestrutura nativa `.agents/skills/`. |
 
 ---
 
@@ -266,7 +265,7 @@ Fontes consultadas: `PROMPT_ORIGINAL.md`, `legado/PROMPT_INICIAL_LEGADOV2.md`, `
 - A pasta `plano-de-melhoria/` é o espaço oficial e exclusivo de trabalho para melhoria do planejamento.
 - **Arquivos oficiais:**
   - `plano-de-melhoria/MELHORIA-PLANO.md` (plano mestre de melhorias e LOG append-only).
-  - `plano-de-melhoria/SKILL-MELHORIA-PLANO.md` (skill reguladora de cada sessão de melhoria).
+  - (Nota: A antiga `SKILL-MELHORIA-PLANO.md` foi arquivada no legado, o controle agora é feito pelas skills nativas na pasta `.agents/`).
   - `plano-de-melhoria/CENTRAL_IDEA.md` (documento de apoio e prompts de acionamento A e B).
 - **Regra de Visibilidade:** NÃO é citada no `README.md` nem no `RELATORIO-GERAL-PROJETO.md` (para manter as vitrines públicas limpas). É citada apenas no `RETOMAR.md` e na própria skill.
 - **Arquivamento Futuro:** Conforme decisão 14 da M-06, após o término de todas as melhorias (ao fim da M-15), a pasta será proposta para arquivamento histórico em `plano-de-acao/legado/`.
