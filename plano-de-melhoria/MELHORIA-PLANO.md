@@ -407,6 +407,38 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Lê: todos os `.md` modificados
   - Altera: `plano-de-melhoria/MELHORIA-PLANO.md` (LOG final)
 
+- [x] **M-16** Criação da Skill "Gerador de M" e Arquivo Mestre — Criar a skill nativa `gerador-de-m` em `.agents/skills` e o arquivo `PROMPTS_MESTRES.md` para que todo pedido passe por uma nova tarefa `M`.
+  - Lê: `plano-de-melhoria/CENTRAL_IDEA.md`
+  - Altera: `.agents/skills/gerador-de-m/SKILL.md` (criação) e `plano-de-melhoria/PROMPTS_MESTRES.md` (novo)
+
+- [ ] **M-17** Consolidação das Regras Mestras Globais — Agrupar regras fundamentais (ex: resolução de conflitos) em um único arquivo consultado por todas as skills.
+  - Lê: regras espalhadas no planejamento
+  - Altera: `plano-de-melhoria/MELHORIA-PLANO.md` (ou novo doc de regras)
+
+- [ ] **M-18** Padronização 100% Inglês — Adicionar D-19 (Idioma Técnico) e atualizar diretrizes para que todo código, arquivos e comentários sejam em inglês.
+  - Lê: `plano-de-acao/PLANO.md`, `skills/SKILLENG.md`
+  - Altera: os mesmos
+
+- [ ] **M-19** Reestruturação e Renomeação — Propor a tradução e reestruturação dos nomes de arquivos de documentação para o inglês (separado em sub-tarefas a, b, c).
+  - Lê: estrutura atual
+  - Altera: `plano-de-melhoria/MELHORIA-PLANO.md` (para documentar o plano de renomeação)
+
+- [ ] **M-20** Regra de Backup no Legado — Registrar a regra estrita de clone de segurança na pasta de legado antes de qualquer renomeação/exclusão estrutural.
+  - Lê: `plano-de-acao/RELATORIO-GERAL-PROJETO.md`
+  - Altera: `plano-de-acao/RELATORIO-GERAL-PROJETO.md`
+
+- [ ] **M-21** Criação da Skill "Limpador Seguro" (Cleanup) — Criar a skill `safe-cleanup` que obriga a IA a explicar o arquivo antes de deletá-lo e pede autorização.
+  - Lê: N/A
+  - Altera: `.agents/skills/safe-cleanup/SKILL.md` (criação)
+
+- [ ] **M-22** Faxina de Arquivos Obsoletos — Usar a `safe-cleanup` para remover `CENTRAL_IDEA.md`, `PROMPT_ORIGINAL.md` etc., ou enviá-los ao legado.
+  - Lê: os arquivos a deletar
+  - Altera: sistema de arquivos (deleção/movimentação)
+
+- [ ] **M-23** Correção de Bugs Pós-Limpeza — Tarefa de revisão final para consertar eventuais links quebrados ou conflitos gerados pelas renomeações.
+  - Lê: todos os .md
+  - Altera: os .md com bugs
+
 ---
 
 ## Checklist de requisitos (para a M-03)
@@ -496,4 +528,7 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 [2026-10-04 17:16] FIM M-11 — arquivos alterados: plano-de-acao/RELATORIO-GERAL-PROJETO.md, plano-de-melhoria/MELHORIA-PLANO.md — achados: 5 links absolutos file:/// substituídos por caminhos relativos; §5B e D-18 ajustados para voz e comparação falado/esperado com privacidade (100% local por padrão); Fase 6 e visão de futuro alinhadas com adoção incremental de TypeScript (D-07); tabela D-11..D-18 atualizada para Decidido; §6.1 alinhado à ordem canônica de 6 passos da M-07.
 [2026-10-04 17:36] INÍCIO M-12 — Alinhamento das skills à governança e decisões
 [2026-10-04 17:40] FIM M-12 — arquivos alterados: skills/SKILLENG.md, skills/references/convencoes-v2.md, skills/skill.md, skills/references/diagnostico-atual.md, plano-de-melhoria/MELHORIA-PLANO.md — achados: SKILLENG.md alinhado com a governança da M-07 (6 passos canônicos, plan_tool.py operacional único com init obsoleto, T-092 prova de fogo e stack D-11/D-14/D-18); convencoes-v2.md com pasta de backup generalizada e D-16 ratificado sem renomear plano-de-acao/; skill.md alinhado com D-08 (README em pt-BR até Fase 14); diagnostico-atual.md com tarja de histórico e somente leitura.
+[2026-10-05 23:45] INÍCIO M-16 — Criação da Skill "Gerador de M" e Arquivo Mestre
+[2026-10-05 23:45] FIM M-16 — arquivos alterados: .agents/skills/gerador-de-m/SKILL.md, plano-de-melhoria/PROMPTS_MESTRES.md — achados: Criada a skill `gerador-de-m` e o arquivo `PROMPTS_MESTRES.md`. O novo catálogo de prompts foi centralizado e as intenções agora passam obrigatoriamente pela geração de uma tarefa M antes de serem executadas, garantindo segurança contra perda de contexto.
 ```
+
