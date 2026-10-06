@@ -52,6 +52,11 @@ Ative a skill gerador-de-m. Minha solicitação é: Usar a skill markdown-doctor
 Ative a skill gerador-de-m. Minha solicitação é: Acionar o prompt-updater para registrar no PROMPTS_MESTRES.md uma nova skill que acabamos de criar.
 ```
 
+## 11. Buscar Contexto do Projeto (Project Oracle)
+```text
+Ative a skill project-oracle. Minha solicitação é: Buscar nos logs o que foi feito nas últimas horas e me dar um resumo do estado atual do projeto.
+```
+
 ---
 
 > **Como a IA sabe qual skill usar?**

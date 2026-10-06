@@ -472,6 +472,23 @@ Every architectural choice has been debated, documented, and formally decided:
 | **D-16** | Planning Translation | **Optional Post-Trial Translation** | Internal planning translation is optional and scheduled only after completing the Trial by Fire (T-092). | **Decided** |
 | **D-17** | Frontend Linter | **Oxlint Kept for Frontend** | Retains Oxlint's superior linting speed for React, applying ESLint to the server and shared Prettier formatting. | **Decided** |
 | **D-18** | Voice & Pronunciation | **Native Local Web Speech API** | Prefers local browser voices (`localService=true`). Avoids sending audio data to third-party transcription services. | **Decided** |
+| **D-19** | Technical Language | **Strict English Standard** | All source code, folders, commits, and code comments must be strictly in English (except for app-specific learning data). | **Decided** |
+
+---
+
+## Autonomous AI Agents & Custom Skills
+
+This repository features a robust, self-documenting ecosystem of custom skills for autonomous AI agents (like Google Antigravity). These skills ensure strict project governance, security, and continuous maintenance without human micromanagement.
+
+All skills are natively loaded from `.agents/skills/`:
+- **`studyreviewblast-planner`**: The core engineering skill that strictly enforces TDD, no-secrets policies, and database migration rules.
+- **`gerador-de-m`**: Automates the creation of architectural improvement plans (`M-xx`) before any code is touched, enforcing planning-first development.
+- **`safe-cleanup`**: A governance skill that prevents accidental deletion of files, demanding formal justification and user approval before moving legacy data.
+- **`markdown-doctor`**: An autonomous documentation healer that scans and fixes broken markdown links across the repository after folder restructures.
+- **`prompt-updater`**: Automatically injects new capabilities into the master prompt catalog (`PROMPTS_MESTRES.md`) whenever a new skill is born.
+- **`readme-open-source`**: Analyzes the repository stack and automatically generates/updates this professional README.
+
+To view the master rules these agents obey, see `.agents/rules/global_rules.md`.
 
 ---
 

@@ -262,6 +262,23 @@ Toda tarefa executada termina obrigatoriamente com a **PAUSA**:
 | **D-16** | Planejamento EN | Tradução opcional após T-092, sem renomear a pasta `plano-de-acao/` | Decidido (2026-10-03) |
 | **D-17** | Linter frontend | Oxlint no client, ESLint no server, Prettier nos dois | Decidido (2026-10-03) |
 | **D-18** | Voz | Web Speech API (opcional, desligado por padrão, aviso de privacidade Chrome/Google, preferência `localService=true`, comparação falado/esperado sem análise fonética) | Decidido (2026-10-03) |
+| **D-19** | Idioma Técnico | Padrão estritamente em Inglês para todo o código, arquivos fonte, nomes de pastas, commits e comentários | Decidido (2026-10-06) |
+
+---
+
+## 8. Ecossistema de Agentes Autônomos e Skills
+
+O repositório é ativamente gerido e governado por agentes de inteligência artificial autônomos (Antigravity). As seguintes skills nativas existem em `.agents/skills/` para garantir a manutenção, segurança e evolução:
+
+- **`studyreviewblast-planner`**: Motor de engenharia que codifica seguindo estritamente o TDD e as regras arquiteturais.
+- **`gerador-de-m`**: Garante que o planejamento preceda a codificação. Formula as melhorias `M-xx`.
+- **`project-oracle`**: O buscador de contexto. Força a IA a ler a `LINHA-DO-TEMPO.md` e os relatórios antes de responder perguntas abertas do usuário.
+- **`safe-cleanup`**: Trava de segurança que impede a deleção arbitrária de arquivos, exigindo justificativa e autorização.
+- **`markdown-doctor`**: Cura de links quebrados. Varre a documentação consertando referências órfãs.
+- **`prompt-updater`**: Mantém o arquivo `PROMPTS_MESTRES.md` sempre sincronizado com as novas skills.
+- **`readme-open-source`**: Mantém o `README.md` raiz com padrão profissional e com a arquitetura sempre em dia.
+
+A IA atuante deve **obrigatória e constantemente** recorrer a essas skills para evitar o trabalho manual.
 
 ---
 

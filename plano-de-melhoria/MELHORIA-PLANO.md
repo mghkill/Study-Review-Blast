@@ -455,6 +455,18 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Lê: N/A
   - Altera: `.agents/skills/...`, `.agents/rules/global_rules.md`, `PROMPTS_MESTRES.md`
 
+- [x] **M-27** Atualização do README — Acionar a skill `readme-open-source` para varrer o projeto e atualizar o arquivo `README.md` da raiz com as últimas novidades arquiteturais e o ecossistema de agentes/skills criados.
+  - Lê: projeto inteiro, `.agents/skills`
+  - Altera: `README.md`
+
+- [x] **M-28** Skill "Project Oracle" (Buscador de Contexto) — Criar a skill permanente `project-oracle`. Objetivo concluído: O `RELATORIO-GERAL-PROJETO.md` foi reescrito para incluir todo o ecossistema de agentes e a nova `global_rules.md` agora obriga a IA a usar o Oráculo antes de responder perguntas gerais. O catálogo mestre foi atualizado.
+  - Lê: N/A
+  - Altera: `.agents/skills/project-oracle/SKILL.md`, `PROMPTS_MESTRES.md`, `.agents/rules/global_rules.md`, `RELATORIO-GERAL-PROJETO.md`
+
+- [ ] **M-29** Skills "Crash Recovery" e "Hierarchy Sync" — Criar a skill permanente `crash-recovery` para recuperar o contexto exato e explicar onde a IA parou caso o sistema caia por limite de tokens. Criar a skill `hierarchy-sync` para garantir que a atualização de documentação siga uma cascata lógica (ex: TAREFAS -> RELATORIO -> README) sem dessincronização. Adicionar regra global obrigando a IA a conferir as tarefas M correlacionadas caso essa hierarquia estrutural mude, prevenindo bugs documentais.
+  - Lê: N/A
+  - Altera: `.agents/skills/crash-recovery/SKILL.md`, `.agents/skills/hierarchy-sync/SKILL.md`, `.agents/rules/global_rules.md`
+
 ---
 
 ## Checklist de requisitos (para a M-03)
@@ -560,5 +572,9 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 [2026-10-06 00:15] FIM M-21 — arquivos alterados: .agents/skills/safe-cleanup/SKILL.md — achados: Criada a skill `safe-cleanup`. Qualquer faxina agora exige justificativa formal de obsolescência e prompt explícito de autorização para ir para a lixeira ou para o legado.
 [2026-10-06 00:22] INÍCIO M-26 — Skills Markdown Doctor / Prompt Updater e Regra
 [2026-10-06 00:25] FIM M-26 — arquivos alterados: global_rules.md, PROMPTS_MESTRES.md, novas skills — achados: Criadas as skills `markdown-doctor` (saneamento de links da documentação) e `prompt-updater` (manutenção do catálogo). Adicionada a regra global exigindo a atualização síncrona do PROMPTS_MESTRES via prompt-updater sempre que algo novo for gerado.
+[2026-10-06 00:30] INÍCIO M-27 — Atualização do README
+[2026-10-06 00:30] FIM M-27 — arquivos alterados: README.md — achados: Acionada a skill `readme-open-source`. Inserida a Decisão D-19 (English Standard) na tabela oficial e criada a nova seção "Autonomous AI Agents & Custom Skills" documentando todo o ecossistema e ferramentas sob `.agents/skills/` para exibir o repositório como um projeto open source profissional governado por agentes de IA.
+[2026-10-06 00:38] INÍCIO M-28 — Skill Project Oracle (Buscador de Contexto)
+[2026-10-06 00:39] FIM M-28 — arquivos alterados: project-oracle/SKILL.md, global_rules.md, PROMPTS_MESTRES.md, RELATORIO-GERAL-PROJETO.md — achados: Criada a skill `project-oracle`. A regra 7 de "Oráculo Obrigatório" foi implementada, impedindo a IA de chutar o que foi feito sem ler os logs antes. O RELATORIO-GERAL-PROJETO foi atualizado e sincronizado com todas as novas dinâmicas, refletindo a estrutura completa de inteligência do repositório.
 ```
 

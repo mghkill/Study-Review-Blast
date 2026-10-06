@@ -27,3 +27,6 @@ Este arquivo contém as diretrizes inegociáveis para qualquer IA operando neste
 ## 6. Transparência e Prevenção contra Limite de Tokens
 - **Pré-Registro (Save State):** Antes de iniciar as alterações reais de qualquer `M-xx` ou `T-xx`, a IA DEVE registrar no LOG do plano correspondente (`MELHORIA-PLANO.md` ou `LINHA-DO-TEMPO.md`) o **plano exato** de execução (o que fará e onde mexerá). Assim, se a IA "cortar" por falta de tokens, o usuário saberá exatamente o que ela estava tentando fazer.
 - **Pausa Cautelar de Complexidade:** Se a IA prever que uma tarefa é muito robusta (ex: renomeação em massa de arquivos, grandes refatorações), ela deve **avisar** o usuário sobre o risco e **PAUSAR ANTES** de iniciá-la. A IA só deve prosseguir quando o usuário autorizar o início do bloco mais complexo.
+
+## 7. Oráculo de Contexto Obrigatório
+- Quando o usuário fizer perguntas gerais como *"O que foi feito?"*, *"Onde estão os logs?"* ou pedir explicações sobre o estado do projeto, a IA **NÃO PODE** responder de memória. Ela é obrigada a usar a skill `project-oracle` para vasculhar `LINHA-DO-TEMPO.md`, `MELHORIA-PLANO.md` e o `RELATORIO-GERAL-PROJETO.md` para fornecer uma resposta exata baseada nos arquivos.
