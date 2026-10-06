@@ -10,8 +10,8 @@
 
 ## PRÓXIMO PASSO
 <!-- proximo:start -->
-- Atualizado em 2026-10-05 20:39
-- Iniciar **T-004** — [M] Matriz de usabilidade `docs/usability-matrix.md` (tela × rota × tabela × teste; dados que existem no banco e não aparecem no front) [v1 T-060]
+- Atualizado em 2026-10-05 21:06
+- Iniciar **T-005** — [P] `package.json` na raiz só para ferramentas, com `npm test` e `npm run lint` delegando para server e client (D-09)
 <!-- proximo:end -->
 
 ## Regras fixas (só mudam se o usuário pedir)
@@ -65,7 +65,7 @@ Explicação em linguagem simples no README (seção "Decisões explicadas").
 - [x] T-001 [P] Abrir o V2: árvore limpa em `main` e branch `v2/phase-01-safety-net` ✔ 2026-10-03 20:11
 - [x] T-002 [P] Backup novo do banco (`pg_dump -Fc`) fora do repositório + restauração de teste com contagem por tabela ✔ 2026-10-05 20:25
 - [x] T-003 [P] Baseline: testes, lint, `npm audit` e smoke das telas; registrar números ✔ 2026-10-05 20:39
-- [ ] T-004 [M] Matriz de usabilidade `docs/usability-matrix.md` (tela × rota × tabela × teste; dados que existem no banco e não aparecem no front) [v1 T-060]
+- [x] T-004 [M] Matriz de usabilidade `docs/usability-matrix.md` (tela × rota × tabela × teste; dados que existem no banco e não aparecem no front) [v1 T-060] ✔ 2026-10-05 21:06
 
 ## Fase 2 — Qualidade e ferramentas base
 - [ ] T-005 [P] `package.json` na raiz só para ferramentas, com `npm test` e `npm run lint` delegando para server e client (D-09)
