@@ -86,3 +86,5 @@ Registro cronológico (mais antigo primeiro). Só se acrescenta; nunca se apaga.
 - **2026-10-06 17:56** — [T-101] concluída. Removed DB_HOST from startup log
 - **2026-10-06 17:56** — [T-102] iniciada.
 - **2026-10-06 17:56** — [T-102] concluída. Added express-rate-limit globally and locally
+- **2026-10-06 18:05** — [T-005] iniciada.
+- **2026-10-06 18:06** — [T-005] concluída. Root package.json created, tested delegating to client and server

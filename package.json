@@ -1,0 +1,10 @@
+{
+  "name": "study-review-blast-root",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Ferramentas de orquestração do projeto",
+  "scripts": {
+    "test": "npm --prefix server test && npm --prefix client run test:run",
+    "lint": "npm run lint --prefix server --if-present && npm run lint --prefix client"
+  }
+}
