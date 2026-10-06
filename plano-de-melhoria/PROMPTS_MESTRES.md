@@ -116,5 +116,20 @@ Ative a skill gerador-de-m. Minha solicitação é: Criar uma nova skill permane
 
 ---
 
+## 10. Varredura de Segurança do Backend
+**Skill Relacionada:** `security-scanner`
+**Como Funciona:** Executa uma bateria de 7 verificações estáticas no código-fonte do servidor (`server/src/`) baseadas nas regras globais de segurança (§3). Detecta interpolações SQL perigosas, vazamento de `err.message`, credenciais em logs, ausência de `helmet`/rate-limit e rotas destrutivas sem autenticação. Gera achados no formato `SEC-xx` e propõe cartões M para correção — **nunca altera código diretamente**.
+**Variações de Uso:**
+- *Varredura Completa (Padrão):* "Rodar a varredura de segurança no backend e me dar o relatório de achados."
+- *Pós-Adição de Rota:* "Acabei de criar a rota `/api/tts`. Execute o security-scanner nela antes de commitar."
+- *Auditoria Periódica:* "Início da Fase 6. Rode o security-scanner e confirme que não há regressões de segurança."
+**Prompt Padrão:**
+```text
+Ative a skill security-scanner. Minha solicitação é: Varrer o backend (server/src/) com as verificações V-01 a V-07, gerar o relatório de achados SEC-xx e propor os cartões M correspondentes para correção.
+```
+
+---
+
 > **Como a IA sabe qual skill usar?**
 > A skill `gerador-de-m` possui um "Filtro de Autoconsciência". Quando você pede algo inédito, ela primeiro vasculha a pasta `.agents/skills/` para ver se já existe uma skill que resolva isso (evitando duplicidade). Se não existir, ela avalia se é um bug de 5 minutos ou uma demanda arquitetural que mereça a criação de uma **nova skill autônoma**.
+

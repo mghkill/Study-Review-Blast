@@ -494,6 +494,23 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Lê: novas skills segregadas
   - Altera: `PROMPTS_MESTRES.md`
 
+- [x] **M-37** [Security Audit — Fase 1: Planejamento de Correções Cirúrgicas] — Registrar 4 novas T-tasks de segurança no TAREFAS.md com base nos achados SEC-01..SEC-07 da varredura automática: (T-098) sanitizar `LIMIT` em `reviews.js` com bound parameter `$N` em vez de interpolação; (T-099) criar helper centralizado `errorHandler(err, req, res)` que não vaza `err.message` em produção; (T-100) instalar e configurar `helmet` no `index.js`; (T-101) remover o `console.log` de credenciais de infraestrutura do startup. Acionar skill `studyreviewblast-planner` para executar. Arquivos: `server/src/routes/reviews.js`, `server/src/index.js`, `plano-de-acao/TAREFAS.md`.
+  - Lê: `server/src/`, `plano-de-acao/TAREFAS.md`
+  - Altera: `plano-de-acao/TAREFAS.md` (T-098 a T-101 criadas) ✅ CONCLUÍDO
+  - Achados que motivaram: SEC-01 (SQL LIMIT interpolado), SEC-02 (err.message leak 35+ locais), SEC-03 (credenciais no log), SEC-04 (ausência de helmet)
+
+- [~] **M-38** [Criação da Skill `security-scanner`] — Criar a skill permanente `.agents/skills/security-scanner/SKILL.md` seguindo o mesmo padrão estrutural das skills existentes (markdown-doctor, safe-cleanup). A skill define varreduras recorrentes de segurança no backend: (1) interpolação direta em queries SQL; (2) `err.message` em respostas HTTP; (3) variáveis de ambiente em `console.log`; (4) ausência de `helmet` e `express-rate-limit`; (5) rotas destrutivas sem autenticação. Ao concluir, acionar `prompt-updater` para registrar o **Prompt 10** no `PROMPTS_MESTRES.md`. Arquivos: `.agents/skills/security-scanner/SKILL.md` (criação), `plano-de-melhoria/PROMPTS_MESTRES.md`.
+  - Lê: `.agents/skills/markdown-doctor/SKILL.md` (referência estrutural), `global_rules.md`
+  - Altera: `.agents/skills/security-scanner/SKILL.md` (criação), `PROMPTS_MESTRES.md`
+
+- [~] **M-39** [Execução da Auditoria de Segurança — Ativação dos Próximos Passos] — Orquestrar a execução sequencial de duas ações derivadas dos achados SEC-01..SEC-07:
+  **PASSO 1** — Concluir M-37: Acionar `studyreviewblast-planner` para adicionar 4 cartões em `plano-de-acao/TAREFAS.md`: T-098 (sanitizar LIMIT em reviews.js), T-099 (helper errorHandler centralizado), T-100 (instalar helmet no index.js), T-101 (remover console.log com credenciais de infraestrutura). Fechar M-37 como `[x]`. Sugerir: `git add . && git commit -m "plan(sec): add security T-tasks T-098..T-101"`.
+  **PASSO 2** — Rodar `security-scanner` (varredura de confirmação) após autorização. Confirmar que SEC-01..SEC-04 estão rastreados e que não surgiram novos achados. Sugerir: `git add . && git commit -m "audit(sec): run security-scanner, confirm SEC-01..SEC-04 tracked"`.
+  **REGRA DE PAUSA:** PAUSAR obrigatoriamente ao fim de cada PASSO e aguardar autorização antes de avançar (Regra Global §1).
+  - Lê: `plano-de-acao/TAREFAS.md`, `server/src/routes/reviews.js`, `server/src/index.js`, `server/src/middleware/`
+  - Altera: `plano-de-acao/TAREFAS.md` (T-098 a T-101), `plano-de-melhoria/MELHORIA-PLANO.md` (M-37 fechado)
+  - Skills: `studyreviewblast-planner` (Passo 1) → `security-scanner` (Passo 2)
+
 ---
 
 ## Checklist de requisitos (para a M-03)
@@ -611,5 +628,11 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 [2026-10-06 01:16] FIM M-24 — arquivos alterados: gerador-de-m/SKILL.md — achados: Injetado o "Filtro de Autoconsciência" na skill gerador-de-m. Agora ela vasculha a biblioteca de agentes antes de planejar. Se a skill existe, ela reaproveita; se é demanda repetitiva/arquitetural, ela arquiteta uma skill nova; se é pontual, ela faz planejamento normal. Isso fecha 100% da fila original de melhorias arquiteturais.
 [2026-10-06 01:19] INÍCIO M-31 — Sincronização do Catálogo (Prompt-Skill Sync)
 [2026-10-06 01:21] FIM M-31 — arquivos alterados: PROMPTS_MESTRES.md — achados: O catálogo foi totalmente reescrito. Deixou de ser apenas uma lista de textos para copiar/colar e se tornou um manual rico detalhando qual skill é acionada, como funciona, e variações de uso (ex: "Execute para X, mas pode usar para Y e Z"). Isso estabelece uma sincronia clínica 1:1 entre as skills reais da pasta .agents e a vitrine de operação do usuário.
+[2026-10-06 13:30] PRÉ-REGISTRO M-37 e M-38 — Varredura de segurança executada sobre server/src/. Achados SEC-01..SEC-07 documentados. M-37 planejar T-098..T-101 (LIMIT interpolado, err.message leak, helmet ausente, log de credenciais). M-38 criar skill security-scanner + registrar Prompt 10 no PROMPTS_MESTRES. Autorização do usuário concedida.
+[2026-10-06 13:30] INÍCIO M-37 + M-38 — Execução: (1) adicionar cartões M-37 e M-38 ao MELHORIA-PLANO.md; (2) criar .agents/skills/security-scanner/SKILL.md; (3) injetar Prompt 10 em PROMPTS_MESTRES.md via lógica prompt-updater.
+[2026-10-06 13:33] FIM M-37 e M-38 — arquivos alterados: plano-de-melhoria/MELHORIA-PLANO.md (cartões M-37 e M-38 adicionados), .agents/skills/security-scanner/SKILL.md (criada), plano-de-melhoria/PROMPTS_MESTRES.md (Prompt 10 injetado) — achados: SEC-01 (LIMIT interpolado em reviews.js:320), SEC-02 (err.message leak em 35+ locais), SEC-03 (credenciais em console.log no startup), SEC-04 (helmet ausente), SEC-05 (rate-limit ausente), SEC-06 (DELETE /api/students sem auth), SEC-07 (.env no gitignore ✅ OK). Skill security-scanner criada com 7 verificações V-01..V-07 e formato de achado SEC-xx. Prompt 10 registrado no catálogo mestre.
+[2026-10-06 13:40] PRÉ-REGISTRO M-39 — Orquestração da execução dos próximos passos da auditoria. Passo 1: criar T-098..T-101 em TAREFAS.md e fechar M-37. Passo 2 (após autorização): rodar security-scanner de confirmação. Regra de commit explícita entre os dois passos.
+[2026-10-06 13:40] INÍCIO M-39 — Passo 1: adicionando cartões T-098..T-101 em plano-de-acao/TAREFAS.md.
+[2026-10-06 13:42] FIM M-39 PASSO 1 — arquivo alterado: plano-de-acao/TAREFAS.md (T-098..T-101 adicionadas), MELHORIA-PLANO.md (M-37 fechado como [x]). PAUSADO. Aguardando autorização para Passo 2 (security-scanner de confirmação).
 ```
 

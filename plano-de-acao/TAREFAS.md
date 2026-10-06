@@ -1133,3 +1133,90 @@ Branch da fase: `v2/phase-15-final-translation`
 - **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3.
 - **Commit:** `test(server): fix review status red to yellow transition test (T-097)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-097.`
+
+---
+
+### T-098 · Sanitizar LIMIT interpolado em reviews.js (SEC-01)
+**P · Origem:** Auditoria de segurança M-37/SEC-01 · **Ler:** ENG
+- **Objetivo:** Eliminar a interpolação direta de `limit` na query SQL do endpoint `GET /api/reviews/history`, substituindo por bound parameter para prevenir SQL injection.
+- **Back:** Em `server/src/routes/reviews.js` linha 320, substituir:
+  ```js
+  query += ` ORDER BY r.reviewed_at DESC LIMIT ${parseInt(limit)}`;
+  ```
+  por:
+  ```js
+  const safeLimit = Math.max(1, Math.min(parseInt(limit, 10) || 20, 200));
+  params.push(safeLimit);
+  query += ` ORDER BY r.reviewed_at DESC LIMIT $${params.length}`;
+  ```
+  Garantir que `limit` nunca seja injetado diretamente na string SQL. Valor máximo permitido: 200.
+- **Front:** sem impacto.
+- **Teste antes:** rodar `npm test --prefix server` e verificar que os testes de `/api/reviews/history` passam. Confirmar que passar `limit=abc` ou `limit=999999` retorna resultado limitado a 200 sem erro 500.
+- **Pronto quando:** nenhuma interpolação direta de variável em query SQL existe em `reviews.js`. `npm test --prefix server` passa.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3. Sugerir `git add .` e `git commit -m "fix(sec): sanitize LIMIT param in reviews history query (T-098)"`.
+- **Commit:** `fix(sec): sanitize LIMIT param in reviews history query (T-098)`.
+- **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-098.`
+
+---
+
+### T-099 · Helper centralizado de tratamento de erros sem vazar err.message (SEC-02)
+**P · Origem:** Auditoria de segurança M-37/SEC-02 · **Ler:** ENG
+- **Objetivo:** Criar um middleware centralizado `errorHandler` que impeça o vazamento de `err.message` interno nas respostas HTTP em ambiente de produção, eliminando o padrão repetido em 35+ locais.
+- **Back:**
+  1. Criar `server/src/middleware/errorHandler.js`:
+     ```js
+     function errorHandler(err, req, res, next) {
+       console.error(err.stack || err.message);
+       const isDev = process.env.NODE_ENV === 'development';
+       res.status(err.status || 500).json({
+         error: isDev ? err.message : 'Internal Server Error',
+       });
+     }
+     module.exports = { errorHandler };
+     ```
+  2. Registrar no `server/src/index.js` como último middleware (após todas as rotas).
+  3. Nos arquivos de rota, substituir os blocos `catch (err) { res.status(500).json({ error: err.message }); }` por `next(err)` para delegar ao handler centralizado.
+  4. Priorizar a substituição em: `students.js`, `sessions.js`, `middleware/requireStudent.js` (todos usam o padrão inseguro).
+- **Front:** sem impacto.
+- **Teste antes:** rodar `npm test --prefix server`. Verificar que em `NODE_ENV=production` um erro 500 retorna `{ error: "Internal Server Error" }` sem detalhes internos.
+- **Pronto quando:** o helper existe, está registrado, e pelo menos os arquivos de maior risco (students, sessions, requireStudent) usam `next(err)`. `npm test --prefix server` passa.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3. Sugerir `git add .` e `git commit -m "feat(sec): add centralized errorHandler, hide err.message in prod (T-099)"`.
+- **Commit:** `feat(sec): add centralized errorHandler, hide err.message in prod (T-099)`.
+- **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-099.`
+
+---
+
+### T-100 · Instalar e configurar helmet no servidor Express (SEC-04)
+**P · Origem:** Auditoria de segurança M-37/SEC-04 · **Ler:** ENG
+- **Objetivo:** Adicionar o middleware `helmet` ao servidor Express para configurar automaticamente os HTTP security headers essenciais (CSP, X-Frame-Options, HSTS, X-Content-Type-Options, XSS-Protection).
+- **Back:**
+  1. Instalar: `npm install helmet --prefix server`.
+  2. Em `server/src/index.js`, adicionar `const helmet = require('helmet');` e `app.use(helmet());` como **primeira** chamada de middleware, antes de `cors()` e `express.json()`.
+  3. Verificar que o CORS ainda funciona corretamente com `helmet` ativo (podem ser necessários ajustes no `Content-Security-Policy` para o frontend em `localhost:5173`).
+- **Front:** sem impacto direto. Verificar que o frontend não recebe bloqueios inesperados do CSP ao acessar a API.
+- **Teste antes:** rodar o servidor e fazer `curl -I http://localhost:3001/api/health`. Verificar ausência dos headers de segurança. Após a instalação, confirmar presença de `X-Frame-Options`, `X-Content-Type-Options` e `X-XSS-Protection` na resposta.
+- **Pronto quando:** `app.use(helmet())` está presente no `index.js` como primeiro middleware. `npm test --prefix server` passa. Headers de segurança aparecem nas respostas.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3. Sugerir `git add .` e `git commit -m "feat(sec): add helmet middleware for HTTP security headers (T-100)"`.
+- **Commit:** `feat(sec): add helmet middleware for HTTP security headers (T-100)`.
+- **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-100.`
+
+---
+
+### T-101 · Remover console.log que vaza dados de infraestrutura no startup (SEC-03)
+**P · Origem:** Auditoria de segurança M-37/SEC-03 · **Ler:** ENG
+- **Objetivo:** Remover ou substituir o `console.log` do startup que imprime `DB_NAME@DB_HOST:DB_PORT` nos logs do servidor, prevenindo vazamento de dados de infraestrutura.
+- **Back:** Em `server/src/index.js` linha 44, substituir:
+  ```js
+  console.log(`   DB: ${process.env.DB_NAME}@${process.env.DB_HOST}:${process.env.DB_PORT}`);
+  ```
+  por:
+  ```js
+  console.log(`   DB: connected`);
+  ```
+  Verificar se existem outros `console.log` em `server/src/db/connection.js` ou em scripts de migração que exponham variáveis sensíveis (DB_PASSWORD, DB_USER) — substituí-los por mensagens genéricas.
+- **Front:** sem impacto.
+- **Teste antes:** rodar `node server/src/index.js` (ou `npm run dev --prefix server`) e verificar que o output do terminal **não** contém o nome do banco, host ou porta de conexão.
+- **Pronto quando:** nenhum `console.log` no código de aplicação (fora de scripts de migração/seed) exibe valores de variáveis `DB_*` ou `PORT` explicitamente. `npm test --prefix server` passa.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3. Sugerir `git add .` e `git commit -m "fix(sec): remove infrastructure info from startup logs (T-101)"`.
+- **Commit:** `fix(sec): remove infrastructure info from startup logs (T-101)`.
+- **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-101.`
