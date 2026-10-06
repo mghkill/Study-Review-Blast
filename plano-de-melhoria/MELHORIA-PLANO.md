@@ -419,8 +419,8 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Lê: `RETOMAR.md`, `PROMPT_ORIGINAL.md`, `RELATORIO-GERAL-PROJETO.md`
   - Altera: `.agents/rules/global_rules.md`
 
-- [ ] **M-18** Padronização 100% Inglês — Adicionar D-19 (Idioma Técnico) e atualizar diretrizes para que todo código, arquivos e comentários sejam em inglês.
-  - Lê: `plano-de-acao/PLANO.md`, `skills/SKILLENG.md`
+- [x] **M-18** Padronização 100% Inglês — Adicionar D-19 (Idioma Técnico) e atualizar diretrizes para que todo código, arquivos e comentários sejam em inglês.
+  - Lê: `plano-de-acao/PLANO.md`, `.agents/skills/studyreviewblast-planner/SKILL.md`
   - Altera: os mesmos
 
 - [ ] **M-19** Reestruturação e Renomeação — Propor a tradução e reestruturação dos nomes de arquivos de documentação para o inglês (separado em sub-tarefas a, b, c).
@@ -548,5 +548,7 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 [2026-10-05 23:55] FIM M-17 — arquivos alterados: .agents/rules/global_rules.md — achados: Criado o arquivo de regras globais em formato nativo (.agents/rules). A partir de agora, as diretrizes inegociáveis de "Pausar após cada tarefa", "Prevenção de conflitos D-xx/M-xx", e "Segurança do Gerador M" estão ativas permanentemente no contexto do Antigravity, eliminando a necessidade de repeti-las em cada prompt manual.
 [2026-10-06 00:02] INÍCIO M-16b — Refinamento de Segurança e Triagem de Regras
 [2026-10-06 00:03] FIM M-16b — arquivos alterados: .agents/rules/global_rules.md — achados: O arquivo de regras globais foi enriquecido. Foram adicionadas travas de segurança rígidas contra alucinação, proibição absoluta de exposição do arquivo `.env` e chaves sensíveis, proibição de commit com senhas, além da regra anti-bagunça para que qualquer limpeza passe antes por planejamento M. Regras obsoletas que conflitavam com as decisões D-xx atuais (ex: ausência de ORM) foram expurgadas do comportamento global.
+[2026-10-06 00:07] INÍCIO M-18 — Padronização 100% Inglês
+[2026-10-06 00:07] FIM M-18 — arquivos alterados: plano-de-acao/PLANO.md, .agents/skills/studyreviewblast-planner/SKILL.md — achados: Inserida a Decisão D-19 formalizando o inglês técnico no projeto. A skill do planner também foi atualizada com a regra inegociável #7, garantindo que o código, os commits e as pastas criadas por ele não usem português.
 ```
 

@@ -47,6 +47,7 @@ Explicação em linguagem simples no README (seção "Decisões explicadas").
 | D-16 | Planejamento em inglês | Tradução do planejamento é **OPCIONAL**, realizada apenas após a T-092 (prova de fogo) e **sem renomear a pasta `plano-de-acao/`** | Renomear pastas e arquivos | Decidido (2026-10-03) |
 | D-17 | Lint do client | Manter **Oxlint** no client (já configurado); **ESLint** no server; **Prettier** nos dois | ESLint também no client | Decidido (2026-10-03) |
 | D-18 | Voz e reconhecimento | Web Speech API (`SpeechRecognition`), opcional, desligado por padrão, aviso do Chrome/Google, "100% local por padrão"; preferir vozes com `localService=true`; **comparação entre falado e esperado** (sem análise fonética) | Não ter reconhecimento | Decidido (2026-10-03) |
+| D-19 | Idioma Técnico | Todo código, arquivos fonte, nomes de pastas, commits e comentários de código devem ser estritamente em **Inglês** (exceto para dados didáticos específicos do app). | Permitir mistura PT/EN | Decidido (2026-10-06) |
 
 ### Dependências aprovadas (D-10) — todas gratuitas e de código aberto
 | Fase | Pacotes | Para quê |

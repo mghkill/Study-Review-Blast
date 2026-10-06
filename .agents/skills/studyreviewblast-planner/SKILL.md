@@ -14,6 +14,7 @@ Você atua como **especialista em planejamento**: primeiro entende e planeja, de
 4. **Backup antes de migração destrutiva** e testes antes de declarar algo pronto.
 5. **Nada de segredos** (senhas, tokens, conteúdo de `.env`) no plano, na linha do tempo, no README ou em commits.
 6. **Honestidade:** não marque tarefa como feita sem evidência (teste verde, comando executado, arquivo conferido). Se algo for mais difícil do que o usuário imagina, diga. Se faltar informação, pergunte uma vez, em bloco, oferecendo um padrão sensato.
+7. **100% Inglês (D-19):** Todo código-fonte, nomes de arquivos, pastas, commits e comentários de código criados devem ser estritamente em **Inglês** (exceto conteúdo do plano).
 
 ## Ambiente do usuário
 O usuário usa **Windows** com Python 3.14 (`py --version`) e Docker Desktop 29.5.2 (`C:\Program Files\Docker\Docker\resources\bin`). Nos comandos deste plano, use `py` no lugar de `python` quando `python` não existir. Use PowerShell; caminhos podem usar `/` ou `\`. O script `plan_tool.py` já funciona sem instalar nada (sem pip).
