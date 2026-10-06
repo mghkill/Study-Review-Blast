@@ -17,6 +17,19 @@ Este é o ÚNICO arquivo de prompts que você precisa consultar para governar es
 Ative a skill brain-sync. Minha solicitação é: Carregue seu contexto profundo lendo as regras globais, o catálogo de skills, o prompt mestre e o estado do projeto em [INSERIR ARQUIVOS AQUI, ex: plano-de-acao/RELATORIO-GERAL-PROJETO.md e plano-de-melhoria/MELHORIA-PLANO.md] para se alinhar completamente à minha linha de raciocínio antes de começarmos a trabalhar.
 ```
 
+```text
+# Exemplo de uso:
+Na pasta plano-de-melhoria/PROMPTS_MESTRES.md existe um Catálogo Mestre de Prompts (PROMPTS_MESTRES.md).
+Leia este documento que faz execuções diretas com prompts e exemplos para a pasta da raiz .agents/ e também plano-de-acao.
+1. Ative a skill brain-sync. Minha solicitação é: Carregue seu contexto profundo lendo as regras globais, o catálogo de skills, o prompt mestre e o estado do projeto em: plano-de-acao/RELATORIO-GERAL-PROJETO.md e plano-de-melhoria/MELHORIA-PLANO.md e todos os outros  dessas pastas que eu citei, bem como o README.md para se alinhar completamente à minha linha de raciocínio antes de começarmos a trabalhar.
+
+2. Ative a skill hierarchy-sync. Minha solicitação é: Atualizar os relatórios globais do projeto seguindo a cascata hierárquica oficial, começando do fundo (LOGS) até o topo (README e RELATORIO-GERAL), garantindo consistência total após a grande reorganização de segurança que fizemos para se alinhar completamente à minha linha de raciocínio antes de começarmos a trabalhar.
+
+3. Ative a skill project-oracle. Minha solicitação é: Buscar nos arquivos de planejamento e me dar um resumo exato das próximas 5 prioridades pendentes na fila da Fase 1.5. para se alinhar completamente à minha linha de raciocínio antes de começarmos a trabalhar.
+
+4. Aplique com todo foco as regras contidas dentro de agents/rules/global_rules.md para se alinhar completamente à minha linha de raciocínio antes de começarmos a trabalhar.
+```
+
 ## 1. Gerador de M (Planejar, Priorizar e Dividir Tarefas M)
 **Skill Relacionada:** `gerador-de-m`
 **Como Funciona:** Delega à IA a responsabilidade de auditar o projeto, reorganizar prioridades e planejar melhorias estruturais *sem tocar no código fonte*. Possui inteligência de **Task Sizing**: se uma tarefa modificar muitos arquivos (>3-4), a IA alertará sobre o risco de estouro de token e sugerirá um "Split" (distribuição) em tarefas menores. Garante que segurança sempre tenha prioridade.

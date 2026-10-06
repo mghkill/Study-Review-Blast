@@ -10,8 +10,8 @@
 
 ## PRÓXIMO PASSO
 <!-- proximo:start -->
-- Atualizado em 2026-10-06 15:48
-- Iniciar **T-098** — [P] Sanitizar LIMIT interpolado em reviews.js (SEC-01)
+- Atualizado em 2026-10-06 17:50
+- Iniciar **T-100** — [P] Instalar e configurar helmet para headers de segurança HTTP (SEC-04)
 <!-- proximo:end -->
 
 ## Regras fixas (só mudam se o usuário pedir)
@@ -70,8 +70,8 @@ Explicação em linguagem simples no README (seção "Decisões explicadas").
 
 ## Fase 1.5 — Hotfixes de Segurança (Security First)
 - [x] T-095 [P] Parametrizar LIMIT e OFFSET e criar sanitizador de erros na API sem vazar err.message nem SQL ✔ 2026-10-06 15:48
-- [ ] T-098 [P] Sanitizar LIMIT interpolado em reviews.js (SEC-01)
-- [ ] T-099 [P] Remover vazamento de err.message genérico em 35 rotas (SEC-02)
+- [x] T-098 [P] Sanitizar LIMIT interpolado em reviews.js (SEC-01) ✔ 2026-10-06 17:46
+- [x] T-099 [P] Remover vazamento de err.message genérico em 35 rotas (SEC-02) ✔ 2026-10-06 17:50
 - [ ] T-100 [P] Instalar e configurar helmet para headers de segurança HTTP (SEC-04)
 - [ ] T-101 [P] Remover console.log que vaza dados de infraestrutura no startup (SEC-03)
 - [ ] T-102 [P] Instalar e configurar express-rate-limit nas rotas críticas (SEC-05)

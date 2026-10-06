@@ -66,6 +66,7 @@ Unlike conventional platforms that require perpetual cloud connectivity, paid su
 - [x] **Comprehensive Vocabulary Catalog:** Vocabulary management covering verbs, meanings, usage contexts, example sentences, and associated canonical verb tenses.
 - [x] **Heuristic SRS Review Queue:** Smart scheduling based on recall difficulty, calculation of dynamic review intervals, and diagnostic error analysis grouped by category.
 - [x] **Student Sentence Composition:** Learners can draft and persist custom sentences during active review sessions.
+- [x] **Pre-development Security Layer:** Early implementation of query sanitization, `LIMIT` parameterization, and centralized API error masking to prevent internal database leakages.
 - [x] **Canonical 12 English Verb Tenses:** Dedicated relational structure for functional grammar and verb conjugation practice.
 - [x] **Native Browser Speech Synthesis:** Text-to-speech audio powered by the browser's native `SpeechSynthesis` (Web Speech API) with zero network dependency.
 - [x] **Analytical Dashboard:** Visual retention charts, study volume, and error frequency metrics powered by Chart.js.

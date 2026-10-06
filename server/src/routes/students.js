@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../db/connection');
 
 // GET /api/students — lista todos (não requer header, é usada na seleção de estudante)
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
   try {
     const result = await db.query(`
       SELECT s.*,
@@ -19,24 +19,24 @@ router.get('/', async (req, res) => {
     `);
     res.json(result.rows);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 });
 
 // GET /api/students/:id
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const result = await db.query('SELECT * FROM students WHERE id = $1', [id]);
     if (!result.rows[0]) return res.status(404).json({ error: 'Student not found' });
     res.json(result.rows[0]);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 });
 
 // POST /api/students — cria estudante NOVO, começa com zero palavras (T-026)
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
   try {
     const { name, current_level = 'A1' } = req.body;
     if (!name) return res.status(400).json({ error: 'name is required' });
@@ -47,12 +47,12 @@ router.post('/', async (req, res) => {
     // Não vincula vocabulário existente — cada palavra pertence ao seu criador (T-026)
     res.status(201).json(result.rows[0]);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 });
 
 // PATCH /api/students/:id
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const { name, current_level } = req.body;
@@ -67,19 +67,19 @@ router.patch('/:id', async (req, res) => {
     if (!result.rows[0]) return res.status(404).json({ error: 'Student not found' });
     res.json(result.rows[0]);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 });
 
 // DELETE /api/students/:id
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     // ON DELETE CASCADE em vocabulary_items.student_id cuida de todo o progresso
     await db.query('DELETE FROM students WHERE id = $1', [id]);
     res.json({ success: true });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 });
 
