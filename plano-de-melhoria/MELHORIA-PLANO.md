@@ -422,9 +422,6 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Lê: `plano-de-acao/PLANO.md`, `.agents/skills/studyreviewblast-planner/SKILL.md`
   - Altera: os mesmos
 
-- [ ] **M-19** Reestruturação e Renomeação — Propor a tradução e reestruturação dos nomes de arquivos de documentação para o inglês (separado em sub-tarefas a, b, c). **[ADIADA por complexidade]**
-  - Lê: estrutura atual
-  - Altera: `plano-de-melhoria/MELHORIA-PLANO.md` (para documentar o plano de renomeação)
 
 - [x] **M-20** Regra de Backup no Legado — Registrar a regra estrita de clone de segurança na pasta de legado antes de qualquer renomeação/exclusão estrutural.
   - Lê: `plano-de-acao/RELATORIO-GERAL-PROJETO.md`
@@ -474,25 +471,6 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Lê: todas as skills em `.agents/skills/`
   - Altera: `PROMPTS_MESTRES.md`
 
-- [ ] **M-32** Skill "Revisor de Dependências" (Dependency Checker) — Criar a skill `dependency-checker` em `.agents/skills/`. Ela varrerá a fila de melhorias procurando por tarefas não concluídas (`[ ]` ou `[~]`) que contêm tags de bloqueio (ex: `[! Bloqueada até M-XX]`). Ela validará se a tarefa bloqueadora já foi concluída (`[x]`) e informará o usuário exatamente quais tarefas agora estão livres para execução e quais continuam travadas.
-  - Lê: `plano-de-melhoria/MELHORIA-PLANO.md`
-  - Altera: `.agents/skills/dependency-checker/SKILL.md` (criação)
-
-- [ ] **M-33** Auditoria de Regras Específicas (Plano de Ação) — Conferir minuciosamente todas as regras que se aplicam SOMENTE ao `plano-de-acao/` (TDD, arquitetura do DB, pausas rígidas). Analisar exceções, avaliar o que pode ser reaproveitado e definir como o arquivo mestre deverá trabalhar para abrigar essas especificidades sem conflitar com as regras de melhoria arquitetural.
-  - Lê: `plano-de-acao/RETOMAR.md`, `plano-de-acao/PLANO.md`
-  - Altera: `MELHORIA-PLANO.md` (Mapeamento de Regras)
-
-- [ ] **M-34** Segregação de Agentes (Melhoria vs Ação) — Estruturar a separação lógica e física das skills. Evitar confusão separando as skills de infraestrutura (`plano-de-melhoria`) das skills de código (`plano-de-acao`). Organizar a pasta `.agents/skills/` em subdomínios (ex: `architect/` e `coder/`) e migrar com segurança o conteúdo da pasta `/skills` da raiz (que é ligada ao plano de ação) para a nova hierarquia, ajustando nomes de arquivos sem bugar o sistema atual.
-  - Lê: `/skills/`, `.agents/skills/`
-  - Altera: sistema de arquivos (`.agents/skills/`), acionando `markdown-doctor` em seguida.
-
-- [ ] **M-35** Evolução do `RETOMAR.md` (Mimetizando o Master Prompt) — O `RETOMAR.md` é o embrião do prompt mestre para código. A tarefa é aplicar a mesma lógica das skills de contexto a ele. Transformar seu fluxo em um sistema parelho ao de "prompts/skills", garantindo que a execução operacional siga a mesma fluidez das tarefas "M", mas blindando a lógica hierárquica e rigorosa que o `RETOMAR` já possui para não bugar o TDD.
-  - Lê: `plano-de-acao/RETOMAR.md`
-  - Altera: `RETOMAR.md`, `.agents/skills/studyreviewblast-planner/SKILL.md`
-
-- [ ] **M-36** Sincronização Final do Catálogo Operacional — Após segregar os agentes e evoluir o modelo do plano de ação, acionar o `prompt-updater` para injetar os novos Prompts Mestres operacionais (para as T-tasks) no catálogo, formalizando os dois sistemas paralelos.
-  - Lê: novas skills segregadas
-  - Altera: `PROMPTS_MESTRES.md`
 
 - [x] **M-37** [Security Audit — Fase 1: Planejamento de Correções Cirúrgicas] — Registrar 4 novas T-tasks de segurança no TAREFAS.md com base nos achados SEC-01..SEC-07 da varredura automática: (T-098) sanitizar `LIMIT` em `reviews.js` com bound parameter `$N` em vez de interpolação; (T-099) criar helper centralizado `errorHandler(err, req, res)` que não vaza `err.message` em produção; (T-100) instalar e configurar `helmet` no `index.js`; (T-101) remover o `console.log` de credenciais de infraestrutura do startup. Acionar skill `studyreviewblast-planner` para executar. Arquivos: `server/src/routes/reviews.js`, `server/src/index.js`, `plano-de-acao/TAREFAS.md`.
   - Lê: `server/src/`, `plano-de-acao/TAREFAS.md`
@@ -532,6 +510,44 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 - [x] **M-45** [Faxina Segura de Arquivos Obsoletos] — Excluir permanentemente o rascunho temporário `RASCUNHO_PRIORIZACAO_SEGURANCA.md` e os 5 arquivos `.log` localizados na raiz do repositório, garantindo que o Workspace fique limpo. ✅ CONCLUÍDA
   - Limite: 6 arquivos a serem deletados.
   - Skill acionada: `safe-cleanup`
+
+- [x] **M-46** [Auditoria e Reorganização das Ms Pendentes] — Avaliar o motivo de M-19 e M-32 a M-36 estarem abertas, verificar dependências lógicas e reorganizar a fila do `MELHORIA-PLANO.md` estabelecendo a nova ordem de prioridade. ✅ CONCLUÍDA
+  - Limite: 1 arquivo (`MELHORIA-PLANO.md`)
+  - Skill acionada: `project-oracle` / `gerador-de-m`
+
+### Fila Ativa de Melhorias (Reorganizada na M-46)
+
+- [x] **M-47** [Criação da Skill `task-reviewer`] — Criar uma nova skill permanente em `.agents/skills/task-reviewer/SKILL.md` especializada em automatizar a revisão de tarefas M e T, garantindo que o planejamento de cada passo sempre aplique as skills de agentes apropriadas. *(Prioridade Máxima)* ✅ CONCLUÍDA
+  - Limite: 1 arquivo novo (a skill).
+  - Skill acionada: `gerador-de-m` (criação de skill)
+
+- [ ] **M-48** [Expansão Mestra do Catálogo de Prompts] — Revisar o `PROMPTS_MESTRES.md` para registrar a nova skill (`task-reviewer`) via `prompt-updater`, e reescrever o catálogo adicionando múltiplas variações de prompts práticos para cada tipo de resolução e skill.
+  - Limite: 1 arquivo (`PROMPTS_MESTRES.md`)
+  - Skill acionada: `prompt-updater`
+
+- [ ] **M-34** Segregação de Agentes (Melhoria vs Ação) — Estruturar a separação lógica e física das skills. Evitar confusão separando as skills de infraestrutura (`plano-de-melhoria`) das skills de código (`plano-de-acao`). Organizar a pasta `.agents/skills/` em subdomínios (ex: `architect/` e `coder/`) e migrar com segurança o conteúdo da pasta `/skills` da raiz para a nova hierarquia, ajustando nomes de arquivos sem bugar o sistema atual.
+  - Lê: `/skills/`, `.agents/skills/`
+  - Altera: sistema de arquivos (`.agents/skills/`), acionando `markdown-doctor` em seguida.
+
+- [ ] **M-32** Skill "Revisor de Dependências" (Dependency Checker) — Criar a skill `dependency-checker` em `.agents/skills/`. Ela varrerá a fila de melhorias procurando por tarefas não concluídas (`[ ]` ou `[~]`) que contêm tags de bloqueio. Ela validará se a tarefa bloqueadora já foi concluída e informará o usuário exatamente quais tarefas agora estão livres.
+  - Lê: `plano-de-melhoria/MELHORIA-PLANO.md`
+  - Altera: `.agents/skills/dependency-checker/SKILL.md` (criação)
+
+- [ ] **M-36** Sincronização Final do Catálogo Operacional — Após segregar os agentes e evoluir o modelo do plano de ação, acionar o `prompt-updater` para injetar os novos Prompts Mestres operacionais (para as T-tasks) no catálogo, formalizando os dois sistemas paralelos.
+  - Lê: novas skills segregadas
+  - Altera: `PROMPTS_MESTRES.md`
+
+- [ ] **M-33** Auditoria de Regras Específicas (Plano de Ação) — Conferir minuciosamente todas as regras que se aplicam SOMENTE ao `plano-de-acao/` (TDD, arquitetura do DB, pausas rígidas). Analisar exceções, avaliar o que pode ser reaproveitado e definir como o arquivo mestre deverá trabalhar para abrigar essas especificidades sem conflitar com as regras de melhoria arquitetural.
+  - Lê: `plano-de-acao/RETOMAR.md`, `plano-de-acao/PLANO.md`
+  - Altera: `MELHORIA-PLANO.md` (Mapeamento de Regras)
+
+- [ ] **M-35** Evolução do `RETOMAR.md` (Mimetizando o Master Prompt) — O `RETOMAR.md` é o embrião do prompt mestre para código. A tarefa é aplicar a mesma lógica das skills de contexto a ele. Transformar seu fluxo em um sistema parelho ao de "prompts/skills", garantindo que a execução operacional siga a mesma fluidez das tarefas "M".
+  - Lê: `plano-de-acao/RETOMAR.md`
+  - Altera: `RETOMAR.md`, `.agents/skills/studyreviewblast-planner/SKILL.md`
+
+- [ ] **M-19** Reestruturação e Renomeação — Propor a tradução e reestruturação dos nomes de arquivos de documentação para o inglês (separado em sub-tarefas a, b, c). **[ADIADA por complexidade]**
+  - Lê: estrutura atual
+  - Altera: `plano-de-melhoria/MELHORIA-PLANO.md` (para documentar o plano de renomeação)
 
 ---
 
@@ -668,6 +684,10 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 [2026-10-06 15:40] FIM M-44 — Varredura markdown-doctor concluída. Os arquivos e âncoras foram verificados. O bloco 'PRÓXIMO PASSO' no `PLANO.md`, que havia ficado defasado apontando para a T-005, foi devidamente atualizado para apontar para o novo início da fila: T-095. A fundação de planejamento e prioridade foi 100% finalizada (Split M-41 a M-44 encerrado). Próximo passo: Iniciar codificação.
 [2026-10-06 16:20] PRÉ-REGISTRO M-45 — Planejamento de faxina segura dos arquivos obsoletos (RASCUNHO_PRIORIZACAO_SEGURANCA.md e logs da raiz). Destino escolhido pelo usuário: exclusão permanente. O M-45 irá deletar esses 6 arquivos via skill safe-cleanup.
 [2026-10-06 16:21] FIM M-45 — Faxina segura concluída. Os 6 arquivos obsoletos foram excluídos permanentemente do disco e o repositório agora está limpo de logs temporários. Próximo passo: Iniciar codificação T-098.
+[2026-10-06 16:35] PRÉ-REGISTRO GERADOR DE M — Planejamento de Revisão de Ms, Nova Skill de Planejamento e Expansão do Catálogo. Devido à complexidade do pedido do usuário, a intenção foi dividida (Split) em 3 cartões (M-46, M-47, M-48) para respeitar o limite de tokens. M-46 fará a auditoria das Ms abertas (M-19, M-32 a M-36) e reorganizará a fila; M-47 criará a skill de revisão de tarefas (`task-reviewer`); M-48 usará o `prompt-updater` para expandir o `PROMPTS_MESTRES.md` com múltiplas variações para todas as skills.
+[2026-10-06 16:36] FIM M-46 — Auditoria concluída. As tarefas M-19, M-32 a M-36 estavam pendentes por causa do hijack da Fase 1.5 de Segurança (M-37 a M-45). Elas foram reorganizadas fisicamente para o fim da fila de melhorias ativas, criando um bloco estruturado. A M-47 (Criar `task-reviewer`) foi colocada como prioridade máxima, seguida da M-48 (Expansão de Prompts) e do restante, sendo o M-19 (Adiada) a última. O planejamento está alinhado e íntegro.
+[2026-10-06 16:37] PRÉ-REGISTRO M-47 — Criação da skill `task-reviewer` em `.agents/skills/task-reviewer/SKILL.md` para revisão automatizada de escopos M e T.
+[2026-10-06 16:38] FIM M-47 — Skill permanente criada com sucesso. Agora toda tarefa operacional ou de planejamento passará pela barreira de injeção de agentes. Próximo passo: M-48 (Expansão Mestra do Catálogo).
 ```
 
 
