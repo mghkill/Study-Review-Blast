@@ -236,6 +236,7 @@ Toda tarefa executada termina obrigatoriamente com a **PAUSA**:
 - **Não instale nada fora da lista D-10:** A lista de dependências aprovadas está em [`plano-de-acao/PLANO.md §Dependências aprovadas`](./PLANO.md#dependências-aprovadas). Qualquer pacote fora da lista exige decisão formal prévia.
 - **Migrations SQL são imutáveis:** Nunca edite um arquivo de migração já aplicado (001 a 009). Qualquer alteração de banco deve ser uma nova migração sequencial (`010_...sql`).
 - **Segredos:** Nunca escreva senhas, tokens ou dados reais de conexão no `PLANO.md`, na `LINHA-DO-TEMPO.md`, em commits ou no README.
+- **Backup Obrigatório (M-20):** Nunca renomeie ou exclua arquivos estruturais de planejamento ou documentação sem antes criar um clone de segurança na pasta `plano-de-acao/legado/`.
 
 ---
 

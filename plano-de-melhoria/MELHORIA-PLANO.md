@@ -423,15 +423,15 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Lê: `plano-de-acao/PLANO.md`, `.agents/skills/studyreviewblast-planner/SKILL.md`
   - Altera: os mesmos
 
-- [ ] **M-19** Reestruturação e Renomeação — Propor a tradução e reestruturação dos nomes de arquivos de documentação para o inglês (separado em sub-tarefas a, b, c).
+- [ ] **M-19** Reestruturação e Renomeação — Propor a tradução e reestruturação dos nomes de arquivos de documentação para o inglês (separado em sub-tarefas a, b, c). **[ADIADA por complexidade]**
   - Lê: estrutura atual
   - Altera: `plano-de-melhoria/MELHORIA-PLANO.md` (para documentar o plano de renomeação)
 
-- [ ] **M-20** Regra de Backup no Legado — Registrar a regra estrita de clone de segurança na pasta de legado antes de qualquer renomeação/exclusão estrutural.
+- [x] **M-20** Regra de Backup no Legado — Registrar a regra estrita de clone de segurança na pasta de legado antes de qualquer renomeação/exclusão estrutural.
   - Lê: `plano-de-acao/RELATORIO-GERAL-PROJETO.md`
   - Altera: `plano-de-acao/RELATORIO-GERAL-PROJETO.md`
 
-- [ ] **M-21** Criação da Skill "Limpador Seguro" (Cleanup) — Criar a skill `safe-cleanup` que obriga a IA a explicar o arquivo antes de deletá-lo e pede autorização.
+- [x] **M-21** Criação da Skill "Limpador Seguro" (Cleanup) — Criar a skill `safe-cleanup` que obriga a IA a explicar o arquivo antes de deletá-lo e pede autorização.
   - Lê: N/A
   - Altera: `.agents/skills/safe-cleanup/SKILL.md` (criação)
 
@@ -450,6 +450,10 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 - [x] **M-25** Refatoração Visual do PROMPTS_MESTRES.md — Formatar o catálogo de prompts com blocos de código markdown para permitir a cópia em um clique pelo usuário.
   - Lê: `plano-de-melhoria/PROMPTS_MESTRES.md`
   - Altera: `plano-de-melhoria/PROMPTS_MESTRES.md`
+
+- [x] **M-26** Skills "Markdown Doctor" / "Prompt Updater" e Regra de Atualização — Criar as skills `markdown-doctor` (links) e `prompt-updater` (atualização do catálogo). Adicionar regra global obrigando descoberta prévia de skills e registro de novas skills no mestre.
+  - Lê: N/A
+  - Altera: `.agents/skills/...`, `.agents/rules/global_rules.md`, `PROMPTS_MESTRES.md`
 
 ---
 
@@ -550,5 +554,11 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 [2026-10-06 00:03] FIM M-16b — arquivos alterados: .agents/rules/global_rules.md — achados: O arquivo de regras globais foi enriquecido. Foram adicionadas travas de segurança rígidas contra alucinação, proibição absoluta de exposição do arquivo `.env` e chaves sensíveis, proibição de commit com senhas, além da regra anti-bagunça para que qualquer limpeza passe antes por planejamento M. Regras obsoletas que conflitavam com as decisões D-xx atuais (ex: ausência de ORM) foram expurgadas do comportamento global.
 [2026-10-06 00:07] INÍCIO M-18 — Padronização 100% Inglês
 [2026-10-06 00:07] FIM M-18 — arquivos alterados: plano-de-acao/PLANO.md, .agents/skills/studyreviewblast-planner/SKILL.md — achados: Inserida a Decisão D-19 formalizando o inglês técnico no projeto. A skill do planner também foi atualizada com a regra inegociável #7, garantindo que o código, os commits e as pastas criadas por ele não usem português.
+[2026-10-06 00:14] INÍCIO M-20 — Regra de Backup no Legado
+[2026-10-06 00:15] FIM M-20 — arquivos alterados: plano-de-acao/RELATORIO-GERAL-PROJETO.md — achados: Adicionada a trava "Backup Obrigatório" nas restrições técnicas, proibindo renomeação ou exclusão estrutural sem clone em legado.
+[2026-10-06 00:15] INÍCIO M-21 — Criação da Skill Limpador Seguro (Cleanup)
+[2026-10-06 00:15] FIM M-21 — arquivos alterados: .agents/skills/safe-cleanup/SKILL.md — achados: Criada a skill `safe-cleanup`. Qualquer faxina agora exige justificativa formal de obsolescência e prompt explícito de autorização para ir para a lixeira ou para o legado.
+[2026-10-06 00:22] INÍCIO M-26 — Skills Markdown Doctor / Prompt Updater e Regra
+[2026-10-06 00:25] FIM M-26 — arquivos alterados: global_rules.md, PROMPTS_MESTRES.md, novas skills — achados: Criadas as skills `markdown-doctor` (saneamento de links da documentação) e `prompt-updater` (manutenção do catálogo). Adicionada a regra global exigindo a atualização síncrona do PROMPTS_MESTRES via prompt-updater sempre que algo novo for gerado.
 ```
 

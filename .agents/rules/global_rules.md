@@ -20,5 +20,10 @@ Este arquivo contém as diretrizes inegociáveis para qualquer IA operando neste
 - Para evitar bagunçar o projeto: nenhuma alteração estrutural, remoção de arquivos, limpeza ou refatoração arquitetural pode ser feita diretamente.
 - Tudo o que sair do escopo de uma tarefa operacional `T-xx` já agendada deve passar primeiro pela geração de um cartão `M-xx` no `MELHORIA-PLANO.md` (via intenção do usuário no `PROMPTS_MESTRES.md`). O planejamento formal precede qualquer ação.
 
-## 5. Reaproveitamento e Checagem
-- Antes de formular novas soluções manuais, a IA deve vasculhar a pasta `.agents/skills/`. Se existir uma skill nativa que faça o trabalho, ela DEVE ser usada para garantir previsibilidade e não reinventar a roda.
+## 5. Reaproveitamento e Checagem Contínua
+- Todo planejamento de `M-xx` DEVE iniciar identificando se há alguma skill em `.agents/skills/` que automatiza o problema (ex: `markdown-doctor` para links, `safe-cleanup` para lixo).
+- **Regra do Prompt Mestre:** Se uma nova skill for gerada ou uma nova dinâmica permanente for criada, a IA é OBRIGADA a acionar a skill `prompt-updater` para registrar imediatamente essa nova capacidade no arquivo `PROMPTS_MESTRES.md`.
+
+## 6. Transparência e Prevenção contra Limite de Tokens
+- **Pré-Registro (Save State):** Antes de iniciar as alterações reais de qualquer `M-xx` ou `T-xx`, a IA DEVE registrar no LOG do plano correspondente (`MELHORIA-PLANO.md` ou `LINHA-DO-TEMPO.md`) o **plano exato** de execução (o que fará e onde mexerá). Assim, se a IA "cortar" por falta de tokens, o usuário saberá exatamente o que ela estava tentando fazer.
+- **Pausa Cautelar de Complexidade:** Se a IA prever que uma tarefa é muito robusta (ex: renomeação em massa de arquivos, grandes refatorações), ela deve **avisar** o usuário sobre o risco e **PAUSAR ANTES** de iniciá-la. A IA só deve prosseguir quando o usuário autorizar o início do bloco mais complexo.

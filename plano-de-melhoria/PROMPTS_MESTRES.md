@@ -42,6 +42,16 @@ Ative a skill gerador-de-m. Minha solicitação é: Garantir a padronização 10
 Ative a skill gerador-de-m. Minha solicitação é: Renomear arquivos de documentação para inglês estruturadamente.
 ```
 
+## 9. Curar Documentação (Markdown Doctor)
+```text
+Ative a skill gerador-de-m. Minha solicitação é: Usar a skill markdown-doctor para varrer o projeto e consertar links quebrados nas documentações.
+```
+
+## 10. Atualizar este Catálogo (Prompt Updater)
+```text
+Ative a skill gerador-de-m. Minha solicitação é: Acionar o prompt-updater para registrar no PROMPTS_MESTRES.md uma nova skill que acabamos de criar.
+```
+
 ---
 
 > **Como a IA sabe qual skill usar?**
