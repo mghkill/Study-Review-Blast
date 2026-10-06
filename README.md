@@ -243,6 +243,28 @@ If your session terminates due to context window limits, client switching, or re
 
 ---
 
+## AI Development Skills & Prompts
+
+This repository is designed to be co-developed with agentic AI assistants. It includes predefined prompts and custom skills to guide the AI's behavior reliably without losing context:
+
+### 1. Operational Execution (The "T" Tasks)
+* **Skill:** `studyreviewblast-planner` (located in [`skills/SKILLENG.md`](./skills/SKILLENG.md))
+* **Purpose:** Drives the day-to-day execution of the project. It forces the AI to follow the atomic workflow (1 task per session), write tests first, and pause for commits.
+* **How to use:** Trigger the skill and prompt the AI with:
+  > `Leia plano-de-acao/RETOMAR.md e execute a T-0XX.`
+
+### 2. Planning Refinement (The "M" Tasks)
+* **Skill:** `SKILL-MELHORIA-PLANO` (located in [`plano-de-melhoria/SKILL-MELHORIA-PLANO.md`](./plano-de-melhoria/SKILL-MELHORIA-PLANO.md))
+* **Purpose:** Allows the AI to audit the project and improve the action plan itself without touching source code.
+* **How to use:** Trigger the skill and prompt the AI with "Prompt B" (found in [`plano-de-melhoria/CENTRAL_IDEA.md`](./plano-de-melhoria/CENTRAL_IDEA.md)):
+  > `Leia plano-de-melhoria/SKILL-MELHORIA-PLANO.md e plano-de-melhoria/MELHORIA-PLANO.md e siga o ciclo da skill. Se algum desses dois arquivos não existir nesses caminhos, PARE e me avise sem tentar adivinhar. Execute APENAS a próxima tarefa M pendente (ou termine a que estiver em [~]). Não altere código, não commite, não faça push. Ao final: log, resumo, git status, oferta de git add . na raiz, e PARE perguntando se devo continuar.`
+
+### 3. Open Source Documentation
+* **Skill:** `readme-open-source` (located in [`skills/skill.md`](./skills/skill.md))
+* **Purpose:** Instructs the AI to analyze the actual codebase and generate/update this README file with accurate stack versions and setup instructions.
+
+---
+
 ## Action Plan V2 and Phases
 
 The development roadmap is structured into **15 core phases** plus approved expansion modules, encompassing **97 atomic tasks**:
