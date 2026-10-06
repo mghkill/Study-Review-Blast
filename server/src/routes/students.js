@@ -35,8 +35,10 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
+const { strictLimiter } = require('../middleware/rateLimiters');
+
 // POST /api/students — cria estudante NOVO, começa com zero palavras (T-026)
-router.post('/', async (req, res, next) => {
+router.post('/', strictLimiter, async (req, res, next) => {
   try {
     const { name, current_level = 'A1' } = req.body;
     if (!name) return res.status(400).json({ error: 'name is required' });
