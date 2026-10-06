@@ -75,3 +75,4 @@ Registro cronológico (mais antigo primeiro). Só se acrescenta; nunca se apaga.
 - **2026-10-05 21:06** — [T-004] concluída. docs/usability-matrix.md gerada a partir das tabelas físicas e rotas reais. Foram mapeadas 20 tabelas, identificando itens desconectados da UI como custom_quizzes, student_sentences e context_mastery.
 - **2026-10-06 15:42** — [T-095] iniciada.
 - **2026-10-06 15:48** — [T-095] concluída. Substituida interpolacao de LIMIT por binding seguro na api de reviews. Centralizado tratamento de erros no sendError() e limpo os res.status(500).json das rotas reviews.js, vocabulary.js e sentences.js, ocultando o err.message do db no client. Adicionados dois testes TDD para validar sanitizacao e limite.
+- **2026-10-06 17:07** — Fase de Planejamento e Arquitetura M-Tasks concluída com sucesso! Todos os agentes segregados e Catálogo Mestre estabelecido. Preparando para retomar o código (T-Tasks).

@@ -6,9 +6,11 @@
 
 ## PRÓXIMO PASSO
 
-Cole o Prompt B para iniciar a **M-13**:
+**FASE M (MELHORIA ARQUITETURAL) CONCLUÍDA COM SUCESSO!**
 
-> Leia plano-de-melhoria/SKILL-MELHORIA-PLANO.md e plano-de-melhoria/MELHORIA-PLANO.md e siga o ciclo da skill. Se algum desses dois arquivos não existir nesses caminhos, PARE e me avise sem tentar adivinhar. Execute APENAS a próxima tarefa M pendente (ou termine a que estiver em [~]). Não altere código, não commite, não faça push. Ao final: log, resumo, git status, oferta de git add . na raiz, e PARE perguntando se devo continuar.
+A infraestrutura inteligente de agentes foi segregada, o Catálogo Mestre foi formalizado em dois sistemas paralelos e as fronteiras operacionais foram documentadas.
+
+**Ação:** O ciclo de planejamento foi encerrado. A partir de agora, o foco deve voltar 100% para o código, utilizando a skill operacional do `plano-de-acao/PLANO.md` (`studyreviewblast-planner`).
 
 ---
 

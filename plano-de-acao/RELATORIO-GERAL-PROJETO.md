@@ -108,20 +108,22 @@ Study-Review-Blast/
 │       ├── PROMPT_INICIAL_LEGADOV2.md # Prompt mestre que ordenou a reconstrução do plano
 │       └── RELATORIO-RECONSTRUCAO-V2.md # Registro técnico da transição entre IAs (Sessão 1 -> Opus 5.5 -> Gemini)
 │
-└── skills/                            # PACOTE DE INSTRUÇÕES DE ENGENHARIA DA IA
-    ├── SKILLENG.md                    # Diretrizes técnicas da IA planejadora (estratégia, stack, regras)
-    ├── skill.md                       # Diretrizes para documentação e README open source
-    ├── assets/                        # Templates e esqueletos de apoio
-    │   └── README.template.md         # Template de documentação profissional
-    ├── references/                    # Base de conhecimento e convenções do repositório
-    │   ├── convencoes-v2.md           # Padrões de código, branches, Conventional Commits e testes
-    │   ├── diagnostico-atual.md       # [Histórico] Análise preliminar do projeto pré-V1
-    │   ├── modelo-logico-alvo.md      # [Histórico/Ref] Modelagem relacional e status das migrations 002–009
-    │   ├── open-source-basico.md      # Guia conceitual de licença MIT, badges e CONTRIBUTING
-    │   └── open-source-checklist.md   # Lista de conferência para lançamento público
-    └── scripts/
-        ├── plan_tool.py               # Cópia mestre da ferramenta de planejamento
-        └── detect_stack.py            # Analisador automático de stack e dependências
+└── plano-de-melhoria/                 # FASE M: PLANEJAMENTO E ARQUITETURA DE AGENTES
+    ├── MELHORIA-PLANO.md              # Consolidação de F-xx, L-xx, Q-xx e tarefas M concluídas
+    └── PROMPTS_MESTRES.md             # Catálogo mestre com os sistemas paralelos (M e T)
+
+├── .agents/                           # PACOTE DE INSTRUÇÕES DE ENGENHARIA DA IA (SKILLS)
+    ├── rules/                         # Meta-regulação global (global_rules.md)
+    └── skills/                        # Agentes especializados segregados
+        ├── architect/                 # Skills do Sistema M (Infraestrutura e Planejamento)
+        │   ├── brain-sync/
+        │   ├── task-reviewer/
+        │   ├── dependency-checker/
+        │   └── ... (outros agentes M)
+        └── coder/                     # Skills do Sistema T (Operacional e Execução)
+            ├── old-root-skills/       # Legado e referências da antiga pasta raiz /skills
+            ├── studyreviewblast-planner/ # Motor principal das T-Tasks (código)
+            └── security-scanner/      # Scanner e auditor de segurança do código
 ```
 
 ---

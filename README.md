@@ -243,24 +243,17 @@ If your session terminates due to context window limits, client switching, or re
 
 ---
 
-## AI Development Skills & Prompts
+## AI Development Architecture & Master Prompts
 
-This repository is designed to be co-developed with agentic AI assistants. It includes predefined prompts and custom skills to guide the AI's behavior reliably without losing context:
+The governance of this repository is heavily driven by Autonomous AI Agents structured in a two-tier system, documented natively inside the [Master Prompts Catalog (`PROMPTS_MESTRES.md`)](./plano-de-melhoria/PROMPTS_MESTRES.md).
 
-### 1. Operational Execution (The "T" Tasks)
-* **Skill:** `studyreviewblast-planner` (located in [`skills/SKILLENG.md`](./skills/SKILLENG.md))
-* **Purpose:** Drives the day-to-day execution of the project. It forces the AI to follow the atomic workflow (1 task per session), write tests first, and pause for commits.
-* **How to use:** Trigger the skill and prompt the AI with:
-  > `Leia plano-de-acao/RETOMAR.md e execute a T-0XX.`
+### 1. Planning and Architecture (`architect/` Agents)
+The `plano-de-melhoria/` folder governs the architectural roadmap (the "M" Tasks). The agents in `.agents/skills/architect/` ensure the project stays sane, checking dependencies, reviewing plans, and generating tasks based on capacity constraints (Task Sizing).
 
-### 2. Planning Refinement (The "M" Tasks)
-* **Skill:** `SKILL-MELHORIA-PLANO` (obsoleta, preservada em [`plano-de-acao/legado/SKILL-MELHORIA-PLANO.md`](./plano-de-acao/legado/SKILL-MELHORIA-PLANO.md))
-* **Purpose:** Allows the AI to audit the project and improve the action plan itself without touching source code.
-* **How to use:** O projeto agora utiliza as skills nativas do diretório `.agents/skills/`. O antigo processo (preservado em [`plano-de-acao/legado/CENTRAL_IDEA.md`](./plano-de-acao/legado/CENTRAL_IDEA.md)) foi superado pelo novo ecossistema.
-
-### 3. Open Source Documentation
-* **Skill:** `readme-open-source` (located in [`.agents/skills/coder/old-root-skills/skill.md`](./.agents/skills/coder/old-root-skills/skill.md))
-* **Purpose:** Instructs the AI to analyze the actual codebase and generate/update this README file with accurate stack versions and setup instructions.
+### 2. Operational Code Execution (`coder/` Agents)
+The `plano-de-acao/` folder governs the execution of code tasks (the "T" Tasks). The primary engine is the `studyreviewblast-planner` agent located in `.agents/skills/coder/studyreviewblast-planner/`.
+* **Purpose:** It forces the AI to follow the atomic workflow (1 task per session), write TDD tests first, execute linter checks, and pause for commits.
+* **How to resume work:** Activate the `studyreviewblast-planner` skill and ask to execute the next pending T-Task. The Master Catalog handles the context injection.
 
 ---
 
