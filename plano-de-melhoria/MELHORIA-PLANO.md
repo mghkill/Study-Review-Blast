@@ -435,11 +435,11 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Lê: N/A
   - Altera: `.agents/skills/safe-cleanup/SKILL.md` (criação)
 
-- [ ] **M-22** Faxina de Arquivos Obsoletos — Usar a `safe-cleanup` para remover `CENTRAL_IDEA.md`, `PROMPT_ORIGINAL.md` etc., ou enviá-los ao legado.
+- [x] **M-22** Faxina de Arquivos Obsoletos — Usar a `safe-cleanup` para remover `CENTRAL_IDEA.md`, `PROMPT_ORIGINAL.md` etc., ou enviá-los ao legado.
   - Lê: os arquivos a deletar
   - Altera: sistema de arquivos (deleção/movimentação)
 
-- [ ] **M-23** Correção de Bugs Pós-Limpeza — Tarefa de revisão final para consertar eventuais links quebrados ou conflitos gerados pelas renomeações.
+- [x] **M-23** Correção de Bugs Pós-Limpeza — Tarefa de revisão final para consertar eventuais links quebrados ou conflitos gerados pelas renomeações. (Regra de Dependência adicionada ao Doctor).
   - Lê: todos os .md
   - Altera: os .md com bugs
 
@@ -582,5 +582,7 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 [2026-10-06 00:39] FIM M-28 — arquivos alterados: project-oracle/SKILL.md, global_rules.md, PROMPTS_MESTRES.md, RELATORIO-GERAL-PROJETO.md — achados: Criada a skill `project-oracle`. A regra 7 de "Oráculo Obrigatório" foi implementada, impedindo a IA de chutar o que foi feito sem ler os logs antes. O RELATORIO-GERAL-PROJETO foi atualizado e sincronizado com todas as novas dinâmicas, refletindo a estrutura completa de inteligência do repositório.
 [2026-10-06 00:50] INÍCIO M-29 e M-30 — Skills Crash Recovery, Hierarchy Sync e Brain Sync
 [2026-10-06 00:58] FIM M-29 e M-30 — arquivos alterados: skills criadas, global_rules.md, PROMPTS_MESTRES.md — achados: Execução simultânea por comando direto do usuário. A arquitetura de resiliência e contexto profundo foi finalizada. As skills `crash-recovery` e `hierarchy-sync` garantem integridade em caso de quedas de energia/token e evolução da documentação. A skill `brain-sync` atua como o boot cognitivo da IA, forçando-a a cruzar regras, skills e prompts antes de agir, tornando o agente proativo e altamente alinhado ao contexto. O prompt 0 foi adicionado no topo do catálogo mestre.
+[2026-10-06 01:07] INÍCIO M-22 e M-23 — Faxina Segura e Markdown Doctor
+[2026-10-06 01:10] FIM M-22 e M-23 — arquivos alterados: markdown-doctor/SKILL.md, README.md, RELATORIO-GERAL-PROJETO.md, RETOMAR.md — achados: Os 4 arquivos obsoletos da estrutura V1 (PROMPT_ORIGINAL.md, CENTRAL_IDEA.md, CONVERSABUGSMELHORIA.md, SKILL-MELHORIA-PLANO.md) foram movidos para plano-de-acao/legado/. O Markdown Doctor teve sua inteligência aprimorada com o "Ciclo de Observação" (look-ahead de dependências) e foi rodado para curar e atualizar as referências órfãs nos documentos ativos.
 ```
 

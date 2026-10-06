@@ -93,7 +93,7 @@ A governança do repositório opera em dois regimes: o **Ciclo de Melhoria do Pl
 
 | Precedência | Documento | Esfera de Autoridade Máxima (Manda em quê) |
 |---|---|---|
-| **0 (Meta-Regulação Ativa)** | `plano-de-melhoria/SKILL-MELHORIA-PLANO.md` | **Regulação Suprema das Sessões de Melhoria:** Durante as tarefas M, rege o ciclo de sessão, escopo estrito (.md), proibição de tocar em código e regra de 1 M por sessão. |
+| **0 (Meta-Regulação Ativa)** | `.agents/rules/global_rules.md` | **Regulação Suprema:** Diretrizes inegociáveis de segurança, pausas e oráculo de contexto. |
 | **0.1 (Fonte das Melhorias)** | `plano-de-melhoria/MELHORIA-PLANO.md` | **Diretrizes e Decisões de Refinamento:** Consolida achados (F-xx), lacunas (L-xx), decisões do usuário (M-06) e o LOG cronológico das melhorias. |
 | **1 (Suprema Operacional)** | [`RELATORIO-GERAL-PROJETO.md`](./RELATORIO-GERAL-PROJETO.md) | **Arquitetura, Visão Alvo e Princípios Cardeais:** Define o que o sistema é e será; regras inegociáveis (100% gratuito/local, isolamento estrito, PostgreSQL 18 soberano); mapa de decisões D-01 a D-18. |
 | **2** | [`RETOMAR.md`](./RETOMAR.md) (este arquivo) | **Conduta Operacional e Protocolo de Execução:** Manda no fluxo da sessão diária de desenvolvimento de código, ritual de pausa com `git add .`, verificação prévia e tolerância a falhas de contexto. |
@@ -110,7 +110,7 @@ A governança do repositório opera em dois regimes: o **Ciclo de Melhoria do Pl
 - **Cópia espelho de referência:** `skills/scripts/plan_tool.py` mantida intacta na skill.
 
 ### Confinamento de `plano-de-melhoria/`
-- Espaço oficial de trabalho das melhorias M (`MELHORIA-PLANO.md`, `SKILL-MELHORIA-PLANO.md`, `CENTRAL_IDEA.md`).
+- Espaço oficial de trabalho das melhorias M (`MELHORIA-PLANO.md` e a pasta `.agents/skills/`).
 - Não é citado em vitrines públicas (`README.md`, `RELATORIO-GERAL-PROJETO.md`).
 - Arquivamento histórico em `plano-de-acao/legado/` previsto para o fim da M-15.
 

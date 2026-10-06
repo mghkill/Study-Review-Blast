@@ -97,7 +97,6 @@ Study-Review-Blast/
 │   ├── RETOMAR.md                     # Manual operacional diário da IA (ordem de leitura e pausa)
 │   ├── LINHA-DO-TEMPO.md              # Log cronológico imutável de todas as ações executadas
 │   ├── plan_tool.py                   # Script CLI de automação (status, start, done, log, add-feature)
-│   ├── PROMPT_ORIGINAL.md             # Instruções primitivas do projeto preservadas
 │   ├── RELATORIO-GERAL-PROJETO.md     # ESTE DOCUMENTO — Guia mestre de arquitetura e evolução
 │   └── legado/                        # Museu e histórico do Plano V1 congelado
 │       ├── PLANO-v1.md                # Plano antigo (26 tarefas concluídas preservadas)

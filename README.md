@@ -254,10 +254,9 @@ This repository is designed to be co-developed with agentic AI assistants. It in
   > `Leia plano-de-acao/RETOMAR.md e execute a T-0XX.`
 
 ### 2. Planning Refinement (The "M" Tasks)
-* **Skill:** `SKILL-MELHORIA-PLANO` (located in [`plano-de-melhoria/SKILL-MELHORIA-PLANO.md`](./plano-de-melhoria/SKILL-MELHORIA-PLANO.md))
+* **Skill:** `SKILL-MELHORIA-PLANO` (obsoleta, preservada em [`plano-de-acao/legado/SKILL-MELHORIA-PLANO.md`](./plano-de-acao/legado/SKILL-MELHORIA-PLANO.md))
 * **Purpose:** Allows the AI to audit the project and improve the action plan itself without touching source code.
-* **How to use:** Trigger the skill and prompt the AI with "Prompt B" (found in [`plano-de-melhoria/CENTRAL_IDEA.md`](./plano-de-melhoria/CENTRAL_IDEA.md)):
-  > `Leia plano-de-melhoria/SKILL-MELHORIA-PLANO.md e plano-de-melhoria/MELHORIA-PLANO.md e siga o ciclo da skill. Se algum desses dois arquivos não existir nesses caminhos, PARE e me avise sem tentar adivinhar. Execute APENAS a próxima tarefa M pendente (ou termine a que estiver em [~]). Não altere código, não commite, não faça push. Ao final: log, resumo, git status, oferta de git add . na raiz, e PARE perguntando se devo continuar.`
+* **How to use:** O projeto agora utiliza as skills nativas do diretório `.agents/skills/`. O antigo processo (preservado em [`plano-de-acao/legado/CENTRAL_IDEA.md`](./plano-de-acao/legado/CENTRAL_IDEA.md)) foi superado pelo novo ecossistema.
 
 ### 3. Open Source Documentation
 * **Skill:** `readme-open-source` (located in [`skills/skill.md`](./skills/skill.md))
