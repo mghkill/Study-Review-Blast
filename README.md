@@ -103,6 +103,8 @@ The project is built on an audited, high-performance stack. All versions below a
 | **HTTP Integration Testing** | Supertest | `^7.3.0` | `7.3.0` | Programmatic HTTP endpoint testing | `server/package.json` |
 | **Frontend Testing** | Vitest | `^5.0.3` | `5.0.3` | Vite-native test runner for frontend components | `client/package.json` |
 | **Frontend Linter** | Oxlint | `^1.81.0` | `1.81.0` | Rust-based high-speed static analyzer for React | `client/package.json` |
+| **HTTP Security** | Helmet | `^8.3.0` | `8.3.0` | Secure HTTP headers generation against XSS and injection | `server/package.json` |
+| **DDoS Protection** | Express Rate Limit | `^8.7.1` | `8.7.1` | Throttling requests to protect API endpoints | `server/package.json` |
 <!-- stack:end -->
 
 ---
