@@ -26,15 +26,16 @@ Ative a skill brain-sync. Minha solicitação é: Carregue seu contexto profundo
 Ative a skill studyreviewblast-planner. Minha solicitação é: Continuar a programação (executar a próxima T-xx pendente na fila operacional).
 ```
 
-## 2. Refinamento de Planejamento (Tarefas M)
+## 2. Refinamento de Planejamento e Gestão de Tokens (Tarefas M)
 **Skill Relacionada:** `gerador-de-m`
-**Como Funciona:** Delega à IA a responsabilidade de auditar o projeto e planejar melhorias estruturais (arquitetura, documentação, criação de novas skills) *sem tocar no código fonte* da aplicação. Ele possui um Filtro de Autoconsciência para evitar criar skills duplicadas.
+**Como Funciona:** Delega à IA a responsabilidade de auditar o projeto, reorganizar prioridades e planejar melhorias estruturais *sem tocar no código fonte*. Possui inteligência de **Task Sizing**: se uma tarefa modificar muitos arquivos (>3-4), a IA alertará sobre o risco de estouro de token e sugerirá um "Split" (distribuição) em tarefas menores. Garante que segurança sempre tenha prioridade.
 **Variações de Uso:**
 - *Fila de Melhorias (Padrão):* "Execute a próxima melhoria planejada na fila."
-- *Planejamento sob demanda:* "Notei que a documentação X está confusa. Gere um cartão M para consertar isso na próxima sessão."
+- *Planejamento e Split:* "Gere um cartão M para refatorar o backend. Se for grande demais, faça o split em vários Ms."
+- *Repriorização:* "Varra as pendências abertas e reorganize a fila dando prioridade para itens de segurança e estabilidade."
 **Prompt Padrão:**
 ```text
-Ative a skill gerador-de-m. Minha solicitação é: Executar a próxima melhoria planejada na fila do plano-de-melhoria.
+Ative a skill gerador-de-m. Minha solicitação é: Executar a próxima melhoria planejada na fila do plano-de-melhoria, aplicando as regras de Task Sizing, Split (se necessário) e prioridade de Segurança.
 ```
 
 ## 3. Buscador de Contexto (Project Oracle)

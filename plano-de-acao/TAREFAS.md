@@ -1220,3 +1220,19 @@ Branch da fase: `v2/phase-15-final-translation`
 - **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3. Sugerir `git add .` e `git commit -m "fix(sec): remove infrastructure info from startup logs (T-101)"`.
 - **Commit:** `fix(sec): remove infrastructure info from startup logs (T-101)`.
 - **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-101.`
+
+---
+
+### T-102 · Instalar e configurar express-rate-limit nas rotas críticas (SEC-05)
+**P · Origem:** Auditoria de segurança M-39/SEC-05 · **Ler:** ENG
+- **Objetivo:** Adicionar o middleware `express-rate-limit` para proteger rotas críticas (criação de estudantes, reviews e fila) contra abuso ou loops acidentais no frontend.
+- **Back:** 
+  1. Instalar: `npm install express-rate-limit --prefix server`.
+  2. Em `server/src/index.js`, configurar um limitador global moderado (ex: 500 req/min) após o `helmet`.
+  3. Criar limitadores restritos em middlewares (ex: 30 req/min) e aplicar nas rotas: `POST /api/students`, `POST /api/reviews`, `GET /api/reviews/queue`.
+- **Front:** sem impacto direto, a não ser que os testes revelem falha. O frontend deve lidar com 429 adequadamente se atingir o limite (o interceptor axios deve logar ou mostrar erro).
+- **Teste antes:** Tentar disparar 100 requisições seguidas para `POST /api/reviews` no mock test, confirmar que o servidor aceita. Após implementar, confirmar que devolve HTTP 429 Too Many Requests.
+- **Pronto quando:** O pacote `express-rate-limit` estiver operante e testes da API continuarem passando sob uso normal.
+- **Pausa:** seguir protocolo em [`RETOMAR.md`](./RETOMAR.md) §3. Sugerir `git add . && git commit -m "feat(sec): add express-rate-limit to protect critical routes (T-102)"`.
+- **Commit:** `feat(sec): add express-rate-limit to protect critical routes (T-102)`.
+- **Prompt:** `Leia plano-de-acao/RETOMAR.md e execute a T-102.`

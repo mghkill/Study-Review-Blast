@@ -507,6 +507,11 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
   - Altera: `plano-de-acao/TAREFAS.md` (T-098..T-101) ✅, `MELHORIA-PLANO.md` (M-37,M-38,M-39 fechadas) ✅
   - Skills: `studyreviewblast-planner` (Passo 1) → `security-scanner` (Passo 2) ✅
 
+- [x] **M-40** [Fechamento da Auditoria de Segurança — Rate Limiting] — Criar cartão T-102 para cobrir a pendência SEC-05 descoberta no passo 2 da M-39. A tarefa T-102 instalará o `express-rate-limit` no Express para as rotas críticas. Sugerir o commit logo em seguida.
+  - Lê: `plano-de-acao/TAREFAS.md`
+  - Altera: `plano-de-acao/TAREFAS.md` (T-102 adicionada) ✅
+  - Skills: `studyreviewblast-planner` ✅
+
 ---
 
 ## Checklist de requisitos (para a M-03)
@@ -633,5 +638,8 @@ Identificados durante a varredura da M-07 para correção nas fases M-09, M-11 e
 [2026-10-06 13:57] SAVE-STATE (crash-recovery) M-39 PASSO 2 — Sistema sobrecarregado antes de iniciar o Passo 2. Estado no momento do crash: Passo 1 100% concluído e persistido no disco. Arquivos modificados nesta sessão: plano-de-acao/TAREFAS.md (+T-098..T-101), plano-de-melhoria/MELHORIA-PLANO.md (M-37=[x], M-38=[~], M-39=[~], LOG atualizado), .agents/skills/security-scanner/SKILL.md (criada), plano-de-melhoria/PROMPTS_MESTRES.md (Prompt 10 injetado). PRÓXIMO PASSO: Passo 2 da M-39 — rodar security-scanner V-01..V-07 como varredura de confirmação sobre server/src/. Verificar SEC-01..SEC-04 rastreados via T-098..T-101. Checar SEC-05 (rate-limit) e SEC-06 (DELETE sem auth) ainda abertos. Fechar M-38 e M-39 como [x] ao concluir. Commit sugerido: "audit(sec): run security-scanner confirmation, close M-38 M-39".
 [2026-10-06 14:06] RETOMADA M-39 PASSO 2 — Autorização confirmada pelo usuário. Iniciando varredura de confirmação security-scanner V-01..V-07.
 [2026-10-06 14:08] FIM M-39 PASSO 2 e FIM M-39 COMPLETA — Varredura security-scanner V-01..V-07 executada. Resultado: SEC-01 rastreado (T-098), SEC-02 rastreado (T-099), SEC-03 rastreado (T-101), SEC-04 rastreado (T-100), SEC-05 sem T-task ainda (proposta T-102 para M futura), SEC-06 aceito por design (DELETE students sem auth, documentado), SEC-07 OK (.env no .gitignore). M-37=[x], M-38=[x], M-39=[x]. Arquivos alterados: MELHORIA-PLANO.md (fechamento das 3 Ms + save-state + FIM). Não houve alteração de código-fonte nesta M.
+[2026-10-06 14:11] SAVE-STATE SESSÃO ENCERRADA — Pendência aberta ao encerrar: SEC-05 (express-rate-limit ausente no servidor Express) identificado na varredura V-05 mas sem cartão T-task correspondente. PRÓXIMA AÇÃO: criar M-40 via gerador-de-m para gerar T-102 (instalar express-rate-limit nas rotas críticas: POST /api/students, POST /api/reviews, GET /api/reviews/queue). Nenhum código foi alterado nesta sessão — todas as ações foram de planejamento (criação de Ms, cartões T e skills). Commit pendente: "audit(sec): complete M-39 security audit cycle". Arquivos modificados não commitados: plano-de-melhoria/MELHORIA-PLANO.md. Para retomar: usar Prompt 8 (crash-recovery) seguido de Prompt 2 (gerador-de-m para M-40).
+[2026-10-06 14:48] FIM M-40 — arquivo alterado: plano-de-acao/TAREFAS.md (T-102 adicionada). Pendência SEC-05 agora rastreada por uma T-task. Além disso, as regras da skill gerador-de-m e o Catálogo de Prompts foram atualizados com inteligência de 'Task Sizing' (limite e split de tokens).
 ```
+
 
