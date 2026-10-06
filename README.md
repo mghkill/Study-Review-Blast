@@ -259,7 +259,7 @@ This repository is designed to be co-developed with agentic AI assistants. It in
 * **How to use:** O projeto agora utiliza as skills nativas do diretório `.agents/skills/`. O antigo processo (preservado em [`plano-de-acao/legado/CENTRAL_IDEA.md`](./plano-de-acao/legado/CENTRAL_IDEA.md)) foi superado pelo novo ecossistema.
 
 ### 3. Open Source Documentation
-* **Skill:** `readme-open-source` (located in [`skills/skill.md`](./skills/skill.md))
+* **Skill:** `readme-open-source` (located in [`.agents/skills/coder/old-root-skills/skill.md`](./.agents/skills/coder/old-root-skills/skill.md))
 * **Purpose:** Instructs the AI to analyze the actual codebase and generate/update this README file with accurate stack versions and setup instructions.
 
 ---

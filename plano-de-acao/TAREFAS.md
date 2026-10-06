@@ -3,7 +3,7 @@
 > Cada cartão diz **o que fazer** numa sessão. A IA lê **só o cartão da tarefa do dia** (busque por `### T-0XX`), mais os arquivos indicados em **Ler**.
 > O estado (`[ ]`, `[~]`, `[x]`) vive em [`PLANO.md`](./PLANO.md). O ritual de abertura e a **pausa obrigatória** estão em [`RETOMAR.md`](./RETOMAR.md).
 > Prompt de todas as tarefas: `Leia plano-de-acao/RETOMAR.md e execute a T-0XX.` (troque o número).
-> Abreviações dos arquivos em **Ler**: `ENG` = `skills/SKILLENG.md` · `CONV` = `skills/references/convencoes-v2.md` · `MLA` = `skills/references/modelo-logico-alvo.md` · `DIAG` = `skills/references/diagnostico-atual.md` · `README-SKILL` = `skills/skill.md` · `OSB` = `skills/references/open-source-basico.md` · `OSC` = `skills/references/open-source-checklist.md`.
+> Abreviações dos arquivos em **Ler**: `ENG` = `skills/SKILLENG.md` · `CONV` = `skills/references/convencoes-v2.md` · `MLA` = `skills/references/modelo-logico-alvo.md` · `DIAG` = `skills/references/diagnostico-atual.md` · `README-SKILL` = `.agents/skills/coder/old-root-skills/skill.md` · `OSB` = `skills/references/open-source-basico.md` · `OSC` = `skills/references/open-source-checklist.md`.
 > "Teste antes" = o teste (ou verificação automatizada, quando não há código) é escrito **primeiro**, rodado e visto **falhando**; só depois se implementa.
 
 ---

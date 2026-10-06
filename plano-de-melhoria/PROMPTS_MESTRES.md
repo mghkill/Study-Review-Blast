@@ -137,6 +137,17 @@ Ative a skill gerador-de-m. Minha solicitação é: [INSERIR IDEIA DA SKILL, ex:
 Ative a skill security-scanner. Minha solicitação é: [INSERIR ESCOPO DA VARREDURA, ex: Varrer o backend em server/src/ com as verificações de segurança ativas, gerar o relatório de achados SEC-xx e apenas propor os cartões M correspondentes no MELHORIA-PLANO.md, sem alterar o código de aplicação].
 ```
 
+## 11. Task Reviewer (Revisão e Planejamento de Escopo)
+**Skill Relacionada:** `task-reviewer`
+**Como Funciona:** Atua como uma barreira de qualidade antes da execução de tarefas (M-xx ou T-xx). Garante que a tarefa seja analisada e que skills de agentes (como security-scanner ou markdown-doctor) sejam aplicadas preventivamente no planejamento.
+**Variações de Uso:**
+- *Revisão de Melhoria (M):* "Revise a M-48 antes de executarmos."
+- *Revisão Operacional (T):* "Revise a T-102 e veja quais skills preciso injetar."
+**Prompt Padrão:**
+```text
+Ative a skill task-reviewer. Minha solicitação é: [INSERIR AÇÃO DE REVISÃO, ex: Revisar a próxima tarefa pendente e me sugerir o planejamento enriquecido com as skills de IA necessárias, antes de iniciarmos a execução].
+```
+
 ---
 
 > **Como a IA sabe qual skill usar?**
