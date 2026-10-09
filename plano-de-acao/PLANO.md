@@ -10,8 +10,8 @@
 
 ## PRÓXIMO PASSO
 <!-- proximo:start -->
-- Atualizado em 2026-10-06 18:06
-- Iniciar **T-006** — [M] ESLint 9 (flat config) no server; client mantém Oxlint (D-17)
+- Atualizado em 2026-10-07 18:58
+- Continuar **T-006** (em andamento) — [M] ESLint 9 (flat config) no server; client mantém Oxlint (D-17) ⏳ 2026-10-07 18:58
 <!-- proximo:end -->
 
 ## Regras fixas (só mudam se o usuário pedir)
@@ -78,7 +78,7 @@ Explicação em linguagem simples no README (seção "Decisões explicadas").
 
 ## Fase 2 — Qualidade e ferramentas base
 - [x] T-005 [P] `package.json` na raiz só para ferramentas, com `npm test` e `npm run lint` delegando para server e client (D-09) ✔ 2026-10-06 18:06
-- [ ] T-006 [M] ESLint 9 (flat config) no server; client mantém Oxlint (D-17)
+- [~] T-006 [M] ESLint 9 (flat config) no server; client mantém Oxlint (D-17) ⏳ 2026-10-07 18:58
 - [ ] T-007 [M] Prettier compartilhado + formatação geral em commit separado + `.git-blame-ignore-revs`
 - [ ] T-008 [M] Husky + lint-staged na raiz + guarda contra commit parcial
 - [ ] T-009 [P] commitlint (Conventional Commits) no hook `commit-msg`

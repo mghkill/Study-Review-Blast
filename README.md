@@ -284,7 +284,6 @@ The development roadmap is structured into **15 core phases** plus approved expa
 | **Phase 13** | Documentation & Open Source | T-086 to T-091 | Interactive Swagger UI (`/api/docs`), community files (`CONTRIBUTING.md`, `LICENSE`), screenshots | Pending |
 | **Phase 14** | Production Trial (Trial by Fire) | T-092 | Clean clone on a fresh machine validating README setup from scratch | Pending |
 | **Phase 15** | Final Translation | T-093 to T-094 | Cross-linked English and Portuguese READMEs (`README.en.md` / `README.pt-BR.md`), plus optional internal planning translation | Pending |
-| **Module 1** | Pre-ORM API Sanitization | T-095 | Strict parameterization of `LIMIT`/`OFFSET` and internal error message masking | Pending |
 | **Module 2** | Legacy Test Stabilization | T-096 to T-097 | Fix legacy frontend tests (`srs.test.js`, `tts.test.js`) and server review status check | Pending |
 
 ---
